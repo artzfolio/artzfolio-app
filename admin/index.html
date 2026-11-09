@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script>
 /* B9-BEGIN text size 60-200 (same steps as the App). --fs multiplies every font size. Saved on this computer per person (localStorage, try/catch). */
-var AF_FS_STEPS = [70, 80, 100, 120, 140], AF_FS_BASE = 1, AF_FS_DEF = 2,   /* ADM-r22b: 5 stops, default 100% = index 2 (gate R1: 80% was smaller than v2.68) */  AF_FS_KEY = 'af_admin_text_pct', AF_FS_OLDKEY = 'af_admin_font_step_retired', AF_FS_OLD = [], AF_FS_CUR = 2, AF_ROOT100 = 85;   /* root = AF_ROOT100 % of the browser's own size at 100 % */
+var AF_FS_STEPS = [50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150], AF_FS_BASE = 1, AF_FS_DEF = 5,   /* ADM-r22b: 5 stops, default 100% = index 2 (gate R1: 80% was smaller than v2.68) */  AF_FS_KEY = 'af_admin_text_pct', AF_FS_OLDKEY = 'af_admin_font_step_retired', AF_FS_OLD = [], AF_FS_CUR = 5, AF_ROOT100 = 85;   /* root = AF_ROOT100 % of the browser's own size at 100 % */
 function afFontPctToIdx(p) { p = Number(p); if (!(p >= 0)) return AF_FS_DEF; var b = 0, k; for (k = 1; k < AF_FS_STEPS.length; k++) { if (Math.abs(AF_FS_STEPS[k] - p) < Math.abs(AF_FS_STEPS[b] - p)) b = k; } return b; }   /* ADM-c21a: nearest of the 5 stops */
 function afFontMap() { try { var m = JSON.parse(localStorage.getItem(AF_FS_KEY) || 'null'); if (m && typeof m === 'object') return m; var o = JSON.parse(localStorage.getItem(AF_FS_OLDKEY) || '{}'), n = {}; if (o && typeof o === 'object') { for (var k in o) { if (typeof o[k] === 'number' && AF_FS_OLD[o[k]]) n[k] = AF_FS_OLD[o[k]]; } } return n; } catch (e) { return {}; } }
 function afFontWho() { try { var x = (typeof getAdminPanelSession === 'function') ? getAdminPanelSession() : null; return (x && x.employee_code) ? String(x.employee_code).toUpperCase() : ''; } catch (e) { return ''; } }
@@ -45,7 +45,7 @@ function afFontApply() {
 function afFontCtl() {
     return '<div class="af-fs-row" role="group" aria-label="Text size"><button type="button" class="af-fs-b af-fs-dn" onclick="afFontStep(-1)" aria-label="Smaller text">A&minus;</button>' +
         '<span class="af-fs-lbl" aria-live="polite">80%</span><button type="button" class="af-fs-b af-fs-up" onclick="afFontStep(1)" aria-label="Bigger text">A+</button>' +
-        '<input type="range" class="af-fs-rg" min="0" max="4" step="1" value="1" aria-label="Text size: 70, 80, 100, 120 or 140 percent" oninput="afFontSet(this.value)" style="flex:1 1 100%;min-height:44px;order:9">' +
+        '<input type="range" class="af-fs-rg" min="0" max="10" step="1" value="5" aria-label="Text size: 50 to 150 percent, in steps of 10" oninput="afFontSet(this.value)" style="flex:1 1 100%;min-height:44px;order:9">' +
         '<button type="button" class="af-fs-b af-fs-rs" onclick="afFontReset()" aria-label="Reset text size">Reset</button></div>';
 }
 /* the always-visible "Aa Text size" button (bottom right of every page; also works at phone width where the side menu is collapsed) */
@@ -3220,7 +3220,7 @@ label:has(>input[type=checkbox]),label:has(>input[type=radio]){display:flex;alig
     <div class="sidebar-footer">
       <div class="af-fs-side"><div class="af-fs-t">Text size</div><div id="af-fs-ctl-side"></div></div>
       <button class="logout-btn" onclick="adminLogout()">Sign out</button>   <!-- ADM-v258 A-01 -->
-      <div class="ver-footer">ArtzFolio Super App - Admin Panel v2.77</div>
+      <div class="ver-footer">ArtzFolio Super App - Admin Panel v2.78</div>
     </div>
   </div>
 
