@@ -3208,6 +3208,7 @@ label:has(>input[type=checkbox]),label:has(>input[type=radio]){display:flex;alig
       <li class="nav-item" data-page="sessions" onclick="switchPage('sessions')"><span class="nav-icon">🔄</span><span class="nav-label">Batch scans</span></li>
       <li class="nav-item" data-page="employees" onclick="switchPage('employees')"><span class="nav-icon">👥</span><span class="nav-label">People and access</span></li>
       <li class="nav-item" data-page="devices" onclick="switchPage('devices')"><span class="nav-icon">📱</span><span class="nav-label">Phones</span></li>
+      <li class="nav-item" data-page="pcs" onclick="switchPage('pcs')"><span class="nav-icon">🖥</span><span class="nav-label">Computers (desktop app)</span></li>
       <li class="nav-item" data-page="sku" onclick="switchPage('sku')"><span class="nav-icon">📦</span><span class="nav-label">Product stock search</span></li>
       <li class="nav-item" data-page="bins" onclick="switchPage('bins')"><span class="nav-icon">🗂</span><span class="nav-label">Bins (shelf locations)</span></li>
       <li class="nav-item" data-page="rmctl" onclick="switchPage('rmctl')"><span class="nav-icon">🧾</span><span class="nav-label">Purchasing controls (raw materials)</span></li>
@@ -3220,7 +3221,7 @@ label:has(>input[type=checkbox]),label:has(>input[type=radio]){display:flex;alig
     <div class="sidebar-footer">
       <div class="af-fs-side"><div class="af-fs-t">Text size</div><div id="af-fs-ctl-side"></div></div>
       <button class="logout-btn" onclick="adminLogout()">Sign out</button>   <!-- ADM-v258 A-01 -->
-      <div class="ver-footer">ArtzFolio Super App - Admin Panel v2.78</div>
+      <div class="ver-footer">ArtzFolio Super App - Admin Panel v2.79</div>
     </div>
   </div>
 
@@ -3590,6 +3591,24 @@ label:has(>input[type=checkbox]),label:has(>input[type=radio]){display:flex;alig
          settings, the data-quality check, import undo, who-changed-what and
          the vendor scorecard. Everything is read through the M20 database
          functions with the signed-in employee's own code and PIN. -->
+    <div class="page" id="page-pcs">
+      <div class="page-header">
+        <div>
+          <div class="page-title">Computers</div>
+          <div class="page-sub">Windows computers running the ArtzFolio Super App. Switch one off if it is lost or should no longer be used. A switched-off computer stops within 10 minutes. Admin only.</div>
+        </div>
+      </div>
+      <div class="rmc-pin">
+        <div class="filter-field">
+          <label for="pcs-pin">Your PIN</label>
+          <input type="text" class="pw-mask" inputmode="numeric" autocapitalize="off" spellcheck="false" autocomplete="off" id="pcs-pin" data-1p-ignore data-lpignore="true" data-bwignore="true" data-form-type="other" maxlength="8" placeholder="Type your PIN">
+        </div>
+        <div class="rmc-hint" style="flex:1 1 240px;margin:0;">Kept only in this browser tab and cleared when you leave this page. Every switch-off and switch-on is recorded against your employee code.</div>
+        <button class="preset-btn active" onclick="pcsLoad()">Show computers</button>
+      </div>
+      <div id="pcs-msg" class="result-msg" role="status"></div>
+      <div id="pcs-list" style="overflow-x:auto"></div>
+    </div>
     <div class="page" id="page-rmctl">
       <div class="page-header">
         <div>
@@ -5378,17 +5397,105 @@ document.addEventListener('DOMContentLoaded', initAdminPullToRefresh);
 // v2.45 (review F-13): a PIN typed on the Security page or the Purchasing page is cleared after 30 idle minutes (typing or using the page counts as activity)
 var PIN_FIELD_IDLE_MS = 30 * 60000, pinFieldTouch = {};
 function pinFieldTouchNow(id) { pinFieldTouch[id] = Date.now(); }
-document.addEventListener('input', function (e) { var id = e.target && e.target.id; if (id === 'sec-pin' || id === 'rmc-pin') pinFieldTouchNow(id); }, true);
+document.addEventListener('input', function (e) { var id = e.target && e.target.id; if (id === 'sec-pin' || id === 'rmc-pin' || id === 'pcs-pin') pinFieldTouchNow(id); }, true);
 setInterval(function () {
-  ['sec-pin', 'rmc-pin'].forEach(function (id) {
+  ['sec-pin', 'rmc-pin', 'pcs-pin'].forEach(function (id) {
     var el = document.getElementById(id); if (!el || !el.value) { delete pinFieldTouch[id]; return; }
     if (pinFieldTouch[id] == null) { pinFieldTouch[id] = Date.now(); return; }
     if (Date.now() - pinFieldTouch[id] >= PIN_FIELD_IDLE_MS) { el.value = ''; delete pinFieldTouch[id]; }
   });
 }, 10000);
+/* DSK-R30-BEGIN */
+/* DSK-R30 v3 (Admin Panel, RC30b wording only): the "Computers" page. Lists the Windows computers registered with the ArtzFolio Super App and lets an Admin switch one off (Block) or back on (Unblock).
+   Calls dsk_device_list / dsk_device_block (code + PIN, Admin only: the database refuses anyone else). Only fixed sentences are shown for database answers.
+   The PIN is typed in the page's own box, kept only while the page is open, and cleared when the person leaves the page. The stored hash of a computer is never returned by the database. */
+var PCS = { rows: null, busy: false, pending: null, loadedAt: 0 };
+function pcsSentence(code) {
+  switch (String(code || '')) {
+    case 'PIN_REJECTED': return 'That PIN did not match. Nothing was changed.';
+    case 'LOCKED': return 'This account is locked for a while after wrong PINs. Nothing was changed. Try again later.';
+    case 'NOT_ALLOWED': return 'Only an Admin can do this. Nothing was changed.';
+    case 'RATE_LIMITED': return 'Too many tries in a minute. Wait a minute and try again. Nothing was changed.';
+    case 'NO_SUCH_DEVICE': return 'That computer is no longer in the list. Nothing was changed.';
+    case 'BAD_INPUT': return 'Something was missing. Nothing was changed.';
+    case 'MISSING': return 'This feature is not switched on yet. Nothing was changed.';
+    case 'NOPIN': return 'Type your PIN at the top of this page first.';
+    case 'NOCODE': return 'You are not signed in with an employee code.';
+    case 'READONLY': return 'The Computers page is for Admin accounts. A read-only account cannot use it.';
+    default: return 'Nothing was changed. Check the connection and try again.';
+  }
+}
+function pcsAgo(ts, nowMs) {
+  var t = Date.parse(ts); if (isNaN(t)) return 'unknown';
+  var m = Math.max(0, Math.floor((nowMs - t) / 60000));
+  if (m < 2) return 'just now'; if (m < 120) return m + ' min ago'; var h = Math.floor(m / 60); if (h < 48) return h + ' h ago'; return Math.floor(h / 24) + ' days ago';
+}
+function pcsRowsHtml(rows, pending, nowMs) {
+  if (!rows) return '<div class="rmc-hint">Not loaded yet.</div>';
+  if (!rows.length) return '<div class="rmc-hint">No computer has been registered yet. A computer registers itself when someone signs in to the desktop app on it.</div>';
+  var h = '<table style="width:100%;border-collapse:collapse;font-size:15px"><thead><tr style="text-align:left"><th>Computer</th><th>Person</th><th>Status</th><th>Last seen</th><th>App</th><th></th></tr></thead><tbody>';
+  rows.forEach(function (r, i) {
+    var blocked = r.status === 'blocked', isP = pending && pending.id === r.device_id;
+    h += '<tr style="border-top:1px solid #E2E8F0"><td>' + esc(r.label || r.host || 'Computer') + '<div style="font-size:12px;opacity:.7">' + esc(r.host || '') + ' ' + esc(r.os || '') + '</div></td>'
+      + '<td>' + esc(r.owner_code || '') + '</td>'
+      + '<td><span style="padding:2px 8px;border-radius:10px;background:' + (blocked ? '#FEE2E2' : '#DCFCE7') + '">' + (blocked ? 'Switched off' : 'On') + '</span>'
+      + (blocked && r.block_reason ? '<div style="font-size:12px;opacity:.8">' + esc(r.block_reason) + '</div>' : '') + '</td>'
+      + '<td>' + esc(pcsAgo(r.last_seen, nowMs)) + '</td><td>' + esc(r.app_version || '') + '</td><td>';
+    if (isP) {
+      h += (pending.block ? '<input type="text" id="pcs-reason" maxlength="200" placeholder="Why? (optional)" style="min-height:36px;margin-right:6px">' : '')
+        + '<button class="preset-btn active" onclick="pcsConfirm()">' + (pending.block ? 'Confirm: switch off' : 'Confirm: switch on') + '</button> <button class="preset-btn" onclick="pcsCancel()">Cancel</button>';
+    } else {
+      h += '<button class="preset-btn" onclick="pcsAsk(' + i + ')">' + (blocked ? 'Switch on' : 'Switch off') + '</button>';
+    }
+    h += '</td></tr>';
+  });
+  return h + '</tbody></table>';
+}
+function pcsSetMsg(text, ok) { var el = document.getElementById('pcs-msg'); if (!el) return; el.className = 'result-msg' + (text ? (ok === null ? '' : (ok ? ' ok' : ' err')) : ''); el.textContent = text || ''; }
+function pcsPaint() { var el = document.getElementById('pcs-list'); if (el) el.innerHTML = pcsRowsHtml(PCS.rows, PCS.pending, Date.now()); }
+/* One call: resolves {ok, error, data}. error is a code for pcsSentence, never the server's text. */
+function pcsCall(fn, extra, label) {
+  var code = getAdminPanelEmployeeCode(), pinEl = document.getElementById('pcs-pin'), pin = pinEl ? (pinEl.value || '').trim() : '';
+  if (pin) pinFieldTouchNow('pcs-pin');
+  if (isReadOnlyAdmin()) return Promise.resolve({ ok: false, error: 'READONLY' });
+  if (!code) return Promise.resolve({ ok: false, error: 'NOCODE' });
+  if (!pin) return Promise.resolve({ ok: false, error: 'NOPIN' });
+  var args = { p_code: code, p_pin: pin }; Object.keys(extra || {}).forEach(function (k) { args[k] = extra[k]; });
+  return Promise.resolve().then(function () { return withTimeout(db.rpc(fn, args), 20000, label || fn); }).then(function (res) {   /* v2: a missing db or a synchronous throw cannot leave the page busy */
+    if (res && res.error) { var raw = String(res.error.message || '') + ' ' + String(res.error.code || ''); return { ok: false, error: /could not find the function|schema cache|PGRST202/i.test(raw) ? 'MISSING' : 'NETWORK' }; }
+    var d = res && res.data; if (Array.isArray(d)) d = d[0]; if (typeof d === 'string') { try { d = JSON.parse(d); } catch (e) { d = null; } }
+    if (!d || typeof d !== 'object') return { ok: false, error: 'NETWORK' };
+    if (d.ok === false) return { ok: false, error: String(d.error || 'NETWORK') };
+    return { ok: true, data: d };
+  }, function () { return { ok: false, error: 'NETWORK' }; });
+}
+function pcsLoad() {
+  if (PCS.busy) return; PCS.busy = true; pcsSetMsg('Loading...', null);
+  pcsCall('dsk_device_list', {}, 'Computers').then(function (r) {
+    PCS.busy = false;
+    if (!r.ok) { pcsSetMsg(pcsSentence(r.error), false); return; }
+    PCS.rows = Array.isArray(r.data.rows) ? r.data.rows : []; PCS.loadedAt = Date.now(); PCS.pending = null; pcsSetMsg(PCS.rows.length + ' computer(s).', true); pcsPaint();
+  });
+}
+function pcsAsk(i) { var r = PCS.rows && PCS.rows[i]; if (!r) return; PCS.pending = { id: r.device_id, block: r.status !== 'blocked' }; pcsPaint(); }
+function pcsCancel() { PCS.pending = null; pcsPaint(); }
+function pcsConfirm() {
+  var p = PCS.pending; if (!p || PCS.busy) return;
+  var reasonEl = document.getElementById('pcs-reason'), reason = p.block && reasonEl ? String(reasonEl.value || '').slice(0, 200) : '';
+  PCS.busy = true; pcsSetMsg('Saving...', null);
+  pcsCall('dsk_device_block', { p_device_id: p.id, p_block: p.block, p_reason: reason }, 'Switch computer').then(function (r) {
+    PCS.busy = false; PCS.pending = null;
+    if (!r.ok) { pcsSetMsg(pcsSentence(r.error), false); pcsPaint(); return; }
+    pcsSetMsg(p.block ? 'Switched off. The computer stops within 10 minutes.' : 'Switched on. The computer works again within 10 minutes.', true);
+    PCS.busy = false; pcsLoad();
+  });
+}
+function pcsInit() { if (!PCS.rows || (Date.now() - PCS.loadedAt) > 60000) { var pe = document.getElementById('pcs-pin'); if (pe && (pe.value || '').trim()) pcsLoad(); else { pcsSetMsg('Type your PIN, then tap Show computers.', null); pcsPaint(); } } else pcsPaint(); }
+/* DSK-R30-END */
 function switchPage(name) {
   if (currentPage === "rmctl" && name !== "rmctl") { var _pe = document.getElementById("rmc-pin"); if (_pe) _pe.value = ""; }
   if (currentPage === "secdata" && name !== "secdata") { var _ps = document.getElementById("sec-pin"); if (_ps) _ps.value = ""; }   // v2.45
+  if (currentPage === "pcs" && name !== "pcs") { var _pc = document.getElementById("pcs-pin"); if (_pc) _pc.value = ""; PCS.pending = null; }   // R30: Computers
   document.querySelectorAll('.page').forEach(function (p) { p.classList.remove('active'); });
   document.querySelectorAll('.nav-item').forEach(function (n) { n.classList.remove('active'); });
   document.getElementById('page-' + name).classList.add('active');
@@ -5413,6 +5520,7 @@ function switchPage(name) {
   if (name === 'bins' && !binsLoadedOnce) { loadBins(); }
   if (name === 'devices' && !devicesLoadedOnce) { loadDevices(); }
   if (name === 'secdata') { secInit(); }   // v2.45: Safety and backups
+  if (name === 'pcs') { pcsInit(); }   // R30: Computers
   if (name === 'audit' || name === 'sessions' || name === 'reports') { try { populateEmployeeDropdowns(true); } catch (e72) {} }   // A72: the pick-lists need names; the PIN box opens once
 }
 
