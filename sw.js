@@ -113,7 +113,8 @@
 // v77 (2026-11-03): cache name bumped for App v205 (Admin Panel v2.55); nothing else changed.
 // v77 (2026-11-03): cache name bumped for App v206 (Admin Panel v2.55); nothing else changed.
 // v83 (2026-11-05): cache name bumped for App v207 (Admin Panel v2.57). NEW: a 'message' handler - when the page posts {type:'SKIP_WAITING'} the waiting worker calls self.skipWaiting() so an open tab can move to the new build on demand. Fetch stays network-first with cache:'no-cache'; no stale shell.
-const CACHE_NAME = 'artzfolio-oms-shell-v85';
+// v86 (2026-11-12, RC31): cache name bumped for App v228 (server token, names, Today, Stock, More, Sales). Nothing else changed.
+const CACHE_NAME = 'artzfolio-oms-shell-v86';
 const OPTIONAL_FILES = ['./zxing_reader_3.1.4.js', './zxing_reader_3.1.4.wasm'];
 const SHELL_FILES = ['./index.html', './manifest.json', './icon.svg'];
 
