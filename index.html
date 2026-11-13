@@ -4003,7 +4003,7 @@ button:focus-visible,select:focus-visible,input:focus-visible,textarea:focus-vis
 </style>
 </head>
 <body>
-<div class="ver-corner" id="verCornerBadge">v230e</div>
+<div class="ver-corner" id="verCornerBadge">v231a</div>
 <!-- v112: the full-screen SKU page (opened by a12OpenSku) -->
 <div class="a12-skupage" id="a12-skupage"><div class="a12-sphead"><button type="button" onclick="a12CloseSku()">&larr; Back</button><div id="a12-sp-title" style="flex:1"></div><button type="button" onclick="shOpen('sku')" aria-label="Share this product page">&#128228; Share</button></div><div class="a12-spbody" id="a12-sp-body"></div></div>
 <!-- v63: Gap 2 — offline write-queue indicator. Hidden (display:none) unless
@@ -5224,7 +5224,7 @@ button:focus-visible,select:focus-visible,input:focus-visible,textarea:focus-vis
 
             <!-- Version -->
             <div class="ver-badge">
-                <div class="ver-name">&#128230; ArtzFolio Super App v230e</div>
+                <div class="ver-name">&#128230; ArtzFolio Super App v231a</div>
                 <div class="ver-sub">Tap the button below to see what is new in this version.</div>
                 <button class="settings-btn" style="min-height:46px" onclick="wnOpen()">What is new and what is done</button>
             </div>
@@ -6605,7 +6605,7 @@ body.bl-x4 #crm-tab .rm-tile .rm-tile-l,body.bl-x4 #crm-tab .rm-tile .rm-tile-s{
                 s5.setByUs = false; s5.widened = null;
                 document.body.classList.remove('bl-x5', 'bl-x5-vendors');
                 var n = document.querySelectorAll('[data-x5]'); for (var i = 0; i < n.length; i++) if (n[i].parentNode) n[i].parentNode.removeChild(n[i]);
-                localStorage.setItem('bl_x5_v1', 'off');
+                try { localStorage.setItem('bl_x5_v1', 'off'); } catch (e) { }
                 try { if (inVendors() && typeof rmRender === 'function') rmRender(false); } catch (e) { }
             } catch (e) { }
         };
@@ -6615,7 +6615,7 @@ body.bl-x4 #crm-tab .rm-tile .rm-tile-l,body.bl-x4 #crm-tab .rm-tile .rm-tile-s{
 
     /* ======================= X4 CUSTOMERS ======================= */
     try {
-        var s4 = { on: false, tile: null, share: null };
+        var s4 = { on: false, tile: null, share: null, inT: false, inS: false };
         function mapSub(label, sub) {
             var t = String(sub == null ? '' : sub);
             if (label === 'Active customers') return t.replace(/ have ordered$/, ' have ordered through the app');
@@ -6645,17 +6645,20 @@ body.bl-x4 #crm-tab .rm-tile .rm-tile-l,body.bl-x4 #crm-tab .rm-tile .rm-tile-s{
         }
         function on4() {
             if (s4.on || !need(['xmTile', 'crmShareRep'])) return;
-            s4.on = true; s4.tile = window.xmTile; s4.share = window.crmShareRep; window.xmTile = tile4; window.crmShareRep = share4;
+            s4.on = true;
+            /* capture the original only when our wrapper is not already in the chain (another layer may sit above it after an off): the X3 pattern */
+            if (!s4.inT) { s4.tile = window.xmTile; window.xmTile = tile4; s4.inT = true; }
+            if (!s4.inS) { s4.share = window.crmShareRep; window.crmShareRep = share4; s4.inS = true; }
             document.body.classList.add('bl-x4');
             try { if (typeof XM !== 'undefined' && XM.crm && XM.crm.view === 'home' && document.getElementById('crm-tab') && document.getElementById('crm-tab').classList.contains('active') && typeof crmView_home === 'function') crmView_home(false); } catch (e) { }
         }
         window.blx4Off = function () {
             try {
                 s4.on = false;
-                if (s4.tile && window.xmTile === tile4) window.xmTile = s4.tile;   /* AUDIT B finding 8: leave a layer that wrapped above us alone; tile4 passes straight through once s4.on is false */
-                if (s4.share && window.crmShareRep === share4) window.crmShareRep = s4.share;
+                if (s4.tile && window.xmTile === tile4) { window.xmTile = s4.tile; s4.inT = false; }   /* AUDIT B finding 8: leave a layer that wrapped above us alone; tile4 passes straight through once s4.on is false */
+                if (s4.share && window.crmShareRep === share4) { window.crmShareRep = s4.share; s4.inS = false; }
                 document.body.classList.remove('bl-x4');
-                localStorage.setItem('bl_x4_v1', 'off');
+                try { localStorage.setItem('bl_x4_v1', 'off'); } catch (e) { }
                 try { if (typeof XM !== 'undefined' && XM.crm && XM.crm.view === 'home' && typeof crmView_home === 'function') crmView_home(false); } catch (e) { }
             } catch (e) { }
         };
@@ -7228,6 +7231,312 @@ body.bl-x4m #crm-tab .rm-act[onclick^="xmGo('crm','dups'"] { display: none !impo
         window.bl4mRows = function () { return ROWS.map(function (r) { return r.n; }); };
         if (flag('bl_x4m_v1', 'x4m')) on4m();
     } catch (err) { try { console.warn('x4m off:', err && err.message); } catch (e) { } }
+})();
+
+</script>
+<script id="bl-bulk-js">
+/* RC34 Q8 BULK CENTER core: in-app .xlsx templates (template standard of roadmap v30 WS4) + upload check (preview, row errors, error file). ADDITIVE, OFF by default:
+   flag localStorage bl_bulk_v1 = on|off, or ?bulk=on|off. The spreadsheet library (ExcelJS 4.4.0) is loaded only when a template is made or a file is checked, from the CDN the app already trusts (CSP), pinned by an integrity hash.
+   This file makes and CHECKS files. It writes NOTHING to the database and handles no PIN: saving a checked file is a separate, per-template step that must go through the existing PIN-checked database function (not connected here). */
+(function () {
+    function flag(key, qname) {
+        try {
+            var q = String(location.search || '');
+            if (new RegExp('[?&]' + qname + '=on').test(q)) localStorage.setItem(key, 'on');
+            else if (new RegExp('[?&]' + qname + '=off').test(q)) localStorage.setItem(key, 'off');
+            return localStorage.getItem(key) === 'on';
+        } catch (e) { return new RegExp('[?&]' + qname + '=on').test(String(location.search || '')); }
+    }
+    var LIB = { url: 'https://cdn.jsdelivr.net/npm/exceljs@4.4.0/dist/exceljs.min.js', sri: 'sha384-Pqp51FUN2/qzfxZxBCtF0stpc9ONI6MYZpVqmo8m20SoaQCzf+arZvACkLkirlPz', p: null };
+    var VERSION = '1.0', DATE = '2026-11-13';
+    /* column: k key, l label, m mandatory, a auto (filled by the app), t text|int|dec|date|list, list = Lists key, min/max numbers, len max length, h help (also the header note), ex example value */
+    var T = {
+        listings: { name: 'Listings (add or change)', module: 'Listings', cols: [
+            { k: 'sku_code', l: 'SKU code', m: 1, t: 'text', len: 60, h: 'The product code, for example AF-PF-4X6-BLK. Letters, numbers and hyphens.', ex: 'AF-PF-4X6-BLK' },
+            { k: 'product_name', l: 'Product name', m: 1, t: 'text', len: 300, h: 'The full product title.', ex: 'Photo frame 4x6 black' },
+            { k: 'product_type', l: 'Product type', t: 'text', len: 80, h: 'The type, for example Photo Frame.', ex: 'Photo Frame' },
+            { k: 'asin', l: 'ASIN', t: 'text', len: 10, h: 'Amazon ASIN, 10 characters starting with B0 (optional).', ex: 'B0ABCDE123' },
+            { k: 'mrp', l: 'MRP (Rs)', t: 'dec', min: 0, max: 10000000, h: 'Printed price in rupees. Number only.', ex: 499 },
+            { k: 'set_size', l: 'Set size', t: 'int', min: 1, max: 1000, h: 'Pieces in one pack. Whole number.', ex: 1 },
+            { k: 'gst_rate', l: 'GST rate (%)', t: 'list', list: 'gst', h: 'Pick the GST rate.', ex: 18 },
+            { k: 'switch', l: 'Switch', t: 'list', list: 'onoff', h: 'ON = staff can scan it. OFF = hidden from scanning. The app asks your PIN when you save.', ex: 'ON' }] },
+        stock_in: { name: 'Stock in', module: 'Stock', cols: [
+            { k: 'sku_code', l: 'SKU code', m: 1, t: 'text', len: 60, h: 'The product code. It must already exist and be switched ON.', ex: 'AF-PF-4X6-BLK' },
+            { k: 'qty', l: 'Quantity', m: 1, t: 'int', min: 1, max: 100000, h: 'Whole number of pieces added, 1 to 100000.', ex: 20 },
+            { k: 'bin_code', l: 'Bin', m: 1, t: 'list', list: 'bins', h: 'Pick the bin the pieces go into.', ex: 'A-01' },
+            { k: 'note', l: 'Note', t: 'text', len: 200, h: 'Optional note, up to 200 characters.', ex: 'Purchase order 1042' }] },
+        stock_out: { name: 'Stock out (dispatch)', module: 'Stock', cols: [
+            { k: 'sku_code', l: 'SKU code', m: 1, t: 'text', len: 60, h: 'The product code.', ex: 'AF-PF-4X6-BLK' },
+            { k: 'qty', l: 'Quantity', m: 1, t: 'int', min: 1, max: 100000, h: 'Whole number of pieces going out.', ex: 5 },
+            { k: 'bin_code', l: 'Bin', m: 1, t: 'list', list: 'bins', h: 'The bin the pieces leave from.', ex: 'A-01' },
+            { k: 'channel', l: 'Channel', t: 'list', list: 'channels', h: 'Where the order came from.', ex: 'Offline' },
+            { k: 'order_id', l: 'Order number', t: 'text', len: 60, h: 'Order number (optional).', ex: '402-1234567-1234567' }] },
+        bin_transfer: { name: 'Bin transfer', module: 'Stock', cols: [
+            { k: 'sku_code', l: 'SKU code', m: 1, t: 'text', len: 60, h: 'The product code.', ex: 'AF-PF-4X6-BLK' },
+            { k: 'qty', l: 'Quantity', m: 1, t: 'int', min: 1, max: 100000, h: 'Whole number of pieces to move.', ex: 10 },
+            { k: 'from_bin', l: 'From bin', m: 1, t: 'list', list: 'bins', h: 'The bin the pieces are in now.', ex: 'A-01' },
+            { k: 'to_bin', l: 'To bin', m: 1, t: 'list', list: 'bins', h: 'The bin the pieces go to.', ex: 'B-02' },
+            { k: 'note', l: 'Note', t: 'text', len: 200, h: 'Optional note, up to 200 characters.', ex: 'Restock front shelf' }] },
+        bins: { name: 'Bins (create)', module: 'Stock', cols: [
+            { k: 'bin_code', l: 'Bin code', m: 1, t: 'text', len: 20, h: 'Short code, for example A-01. Letters, numbers, hyphen.', ex: 'C-07' },
+            { k: 'description', l: 'Description', t: 'text', len: 100, h: 'What this bin is (optional).', ex: 'Frames, aisle C' },
+            { k: 'pickable', l: 'Pickable', t: 'list', list: 'yesno', h: 'YES if staff can pick from it.', ex: 'YES' }] },
+        raw_materials: { name: 'Raw materials (master)', module: 'Raw materials', cols: [
+            { k: 'item_code', l: 'Item code', m: 1, t: 'text', len: 40, h: 'Your code for the material.', ex: 'RM-MDF-3MM' },
+            { k: 'item_name', l: 'Item name', m: 1, t: 'text', len: 200, h: 'The material name.', ex: 'MDF board 3 mm' },
+            { k: 'category_code', l: 'Category', m: 1, t: 'text', len: 40, h: 'Category code that already exists in Raw materials.', ex: 'BOARD' },
+            { k: 'uom_code', l: 'Unit', m: 1, t: 'list', list: 'uoms', h: 'The unit you count it in.', ex: 'PCS' },
+            { k: 'spec', l: 'Specification', t: 'text', len: 200, h: 'Size, grade, colour (optional).', ex: '8x4 ft' },
+            { k: 'hsn', l: 'HSN', t: 'text', len: 8, h: '4 to 8 digits (optional).', ex: '4410' },
+            { k: 'gst_rate', l: 'GST rate (%)', t: 'list', list: 'gst', h: 'Pick the GST rate.', ex: 18 },
+            { k: 'reorder_level', l: 'Reorder level', t: 'dec', min: 0, max: 100000000, h: 'Buy more when stock is at or below this.', ex: 20 },
+            { k: 'reorder_qty', l: 'Reorder quantity', t: 'dec', min: 0, max: 100000000, h: 'How much to buy each time.', ex: 100 },
+            { k: 'lead_time_days', l: 'Lead time (days)', t: 'int', min: 0, max: 365, h: 'Days from order to delivery.', ex: 7 }] },
+        vendors: { name: 'Vendors', module: 'Raw materials', cols: [
+            { k: 'vendor_code', l: 'Vendor code', m: 1, t: 'text', len: 30, h: 'Your short code for the vendor.', ex: 'V010' },
+            { k: 'vendor_name', l: 'Vendor name', m: 1, t: 'text', len: 200, h: 'The vendor name.', ex: 'Sharma Boards' },
+            { k: 'gstin', l: 'GSTIN', t: 'text', len: 15, h: '15 characters (optional).', ex: '07ABCDE1234F1Z5' },
+            { k: 'phone', l: 'Phone', t: 'text', len: 20, h: 'Phone number (optional).', ex: '9810000000' },
+            { k: 'email', l: 'Email', t: 'text', len: 120, h: 'Email (optional).', ex: 'orders@example.com' },
+            { k: 'payment_terms_days', l: 'Payment terms (days)', t: 'int', min: 0, max: 365, h: 'Days allowed to pay.', ex: 30 },
+            { k: 'lead_time_days', l: 'Lead time (days)', t: 'int', min: 0, max: 365, h: 'Days from order to delivery.', ex: 7 },
+            { k: 'active', l: 'Active', t: 'list', list: 'yesno', h: 'YES if you still buy from this vendor (optional, default YES).', ex: 'YES' }] },
+        customers: { name: 'Customers', module: 'Customers', cols: [
+            { k: 'display_name', l: 'Customer name', m: 1, t: 'text', len: 200, h: 'The name you call the customer.', ex: 'Asha Gifts' },
+            { k: 'customer_type', l: 'Type', m: 1, t: 'list', list: 'ctype', h: 'Pick the customer type.', ex: 'RETAIL' },
+            { k: 'gstin', l: 'GSTIN', t: 'text', len: 15, h: '15 characters (optional).', ex: '07ABCDE1234F1Z5' },
+            { k: 'phone', l: 'Phone', t: 'text', len: 20, h: 'Phone number (optional).', ex: '9810000000' },
+            { k: 'email', l: 'Email', t: 'text', len: 120, h: 'Email (optional).', ex: 'asha@example.com' },
+            { k: 'notes', l: 'Notes', t: 'text', len: 500, h: 'Anything useful (optional).', ex: 'Pays on time' }] },
+        production_plan: { name: 'Production plan (weekly)', module: 'Production', cols: [
+            { k: 'sku_code', l: 'SKU code', m: 1, t: 'text', len: 60, h: 'The product to make. It must exist and be switched ON.', ex: 'AF-PF-4X6-BLK' },
+            { k: 'planned_qty', l: 'Quantity to make', m: 1, t: 'int', min: 1, max: 100000, h: 'Whole number of pieces, 1 to 100000.', ex: 50 },
+            { k: 'planned_for', l: 'Make on (date)', m: 1, t: 'date', h: 'Date to make it, written YYYY-MM-DD.', ex: '2026-11-20' },
+            { k: 'priority', l: 'Priority', t: 'list', list: 'prio', h: '1 = most urgent, 3 = normal.', ex: 3 },
+            { k: 'note', l: 'Note', t: 'text', len: 500, h: 'Optional note.', ex: 'For festival orders' }] }
+    };
+    var LISTS = { gst: [0, 5, 12, 18, 28], onoff: ['ON', 'OFF'], yesno: ['YES', 'NO'], prio: [1, 2, 3], ctype: ['RETAIL', 'WHOLESALE', 'BUSINESS', 'DISTRIBUTOR', 'OTHER'], channels: ['Amazon', 'Flipkart', 'Shopify', 'Offline', 'Other'], bins: ['A-01', 'A-02', 'B-01', 'B-02'], uoms: ['PCS', 'KG', 'MTR', 'SQFT', 'LTR', 'BOX'] };
+    var GENERIC_NOTE = 'The lists are examples until the app fills them from your own data; a value not in the list is refused with a plain message.';
+    var FONT = { name: 'Arial', size: 10 };
+    var SOFTL = { bins: 1, uoms: 1, channels: 1, ctype: 1 };
+    function lib() {
+        if (window.ExcelJS) return Promise.resolve(window.ExcelJS);
+        if (LIB.p) return LIB.p;
+        LIB.p = new Promise(function (res, rej) {
+            var s = document.createElement('script'); s.src = LIB.url; s.integrity = LIB.sri; s.crossOrigin = 'anonymous'; s.async = true;
+            s.onload = function () { if (window.ExcelJS) res(window.ExcelJS); else { LIB.p = null; rej(new Error('library missing')); } };
+            s.onerror = function () { LIB.p = null; rej(new Error('Could not load the spreadsheet tool. Check the connection and try again.')); };
+            document.head.appendChild(s);
+        });
+        return LIB.p;
+    }
+    function colLetter(n) { var s = ''; while (n > 0) { var m = (n - 1) % 26; s = String.fromCharCode(65 + m) + s; n = Math.floor((n - 1) / 26); } return s; }
+    function listVals(spec, lists, key) { return (lists && lists[key]) || LISTS[key] || []; }
+    function build(id, opts) {
+        opts = opts || {}; var spec = T[id]; if (!spec) return Promise.reject(new Error('Unknown template ' + id));
+        return lib().then(function (X) {
+            var wb = new X.Workbook(); wb.creator = 'ArtzFolio Super App'; wb.title = spec.name + ' template'; wb.created = new Date(); wb.modified = new Date();
+            wb.properties = wb.properties || {};
+            var rm = wb.addWorksheet('Read me first'), tp = wb.addWorksheet('Template'), ls = wb.addWorksheet('Lists'), ru = wb.addWorksheet('Rules and errors');
+            var mand = spec.cols.filter(function (c) { return c.m; }).map(function (c) { return c.l; });
+            var lines = [[spec.name + ' - upload template', 'h'],
+                ['What this file is: a list for the module "' + spec.module + '", one row per line. Fill the Template sheet.', ''],
+                ['What it does: after you upload it the app shows a preview with any problems. Nothing is saved until you tap Save. You can undo for 24 hours.', ''],
+                ['How to upload:', 'h'],
+                ['1. Fill the Template sheet starting under the example row (delete the example row).', ''],
+                ['2. In the app open More > Bulk Center > ' + spec.name + ' > Upload.', ''],
+                ['3. Read the preview, fix any red rows (you can download the error file), then tap Save.', ''],
+                ['Mandatory columns have a dark header and a star: ' + (mand.join(', ') || 'none') + '. Optional columns are grey. Columns with a blue header are filled by the app: do not type there.', ''],
+                ['What happens after upload: the app checks every row, shows how many are OK, warnings or errors, and saves only after your tap.', ''],
+                ['Version ' + VERSION + ', ' + DATE + '. Help: ask your supervisor, or tap the (i) on any screen of the app.', '']];
+            lines.forEach(function (ln, i) { var c = rm.getCell(i + 1, 1); c.value = ln[0]; c.font = { name: 'Arial', size: ln[1] === 'h' ? 12 : 10, bold: ln[1] === 'h' }; c.alignment = { wrapText: true, vertical: 'top' }; });
+            rm.getColumn(1).width = 120;
+            tp.views = [{ state: 'frozen', xSplit: 1, ySplit: 1 }];
+            spec.cols.forEach(function (c, i) {
+                var cell = tp.getCell(1, i + 1);
+                cell.value = (c.m ? '★ ' : '') + c.l;
+                var fill = c.a ? 'FFDDEBF7' : (c.m ? 'FF1F3864' : 'FFD9D9D9');
+                cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: fill } };
+                cell.font = { name: 'Arial', size: 10, bold: true, color: { argb: c.m ? 'FFFFFFFF' : 'FF000000' } };
+                cell.alignment = { wrapText: true, vertical: 'middle' };
+                cell.note = (c.m ? 'Mandatory. ' : (c.a ? 'Filled by the app. ' : 'Optional. ')) + c.h;
+                tp.getColumn(i + 1).width = Math.max(16, Math.min(40, c.l.length + 8));
+                var ex = tp.getCell(2, i + 1); ex.value = i === 0 ? 'EXAMPLE ' + c.ex + ' (delete this row)' : c.ex; ex.font = { name: 'Arial', size: 10, italic: true };
+            });
+            tp.getRow(1).height = 32;
+            var li = 0, listCol = {};
+            spec.cols.forEach(function (c) { if (c.t === 'list' && listCol[c.list] == null) { li++; listCol[c.list] = li; var vals = listVals(spec, opts.lists, c.list); ls.getCell(1, li).value = c.list; ls.getCell(1, li).font = { name: 'Arial', size: 10, bold: true }; vals.forEach(function (v, r) { var x = ls.getCell(r + 2, li); x.value = v; x.font = FONT; }); } });
+            if (!li) { ls.getCell(1, 1).value = 'No lists for this template'; ls.getCell(1, 1).font = FONT; }
+            ls.state = 'hidden';
+            var rules = [];
+            spec.cols.forEach(function (c, i) {
+                var L = colLetter(i + 1), rng = L + '3:' + L + '5000', dv = null, msg = '';
+                if (c.t === 'list') { var n = listVals(spec, opts.lists, c.list).length; var lc = colLetter(listCol[c.list]); dv = { type: 'list', allowBlank: !c.m, formulae: ['Lists!$' + lc + '$2:$' + lc + '$' + (n + 1)] }; msg = SOFTL[c.list] ? c.l + ' is not in the example list. You may keep your own value; the app checks it when you upload.' : c.l + ' must be one of the values in the list.'; }
+                else if (c.t === 'int') { dv = { type: 'whole', operator: 'between', allowBlank: !c.m, formulae: [c.min, c.max] }; msg = c.l + ' must be a whole number from ' + c.min + ' to ' + c.max + '.'; }
+                else if (c.t === 'dec') { dv = { type: 'decimal', operator: 'between', allowBlank: !c.m, formulae: [c.min, c.max] }; msg = c.l + ' must be a number from ' + c.min + ' to ' + c.max + '.'; }
+                else if (c.t === 'date') { dv = { type: 'date', operator: 'greaterThan', allowBlank: !c.m, formulae: [new Date(Date.UTC(2020, 0, 1))] }; msg = c.l + ' must be a date written YYYY-MM-DD.'; }
+                else if (c.t === 'text' && c.len) { dv = { type: 'textLength', operator: 'lessThanOrEqual', allowBlank: !c.m, formulae: [c.len] }; msg = c.l + ' can have at most ' + c.len + ' characters.'; }
+                if (dv) {
+                    dv.showErrorMessage = true; dv.errorStyle = (c.t === 'list' && SOFTL[c.list]) ? 'warning' : 'stop'; dv.errorTitle = c.l; dv.error = msg;
+                    for (var r = 3; r <= 5000; r++) tp.getCell(r, i + 1).dataValidation = dv;
+                    rules.push('Rule: ' + msg + (c.m ? ' It cannot be empty.' : ' It may be empty.'));
+                }
+            });
+            rules.push('Rule: a cell that starts with = + - or @ in a text column is refused (this protects against formula injection).');
+            rules.push('Rule: a row with an empty mandatory column is refused with the row number and the column name.');
+            rules.push('Rule: ' + GENERIC_NOTE);
+            rules.forEach(function (t, i) { var c = ru.getCell(i + 1, 1); c.value = t; c.font = FONT; c.alignment = { wrapText: true }; });
+            ru.getColumn(1).width = 120;
+            return wb.xlsx.writeBuffer().then(function (buf) { return { id: id, name: 'Template_' + id + '_v' + VERSION + '_' + DATE.slice(0, 7) + '.xlsx', buffer: buf, spec: spec }; });
+        });
+    }
+    /* keys that identify a row (a repeat is a warning); customers have none */
+    T.listings.key = ['sku_code']; T.stock_in.key = ['sku_code', 'bin_code']; T.stock_out.key = ['sku_code', 'bin_code']; T.bin_transfer.key = ['sku_code', 'from_bin', 'to_bin'];
+    T.bins.key = ['bin_code']; T.raw_materials.key = ['item_code']; T.vendors.key = ['vendor_code']; T.production_plan.key = ['sku_code', 'planned_for']; T.customers.key = [];
+    var SOFT = { bins: 1, uoms: 1, channels: 1, ctype: 1 };   /* example lists until the app fills them from live data: a value outside them is a WARNING, not an error */
+    function isFormulaCell(v) { return !!v && typeof v === 'object' && (v.formula != null || v.sharedFormula != null || v.error != null); }
+    function validDate(v) {
+        var m = /^([0-9]{4})-([0-9]{2})-([0-9]{2})$/.exec(v); if (!m) return false;
+        var y = +m[1], mo = +m[2], d = +m[3]; var dt = new Date(Date.UTC(y, mo - 1, d));
+        return dt.getUTCFullYear() === y && dt.getUTCMonth() === mo - 1 && dt.getUTCDate() === d && dt.getTime() > Date.UTC(2020, 0, 1);
+    }
+    function cellText(v) {
+        if (v == null) return '';
+        if (typeof v === 'object') { if (v.text != null) return String(v.text); if (v.richText) return v.richText.map(function (r) { return r.text; }).join(''); if (v instanceof Date) return v.toISOString().slice(0, 10); return ''; }
+        return String(v);
+    }
+    var MAX_ROWS = 5000;
+    function check(id, buffer, opts) {
+        opts = opts || {}; var spec = T[id]; if (!spec) return Promise.reject(new Error('Unknown template ' + id));
+        return lib().then(function (X) {
+            var wb = new X.Workbook(); return wb.xlsx.load(buffer).then(function () {
+                var tp = wb.getWorksheet('Template'); if (!tp) return { ok: false, fatal: 'This file has no sheet named Template. Download a fresh template and fill that one.', rows: 0, good: 0, warnings: [], errors: [] };
+                if (tp.rowCount > MAX_ROWS + 1) return { ok: false, fatal: 'The Template sheet reaches down to row ' + tp.rowCount + '. The limit is ' + MAX_ROWS + ' data rows per file. Delete the empty rows below your data (select them, right-click, Delete) or split the file.', rows: 0, good: 0, warnings: [], errors: [] };
+                var headers = spec.cols.map(function (c) { return (c.m ? '★ ' : '') + c.l; }), got = [];
+                for (var j = 1; j <= spec.cols.length; j++) got.push(cellText(tp.getCell(1, j).value));
+                if (JSON.stringify(headers) !== JSON.stringify(got)) return { ok: false, fatal: 'The header row does not match this template (' + spec.name + '). Download a fresh template; do not rename or move columns.', rows: 0, good: 0, warnings: [], errors: [] };
+                var lists = opts.lists || {}, errors = [], warnings = [], rows = 0, good = 0, seen = {};
+                var last = tp.rowCount;
+                for (var r = 2; r <= last; r++) {
+                    var vals = [], any = false, fcells = []; for (var c = 1; c <= spec.cols.length; c++) { var raw = tp.getCell(r, c).value; if (isFormulaCell(raw)) { fcells.push(c - 1); vals.push(''); any = true; continue; } var tv = cellText(raw).trim(); vals.push(tv); if (tv) any = true; }
+                    if (!any) continue;
+                    if (r === 2 && /^EXAMPLE .*\(delete this row\)$/i.test(vals[0])) continue;
+                    rows++; var bad = false;
+                    fcells.forEach(function (i) { errors.push({ row: r, col: spec.cols[i].l, msg: 'Row ' + r + ', ' + spec.cols[i].l + ': contains a formula, which is not allowed. Type the value instead.' }); bad = true; });
+                    spec.cols.forEach(function (col, i) {
+                        if (fcells.indexOf(i) >= 0) return;
+                        var v = vals[i], where = 'Row ' + r + ', ' + col.l + ': ';
+                        if (!v) { if (col.m) { errors.push({ row: r, col: col.l, msg: where + 'is empty but it is mandatory.' }); bad = true; } return; }
+                        var phone = (col.k === 'phone' && /^\+[0-9 ()-]+$/.test(v));
+                        if ((col.t === 'text' || col.t === 'list') && /^[=+\-@]/.test(v) && !/^-?[0-9.]+$/.test(v) && !phone) { errors.push({ row: r, col: col.l, msg: where + 'starts with = + - or @, which is not allowed.' }); bad = true; return; }
+                        if (col.t === 'int') { if (!/^-?[0-9]+$/.test(v)) { errors.push({ row: r, col: col.l, msg: where + 'must be a whole number.' }); bad = true; } else if (Number(v) < col.min || Number(v) > col.max) { errors.push({ row: r, col: col.l, msg: where + 'must be from ' + col.min + ' to ' + col.max + '.' }); bad = true; } }
+                        else if (col.t === 'dec') { if (!/^-?[0-9]+(\.[0-9]+)?$/.test(v)) { errors.push({ row: r, col: col.l, msg: where + 'must be a number.' }); bad = true; } else if (Number(v) < col.min || Number(v) > col.max) { errors.push({ row: r, col: col.l, msg: where + 'must be from ' + col.min + ' to ' + col.max + '.' }); bad = true; } }
+                        else if (col.t === 'date') { if (!validDate(v)) { errors.push({ row: r, col: col.l, msg: where + 'must be a real date written YYYY-MM-DD, after 2020-01-01.' }); bad = true; } }
+                        else if (col.t === 'list') { var ok = listVals(spec, lists, col.list).map(String).map(function (x) { return x.toUpperCase(); }).indexOf(v.toUpperCase()) >= 0; if (!ok) { if (SOFT[col.list]) warnings.push({ row: r, col: col.l, msg: where + '"' + v + '" is not in the example list; accepted for now (the list is filled from your own data later).' }); else { errors.push({ row: r, col: col.l, msg: where + '"' + v + '" is not in the list.' }); bad = true; } } }
+                        else if (col.t === 'text' && col.len && v.length > col.len) { errors.push({ row: r, col: col.l, msg: where + 'is longer than ' + col.len + ' characters.' }); bad = true; }
+                    });
+                    if (spec.key && spec.key.length) {
+                        var kv = spec.key.map(function (kk) { var ix = -1; spec.cols.forEach(function (cc, q) { if (cc.k === kk) ix = q; }); return (vals[ix] || '').toUpperCase(); }), key = kv.join('|');
+                        if (kv[0]) { if (seen[key]) warnings.push({ row: r, col: spec.cols[0].l, msg: 'Row ' + r + ': the same ' + spec.key.join(' + ') + ' also appears in row ' + seen[key] + '.' }); else seen[key] = r; }
+                    }
+                    if (!bad) good++;
+                }
+                return { ok: !errors.length, fatal: '', rows: rows, good: good, warnings: warnings, errors: errors, id: id };
+            });
+        });
+    }
+    function errorFile(id, buffer, res) {
+        /* same template with an "Errors" column placed after the last used column */
+        return lib().then(function (X) {
+            var wb = new X.Workbook(); return wb.xlsx.load(buffer).then(function () {
+                var tp = wb.getWorksheet('Template'), spec = T[id], col = Math.max(spec.cols.length, tp.columnCount) + 1;
+                var h = tp.getCell(1, col); h.value = 'Errors (added by the app)'; h.font = { name: 'Arial', size: 10, bold: true, color: { argb: 'FFB3261E' } };
+                tp.getColumn(col).width = 80;
+                var by = {}; res.errors.forEach(function (e) { by[e.row] = (by[e.row] ? by[e.row] + ' ' : '') + e.msg; });
+                Object.keys(by).forEach(function (r) { var c = tp.getCell(Number(r), col); c.value = by[r]; c.font = { name: 'Arial', size: 10, color: { argb: 'FFB3261E' } }; });
+                return wb.xlsx.writeBuffer();
+            });
+        });
+    }
+    window.blBulkOn = function () { try { localStorage.setItem('bl_bulk_v1', 'on'); } catch (e) { } };
+    window.blBulkOff = function () { try { localStorage.setItem('bl_bulk_v1', 'off'); } catch (e) { } try { if (window.blBulkUiOff) window.blBulkUiOff(); } catch (e) { } try { var n = document.querySelectorAll('[data-bulk]'); for (var i = 0; i < n.length; i++) if (n[i].parentNode) n[i].parentNode.removeChild(n[i]); } catch (e) { } };
+    var ON = false; try { ON = flag('bl_bulk_v1', 'bulk'); } catch (e) { }
+    if (ON) window.blBulk = { templates: T, build: build, check: check, errorFile: errorFile, lists: LISTS, version: VERSION, loadLib: lib };   /* nothing is defined, loaded or run with the flag off */
+    /* ---- Bulk Center screen (only with the flag on): a button at the top of the More page (Admin and Supervisor), a sheet listing every template: download the blank file, upload a filled one, see the check, download the error file. No Save yet (see header). ---- */
+    function uiOn() {
+        var st = { on: true, wPaint: null, oPaint: null, inP: false, sheet: null, res: {} };
+        function role() { try { return String((state.session && state.session.role) || '').toUpperCase(); } catch (e) { return ''; } }
+        function esc(s) { return window.esc59 ? window.esc59(s == null ? '' : s) : String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+        function save(buf, name) {
+            var blob = new Blob([buf], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+            if (typeof window.rmSaveBlob === 'function') { try { window.rmSaveBlob(blob, name); return; } catch (e) { } }
+            var a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = name; document.body.appendChild(a); a.click(); setTimeout(function () { URL.revokeObjectURL(a.href); if (a.parentNode) a.parentNode.removeChild(a); }, 1000);
+        }
+        function paint() {
+            try {
+                if (!st.on || typeof NV === 'undefined' || !NV.open || NV.grp !== 'more') return;
+                var role_ = role(); if (role_ !== 'ADMIN' && role_ !== 'SUPERVISOR') return;
+                var body = document.getElementById('nv-body'); if (!body || body.querySelector('[data-bulk]')) return;
+                var b = document.createElement('button'); b.type = 'button'; b.className = 'settings-btn'; b.setAttribute('data-bulk', '1'); b.style.cssText = 'min-height:48px;margin:2px 0 4px;width:100%;background:#1B3F6B';
+                b.textContent = 'Bulk Center: Excel templates and uploads'; b.addEventListener('click', function () { try { if (typeof nvClose === 'function') { NV.after = openSheet; nvClose(); } else openSheet(); } catch (e) { openSheet(); } });
+                body.insertBefore(b, body.firstChild);
+            } catch (e) { }
+        }
+        function closeSheet() { if (st.sheet) { try { document.removeEventListener('keydown', st.sheet.key, true); st.sheet.bg.parentNode.removeChild(st.sheet.bg); } catch (e) { } st.sheet = null; } st.res = {}; }
+        var onVis = function () { if (document.visibilityState === 'hidden') closeSheet(); };
+        try { document.addEventListener('visibilitychange', onVis); } catch (e) { }
+        function openSheet() {
+            closeSheet();
+            var bg = document.createElement('div'); bg.id = 'bl-bulk-bg'; bg.setAttribute('data-bulk', '1');
+            bg.style.cssText = 'position:fixed;inset:0;background:rgba(10,22,40,.55);z-index:9100;display:flex;align-items:flex-end;justify-content:center';
+            var mods = {}; Object.keys(T).forEach(function (id) { var m = T[id].module; (mods[m] = mods[m] || []).push(id); });
+            var h = '<div role="dialog" aria-modal="true" aria-labelledby="bl-bulk-h" style="background:#fff;width:100%;max-width:640px;max-height:90vh;overflow-y:auto;border-radius:14px 14px 0 0;padding:10px 12px 18px;box-sizing:border-box">' +
+                '<div style="display:flex;justify-content:space-between;align-items:center"><b id="bl-bulk-h" style="font-size:1.1em">Bulk Center</b><button type="button" data-x="1" aria-label="Close" style="min-width:44px;min-height:44px;border:0;background:transparent;font-size:1.3em">&#10005;</button></div>' +
+                '<div class="rm-dim" style="margin:4px 0 8px">Download a blank Excel template, fill it, upload it: the app checks every row and shows the problems. Nothing is saved yet from this screen: saving is added one module at a time.</div>';
+            Object.keys(mods).forEach(function (m) {
+                h += '<div style="font-weight:700;margin:10px 0 4px;color:#1B3F6B">' + esc(m) + '</div>';
+                mods[m].forEach(function (id) {
+                    h += '<div style="border:1px solid #C9D3E0;border-radius:10px;padding:8px 10px;margin-bottom:6px"><div style="font-weight:600">' + esc(T[id].name) + '</div>' +
+                        '<div style="display:flex;gap:6px;margin-top:6px;flex-wrap:wrap"><button type="button" class="settings-btn rm-sm" data-dl="' + id + '" style="min-height:44px;flex:1 1 9rem">Download template</button>' +
+                        '<label class="settings-btn rm-sm" style="min-height:44px;flex:1 1 9rem;display:flex;align-items:center;justify-content:center;cursor:pointer;background:#1B7A3A;margin:0">Upload filled file<input type="file" accept=".xlsx" data-up="' + id + '" style="display:none"></label></div>' +
+                        '<div data-res="' + id + '" role="status" aria-live="polite" style="margin-top:6px;font-size:.92em"></div></div>';
+                });
+            });
+            h += '</div>'; bg.innerHTML = h; document.body.appendChild(bg);
+            var key = function (ev) { if (ev.key === 'Escape') { ev.preventDefault(); ev.stopPropagation(); closeSheet(); } };
+            document.addEventListener('keydown', key, true); st.sheet = { bg: bg, key: key };
+            bg.addEventListener('click', function (ev) {
+                var t = ev.target; if (t === bg || (t.closest && t.closest('[data-x]'))) { closeSheet(); return; }
+                var dl = t.closest ? t.closest('[data-dl]') : null; if (dl) { var id = dl.getAttribute('data-dl'); dl.disabled = true; build(id).then(function (o) { save(o.buffer, o.name); }).catch(function (e) { show(id, '<span style="color:#B3261E">' + esc(e && e.message) + '</span>'); }).then(function () { dl.disabled = false; }); return; }
+                var eb = t.closest ? t.closest('[data-err]') : null; if (eb) { var id2 = eb.getAttribute('data-err'), r = st.res[id2]; if (r) errorFile(id2, r.buf, r.res).then(function (b) { save(b, 'Errors_' + id2 + '_' + DATE + '.xlsx'); }); }
+            });
+            bg.addEventListener('change', function (ev) {
+                var inp = ev.target; var id = inp && inp.getAttribute ? inp.getAttribute('data-up') : null; if (!id || !inp.files || !inp.files[0]) return;
+                var f = inp.files[0];
+                if (f.size > 5 * 1024 * 1024) { show(id, '<span style="color:#B3261E">This file is bigger than 5 MB. Split it and upload the parts.</span>'); inp.value = ''; return; }
+                show(id, 'Checking ' + esc(f.name) + '...');
+                var fr = new FileReader();
+                fr.onload = function () { check(id, fr.result).then(function (res) { st.res[id] = { buf: fr.result, res: res }; render(id, res); }).catch(function (e) { show(id, '<span style="color:#B3261E">Could not read this file: ' + esc(e && e.message) + '</span>'); }); inp.value = ''; };
+                fr.readAsArrayBuffer(f);
+            });
+            var f0 = bg.querySelector('button'); if (f0) f0.focus();
+        }
+        function show(id, html) { var el = st.sheet && st.sheet.bg.querySelector('[data-res="' + id + '"]'); if (el) el.innerHTML = html; }
+        function render(id, res) {
+            if (res.fatal) { show(id, '<span style="color:#B3261E">' + esc(res.fatal) + '</span>'); return; }
+            var h = '<b>' + res.rows + ' row(s) read: <span style="color:#1B7A3A">' + res.good + ' OK</span>, <span style="color:#9A6700">' + res.warnings.length + ' warning(s)</span>, <span style="color:#B3261E">' + res.errors.length + ' error(s)</span>.</b>';
+            res.errors.slice(0, 20).forEach(function (e) { h += '<div style="color:#B3261E">' + esc(e.msg) + '</div>'; });
+            if (res.errors.length > 20) h += '<div class="rm-dim">...and ' + (res.errors.length - 20) + ' more: download the error file.</div>';
+            res.warnings.slice(0, 5).forEach(function (e) { h += '<div style="color:#9A6700">' + esc(e.msg) + '</div>'; });
+            if (res.errors.length) h += '<button type="button" class="settings-btn rm-sm" data-err="' + id + '" style="min-height:44px;margin-top:6px">Download the error file</button>';
+            else h += '<div class="rm-dim" style="margin-top:4px">The file is clean. Saving from this screen is not connected yet.</div>';
+            show(id, h);
+        }
+        if (typeof window.nvPaint === 'function' && !st.inP) { st.oPaint = window.nvPaint; window.nvPaint = st.wPaint = function () { var r = st.oPaint.apply(this, arguments); if (st.on) paint(); return r; }; st.inP = true; try { window.nvPaint(); } catch (e) { } }
+        window.blBulkUiOff = function () { st.on = false; closeSheet(); try { document.removeEventListener('visibilitychange', onVis); } catch (e) { } if (window.nvPaint === st.wPaint) { window.nvPaint = st.oPaint; st.inP = false; } var n = document.querySelectorAll('[data-bulk]'); for (var i = 0; i < n.length; i++) if (n[i].parentNode) n[i].parentNode.removeChild(n[i]); };
+        window.blBulkOpen = openSheet;
+    }
+    if (ON) { try { if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function () { try { uiOn(); } catch (e) { } }); else uiOn(); } catch (e) { } }
 })();
 
 </script>
