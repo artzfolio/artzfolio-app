@@ -114,8 +114,8 @@
 // v77 (2026-11-03): cache name bumped for App v206 (Admin Panel v2.55); nothing else changed.
 // v83 (2026-11-05): cache name bumped for App v207 (Admin Panel v2.57). NEW: a 'message' handler - when the page posts {type:'SKIP_WAITING'} the waiting worker calls self.skipWaiting() so an open tab can move to the new build on demand. Fetch stays network-first with cache:'no-cache'; no stale shell.
 // v86 (2026-11-12, RC31): cache name bumped for App v228 (server token, names, Today, Stock, More, Sales). Nothing else changed.
-// v88 (2026-11-13, RC33): cache name bumped for App v230e (pattern layer, X1, X2 Raw materials hub, X3 Production, X4M Customers menu, X4, X5; every new screen is behind a flag that is OFF). Nothing else changed.
-const CACHE_NAME = 'artzfolio-oms-shell-v88';
+// v89 (2026-11-13, RC34a): cache name bumped for App v231a (pattern layer, X1, X2 Raw materials hub, X3 Production, X4M Customers menu, X4, X5; every new screen is behind a flag that is OFF). Nothing else changed.
+const CACHE_NAME = 'artzfolio-oms-shell-v89';
 const OPTIONAL_FILES = ['./zxing_reader_3.1.4.js', './zxing_reader_3.1.4.wasm'];
 const SHELL_FILES = ['./index.html', './manifest.json', './icon.svg'];
 
