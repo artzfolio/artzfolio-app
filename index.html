@@ -4003,7 +4003,7 @@ button:focus-visible,select:focus-visible,input:focus-visible,textarea:focus-vis
 </style>
 </head>
 <body>
-<div class="ver-corner" id="verCornerBadge">v228i</div>
+<div class="ver-corner" id="verCornerBadge">v230e</div>
 <!-- v112: the full-screen SKU page (opened by a12OpenSku) -->
 <div class="a12-skupage" id="a12-skupage"><div class="a12-sphead"><button type="button" onclick="a12CloseSku()">&larr; Back</button><div id="a12-sp-title" style="flex:1"></div><button type="button" onclick="shOpen('sku')" aria-label="Share this product page">&#128228; Share</button></div><div class="a12-spbody" id="a12-sp-body"></div></div>
 <!-- v63: Gap 2 — offline write-queue indicator. Hidden (display:none) unless
@@ -5224,7 +5224,7 @@ button:focus-visible,select:focus-visible,input:focus-visible,textarea:focus-vis
 
             <!-- Version -->
             <div class="ver-badge">
-                <div class="ver-name">&#128230; ArtzFolio Super App v228i</div>
+                <div class="ver-name">&#128230; ArtzFolio Super App v230e</div>
                 <div class="ver-sub">Tap the button below to see what is new in this version.</div>
                 <button class="settings-btn" style="min-height:46px" onclick="wnOpen()">What is new and what is done</button>
             </div>
@@ -6019,5 +6019,1217 @@ document.addEventListener('click', function (ev) {
 #rm-tab.active>div:first-child>details#b25-more-rm-tab{order:9;margin-top:14px}
 #rm-tab.active>div:first-child>details#b25-more-rm-tab::before{content:"All raw material tools";display:block;font-size:var(--t-section);font-weight:800;color:#0A1628;margin:0 0 6px}
 </style>
+<style id="bl-layer-css">
+/* RC32 pattern layer (Button Law look + help bubbles). Every rule sits under body.bl-on or a bl- id, so with the flag off nothing changes. */
+body.bl-on{--bl-navy:#1B4F8A;--bl-line:#1B4F8A;--bl-grey:#E2E8F0;--bl-grey-t:#475569;--bl-r:10px}
+/* B3 looks: primary = solid navy (existing settings-btn), secondary = outlined navy and rounded, disabled = grey, one focus ring */
+body.bl-on .settings-btn,body.bl-on .csv-btn,body.bl-on .pill-btn,body.bl-on .cc-btn{border-radius:var(--bl-r);min-height:44px;font-weight:700}
+body.bl-on .csv-btn,body.bl-on .pill-btn,body.bl-on .cc-btn.quiet,body.bl-on .settings-btn.rm-sm:not(.danger),body.bl-on .settings-btn.rm-xs:not(.danger){background:#fff;color:var(--bl-navy);border:1.5px solid var(--bl-line)}
+body.bl-on button[disabled],body.bl-on .settings-btn[disabled],body.bl-on .csv-btn[disabled],body.bl-on .pill-btn[disabled]{background:var(--bl-grey);color:var(--bl-grey-t);border:1.5px solid #CBD5E1;cursor:not-allowed}
+body.bl-on button:focus-visible,body.bl-on a:focus-visible,body.bl-on [role=button]:focus-visible{outline:3px solid #F59E0B;outline-offset:2px}
+/* long-press on a phone must not open the system text menu on buttons */
+body.bl-on button,body.bl-on [role=button],body.bl-on .settings-btn,body.bl-on .csv-btn,body.bl-on .pill-btn{-webkit-touch-callout:none;-webkit-user-select:none;user-select:none}
+/* help bubble: never takes a tap, never takes focus */
+#bl-tip{position:fixed;z-index:450;max-width:min(280px,80vw);background:#0A1628;color:#fff;border-radius:8px;padding:8px 10px;font-size:calc(13px*var(--fs,1));line-height:1.35;pointer-events:none;box-shadow:0 4px 14px rgba(0,0,0,.3);display:none}
+#bl-tip.on{display:block}
+/* Explain switch */
+#bl-explain{position:fixed;z-index:440;left:8px;bottom:80px;width:44px;height:44px;border-radius:22px;border:1.5px solid var(--bl-navy,#1B4F8A);background:#fff;color:#1B4F8A;font-weight:800;font-size:18px;cursor:pointer;display:none;padding:0}
+body.bl-on #bl-explain{display:block}
+#bl-explain[aria-pressed=true]{background:#1B4F8A;color:#fff}
+/* caption line under each button while Explain is on: drawn by CSS from an attribute, so it adds no text to the control */
+body.bl-explain [data-bl-cap]::after{content:attr(data-bl-cap);display:block;font-size:calc(11px*var(--fs,1));font-weight:400;line-height:1.25;opacity:.85;margin-top:2px;white-space:normal;text-decoration:none}
+/* explanation sheet */
+#bl-sheet-bg{position:fixed;inset:0;z-index:445;background:rgba(10,22,40,.45);display:none;align-items:flex-end;justify-content:center}
+#bl-sheet-bg.active{display:flex}
+#bl-sheet{background:#fff;width:100%;max-width:520px;border-radius:16px 16px 0 0;padding:16px 16px calc(16px + env(safe-area-inset-bottom,0px));color:#0A1628}
+#bl-sheet h3{margin:0 0 6px;font-size:calc(17px*var(--fs,1))}
+#bl-sheet p{margin:4px 0;font-size:calc(15px*var(--fs,1));line-height:1.4}
+#bl-sheet .bl-row{display:flex;gap:10px;margin-top:14px}
+#bl-sheet .bl-row button{flex:1;min-height:48px;border-radius:10px;font-weight:700;font-size:calc(15px*var(--fs,1));cursor:pointer}
+#bl-sheet .bl-do{background:#1B4F8A;color:#fff;border:1.5px solid #1B4F8A}
+#bl-sheet .bl-close{background:#fff;color:#1B4F8A;border:1.5px solid #1B4F8A}
+@media print{#bl-tip,#bl-explain,#bl-sheet-bg{display:none!important}body.bl-explain [data-bl-cap]::after{content:none!important}}
+
+</style>
+<script id="bl-layer-js">
+/* RC32 pattern layer: hover/focus bubble (computer), long-press bubble (phone), Explain switch. ADDITIVE ONLY: it never edits an existing function, id, class or button text.
+   Flag: localStorage bl_flag_v1 = on|off, or ?bl=on / ?bl=off in the address. Default OFF. Everything it adds carries a data-bl* mark and blOff() removes it. */
+(function () {
+    try {
+        var KEY = 'bl_flag_v1';
+        var HELP = {"today":["Shows what needs your attention right now.","Open it first each day.","A short list of jobs and numbers appears."],"orders":["Shows the orders waiting to be picked and packed.","Use it when you start picking.","Your pick lists open."],"stock":["Shows how many of each product are on the shelves.","Use it to check, add, send out or move stock.","The stock screen opens."],"more":["Opens the list of every other part of the app.","Use it when what you want is not on the bottom bar.","A menu slides up."],"dashboard":["Shows sales, stock and production numbers.","Use it to see how the business is doing.","The dashboard opens."],"chats":["Opens messages with your team and the helper.","Use it to ask or answer a question.","The chat list opens."],"back":["Goes back one screen.","Use it when you opened the wrong page.","You return to the page before."],"refresh":["Loads the newest figures for this screen.","Use it if the list looks old.","The list updates and the page stays where it is."],"alerts":["Shows things that need action, such as low stock.","Check it when the red number is above zero.","The alerts list opens."],"search":["Finds items that match the words you typed.","Use it when the list is long.","Only matching rows stay on screen."],"filters":["Narrows the list by date, person or type.","Use it to find one group of rows.","A panel opens with choices."],"sort":["Changes the order of the list.","Use it to put the biggest or newest first.","The list reorders."],"share":["Sends what you see to someone.","Use it to give a report to a person.","A choice of how to send it opens."],"share this list":["Sends this list to someone.","Use it to share the list you see.","A choice of how to send it opens."],"share this screen":["Sends this screen to someone.","Use it to share what you see.","A choice of how to send it opens."],"share on whatsapp":["Sends this page as a WhatsApp message.","Use it to tell a person the numbers.","WhatsApp opens with the text ready."],"download printable file pdf":["Saves this page as a PDF you can print.","Use it when you need paper.","A PDF file downloads."],"printable file pdf":["Saves this page as a PDF you can print.","Use it when you need paper.","A PDF file downloads."],"download spreadsheet":["Saves the rows as a spreadsheet file.","Use it to work on the numbers in Excel.","A file downloads."],"download this page spreadsheet":["Saves this page as a spreadsheet file.","Use it to open the rows in Excel.","A file downloads."],"spreadsheet file csv":["Saves the rows as a simple spreadsheet file.","Use it for Excel or another program.","A CSV file downloads."],"excel":["Saves the rows as an Excel file.","Use it to work in Excel.","An Excel file downloads."],"copy link":["Copies a link to this page.","Use it to send someone this exact page.","The link is ready to paste."],"copy link to this page":["Copies a link to this page.","Use it to send someone this exact page.","The link is ready to paste."],"full name":["Shows the product's whole name.","Use it when the short name is cut off.","The full name opens."],"copy all title sku and asin":["Copies the title, SKU and ASIN together.","Use it to paste all three into a message.","They are on your clipboard."],"copy just one title asin or sku":["Copies only the item you pick.","Use it when you need one of the three.","That item is on your clipboard."],"print":["Prints what you see.","Use it when you need paper.","The print window opens."],"7 days":["Shows the last 7 days.","Use it for a quick look.","The list shows only those days."],"30 days":["Shows the last 30 days.","Use it for a monthly view.","The list shows only those days."],"this month":["Shows this calendar month.","Use it for month totals.","The list shows only this month."],"this financial year":["Shows the financial year so far.","Use it for yearly totals.","The list shows only this financial year."],"any date":["Shows every date.","Use it to remove the date limit.","The date filter clears."],"custom dates":["Lets you pick your own start and end dates.","Use it for an exact period.","Two date boxes appear."],"overview":["Shows the main numbers at a glance.","Use it for a quick check.","The overview tab opens."],"sales":["Shows what sold and for how much.","Use it to see which products sell.","The sales tab opens."],"inventory":["Shows stock levels and stock value.","Use it to see what you hold.","The inventory tab opens."],"forecast":["Shows how long stock will last and what to make.","Use it to plan production.","The forecast tab opens."],"production":["Shows what to make and the production jobs.","Use it to plan or record making.","The production screen opens."],"insights":["Lets you build your own chart or table.","Use it to answer a question about sales.","The insights tab opens."],"add stock received":["Adds stock that has arrived.","Use it when goods come in.","You scan or pick the product, then save."],"send out":["Removes stock that is leaving.","Use it when you dispatch without a pick list.","You scan or pick the product, then save."],"move between bins":["Moves stock from one shelf place to another.","Use it when you tidy the shelves.","You pick both bins and the amount."],"customer return":["Adds stock that a customer sent back.","Use it when a return arrives.","You pick the product and the amount."],"hold for quality check":["Puts stock aside so it cannot be sold.","Use it for items to be checked.","The held amount leaves free stock."],"release from quality check":["Puts held stock back for sale.","Use it after the check passes.","The amount returns to free stock."],"decrease quantity":["Lowers the amount by one.","Use it to correct the number.","The amount goes down by one."],"increase quantity":["Raises the amount by one.","Use it to correct the number.","The amount goes up by one."],"scan or type sku asin":["Finds a product by its code.","Use it to pick the product.","The product card shows."],"scan sku asin barcode":["Reads a product barcode with the camera.","Use it to avoid typing.","The product card shows."],"scan bin barcode qr":["Picks a shelf place by scanning its sticker.","Use it to avoid typing.","The bin is filled in."],"pick from a list":["Lets you choose from a list instead of scanning.","Use it when the code is missing.","A list opens."],"pick from the list or type a bin":["Lets you choose or type a shelf place.","Use it when the sticker is missing.","The bin is filled in."],"choose from the list":["Lets you choose from a list.","Use it instead of typing.","A list opens."],"scan pick list qr code tap and point at the qr code on the print":["Opens the camera to read the QR on a pick list.","Use it to start a pick.","The pick list opens."],"daily stock check":["Starts today's quick count.","Use it once a day.","A short list of products to count opens."],"raw materials":["Opens everything about raw materials.","Use it for materials, vendors and bills.","The raw materials screen opens."],"raw materials home":["Goes to the top of raw materials.","Use it to start again.","The raw materials start page opens."],"raw materials stock":["Lists every raw material with its stock.","Use it to see what you hold.","The stock list opens."],"add material":["Adds a new raw material.","Use it when you buy something new.","A form opens."],"add vendor":["Adds a new vendor.","Use it when you start buying from someone.","A form opens."],"vendors who we buy from":["Lists the vendors you buy from.","Use it to find or add a vendor.","The vendor list opens."],"vendor scorecard":["Shows how each vendor performs.","Use it to choose who to buy from.","The scorecard opens."],"purchase requests":["Lists requests to buy materials.","Use it to approve or start buying.","The requests list opens."],"purchase orders":["Lists orders placed with vendors.","Use it to track what is on the way.","The order list opens."],"new purchase order":["Starts an order to a vendor.","Use it when you decide to buy.","A form opens."],"buying suggestions":["Suggests what to buy and when.","Use it before you place orders.","The suggestions list opens."],"gst input credit for your accountant":["Shows the tax you paid on purchases.","Use it for the monthly return.","The report opens."],"receive stock enter a purchase bill":["Records goods that arrived with a bill.","Use it when material comes in.","A bill form opens."],"bill photo":["Reads a bill from a photo.","Use it to save typing.","The camera opens."],"scan a label":["Reads a material sticker with the camera.","Use it to find an item fast.","The item opens."],"label sheet":["Makes a sheet of material stickers.","Use it before you print labels.","A label sheet opens."],"export files":["Downloads your data as files.","Use it for backups or Excel work.","Files download."],"count one item":["Counts a single raw material.","Use it to fix one number.","You enter what you counted."],"weekly count list":["Lists the items to count this week.","Use it for the weekly check.","The count list opens."],"batches and expiry":["Shows batches and when they expire.","Use it to use old material first.","The batch list opens."],"materials used per product":["Shows which materials each product needs.","Use it to plan buying.","The list opens."],"stock history every stock in and out":["Shows every stock change.","Use it to find who changed what.","The history opens."],"record change history who edited what":["Shows who edited what and when.","Use it to check a change.","The change list opens."],"morning brief":["Gives a short summary for today.","Read it first thing.","The brief opens."],"alert settings":["Sets which alerts you receive.","Use it to reduce noise.","A settings panel opens."],"alerts and requests":["Shows alerts and open requests together.","Use it to act on what is waiting.","The list opens."],"data quality duplicates missing rates":["Finds duplicate or incomplete records.","Use it to clean the data.","A problem list opens."],"data checks audit trail and totals":["Checks that totals add up.","Use it before you trust a report.","A check result shows."],"more reports and returns":["Opens extra reports and vendor returns.","Use it for less common reports.","The reports list opens."],"warranty":["Handles warranty cards and claims.","Use it when a customer claims.","The warranty screen opens."],"search tips":["Explains how to search.","Use it if search finds nothing.","A short help opens."],"what does this page mean":["Explains this page in plain words.","Use it when a number is unclear.","A help sheet opens."],"customers home":["Goes to the top of Customers.","Use it to start again.","The customers start page opens."],"all customers":["Lists every customer.","Use it to find someone.","The customer list opens."],"add customer":["Adds a new customer.","Use it when you meet a new buyer.","A form opens."],"add an order":["Records an order by hand.","Use it for a phone or shop order.","An order form opens."],"quotes":["Lists price quotes you sent.","Use it to follow up.","The quotes list opens."],"deals":["Shows deals in progress.","Use it to see what may close.","The deals board opens."],"segments":["Shows saved groups of customers.","Use it to message a group.","The segments list opens."],"at risk":["Lists customers who stopped ordering.","Use it to win them back.","The list opens."],"possible duplicates":["Lists customers who may be the same person.","Use it to merge them.","The list opens."],"check an import file":["Tests a file before it is loaded.","Use it before every import.","A check result shows and nothing is saved."],"export csv":["Saves customers as a simple spreadsheet.","Use it for Excel or marketing tools.","A file downloads."],"find a customer":["Looks up a customer.","Use it when you know a name or phone.","Matches show."],"find an order":["Looks up an order.","Use it when you know a number or name.","Matches show."],"find a vendor":["Looks up a vendor.","Use it when you know the name.","Matches show."],"find a material":["Looks up a raw material.","Use it when you know the name.","Matches show."],"production orders":["Lists production jobs.","Use it to see what is being made.","The jobs list opens."],"suggested production orders from forecast":["Shows what to make, worked out from sales.","Use it to plan production.","The suggestions open."],"new production order":["Starts a job to make products.","Use it when you decide to make.","A job form opens."],"daily make summary":["Shows pieces made each day.","Use it to check output.","The summary opens."],"record pieces made":["Opens a form to record finished pieces.","Use it when pieces are done.","Stock goes up only after you press Save."],"made history":["Lists everything that was made.","Use it to look back.","The history opens."],"sign out":["Logs you out of this phone.","Use it when you hand the phone over.","The sign-in screen shows."],"smaller text":["Makes text smaller.","Use it to fit more on screen.","Text shrinks."],"bigger text":["Makes text bigger.","Use it if text is hard to read.","Text grows."],"reset text size":["Returns text to normal size.","Use it after changing size.","Text returns to 100 percent."],"product page":["Opens the details of one product.","Use it to see stock and history.","The product page opens."],"edit listing":["Lets you change a product listing.","Use it to fix details.","The edit form opens."],"show results":["Applies your filters.","Use it after choosing filters.","The list updates."],"filters sort and saved filters":["Opens the filter, sort and saved-filter choices.","Use it to narrow a long list.","A panel opens."],"save these filters":["Keeps your current filters for later.","Use it for a search you repeat.","The filters are saved under a name."],"which days to show":["Chooses how many days of history to show.","Use it to look further back.","The list updates."],"show my latest actions":["Shows what you did most recently.","Use it to check your work.","Your actions list refreshes."],"turn demo mode on":["Shows two practice buttons at the top.","Use it to try the app without touching real data.","Real data is not changed."],"show staff list":["Asks for your PIN, then shows the staff list.","Use it when you need to see who has an account.","A PIN box opens first."],"what is new and what is done":["Shows recent changes to the app.","Use it to see what is new.","A list opens."],"which button do i press":["Helps you choose the right action.","Use it when unsure.","A short guide opens."],"troubleshooting":["Jumps down this page to the section about problems and fixes.","Use it when something fails.","The page scrolls to that section."],"daily workflow":["Jumps down this page to the steps of a normal day.","Use it when you are new.","The page scrolls to that section."],"words explained":["Jumps down this page to the list of words used in the app.","Use it when a word is new.","The page scrolls to that section."],"do something":["Opens a short list of actions for this row.","Use it to act on the row.","A menu opens."],"return to a vendor":["Sends material back to a vendor.","Use it for faulty material.","A return form opens."],"returns to vendors":["Lists what you sent back to vendors.","Use it to track returns.","The list opens."],"what we owe vendors":["Shows money you owe vendors.","Use it when paying.","The list opens."],"what business customers owe":["Shows money business customers owe you.","Use it when collecting.","The list opens."],"payments":["Lists payments made or received.","Use it to check money.","The list opens."],"stock value on a date":["Shows what the stock was worth on a day.","Use it for accounts.","A report opens."],"adjustments by reason":["Groups stock corrections by reason.","Use it to spot repeated mistakes.","A report opens."],"expiry and use first check":["Lists material to use first.","Use it to avoid waste.","A report opens."],"yield and scrap report":["Compares what you made to what was wasted.","Use it to cut waste.","A report opens."],"tax classification code hsn purchase summary":["Totals purchases by tax code.","Use it for GST returns.","A report opens."],"bill photo draft":["Shows bills read from photos and not yet saved.","Use it to finish them.","The drafts open."],"bills we received":["Lists purchase bills.","Use it to look one up.","The list opens."],"raw material item":["Shows one raw material.","Use it to see stock and history.","The item page opens."],"link a vendor":["Connects a vendor to a material.","Use it so buying suggestions know who to ask.","A link form opens."],"raw material labels":["Makes stickers for materials.","Use it when material arrives.","The label maker opens."],"import and export files":["Loads or downloads data files.","Use it for bulk work.","The files page opens."],"download blank spreadsheet to fill in":["Gives you an empty sheet in the right layout.","Use it before a bulk load.","A file downloads."],"excel template":["An empty Excel sheet in the right layout.","Use it before a bulk load.","A file downloads."],"csv template":["An empty simple sheet in the right layout.","Use it before a bulk load.","A file downloads."],"today what needs me":["Shows the jobs waiting for you.","Use it to start your day.","The list opens."],"customer page":["Opens one customer's page.","Use it to see their orders.","The page opens."],"whatsapp":["Sends a WhatsApp message.","Use it to contact the person.","WhatsApp opens."],"e mail":["Sends an email.","Use it to contact the person.","Your email app opens."],"scan the barcode or qr label":["Reads a code with the camera.","Use it to find an item.","The item opens."],"scan a code into the search box":["Reads a code into the search box.","Use it instead of typing.","Results show."],"search sku asin title or size 3 letters or more":["Finds a product by code, title or size.","Type at least 3 letters.","Matching products show."],"reload the stock history":["Loads the stock history again.","Use it if lines look old.","The history reloads."],"download this phone s log":["Saves this phone's activity log.","Use it when support asks.","A file downloads."],"share this report whatsapp copy csv or print":["Sends, copies or prints this report.","Use it to give the report to someone.","A menu opens."],"data quality":["Finds duplicate or incomplete records.","Use it to clean the data.","A problem list opens."],"purchase request":["Shows one request to buy material.","Use it to approve or follow it.","The request opens."],"purchase order":["Shows one order placed with a vendor.","Use it to track delivery.","The order opens."],"note optional e g po number reason":["A place to write why or which order.","Use it so the history is clear.","Your note is saved with the entry."],"back to raw materials":["Returns to the raw materials start page.","Use it when you finish here.","Raw materials opens."],"production home":["Goes to the top of Production.","Use it to start again.","The production start page opens."],"show 50 more 70 left":["Shows the next 50 rows.","Use it when the list is cut short.","More rows appear."],"receive stock":["Records goods that arrived.","Use it when stock comes in.","A form opens."],"any channel":["Does not limit by sales channel.","Leave it to see all channels.","All channels show."],"add an item":["Adds a new item.","Use it to create one.","A form opens."],"add another line":["Adds one more row to this form.","Use it when there is more than one item.","A new row appears."],"all items with stock and value csv":["Saves every item with its stock and value.","Use it for accounts or a backup.","A file downloads."],"add a vendor register new vendor":["Adds a new vendor.","Use it when you start buying from someone.","A form opens."]};
+        var NEVER = ["void", "record loss or wastage", "loss", "fix a stock mistake", "adjust", "record scrap", "issue to production", "give to production stock goes out", "issue", "bulk import", "load from a file", "upload and save to stock", "add employee", "import from file bulk load", "save this stock change", "link orders", "turn on phone code", "forget the pick i had in progress", "camera", "today needs your help labels", "open on a phone", "stock changes"];           /* destructive actions: no bubble until a named person reviews their text */
+        var EXCL = '.qty-step-btn,.scan-cam-btn,.bin-pick-btn,#rm-pin-bg,#xm-pin-bg,#r23-2fa-hold,#scan-bar-wrap,#bl-sheet-bg,#bl-explain,#login-modal-bg,#pick-tab,#move-tab,[id^="cam-"],[class*="camera"]';
+        var CTRL = 'button,a[href],[role=button],summary,[onclick]';
+        var ICONS = { '↻': 'Refresh', '✕': 'Close', '←': 'Back', '⚙': 'Settings', '+': 'Add', '-': 'Remove' };
+        var st = { on: false, explain: false, tipTimer: 0, lpTimer: 0, lpFired: 0, lpActive: false, lpUntil: 0, tab: '', lyr: false, sx: 0, sy: 0, bypass: false, tickT: 0, hide: 0 };
+
+        function flagOn() {
+            try {
+                var q = String(location.search || '');
+                if (/[?&]bl=on/.test(q)) localStorage.setItem(KEY, 'on');
+                else if (/[?&]bl=off/.test(q)) localStorage.setItem(KEY, 'off');
+                return localStorage.getItem(KEY) === 'on';
+            } catch (e) { return /[?&]bl=on/.test(String(location.search || '')); }
+        }
+        function norm(s) { return String(s || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').replace(/^ +| +$/g, ''); }
+        function ctrlOf(t) { try { return t && t.closest ? t.closest(CTRL) : null; } catch (e) { return null; } }
+        function excluded(el) {
+            try {
+                if (document.getElementById('r23-2fa-hold')) return true;
+                var a = document.activeElement;
+                if (a && (a.tagName === 'INPUT' || a.tagName === 'TEXTAREA') && a.type !== 'checkbox' && a.type !== 'radio' && a.type !== 'button') return true;
+                return !!(el && el.closest && el.closest(EXCL));
+            } catch (e) { return true; }
+        }
+        function labelOf(el) {
+            var t = (el.innerText || el.value || el.getAttribute('aria-label') || '');
+            t = String(t).split(String.fromCharCode(10))[0];
+            return t.slice(0, 120);
+        }
+        function helpFor(el) {
+            var k = norm(labelOf(el));
+            if (!k) return null;
+            if (NEVER.indexOf(k) >= 0) return null;
+            var h = HELP[k];
+            if (!h) { k = k.replace(/ [0-9]+$/, ''); h = HELP[k]; }
+            return h || null;
+        }
+        /* ---------- bubble ---------- */
+        function tipEl() {
+            var t = document.getElementById('bl-tip');
+            if (!t) { t = document.createElement('div'); t.id = 'bl-tip'; t.setAttribute('role', 'tooltip'); t.setAttribute('aria-hidden', 'true'); t.setAttribute('data-bl', '1'); document.body.appendChild(t); }
+            return t;
+        }
+        function showTip(el, text) {
+            if (document.getElementById('r23-2fa-hold')) return;
+            var t = tipEl(); t.textContent = text; t.className = 'on';
+            var r = el.getBoundingClientRect(), tw = t.offsetWidth, th = t.offsetHeight, vw = window.innerWidth, vh = window.innerHeight;
+            var top = r.bottom + 8; if (top + th > vh - 4) top = Math.max(4, r.top - th - 8);
+            var left = Math.min(Math.max(4, r.left), Math.max(4, vw - tw - 4));
+            t.style.top = top + 'px'; t.style.left = left + 'px';
+        }
+        function hideTip() { var t = document.getElementById('bl-tip'); if (t) t.className = ''; clearTimeout(st.tipTimer); }
+        /* ---------- computer: hover 400 ms or keyboard focus ---------- */
+        function onOver(e) {
+            if (!st.on || e.pointerType !== 'mouse' || !window.matchMedia('(hover:hover)').matches) return;
+            var el = ctrlOf(e.target); hideTip();
+            if (!el || excluded(el) || el.getAttribute('title')) return;
+            var h = helpFor(el); if (!h) return;
+            st.tipTimer = setTimeout(function () { if (el.isConnected) showTip(el, h[0]); }, 400);
+        }
+        function onFocusIn(e) {
+            if (!st.on) return;
+            var el = ctrlOf(e.target); hideTip();
+            if (!el || excluded(el) || el.getAttribute('title')) return;
+            var ok = false; try { ok = el.matches(':focus-visible'); } catch (x) { ok = false; }
+            if (!ok) return;
+            var h = helpFor(el); if (!h) return;
+            st.tipTimer = setTimeout(function () { if (el.isConnected) showTip(el, h[0]); }, 400);
+        }
+        /* ---------- phone: long-press 500 ms ---------- */
+        function onDown(e) {
+            if (!st.on) return;
+            hideTip(); clearTimeout(st.lpTimer); st.lpActive = false; st.lpUntil = 0;
+            if (e.pointerType !== 'touch') return;
+            var el = ctrlOf(e.target);
+            if (!el || excluded(el)) return;
+            var h = helpFor(el); if (!h) return;
+            st.sx = e.clientX; st.sy = e.clientY;
+            st.lpTimer = setTimeout(function () {
+                if (!st.on || !el.isConnected) return;
+                st.lpFired = Date.now(); st.lpActive = true; showTip(el, h[0]);
+                clearTimeout(st.hide); st.hide = setTimeout(hideTip, 3500);
+            }, 500);
+        }
+        function onMove(e) { if (st.lpTimer && (Math.abs(e.clientX - st.sx) > 10 || Math.abs(e.clientY - st.sy) > 10)) { clearTimeout(st.lpTimer); st.lpTimer = 0; } }
+        function onUp() { clearTimeout(st.lpTimer); st.lpTimer = 0; if (st.lpActive) { st.lpActive = false; st.lpUntil = Date.now() + 500; } }
+        function onMenu(e) { if (st.on && (st.lpActive || Date.now() < st.lpUntil)) e.preventDefault(); }
+        function onClickCap(e) {
+            if (!st.on) return;
+            /* the click that ends a long-press must not run the button */
+            if (st.lpActive || Date.now() < st.lpUntil) { st.lpActive = false; st.lpUntil = 0; e.preventDefault(); e.stopPropagation(); return; }
+            if (!st.explain || st.bypass) return;
+            var el = ctrlOf(e.target);
+            if (!el || excluded(el)) return;
+            var h = helpFor(el) || ['No help has been written for this button yet.', 'If you are not sure, ask before you press it.', 'It does its normal job if you press Do it.'];
+            e.preventDefault(); e.stopPropagation();
+            openSheet(el, h);
+        }
+        /* ---------- Explain switch and sheet ---------- */
+        function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+        var sheetTarget = null;
+        function openSheet(el, h) {
+            sheetTarget = el;
+            var bg = document.getElementById('bl-sheet-bg');
+            if (!bg) { bg = document.createElement('div'); bg.id = 'bl-sheet-bg'; bg.setAttribute('data-bl', '1'); document.body.appendChild(bg); }
+            bg.innerHTML = '<div id="bl-sheet" role="dialog" aria-modal="true" aria-label="What this button does"><h3>' + esc(labelOf(el) || 'This button') + '</h3><p><b>What it does:</b> ' + esc(h[0]) + '</p><p><b>When to use it:</b> ' + esc(h[1]) + '</p><p><b>What happens next:</b> ' + esc(h[2]) + '</p><div class="bl-row"><button type="button" class="bl-do">Do it</button><button type="button" class="bl-close">Close</button></div></div>';
+            bg.className = 'active';
+            bg.querySelector('.bl-close').onclick = closeSheet;
+            bg.querySelector('.bl-do').onclick = function () { var t = sheetTarget; closeSheet(); if (t && t.isConnected) { st.bypass = true; try { t.click(); } finally { st.bypass = false; } } };
+        }
+        function closeSheet() { var bg = document.getElementById('bl-sheet-bg'); if (bg) { bg.className = ''; bg.innerHTML = ''; } sheetTarget = null; }
+        window.blSheetClose = closeSheet;
+        function setExplain(on) {
+            st.explain = !!on;
+            document.body.classList.toggle('bl-explain', st.explain);
+            var b = document.getElementById('bl-explain'); if (b) b.setAttribute('aria-pressed', st.explain ? 'true' : 'false');
+            if (!st.explain) { var n = document.querySelectorAll('[data-bl-cap]'); for (var i = 0; i < n.length; i++) n[i].removeAttribute('data-bl-cap'); closeSheet(); }
+            else caption();
+        }
+        function tabKey() { var a = document.querySelector('.tab-content.active'); return a ? a.id : ''; }
+        function placeSwitch() {
+            var b = document.getElementById('bl-explain'); if (!b) return;
+            var nav = document.getElementById('tab-nav'), h = 0; if (nav && getComputedStyle(nav).display !== 'none') { h = Math.round(nav.getBoundingClientRect().height); }
+            b.style.bottom = 'calc(env(safe-area-inset-bottom,0px) + ' + (h + 10) + 'px)';
+            var vis = function (id) { var e = document.getElementById(id); return !!(e && e.getBoundingClientRect().height > 0 && getComputedStyle(e).display !== 'none' && getComputedStyle(e).visibility !== 'hidden'); };
+            var tk = tabKey(), hide = vis('b4-ret') || vis('bn-banner') || vis('bn-banner2') || vis('un-toast') || tk === 'pick-tab' || tk === 'move-tab' || !!document.getElementById('r23-2fa-hold') || (document.getElementById('login-modal-bg') && document.getElementById('login-modal-bg').classList.contains('active'));
+            b.style.display = hide ? 'none' : '';
+        }
+        function ensureSwitch() {
+            if (document.getElementById('bl-explain')) return;
+            var b = document.createElement('button'); b.type = 'button'; b.id = 'bl-explain'; b.setAttribute('data-bl', '1');
+            b.setAttribute('aria-pressed', 'false'); b.setAttribute('aria-label', 'Explain the buttons on this page'); b.textContent = '?';
+            b.onclick = function () { setExplain(!st.explain); };
+            document.body.appendChild(b);
+        }
+        function caption() {
+            var n = document.querySelectorAll('button,a[href],[role=button],summary'), c = 0;
+            for (var i = 0; i < n.length && c < 400; i++) {
+                var el = n[i]; if (el.hasAttribute('data-bl-cap') || el.offsetParent === null || excluded(el)) continue;
+                var h = helpFor(el); if (h) { el.setAttribute('data-bl-cap', h[0]); c++; }
+            }
+        }
+        /* ---------- accessible names for icon-only controls (only where none exists) ---------- */
+        function names() {
+            var n = document.querySelectorAll('button:not([data-bl-a]),[role=button]:not([data-bl-a])'), c = 0;
+            for (var i = 0; i < n.length && c < 300; i++) {
+                var el = n[i]; el.setAttribute('data-bl-a', '1'); c++;
+                if (el.getAttribute('aria-label') || el.getAttribute('title')) continue;
+                var tx = String(el.textContent || '').replace(/^ +| +$/g, '');
+                if (/[A-Za-z0-9]/.test(tx)) continue;
+                var nm = ICONS[tx];
+                if (nm) { el.setAttribute('aria-label', nm); el.setAttribute('data-bl-al', '1'); }
+            }
+        }
+        function tick() {
+            if (!st.on) return;
+            try {
+                placeSwitch();
+                var tk0 = tabKey(); if (st.tab !== tk0) { st.tab = tk0; if (st.explain) setExplain(false); }
+                if (st.explain && (tk0 === 'pick-tab' || tk0 === 'move-tab' || document.getElementById('r23-2fa-hold') || (document.getElementById('rm-pin-bg') && document.getElementById('rm-pin-bg').classList.contains('active')) || (document.getElementById('xm-pin-bg') && document.getElementById('xm-pin-bg').classList.contains('active')))) setExplain(false);
+                if (st.explain) caption();
+                /* names(): aria-label for icon-only buttons is NOT applied here. AUDIT B F4 + our bisect showed it changes which buttons the app folds (rm_items 62 vs 84). Moves to the per-screen work. */
+            } catch (e) { }
+        }
+        function turnOn() {
+            if (st.on) return; st.on = true;
+            document.body.classList.add('bl-on'); ensureSwitch();
+            if (!st.lis) { st.lis = true;
+            document.addEventListener('pointerover', onOver, true);
+            document.addEventListener('pointerdown', onDown, true);
+            document.addEventListener('pointermove', onMove, true);
+            document.addEventListener('pointerup', onUp, true);
+            document.addEventListener('pointercancel', onUp, true);
+            document.addEventListener('contextmenu', onMenu, true);
+            document.addEventListener('focusin', onFocusIn, true);
+            document.addEventListener('click', onClickCap, true);
+            }
+            if (!st.misc) { st.misc = true; document.addEventListener('keydown', function (e) { if (e.key === 'Escape') hideTip(); }, true); document.addEventListener('scroll', function () { hideTip(); onUp(); }, true); }
+            st.tickT = setInterval(tick, 1500);
+            if (!st.lyr) { st.lyr = true; try { LYR_LIST.unshift(['bl-sheet-bg', 'active', function () { closeSheet(); }]); } catch (e) { } }
+            tick();
+        }
+        /* full undo: removes everything the layer added (the flag-off proof) */
+        window.blOff = function () {
+            try {
+                st.on = false; clearInterval(st.tickT); clearTimeout(st.lpTimer); st.lpTimer = 0; st.lpActive = false; st.lpUntil = 0; setExplain(false); hideTip();
+                document.body.classList.remove('bl-on', 'bl-explain');
+                var m = document.querySelectorAll('[data-bl-al]'); for (var i = 0; i < m.length; i++) { m[i].removeAttribute('aria-label'); m[i].removeAttribute('data-bl-al'); }
+                var a = document.querySelectorAll('[data-bl-a]'); for (var j = 0; j < a.length; j++) a[j].removeAttribute('data-bl-a');
+                var x = document.querySelectorAll('[data-bl]'); for (var k = 0; k < x.length; k++) x[k].parentNode && x[k].parentNode.removeChild(x[k]);
+                localStorage.setItem(KEY, 'off');
+            } catch (e) { }
+        };
+        window.blOn = function () { try { localStorage.setItem(KEY, 'on'); } catch (e) { } turnOn(); };
+        if (flagOn()) turnOn();
+    } catch (err) { try { console.warn('bl layer off:', err && err.message); } catch (e) { } }
+})();
+
+</script>
+<style id="bl-x1-css">
+/* RC32 X1 compact Stock history. Every selector starts with body.bl-x1 (flag off = no effect) and, for the page, #log-tab. Sizes in rem/em with min-height only; no text-overflow ellipsis. */
+body.bl-x1 #log-tab #lh-section>.settings-info{display:none}
+body.bl-x1 #log-tab .lh-bar button[aria-label="Reload the stock history"]{display:none}
+body.bl-x1 #log-tab .log-header{display:flex;align-items:center;flex-wrap:wrap;gap:.5rem}
+body.bl-x1 #log-tab .bl-x1-upd{font-size:.8rem;color:#475569;margin-left:auto}
+body.bl-x1 #log-tab #lh-list>li.bl-x1-li{position:relative;list-style:none;padding:0;margin:0 0 .3rem;border-radius:.6rem}
+body.bl-x1 #log-tab .bl-x1-row{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:.5rem;align-items:center;min-height:3.7rem;padding:.4rem .6rem;cursor:pointer;border-radius:.6rem}
+body.bl-x1 #log-tab .bl-x1-row:focus-visible{outline:3px solid #F59E0B;outline-offset:2px}
+body.bl-x1 #log-tab .bl-x1-chip{color:#fff;border-radius:.5rem;padding:.15rem .45rem;font-size:.75rem;font-weight:700;white-space:nowrap;align-self:start}
+body.bl-x1 #log-tab .bl-x1-main{display:flex;flex-direction:column;min-width:0;gap:.1rem}
+body.bl-x1 #log-tab .bl-x1-name{font-size:.9rem;font-weight:700;line-height:1.25;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;overflow-wrap:anywhere}
+body.bl-x1 #log-tab .bl-x1-meta{font-size:.74rem;line-height:1.3;color:#475569;overflow-wrap:anywhere}
+body.bl-x1 #log-tab .bl-x1-q{font-size:1.3rem;font-weight:800;min-width:3rem;text-align:right}
+body.bl-x1 #log-tab .bl-x1-q.pos{color:#1B7A3A}
+body.bl-x1 #log-tab .bl-x1-q.neg{color:#B3261E}
+body.bl-x1 #log-tab .bl-x1-b{display:inline-block;font-size:.7rem;font-weight:800;border-radius:.4rem;padding:.05rem .35rem;margin-top:.1rem;background:#E5E7EB;color:#374151}
+body.bl-x1 #log-tab .bl-x1-b.disc{background:#FEF3C7;color:#92400E}
+body.bl-x1 #log-tab .bl-x1-b.void{background:#FDE2E0;color:#B3261E}
+body.bl-x1 #log-tab li.lh-void .bl-x1-name,body.bl-x1 #log-tab li.lh-void .bl-x1-q{text-decoration:line-through;color:#6B7280}
+/* hidden but rendered, so the page share keeps every field (never display:none) */
+body.bl-x1 #log-tab .bl-x1-full{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap}
+body.bl-x1.bl-x1-big #log-tab .bl-x1-row{grid-template-columns:minmax(0,1fr) auto}
+body.bl-x1.bl-x1-big #log-tab .bl-x1-chip{grid-column:1 / -1;justify-self:start}
+body.bl-x1.bl-x1-big #log-tab .bl-x1-main{grid-column:1}
+body.bl-x1.bl-x1-sticky #log-tab #lh-summary{position:sticky;top:var(--bl-x1-top,0);z-index:5;background:#fff}
+/* details sheet */
+#bl-x1-sheet-bg{position:fixed;inset:0;z-index:390;background:rgba(10,22,40,.45);display:none;align-items:flex-end;justify-content:center}
+#bl-x1-sheet-bg.active{display:flex}
+#bl-x1-sheet{background:#fff;color:#0A1628;width:100%;max-width:560px;max-height:85vh;overflow:auto;border-radius:1rem 1rem 0 0;padding:1rem 1rem calc(1rem + env(safe-area-inset-bottom,0px))}
+#bl-x1-sheet h3{margin:0 0 .4rem;font-size:1.05rem;line-height:1.3}
+#bl-x1-sheet .bl-x1-s{margin:.2rem 0 .6rem;font-size:.9rem;line-height:1.4}
+#bl-x1-sheet .bl-x1-f{font-size:.88rem;line-height:1.4;margin:.15rem 0;overflow-wrap:anywhere}
+#bl-x1-sheet .bl-x1-btns{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:.9rem}
+#bl-x1-sheet .bl-x1-btns button{flex:1 1 8rem;min-height:3rem}
+#bl-x1-sheet .bl-x1-why{margin-top:.6rem;font-size:.82rem;color:#475569}
+body.bl-x1-open #bl-explain{display:none!important}
+@media print{#bl-x1-sheet-bg,.bl-x1-upd{display:none!important}body.bl-x1.bl-x1-sticky #log-tab #lh-summary{position:static}}
+
+</style>
+<script id="bl-x1-js">
+/* RC32 X1: compact Stock history. ADDITIVE and OFF by default: flag localStorage bl_x1_v1 = on|off, or ?x1=on / ?x1=off in the address.
+   It wraps ONLY window.lgLogPageHtml (the original is kept and used on any error) and wraps lhRenderVoidStatus to keep its sentence true.
+   Void goes only through the existing openVoidEntry (as an onclick attribute, so the permission sweep and wrapper still see it). No database call, no new observer. */
+(function () {
+    try {
+        var KEY = 'bl_x1_v1';
+        var NEED = ['runLedgerHistory', 'lgLogPageHtml', 'lgPairRows', 'lgInfo', 'lhCanVoid', 'idNorm', 'afName', 'esc59', 'openVoidEntry', 'fmtIst', 'lhRenderVoidStatus', 'lhActionLabel', 'lhIsReversalRow', 'lgSourceTxt'];
+        var MINUS = String.fromCharCode(8722);
+        var st = { on: false, orig: null, origVs: null, origRun: null, pending: false, tickT: 0, lis: false, lyr: false, row: null };
+
+        function flagOn() {
+            try {
+                var q = String(location.search || '');
+                if (/[?&]x1=on/.test(q)) localStorage.setItem(KEY, 'on');
+                else if (/[?&]x1=off/.test(q)) localStorage.setItem(KEY, 'off');
+                return localStorage.getItem(KEY) === 'on';
+            } catch (e) { return /[?&]x1=on/.test(String(location.search || '')); }
+        }
+        function ready() {
+            for (var i = 0; i < NEED.length; i++) { if (typeof window[NEED[i]] !== 'function') { try { console.warn('x1 off: missing ' + NEED[i]); } catch (e) { } return false; } }
+            return typeof LH !== 'undefined' && typeof LIX !== 'undefined' && typeof LYR_LIST !== 'undefined';
+        }
+        function E(s) { return window.esc59(s == null ? '' : s); }
+        function sg(q) { q = Number(q) || 0; return q > 0 ? '+' + q.toLocaleString('en-IN') : (q < 0 ? MINUS + Math.abs(q).toLocaleString('en-IN') : '0'); }
+        function nm(x) { var n = window.idNorm(x); return { title: n.title || '', sku: n.sku || '', asin: n.asin || '', name: n.title ? window.afName(n.title, n.sku, '') : (n.sku || '') }; }
+        function who(x) {
+            var c = String(x.employee_code || '').toUpperCase(), e = LH.emps && LH.emps[c];
+            return { code: c || '-', name: e && e.display_name ? e.display_name : '' };
+        }
+        function state(x) {
+            var v = LH.voids ? LH.voids[x.txn_id] : null, bal = LH.voidsByBal ? LH.voidsByBal[x.txn_id] : null, revOf = null;
+            try {
+                revOf = bal ? bal.txn_id : (x.txn_type === 'MANUAL_CORRECTION' && typeof LH_VOID_NOTE_RE !== 'undefined' && LH_VOID_NOTE_RE.test(x.note || '') ? Number(LH_VOID_NOTE_RE.exec(x.note)[1]) : null);
+            } catch (e) { revOf = null; }
+            var brev = LH.brevBy ? LH.brevBy[x.txn_id] : null;
+            return { v: v, revOf: revOf, brev: brev };
+        }
+        function carrier(n) {
+            var hyd = (n.sku && (!n.title || !n.asin)) ? ' data-hyd="1"' : '';
+            return '<span class="idc idc-c bl-x1-car" data-sku="' + E(n.sku) + '" data-asin="' + E(n.asin) + '" data-title="' + E(n.title) + '"' + hyd + '><span class="idc-t">' + E(n.title) + '</span> <span class="idc-r"><span class="idc-a">' + E(n.asin) + '</span> <span class="idc-s">' + E(n.sku) + '</span></span></span>';
+        }
+        /* hidden-but-rendered text so the page share keeps every field (clip, never display:none) */
+        function full(x, n, w, s, extra) {
+            var p = ['Entry #' + x.txn_id, window.fmtIst(x.created_at, true), 'Person ' + w.code + (w.name ? ' ' + w.name : ''), 'Action ' + window.lhActionLabel(x), 'Quantity ' + sg(x.qty_delta)];
+            if (x.bin_code) p.push('Bin ' + x.bin_code);
+            if (x.channel) p.push('Channel ' + x.channel);
+            if (x.order_id) p.push('Order ' + x.order_id);
+            if (x.session_id) p.push('Batch ' + String(x.session_id).slice(0, 8));
+            if (x.entry_source && x.entry_source !== 'APP') p.push('From ' + x.entry_source);
+            if (x.note) p.push('Note ' + x.note);
+            if (s.v) p.push('VOIDED by ' + s.v.voided_by + ' on ' + window.fmtIst(s.v.voided_at) + ': ' + s.v.reason);
+            if (s.revOf) p.push('Reversal of #' + s.revOf);
+            if (s.brev) p.push('Batch reversed by #' + s.brev);
+            if (extra) p.push(extra);
+            return '<span class="bl-x1-full">' + E(p.join(' | ')) + ' ' + carrier(n) + '</span>';
+        }
+        function badges(s, info, x) {
+            return ((info && info.disc && x && x.note) ? ' <span class="bl-x1-b disc">⚠ Check the note</span>' : '') + (s.v ? ' <span class="bl-x1-b void">VOID</span>' : '') + (s.revOf ? ' <span class="bl-x1-b rev">Reversal of #' + E(s.revOf) + '</span>' : '') + (s.brev ? ' <span class="bl-x1-b rev">Batch reversed by #' + E(s.brev) + '</span>' : '');
+        }
+        function single(x) {
+            var info = window.lgInfo(x, {}), n = nm(x), w = who(x), s = state(x), q = Number(x.qty_delta) || 0;
+            var meta = [window.fmtIst(x.created_at, true), w.code];
+            if (x.bin_code) meta.push('Bin ' + x.bin_code);
+            if (x.channel) meta.push(x.channel);
+            var cls = 'log-item lh-row bl-x1-li' + (s.v ? ' lh-void' : '') + (s.revOf ? ' lh-rev' : '');
+            var lab = info.label + ' ' + sg(q) + ' ' + n.name;
+            return '<li class="' + cls + '" data-txn="' + E(x.txn_id) + '"><div class="bl-x1-row sh-skip" role="button" tabindex="0" aria-label="Open details: ' + E(lab) + '">' +
+                '<span class="bl-x1-chip" style="background:' + E(info.color) + '">' + info.icon + ' ' + E(info.label) + '</span>' +
+                '<span class="bl-x1-main"><span class="bl-x1-name">' + E(n.name) + '</span><span class="bl-x1-meta">' + E(meta.join(' · ')) + '</span>' + badges(s, info, x) + '</span>' +
+                '<span class="bl-x1-q ' + (q > 0 ? 'pos' : (q < 0 ? 'neg' : '')) + '">' + E(sg(q)) + '</span></div>' + full(x, n, w, s, '') + '</li>';
+        }
+        function pair(o, nw) {
+            var n = nm(o), w = who(o), s = state(o), q = Math.abs(Number(o.qty_delta) || 0), kind = (typeof LG_KIND !== 'undefined' && LG_KIND.MOVE) ? LG_KIND.MOVE : ['', '#1B4F8A', 'Transfer'];
+            var vo = (LH.voids && (LH.voids[o.txn_id] || LH.voids[nw.txn_id])) || null;
+            if (vo) s.v = vo;
+            var meta = [window.fmtIst(nw.created_at, true), w.code, 'Bin ' + (o.bin_code || '-') + ' → ' + (nw.bin_code || '-')];
+            if (o.channel) meta.push(o.channel);
+            var cls = 'log-item lh-row bl-x1-li lg-pair' + (s.v ? ' lh-void' : '');
+            return '<li class="' + cls + '" data-txn="' + E(o.txn_id) + '" data-txn2="' + E(nw.txn_id) + '"><div class="bl-x1-row sh-skip" role="button" tabindex="0" aria-label="Open details: Transfer ' + E(q) + ' ' + E(n.name) + '">' +
+                '<span class="bl-x1-chip" style="background:' + E(kind[1]) + '">' + kind[0] + ' ' + E(kind[2]) + '</span>' +
+                '<span class="bl-x1-main"><span class="bl-x1-name">' + E(n.name) + '</span><span class="bl-x1-meta">' + E(meta.join(' · ')) + '</span>' + badges(s) + '</span>' +
+                '<span class="bl-x1-q">' + E(q.toLocaleString('en-IN')) + '</span></div>' + full(o, n, w, s, 'Transfer to bin ' + (nw.bin_code || '-') + ' entry #' + nw.txn_id) + '</li>';
+        }
+        function wrap(ids, m) {
+            try {
+                var rows = [], html = '';
+                ids.forEach(function (id) { if (m[id]) { LH.rows[id] = m[id]; rows.push(m[id]); } });
+                window.lgPairRows(rows).forEach(function (it) { html += it.pair ? pair(it.out, it.inn) : single(it.x); });
+                return html;
+            } catch (e) {
+                try { console.warn('x1 fallback to original rows:', e && e.message); } catch (e2) { }
+                return st.orig(ids, m);
+            }
+        }
+        function runWrap() { try { closeSheet(true); st.pending = true; } catch (e) { } return st.origRun.apply(this, arguments); }
+        function checkLoaded() {
+            if (!st.pending) return;
+            var sum = document.getElementById('lh-summary'); if (!sum) return;
+            var t = String(sum.innerText || '');
+            if (/Searching/.test(t) || !t.replace(/\s+/g, '')) return;
+            st.pending = false;
+            if (sum.querySelector('.move-result.err') || /Could not load/.test(t)) return;
+            stamp();
+        }
+        function stamp() {
+            try {
+                var h = document.querySelector('#log-tab .log-header'); if (!h) return;
+                var u = document.getElementById('bl-x1-upd');
+                if (!u) { u = document.createElement('span'); u.id = 'bl-x1-upd'; u.className = 'bl-x1-upd sh-skip'; u.setAttribute('data-x1', '1'); h.appendChild(u); }
+                u.textContent = 'Updated ' + new Date().toLocaleTimeString('en-IN', { timeZone: 'Asia/Kolkata', hour: '2-digit', minute: '2-digit', hour12: false });
+            } catch (e) { }
+        }
+        /* ---------- the details sheet ---------- */
+        function sheetEl() {
+            var bg = document.getElementById('bl-x1-sheet-bg');
+            if (!bg) { bg = document.createElement('div'); bg.id = 'bl-x1-sheet-bg'; bg.setAttribute('data-x1', '1'); document.body.appendChild(bg); bg.addEventListener('click', function (e) { if (!e.target || !e.target.closest) return; if (e.target.closest('.lh-void-btn')) hideNow(); else if (e.target.closest('.bl-x1-close')) closeSheet(false); }, true);
+                bg.addEventListener('keydown', function (e) { if (e.key !== 'Tab') return; var f = bg.querySelectorAll('button,[href],input,select,textarea,[tabindex="0"]'); if (!f.length) return; var a = f[0], z = f[f.length - 1]; if (e.shiftKey && document.activeElement === a) { e.preventDefault(); z.focus(); } else if (!e.shiftKey && document.activeElement === z) { e.preventDefault(); a.focus(); } }, true); }
+            return bg;
+        }
+        function line(k, v) { return v ? '<div class="bl-x1-f"><b>' + E(k) + '</b> <span>' + E(v) + '</span></div>' : ''; }
+        function openSheet(li, rowEl) {
+            if (document.getElementById('r23-2fa-hold')) return;
+            var id = li.getAttribute('data-txn'), id2 = li.getAttribute('data-txn2');
+            var x = LH.rows && LH.rows[id]; if (!x) return;
+            var y = id2 && LH.rows ? LH.rows[id2] : null;
+            var info = window.lgInfo(x, {}), n = nm(x), w = who(x), s = state(x);
+            var sentence = y ? ('Transfer: ' + Math.abs(Number(x.qty_delta) || 0) + ' unit(s) moved from bin ' + E(x.bin_code || '-') + ' to bin ' + E(y.bin_code || '-')) : info.sentence;
+            var vo = y ? ((LH.voids && (LH.voids[x.txn_id] || LH.voids[y.txn_id])) || null) : s.v;
+            var can = y ? (!vo && window.lhCanVoid(x) && window.lhCanVoid(y)) : window.lhCanVoid(x);
+            var chipHtml = ''; try { chipHtml = typeof window.idChip === 'function' ? window.idChip(x, {}) : ''; } catch (e) { chipHtml = ''; }
+            var h = '<div id="bl-x1-sheet" role="dialog" aria-modal="true" aria-label="Entry details"><h3>' + E(n.name || 'Entry') + '</h3>' +
+                '<div class="bl-x1-s">' + sentence + '</div>' + chipHtml +
+                line('Time', window.fmtIst(x.created_at, true)) + line('Person', w.code + (w.name ? ' (' + w.name + ')' : '')) + line('Entry', '#' + x.txn_id + (y ? ' and #' + y.txn_id : '')) +
+                line('Bin', y ? ((x.bin_code || '-') + ' to ' + (y.bin_code || '-')) : x.bin_code) + line('Channel', x.channel) + line('Order', x.order_id) + line('Batch', x.session_id ? String(x.session_id).slice(0, 8) : '') +
+                line('Source', window.lgSourceTxt(x)) + line('Note', (info.disc && x.note ? '⚠ ' : '') + (x.note || '')) +
+                (vo ? line('Voided', 'by ' + vo.voided_by + ' on ' + window.fmtIst(vo.voided_at) + ': ' + vo.reason) : '') + (s.revOf ? line('Reversal', 'of #' + s.revOf) : '') + (s.brev ? line('Batch reversed', 'by #' + s.brev) : '') +
+                '<div class="bl-x1-btns">' + (can ? '<button type="button" class="csv-btn lh-void-btn" onclick="openVoidEntry(' + Number(x.txn_id) + ')">Void this entry</button>' : '') + '<button type="button" class="settings-btn bl-x1-close">Close</button></div>' +
+                (!can ? '<div class="bl-x1-why">' + E(why(x, y, vo, s)) + '</div>' : '') + '</div>';
+            var bg = sheetEl(); bg.innerHTML = h; bg.className = 'active'; document.body.classList.add('bl-x1-open'); st.row = rowEl || null;
+            try { var c = bg.querySelector('.bl-x1-close'); if (c) c.focus(); } catch (e) { }
+        }
+        function why(x, y, vo, s) {
+            if (vo) return 'This entry is already voided.';
+            if (s.revOf) return 'This entry is a reversal made by a Void, so it cannot be voided.';
+            if (s.brev) return 'This entry was already reversed with its whole batch.';
+            if (/^PICK[|]/.test(String(x.client_queue_id || ''))) return 'Pick-slip entries are undone from the pick screen, not here.';
+            return 'Your account cannot void entries here, or Void is not turned on.';
+        }
+        function closeSheet(back) {
+            var bg = document.getElementById('bl-x1-sheet-bg'); if (!bg) return;
+            bg.className = ''; bg.innerHTML = ''; document.body.classList.remove('bl-x1-open');
+            if (!back && st.row && st.row.isConnected) { try { st.row.focus(); } catch (e) { } }
+            st.row = null;
+        }
+        window.blx1Close = function () { closeSheet(false); };
+        /* the Void button keeps the plain onclick=openVoidEntry(N) attribute (the permission sweep and wrapper see it); this capture listener hides the sheet BEFORE that handler runs */
+        function hideNow() { var bg = document.getElementById('bl-x1-sheet-bg'); if (bg) { bg.className = ''; } document.body.classList.remove('bl-x1-open'); st.row = null; }
+        /* ---------- one delegated listener ---------- */
+        function rowOf(t) { try { var r = t && t.closest ? t.closest('.bl-x1-row') : null; return r; } catch (e) { return null; } }
+        function onClick(e) {
+            if (!st.on) return;
+            if (e.target && e.target.closest && e.target.closest('.copy-chip,.idc [data-w]')) return;
+            var r = rowOf(e.target); if (!r) return;
+            var li = r.closest('li'); if (li) openSheet(li, r);
+        }
+        function onKey(e) {
+            if (!st.on || (e.key !== 'Enter' && e.key !== ' ')) return;
+            var r = rowOf(e.target); if (!r || e.target !== r) return;
+            e.preventDefault(); var li = r.closest('li'); if (li) openSheet(li, r);
+        }
+        /* ---------- slow tick (only while the Log tab is showing): hydrate names, sticky and stacking rules ---------- */
+        function tick() {
+            if (!st.on) return;
+            try { checkLoaded(); } catch (e) { }
+            try {
+                var tab = document.getElementById('log-tab'); if (!tab || !tab.classList.contains('active')) return;
+                var names = tab.querySelectorAll('.bl-x1-li');
+                for (var i = 0; i < names.length; i++) {
+                    var li = names[i], car = li.querySelector('.bl-x1-car'), el = li.querySelector('.bl-x1-name'); if (!car || !el) continue;
+                    var t = car.getAttribute('data-title'), sk = car.getAttribute('data-sku');
+                    if (t && el.getAttribute('data-done') !== '1') { el.textContent = window.afName(t, sk, ''); el.setAttribute('data-done', '1'); }
+                }
+                var fs = parseFloat(getComputedStyle(document.documentElement).fontSize) || 16;
+                document.body.classList.toggle('bl-x1-big', fs > 17.2 || window.innerWidth < 361);
+                var hd = document.querySelector('.header'), top = 0;
+                if (hd) { var p = getComputedStyle(hd).position; if (p === 'fixed' || p === 'sticky') top = Math.round(hd.getBoundingClientRect().height); }
+                var sum = document.getElementById('lh-summary'), room = window.innerHeight - top;
+                var ok = !!sum && fs <= 17.2 && window.innerHeight >= 600 && sum.offsetHeight <= room * 0.2;
+                document.body.classList.toggle('bl-x1-sticky', ok);
+                tab.style.setProperty('--bl-x1-top', top + 'px');
+            } catch (e) { }
+        }
+        function vstatus() {
+            st.origVs();
+            try {
+                var el = document.getElementById('lh-void-status');
+                if (el && st.on && el.innerHTML.indexOf('tap <strong>Void</strong> on any entry') > -1) el.innerHTML = el.innerHTML.replace('tap <strong>Void</strong> on any entry', 'tap an entry, then <strong>Void</strong>');
+            } catch (e) { }
+        }
+        function turnOn() {
+            if (st.on) return;
+            if (!ready()) return;
+            st.on = true;
+            if (!st.orig) { st.orig = window.lgLogPageHtml; st.origVs = window.lhRenderVoidStatus; st.origRun = window.runLedgerHistory; }
+            window.lgLogPageHtml = wrap; window.lhRenderVoidStatus = vstatus; window.runLedgerHistory = runWrap;
+            document.body.classList.add('bl-x1');
+            var list = document.getElementById('lh-list');
+            if (list && !st.lis) { st.lis = true; list.addEventListener('click', onClick, false); list.addEventListener('keydown', onKey, false); }
+            if (!st.esc) { st.esc = true; document.addEventListener('keydown', function (e) { if (st.on && e.key === 'Escape' && document.getElementById('bl-x1-sheet-bg') && document.getElementById('bl-x1-sheet-bg').className === 'active') { e.stopPropagation(); closeSheet(false); } }, true); }
+            if (!st.lyr) { st.lyr = true; try { LYR_LIST.push(['bl-x1-sheet-bg', 'active', function () { closeSheet(true); }]); } catch (e) { } }
+            st.tickT = setInterval(tick, 1500);
+            try { if (typeof lhRenderVoidStatus === 'function') window.lhRenderVoidStatus(); } catch (e) { }
+        }
+        /* full undo: restores the original functions and removes everything X1 added; open the tab again or search to redraw rows */
+        window.blx1Off = function () {
+            try {
+                st.on = false; clearInterval(st.tickT);
+                if (st.orig) { window.lgLogPageHtml = st.orig; window.lhRenderVoidStatus = st.origVs; if (st.origRun) window.runLedgerHistory = st.origRun; }
+                closeSheet(true);
+                document.body.classList.remove('bl-x1', 'bl-x1-big', 'bl-x1-sticky', 'bl-x1-open');
+                var x = document.querySelectorAll('[data-x1]'); for (var i = 0; i < x.length; i++) if (x[i].parentNode) x[i].parentNode.removeChild(x[i]);
+                localStorage.setItem(KEY, 'off');
+                try { window.lhRenderVoidStatus(); } catch (e) { }
+            } catch (e) { }
+        };
+        window.blx1On = function () { try { localStorage.setItem(KEY, 'on'); } catch (e) { } turnOn(); };
+        if (flagOn()) turnOn();
+    } catch (err) { try { console.warn('x1 off:', err && err.message); } catch (e) { } }
+})();
+
+</script>
+<style id="bl-x45-css">
+/* RC32 X4 + X5. Every rule starts with body.bl-x4 or body.bl-x5 (flag off = no effect). Sizes in rem/em. */
+/* X5: the panel on the Vendors view holds this screen's own tools (refresh, share, downloads), so it is renamed, never hidden */
+body.bl-x5-vendors #rm-tab.active>div:first-child>details#b25-more-rm-tab::before{content:"Tools on this screen"}
+body.bl-x5 #vr-res .bl-x5-note{font-size:.9rem;line-height:1.4;overflow-wrap:anywhere}
+body.bl-x5 #vr-res .bl-x5-note .bl-x5-btn{margin-left:.4rem;min-height:2.75rem}
+/* X4: the extra button named Customers duplicates All customers and the Customers tile; same destination stays reachable */
+body.bl-x4 #crm-tab .rm-act[onclick="xmGo('crm','list',{})"]{display:none}
+body.bl-x4 #crm-tab .rm-tile .rm-tile-l,body.bl-x4 #crm-tab .rm-tile .rm-tile-s{overflow-wrap:anywhere;white-space:normal}
+
+</style>
+<script id="bl-x45-js">
+/* RC32 X4 (Customers wording) and X5 (archived-vendor fix). ADDITIVE, each OFF by default: flags localStorage bl_x4_v1 / bl_x5_v1 = on|off, or ?x4=on|off ?x5=on|off.
+   X5 wraps rm8VrDraw (once per load, never against the person's own filter choice). X4 wraps xmTile and crmShareRep (words only; every number is unchanged). No database call, no observer. */
+(function () {
+    function flag(key, qname) {
+        try {
+            var q = String(location.search || '');
+            if (new RegExp('[?&]' + qname + '=on').test(q)) localStorage.setItem(key, 'on');
+            else if (new RegExp('[?&]' + qname + '=off').test(q)) localStorage.setItem(key, 'off');
+            return localStorage.getItem(key) === 'on';
+        } catch (e) { return new RegExp('[?&]' + qname + '=on').test(String(location.search || '')); }
+    }
+    function need(names) { for (var i = 0; i < names.length; i++) { if (typeof window[names[i]] !== 'function') { try { console.warn('x45 off: missing ' + names[i]); } catch (e) { } return false; } } return true; }
+    function E(s) { return window.esc59(s == null ? '' : s); }
+
+    /* ======================= X5 VENDORS ======================= */
+    try {
+        var s5 = { on: false, orig: null, widened: null, setByUs: false, tickT: 0 };
+        function loaded5() {
+            var R = (typeof RM !== 'undefined' && RM.data) ? RM.data.vrRows : null;
+            if (!R || R.loading || R.err || R.moreErr) return null;
+            if (!R.rows || (R.total != null && R.rows.length < Number(R.total))) return null;   /* the whole registry must be read first */
+            return R;
+        }
+        function inVendors() { var t = document.getElementById('rm-tab'); return !!(t && t.classList.contains('active') && typeof RM !== 'undefined' && RM.view === 'vendors'); }
+        function mark5() { document.body.classList.toggle('bl-x5-vendors', s5.on && inVendors()); }
+        function draw5() {
+            var R = loaded5(), S = (typeof RM !== 'undefined' && RM.data) ? RM.data.vr : null;
+            if (R && S && R.rows.length > 0) {
+                var act = 0; R.rows.forEach(function (v) { if (v.active !== false) act++; });
+                if (act === 0 && S.show === 'ACTIVE' && s5.widened !== RM.params) {
+                    s5.widened = RM.params; s5.setByUs = true; S.show = 'ALL';   /* once per visit to Vendors (keyed to RM.params, which Refresh keeps); the person's later choices, including after Refresh, are never overridden */
+                }
+            }
+            s5.orig.apply(this, arguments);
+            try {
+                R = loaded5(); S = RM.data.vr;
+                var res = document.getElementById('vr-res');
+                if (res && R && R.rows.length > 0) {
+                    var a = 0; R.rows.forEach(function (v) { if (v.active !== false) a++; });
+                    var arch = R.rows.length - a;
+                    if (a === 0 && arch > 0) {
+                        var txt, btn = '';
+                        if (S.show === 'ACTIVE') { txt = 'There are no active vendors. ' + arch + ' archived vendor' + (arch === 1 ? ' is' : 's are') + ' hidden by the filter.'; btn = ' <button type="button" class="settings-btn rm-xs bl-x5-btn" onclick="rm8VrSet(\'show\',\'ALL\')">Show archived and active</button>'; }
+                        else txt = 'There are no active vendors. Showing the ' + arch + ' archived vendor' + (arch === 1 ? '' : 's') + '.';
+                        res.insertAdjacentHTML('afterbegin', '<div class="rm-note bl-x5-note" data-x5="1">' + E(txt) + btn + '</div>');
+                    }
+                }
+                mark5();
+            } catch (e) { }
+        }
+        function tick5() { if (!s5.on) return; var t = document.getElementById('rm-tab'); if (!t || !t.classList.contains('active')) { if (document.body.classList.contains('bl-x5-vendors')) document.body.classList.remove('bl-x5-vendors'); return; } try { mark5(); } catch (e) { } }
+        function on5() {
+            if (s5.on || !need(['rm8VrDraw', 'rm8VrSet', 'esc59']) || typeof RM === 'undefined' || typeof FB === 'undefined') return;
+            s5.on = true; s5.orig = window.rm8VrDraw; window.rm8VrDraw = draw5;
+            document.body.classList.add('bl-x5'); s5.tickT = setInterval(tick5, 1500); mark5();
+        }
+        window.blx5Off = function () {
+            try {
+                s5.on = false; clearInterval(s5.tickT);
+                if (s5.orig) window.rm8VrDraw = s5.orig;
+                if (s5.setByUs && RM.data && RM.data.vr && RM.data.vr.show === 'ALL') RM.data.vr.show = 'ACTIVE';
+                s5.setByUs = false; s5.widened = null;
+                document.body.classList.remove('bl-x5', 'bl-x5-vendors');
+                var n = document.querySelectorAll('[data-x5]'); for (var i = 0; i < n.length; i++) if (n[i].parentNode) n[i].parentNode.removeChild(n[i]);
+                localStorage.setItem('bl_x5_v1', 'off');
+                try { if (inVendors() && typeof rmRender === 'function') rmRender(false); } catch (e) { }
+            } catch (e) { }
+        };
+        window.blx5On = function () { try { localStorage.setItem('bl_x5_v1', 'on'); } catch (e) { } on5(); };
+        if (flag('bl_x5_v1', 'x5')) on5();
+    } catch (err5) { try { console.warn('x5 off:', err5 && err5.message); } catch (e) { } }
+
+    /* ======================= X4 CUSTOMERS ======================= */
+    try {
+        var s4 = { on: false, tile: null, share: null };
+        function mapSub(label, sub) {
+            var t = String(sub == null ? '' : sub);
+            if (label === 'Active customers') return t.replace(/ have ordered$/, ' have ordered through the app');
+            if (label === 'New this month') return t.replace(/ first orders this month$/, ' placed a first order this month');
+            return t;
+        }
+        function tile4(label, val, sub, onclick, warn) {
+            try {
+                if (s4.on && label === 'Active customers') return s4.tile.call(this, 'Customers', val, mapSub(label, sub), onclick, warn);
+                if (s4.on && label === 'New this month') return s4.tile.call(this, 'Added to the app this month', val, mapSub(label, sub), onclick, warn);
+            } catch (e) { }
+            return s4.tile.call(this, label, val, sub, onclick, warn);
+        }
+        function share4() {
+            var r = s4.share.apply(this, arguments);
+            try {
+                if (s4.on && r && r.lines && r.lines.length) {
+                    r.lines = r.lines.map(function (l) {
+                        if (typeof l !== 'string') return l;
+                        if (l.indexOf('Active customers: ') === 0) return 'Customers: ' + l.slice('Active customers: '.length);
+                        if (l.indexOf('New this month: ') === 0) return 'Added to the app this month: ' + l.slice('New this month: '.length);
+                        return l;
+                    });
+                }
+            } catch (e) { }
+            return r;
+        }
+        function on4() {
+            if (s4.on || !need(['xmTile', 'crmShareRep'])) return;
+            s4.on = true; s4.tile = window.xmTile; s4.share = window.crmShareRep; window.xmTile = tile4; window.crmShareRep = share4;
+            document.body.classList.add('bl-x4');
+            try { if (typeof XM !== 'undefined' && XM.crm && XM.crm.view === 'home' && document.getElementById('crm-tab') && document.getElementById('crm-tab').classList.contains('active') && typeof crmView_home === 'function') crmView_home(false); } catch (e) { }
+        }
+        window.blx4Off = function () {
+            try {
+                s4.on = false;
+                if (s4.tile && window.xmTile === tile4) window.xmTile = s4.tile;   /* AUDIT B finding 8: leave a layer that wrapped above us alone; tile4 passes straight through once s4.on is false */
+                if (s4.share && window.crmShareRep === share4) window.crmShareRep = s4.share;
+                document.body.classList.remove('bl-x4');
+                localStorage.setItem('bl_x4_v1', 'off');
+                try { if (typeof XM !== 'undefined' && XM.crm && XM.crm.view === 'home' && typeof crmView_home === 'function') crmView_home(false); } catch (e) { }
+            } catch (e) { }
+        };
+        window.blx4On = function () { try { localStorage.setItem('bl_x4_v1', 'on'); } catch (e) { } on4(); };
+        if (flag('bl_x4_v1', 'x4')) on4();
+    } catch (err4) { try { console.warn('x4 off:', err4 && err4.message); } catch (e) { } }
+})();
+
+</script>
+<style id="bl-x3-css">
+/* RC33 X3 Production: styles only for elements the layer creates, or under body.bl-x3 */
+#bl-x3-strip { display: flex; gap: 6px; align-items: stretch; margin: 0 0 8px; flex-wrap: wrap; }
+#bl-x3-strip .bl-x3-tab { flex: 1 1 0; min-width: 88px; min-height: 44px; border: 1px solid #1B3F6B; background: #fff; color: #1B3F6B; border-radius: 8px; font-weight: 700; font-size: 0.95em; padding: 6px 8px; }
+#bl-x3-strip .bl-x3-tab.on { background: #1B3F6B; color: #fff; }
+#bl-x3-strip .bl-x3-sum { min-height: 44px; border: 0; background: transparent; color: #1B3F6B; text-decoration: underline; font-weight: 600; padding: 6px 8px; }
+#bl-x3-strip .bl-x3-sum.on { font-weight: 800; }
+body.bl-x3 .bl-x3-hid { display: none !important; }
+body.bl-x3 .bl-x3-head .bl-x3-show { background: #1B7A3A; min-height: 48px; width: 100%; margin: 0 0 6px; }
+body.bl-x3 .bl-x3-words { font-size: 0.92em; line-height: 1.35; margin: 6px 0; }
+body.bl-x3 .bl-x3-make { min-height: 44px; min-width: 88px; background: #1B3F6B; white-space: nowrap; }
+
+</style>
+<script id="bl-x3-js">
+/* RC33 X3 PRODUCTION: one module, three tabs (What to make / Jobs / Made), forecast first, "Make this", plain words, blank-number net.
+   ADDITIVE and OFF by default: flag localStorage bl_x3_v1 = on|off, or ?x3=on|off. Plan: PLAN_X3_v2_PRODUCTION_RC33.md + PLAN_X2_X3_ADDENDUM_RC33.md.
+   Wraps xmRender, xmTile, prdView_plan. No database call of its own, no timer, no observer. Every preview is the person's own tap. */
+(function () {
+    function flag(key, qname) {
+        try {
+            var q = String(location.search || '');
+            if (new RegExp('[?&]' + qname + '=on').test(q)) localStorage.setItem(key, 'on');
+            else if (new RegExp('[?&]' + qname + '=off').test(q)) localStorage.setItem(key, 'off');
+            return localStorage.getItem(key) === 'on';
+        } catch (e) { return new RegExp('[?&]' + qname + '=on').test(String(location.search || '')); }
+    }
+    function need(names) { for (var i = 0; i < names.length; i++) { if (typeof window[names[i]] !== 'function') { try { console.warn('x3 off: missing ' + names[i]); } catch (e) { } return false; } } return true; }
+    function E(s) { return window.esc59(s == null ? '' : s); }
+    try {
+        var s3 = { on: false, landed: false, seen: null, at: '', tapAt: '', wRender: null, wTile: null, wPlan: null, oRender: null, oTile: null, oPlan: null, inR: false, inT: false, inP: false };
+        window.__bl3Net = 0;
+        var STRIP_VIEWS = { home: 1, plan: 1, jobs: 1, done: 1, daily: 1 };
+        function prdActive() { var t = document.getElementById('prd-tab'); return !!(t && t.classList.contains('active')); }
+        function nowIst() { try { return new Date().toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Kolkata' }); } catch (e) { return ''; } }
+
+        /* ---- landing + strip: wraps xmRender ---- */
+        function mkRender(orig) { return function render3(k, fetch) {
+            if (!s3.on || k !== 'prd') return orig.apply(this, arguments);
+            try {
+                var X = XM.prd;
+                if (X && X.lk) {
+                    if (!s3.landed) {
+                        s3.landed = true;   /* once per sign-in: reset only when the sign-in is gone (lk null), never by a replaced lk object */
+                        if (X.view === 'home' && (!X.stack || !X.stack.length) && window.xmCan('prd')) { X.view = 'plan'; X.params = {}; X.form = {}; }
+                    }
+                } else s3.landed = false;
+            } catch (e) { }
+            var r = orig.apply(this, arguments);
+            try { strip3(); } catch (e) { }
+            return r;
+        }; }
+        function strip3() {
+            var X = XM.prd, body = document.getElementById('prd-body'), el = document.getElementById('bl-x3-strip');
+            var show = s3.on && X && X.lk && !X.away && STRIP_VIEWS[X.view] && window.xmCan('prd');
+            if (!show) { if (el) el.style.display = 'none'; return; }
+            if (!body || !body.parentNode) return;
+            if (!el) {
+                el = document.createElement('div'); el.id = 'bl-x3-strip'; el.className = 'e2-keep'; el.setAttribute('data-x3', '1'); el.setAttribute('role', 'tablist');
+                el.addEventListener('click', function (ev) {
+                    var b = ev.target && ev.target.closest ? ev.target.closest('[data-t]') : null; if (!b) return;
+                    window.bl3Tab(b.getAttribute('data-t'));
+                });
+                body.parentNode.insertBefore(el, body);
+            }
+            el.style.display = '';
+            var sel = X.view === 'plan' ? 'plan' : (X.view === 'jobs' ? 'jobs' : ((X.view === 'done' || X.view === 'daily') ? 'done' : ''));
+            function tab(t, label) { return '<button type="button" role="tab" class="pill-btn bl-x3-tab' + (sel === t ? ' on' : '') + '" data-t="' + t + '" aria-selected="' + (sel === t ? 'true' : 'false') + '">' + label + '</button>'; }
+            el.innerHTML = tab('plan', 'What to make') + tab('jobs', 'Jobs') + tab('done', 'Made') + '<button type="button" class="pill-btn bl-x3-sum' + (X.view === 'home' ? ' on' : '') + '" data-t="home">Summary</button>';
+        }
+        window.bl3Tab = function (v) {
+            try {
+                var X = XM.prd; if (!X || !X.lk || X.away) return;
+                if (v !== 'plan' && v !== 'jobs' && v !== 'done' && v !== 'home') return;
+                X.stack = []; X.view = v; X.params = {}; X.form = {};
+                window.xmRender('prd', true);
+            } catch (e) { }
+        };
+
+        /* ---- plan view: Show button, plain words, Make this ---- */
+        var WORDS = '<div class="rm-card bl-x3-words" data-x3="1"><b>How to read this list</b><br>' +
+            '<b>Free</b>: pieces you can sell right now. <b>Sold 30d</b>: pieces sold in the last 30 days. <b>Days stock lasts</b>: free pieces divided by daily sales. ' +
+            '<b>Priority 1</b> is the most urgent. <b>Why this quantity</b>: "Sold recently and nothing left" means it sold in the last 30 days and none is free; "Slow product: make only when ordered" means a slow seller with no sale in 30 days.</div>';
+        function mkPlan(orig) { return function plan3() {
+            var r = orig.apply(this, arguments);
+            if (!s3.on) return r;
+            try {
+                var X = XM.prd, body = document.getElementById('prd-body'); if (!X || !body || X.view !== 'plan') return r;
+                var P = X.data && X.data.plan;
+                if (P && P.res && s3.seen !== P.res) { s3.seen = P.res; s3.at = s3.tapAt || nowIst(); s3.tapAt = ''; }
+                var old = body.querySelectorAll('[data-x3]'); for (var i = 0; i < old.length; i++) if (old[i].parentNode) old[i].parentNode.removeChild(old[i]);
+                var has = !!(P && P.res);
+                var head = document.createElement('div'); head.setAttribute('data-x3', '1'); head.className = 'bl-x3-head';
+                head.innerHTML = '<button type="button" class="settings-btn rm-big bl-x3-show" data-x3act="show">' + (has ? 'Show again what to make' : 'Show what to make') + '</button>' +
+                    (has && s3.at ? '<div class="rm-dim">Preview taken at ' + E(s3.at) + '. Nothing is saved by a preview.</div>' : '<div class="rm-dim">This works out what to make from sales and free stock. Nothing is saved until you press Save plan.</div>') + WORDS;
+                head.addEventListener('click', function (ev) { var b = ev.target && ev.target.closest ? ev.target.closest('[data-x3act]') : null; if (b && b.getAttribute('data-x3act') === 'show') { try { s3.tapAt = nowIst(); window.prdPlanSend(true); } catch (e) { } } });
+                body.insertBefore(head, body.firstChild);
+                var ob = body.querySelectorAll('button[onclick*="prdPlanSend(true)"]'); for (var j = 0; j < ob.length; j++) if (!ob[j].getAttribute('data-x3act')) ob[j].classList.add('bl-x3-hid');
+                if (has && P.dry && window.xmManager('prd')) makeCol(P);
+            } catch (e) { }
+            return r;
+        }; }
+        function makeCol(P) {
+            var res = document.getElementById('pl-res'); if (!res) return;
+            var tb = res.querySelector('table.rm-table'); if (!tb) return;
+            var trs = tb.querySelectorAll('tr'); var rows = (P.res.rows || []).slice(0, 300);
+            if (!trs.length) return;
+            var th = document.createElement('th'); th.setAttribute('data-x3', '1'); th.textContent = ''; trs[0].appendChild(th);
+            for (var i = 1; i < trs.length; i++) {
+                var r = rows[i - 1], td = document.createElement('td'); td.setAttribute('data-x3', '1');
+                if (r && r.status === 'CREATE' && r.sku_code && (trs[i].textContent || '').indexOf(String(r.sku_code)) >= 0) td.innerHTML = '<button type="button" class="settings-btn rm-sm bl-x3-make" data-i="' + (i - 1) + '">Make this</button>';
+                trs[i].appendChild(td);
+            }
+            if (!tb.getAttribute('data-x3click')) { tb.setAttribute('data-x3click', '1'); tb.addEventListener('click', function (ev) { var b = ev.target && ev.target.closest ? ev.target.closest('.bl-x3-make') : null; if (b) make(+b.getAttribute('data-i')); }); }
+        }
+        function make(i) {
+            if (!s3.on) return;
+            var X = XM.prd, P = X && X.data && X.data.plan; if (!P || !P.dry || !P.res || !window.xmManager('prd')) return;
+            var r = (P.res.rows || [])[i]; if (!r || r.status !== 'CREATE' || !r.sku_code) return;
+            if (window.xmBusy('prd', 'mk')) return;
+            try {
+                var q = Number(r.planned_qty), pr = Number(r.priority), dt = P.date;
+                X.data.plan = null;   /* the preview is stale once a job is made */
+                window.xmGo('prd', 'jobEdit', { sku: r.sku_code });
+                var F = XM.prd.form;
+                if (isFinite(q) && q >= 1 && q === Math.floor(q)) F['je-qty'] = String(q);
+                if (pr === 1 || pr === 2 || pr === 3) F['je-prio'] = String(pr);
+                if (/^\d{4}-\d{2}-\d{2}$/.test(String(dt || ''))) F['je-date'] = dt;
+                F['je-note'] = 'From the forecast';
+                window.prdView_jobEdit();
+            } finally { window.xmDone('prd', 'mk'); }
+        }
+
+        /* ---- blank-number net: Production tab only ---- */
+        function mkTile(orig) { return function tile3(label, val, sub, onclick, warn) {
+            try {
+                if (s3.on && prdActive()) {
+                    var t = String(val == null ? '' : val).replace(/<[^>]*>/g, '').trim();
+                    if (t === '' || t === 'undefined' || t === 'NaN' || t === 'null') { val = '-'; window.__bl3Net++; }
+                }
+            } catch (e) { }
+            return orig.call(this, label, val, sub, onclick, warn);
+        }; }
+
+        function on3() {
+            if (s3.on || !need(['xmRender', 'xmTile', 'prdView_plan', 'xmGo', 'xmBusy', 'xmDone', 'xmCan', 'xmManager', 'prdView_jobEdit', 'prdPlanSend', 'esc59']) || typeof XM === 'undefined' || !XM.prd) return;
+            s3.on = true;
+            /* a wrapper still in the chain (another layer sits above it) is reused with its own original; a missing one is made fresh from the current function */
+            if (!s3.inR) { s3.oRender = window.xmRender; window.xmRender = s3.wRender = mkRender(s3.oRender); s3.inR = true; }
+            if (!s3.inT) { s3.oTile = window.xmTile; window.xmTile = s3.wTile = mkTile(s3.oTile); s3.inT = true; }
+            if (!s3.inP) { s3.oPlan = window.prdView_plan; window.prdView_plan = s3.wPlan = mkPlan(s3.oPlan); s3.inP = true; }
+            document.body.classList.add('bl-x3');
+            try { if (prdActive() && XM.prd.lk) window.xmRender('prd', false); } catch (e) { }
+        }
+        window.blx3Off = function () {
+            try {
+                s3.on = false;   /* wrappers pass straight through from here on, whatever the chain order */
+                if (window.xmRender === s3.wRender) { window.xmRender = s3.oRender; s3.inR = false; }
+                if (window.xmTile === s3.wTile) { window.xmTile = s3.oTile; s3.inT = false; }
+                if (window.prdView_plan === s3.wPlan) { window.prdView_plan = s3.oPlan; s3.inP = false; }
+                document.body.classList.remove('bl-x3');
+                var n = document.querySelectorAll('[data-x3],#bl-x3-strip'); for (var i = 0; i < n.length; i++) if (n[i].parentNode) n[i].parentNode.removeChild(n[i]);
+                var h = document.querySelectorAll('.bl-x3-hid'); for (var j = 0; j < h.length; j++) h[j].classList.remove('bl-x3-hid');
+                s3.landed = false; s3.seen = null; s3.at = ''; s3.tapAt = '';
+                try { localStorage.setItem('bl_x3_v1', 'off'); } catch (e) { }
+                try { if (prdActive() && XM.prd.lk) window.xmRender('prd', false); } catch (e) { }
+            } catch (e) { }
+        };
+        window.blx3On = function () { try { localStorage.setItem('bl_x3_v1', 'on'); } catch (e) { } on3(); };
+        if (flag('bl_x3_v1', 'x3')) on3();
+    } catch (err3) { try { console.warn('x3 off:', err3 && err3.message); } catch (e) { } }
+})();
+
+</script>
+<style id="bl-x2-css">
+/* RC33 X2 Raw materials hub: styles only under body.bl-x2 or for the layer's own ids */
+body.bl-x2 .bl-x2-hid { display: none !important; }
+#bl-x2-hub { margin: 0 0 10px; }
+#bl-x2-hub .bl-x2-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+#bl-x2-hub .bl-x2-tile { min-height: 84px; text-align: left; }
+#bl-x2-hub .bl-x2-setup { display: flex; gap: 8px; margin: 8px 0 0; flex-wrap: wrap; }
+#bl-x2-hub .bl-x2-su { min-height: 44px; flex: 1 1 8rem; font-weight: 700; }
+#bl-x2-sheet-bg { position: fixed; inset: 0; background: rgba(10, 22, 40, .55); z-index: 9000; display: flex; align-items: flex-end; justify-content: center; }
+#bl-x2-sheet { background: #fff; width: 100%; max-width: 560px; max-height: 85vh; overflow-y: auto; border-radius: 14px 14px 0 0; padding: 10px 12px 18px; box-sizing: border-box; }
+#bl-x2-sheet .bl-x2-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; font-size: 1.1em; color: #0A1628; }
+#bl-x2-sheet .bl-x2-close { min-width: 44px; min-height: 44px; border: 0; background: transparent; font-size: 1.3em; }
+#bl-x2-sheet .bl-x2-list { display: flex; flex-direction: column; gap: 6px; }
+#bl-x2-sheet .bl-x2-row { min-height: 56px; text-align: left; border: 1px solid #C9D3E0; border-radius: 10px; background: #fff; padding: 8px 12px; display: flex; flex-direction: column; gap: 2px; width: 100%; }
+#bl-x2-sheet .bl-x2-n { font-weight: 700; color: #1B3F6B; }
+#bl-x2-sheet .bl-x2-d { font-size: .88em; color: #4A5568; }
+
+</style>
+<script id="bl-x2-js">
+/* RC33 X2 RAW MATERIALS HUB: six section tiles + Set up buttons at the top of the Raw materials home; each tile opens a sheet of the SAME actions the old buttons ran.
+   ADDITIVE and OFF by default: flag localStorage bl_x2_v1 = on|off, or ?x2=on|off. Parking flag bl_x2_park_v1 (default OFF = everything visible; no feature is parked yet).
+   Plan: PLAN_X2_v2_RC33.md + PLAN_X2_X3_ADDENDUM_RC33.md; map X2_PLACEMENT_MAP_RC33.csv. No database call, no new network call, no PIN code.
+   A row is shown only when the old home really has its button (so every permission and guard of the old button applies by itself); the old buttons are hidden with a class, never removed. */
+(function () {
+    function flag(key, qname) {
+        try {
+            var q = String(location.search || '');
+            if (new RegExp('[?&]' + qname + '=on').test(q)) localStorage.setItem(key, 'on');
+            else if (new RegExp('[?&]' + qname + '=off').test(q)) localStorage.setItem(key, 'off');
+            return localStorage.getItem(key) === 'on';
+        } catch (e) { return new RegExp('[?&]' + qname + '=on').test(String(location.search || '')); }
+    }
+    function need(names) { for (var i = 0; i < names.length; i++) { if (typeof window[names[i]] !== 'function') { try { console.warn('x2 off: missing ' + names[i]); } catch (e) { } return false; } } return true; }
+    function E(s) { return window.esc59(s == null ? '' : s); }
+    try {
+        /* section -> rows. t: 'go' = rmGo(v,p) ; 'fn' = window[f](a). m = text of the old button's onclick that proves it exists on the old home. */
+        var SECTIONS = [
+            { k: 'STOCK', t: 'Stock', d: 'What you hold, counts and corrections', rows: [
+                { n: 'Raw materials stock', d: 'Every material and how much you hold', t: 'go', v: 'items', m: "rmGo('items',{})" },
+                { n: 'Count one item', d: 'Check one material on the shelf', t: 'go', v: 'count', m: "rmGo('count'" },
+                { n: 'Weekly count list', d: 'The materials to count this week', t: 'go', v: 'counts', m: "rmGo('counts'" },
+                { n: 'Fix a stock mistake', d: 'Correct a wrong quantity', t: 'go', v: 'adjust', m: "rmGo('adjust'" },
+                { n: 'Record loss or wastage', d: 'Write off damaged or lost material', t: 'go', v: 'loss', m: "rmGo('loss'" },
+                { n: 'Batches and expiry', d: 'Batches and their expiry dates', t: 'go', v: 'lots', m: "rmGo('lots'" },
+                { n: 'Give to production', d: 'Stock goes out to the production floor', t: 'go', v: 'issue', m: "rmGo('issue'" }] },
+            { k: 'BUYING', t: 'Buying', d: 'Vendors, requests, orders and bills', rows: [
+                { n: 'Vendors', d: 'Who you buy from', t: 'go', v: 'vendors', m: "rmGo('vendors'" },
+                { n: 'Vendor scorecard', d: 'How each vendor performs', t: 'go', v: 'scorecard', m: "rmGo('scorecard'" },
+                { n: 'Purchase requests', d: 'What you asked to buy', t: 'go', v: 'proc', m: "rmGo('proc'" },
+                { n: 'Purchase orders', d: 'Orders sent to vendors', t: 'go', v: 'po', m: "rmGo('po'" },
+                { n: 'Buying suggestions', d: 'What the app suggests you buy', t: 'go', v: 'learn', m: "rmGo('learn'" },
+                { n: 'GST input credit', d: 'GST paid on purchases (manager)', t: 'go', v: 'gst', m: "rmGo('gst'" },
+                { n: 'Bills we received', d: 'Purchase bills of the last 30 days', t: 'go', v: 'register', p: { preset: '30D' }, m: "rmGo('register'" }] },
+            { k: 'RECEIVING', t: 'Receiving', d: 'Bring new material in', rows: [
+                { n: 'Receive stock', d: 'Enter a purchase bill and add the stock', t: 'go', v: 'receive', m: "rmGo('receive'" },
+                { n: 'Bill photo', d: 'Read a bill from a photo', t: 'go', v: 'billPhoto', m: "rmGo('billPhoto'" },
+                { n: 'Scan a label', d: 'Find a material by its label', t: 'fn', f: 'rm20ScanItem', a: '__home', m: 'rm20ScanItem(' },
+                { n: 'Label sheet', d: 'Print labels for materials', t: 'go', v: 'labels', m: "rmGo('labels'" },
+                { n: 'Load from a file', d: 'Add many rows from a file', t: 'go', v: 'bulk', m: "rmGo('bulk'" }] },
+            { k: 'ALERTS', t: 'Alerts', d: 'What needs you today', rows: [
+                { n: 'Alerts and requests', d: 'Messages that need an answer', t: 'go', v: 'inbox', m: "rmGo('inbox'" },
+                /* HELD (AUDIT B finding 10): 'Today: what needs me' (rmView_today) has no old home button and its opener is unverified; add the row only after a cold check with a non-manager */
+                { n: 'Alert settings', d: 'Choose what raises an alert (manager)', t: 'go', v: 'alerts', m: "rmGo('alerts'" }] },
+            { k: 'HEALTH', t: 'Data health', d: 'Find and fix mistakes in the data', rows: [
+                { n: 'Data quality', d: 'Duplicates and missing rates', t: 'go', v: 'dq', m: "rmGo('dq'" },
+                { n: 'Data checks', d: 'Reconcile and check the figures (manager)', t: 'go', v: 'dataChecks', m: "rmGo('dataChecks'" }] },
+            { k: 'REPORTS', t: 'Reports', d: 'Briefs, history and exports', rows: [
+                { n: 'Morning brief', d: 'The day in one page', t: 'go', v: 'brief', m: "rmGo('brief'" },
+                { n: 'Share today’s brief', d: 'Send the brief to someone', t: 'fn', f: 'rm20ShareBrief', a: null, m: 'rm20ShareBrief(' },
+                { n: 'Change history', d: 'Who edited what (manager)', t: 'go', v: 'history', m: "rmGo('history'" },
+                { n: 'Stock history', d: 'Every stock in and out', t: 'go', v: 'ledger', m: "rmGo('ledger'" },
+                { n: 'Export files', d: 'Download your data', t: 'go', v: 'exportv', m: "rmGo('exportv'" },
+                { n: 'Materials used per product', d: 'What goes into each product', t: 'go', v: 'bom', m: "rmGo('bom'" },
+                { n: 'More reports and returns', d: 'Payables, valuation, expiry and more', t: 'go', v: 'more21', m: "rmGo('more21'" }] }
+        ];
+        var SETUP = [
+            { n: 'Add material', t: 'go', v: 'itemEdit', m: "rmGo('itemEdit'" },
+            { n: 'Add vendor', t: 'go', v: 'vendorEdit', m: "rmGo('vendorEdit'" }];
+        var PARK = [];   /* names of rows to park when bl_x2_park_v1 is on; none chosen yet (founder decision with usage data) */
+        var s2 = { tickT: 0, on: false, home: null, home121: null, wHome: null, wHome121: null, mo: null, moEl: null, sheet: null, prevFocus: null, onKey: null };
+
+        function tabActive() { var t = document.getElementById('rm-tab'); return !!(t && t.classList.contains('active')); }
+        function parkOn() { try { return localStorage.getItem('bl_x2_park_v1') === 'on'; } catch (e) { return false; } }
+        function oldBtns() {
+            var t = document.getElementById('rm-tab'); if (!t) return [];
+            var out = [], all = t.querySelectorAll('button[onclick]');
+            for (var i = 0; i < all.length; i++) { var b = all[i]; if (b.closest('#bl-x2-hub') || b.classList.contains('rm-tile') || b.classList.contains('rm-row')) continue; out.push(b); }
+            return out;
+        }
+        function find(list, m) { for (var i = 0; i < list.length; i++) { if ((list[i].getAttribute('onclick') || '').indexOf(m) >= 0) return list[i]; } return null; }
+        function present(row, list) { var key = row.via ? row.m : row.m; return !!find(list, key); }
+        function ensure() {
+            if (!s2.on) return;
+            try {
+                var body = document.getElementById('rm-body');
+                if (!body || !tabActive() || typeof RM === 'undefined' || !RM.lk || RM.view !== 'home') return;
+                var hub = document.getElementById('bl-x2-hub');
+                var list = oldBtns();
+                if (!hub) {
+                    hub = document.createElement('div'); hub.id = 'bl-x2-hub'; hub.setAttribute('data-x2', '1');
+                    hub.addEventListener('click', onHub);
+                    body.insertBefore(hub, body.firstChild);
+                }
+                var parked = parkOn() ? PARK : [];
+                var h = '<div class="bl-x2-grid">', shown = 0;
+                SECTIONS.forEach(function (s) {
+                    var rows = s.rows.filter(function (r) { return present(r, list) && parked.indexOf(r.n) < 0; });
+                    if (!rows.length) return;
+                    shown++;
+                    h += '<button type="button" class="rm-tile bl-x2-tile" data-sec="' + s.k + '"><div class="rm-tile-n">' + rows.length + '</div><div class="rm-tile-l">' + E(s.t) + '</div><div class="rm-tile-s">' + E(s.d) + '</div></button>';
+                });
+                h += '</div>';
+                var su = SETUP.filter(function (r) { return present(r, list); });
+                if (su.length) h += '<div class="bl-x2-setup">' + su.map(function (r, i) { return '<button type="button" class="pill-btn bl-x2-su" data-su="' + i + '">+ ' + E(r.n) + '</button>'; }).join('') + '</div>';
+                if (hub.getAttribute('data-sig') !== h) { hub.innerHTML = h; hub.setAttribute('data-sig', h); }
+                /* hide the old buttons that now have a row (same elements, only a class) */
+                var rowsAll = []; SECTIONS.forEach(function (s) { s.rows.forEach(function (r) { if (parked.indexOf(r.n) < 0) rowsAll.push(r); }); }); SETUP.forEach(function (r) { rowsAll.push(r); });
+                list.forEach(function (b) {
+                    var oc = b.getAttribute('onclick') || '', hit = false;
+                    for (var i = 0; i < rowsAll.length; i++) { if (oc.indexOf(rowsAll[i].m) >= 0) { hit = true; break; } }
+                    if (hit && !b.classList.contains('bl-x2-hid')) b.classList.add('bl-x2-hid');
+                });
+                if (!shown && !su.length) { hub.innerHTML = ''; hub.removeAttribute('data-sig'); }
+            } catch (e) { }
+        }
+        function runRow(r) {
+            try {
+                if (r.t === 'go') window.rmGo(r.v, r.p ? JSON.parse(JSON.stringify(r.p)) : {});
+                else if (r.t === 'fn' && typeof window[r.f] === 'function') { if (r.a == null) window[r.f](); else window[r.f](r.a); }
+            } catch (e) { }
+        }
+        function onHub(ev) {
+            var t = ev.target && ev.target.closest ? ev.target.closest('[data-sec],[data-su]') : null; if (!t) return;
+            if (t.getAttribute('data-su') != null) { var r = SETUP[+t.getAttribute('data-su')]; if (r) runRow(r); return; }
+            openSheet(t.getAttribute('data-sec'));
+        }
+        /* ---- sheet: no history entry; Close / Escape / outside tap closes it; hardware Back behaves exactly as on the old home ---- */
+        function openSheet(k) {
+            var s = null; SECTIONS.forEach(function (x) { if (x.k === k) s = x; }); if (!s) return;
+            closeSheet(true);
+            var list = oldBtns(), parked = parkOn() ? PARK : [];
+            var rows = s.rows.filter(function (r) { return present(r, list) && parked.indexOf(r.n) < 0; });
+            var bg = document.createElement('div'); bg.id = 'bl-x2-sheet-bg'; bg.setAttribute('data-x2', '1');
+            var h = '<div id="bl-x2-sheet" role="dialog" aria-modal="true" aria-labelledby="bl-x2-h"><div class="bl-x2-top"><b id="bl-x2-h">' + E(s.t) + '</b><button type="button" class="bl-x2-close" aria-label="Close">&#10005;</button></div><div class="bl-x2-list">';
+            rows.forEach(function (r, i) { h += '<button type="button" class="bl-x2-row" data-r="' + i + '"><span class="bl-x2-n">' + E(r.n) + '</span><span class="bl-x2-d">' + E(r.d) + '</span></button>'; });
+            h += '</div></div>';
+            bg.innerHTML = h; document.body.appendChild(bg);
+            s2.sheet = { bg: bg, rows: rows }; s2.prevFocus = document.activeElement;
+            bg.addEventListener('click', function (ev) {
+                if (ev.target === bg || (ev.target.closest && ev.target.closest('.bl-x2-close'))) { closeSheet(); return; }
+                var b = ev.target.closest ? ev.target.closest('.bl-x2-row') : null; if (!b) return;
+                var r = s2.sheet && s2.sheet.rows[+b.getAttribute('data-r')]; closeSheet(true);
+                if (r && sheetOk()) runRow(r);
+            });
+            s2.onKey = function (ev) {
+                if (!s2.sheet) return;
+                if (ev.key === 'Escape') { ev.preventDefault(); ev.stopPropagation(); closeSheet(); return; }
+                if (ev.key === 'Tab') { var f = s2.sheet.bg.querySelectorAll('button'); if (!f.length) return; var first = f[0], last = f[f.length - 1];
+                    if (ev.shiftKey && document.activeElement === first) { ev.preventDefault(); last.focus(); } else if (!ev.shiftKey && document.activeElement === last) { ev.preventDefault(); first.focus(); } else if (!s2.sheet.bg.contains(document.activeElement)) { ev.preventDefault(); first.focus(); } }
+            };
+            document.addEventListener('keydown', s2.onKey, true);
+            var f0 = bg.querySelector('.bl-x2-row') || bg.querySelector('.bl-x2-close'); if (f0) f0.focus();
+        }
+        function sheetOk() { try { return tabActive() && typeof RM !== 'undefined' && !RM.away && RM.lk && RM.view === 'home'; } catch (e) { return false; } }
+        function closeSheet(noFocus) {
+            if (!s2.sheet) return;
+            try { if (s2.sheet.bg.parentNode) s2.sheet.bg.parentNode.removeChild(s2.sheet.bg); } catch (e) { }
+            s2.sheet = null; try { document.removeEventListener('keydown', s2.onKey, true); } catch (e) { }
+            if (!noFocus && s2.prevFocus && s2.prevFocus.focus) { try { s2.prevFocus.focus(); } catch (e) { } }
+        }
+        function wrapHome(orig) { return function () { var r = orig.apply(this, arguments); if (s2.on) { try { ensure(); } catch (e) { } } return r; }; }
+        function watch() {
+            var b = document.getElementById('rm-body'); if (!b || s2.moEl === b) return;
+            if (s2.mo) try { s2.mo.disconnect(); } catch (e) { }
+            s2.moEl = b; s2.mo = new MutationObserver(function () { if (s2.on && !document.getElementById('bl-x2-hub')) ensure(); });
+            s2.mo.observe(b, { childList: true });   /* direct children of the body only; the hub's own insertion is guarded by the id check, so no loop */
+        }
+        function on2() {
+            if (s2.on || !need(['rmGo', 'esc59']) || typeof RM === 'undefined') return;
+            s2.on = true;
+            if (typeof window.rmView_home === 'function') { s2.home = window.rmView_home; window.rmView_home = s2.wHome = wrapHome(s2.home); }
+            if (typeof window.rmView_homeV121 === 'function') { s2.home121 = window.rmView_homeV121; window.rmView_homeV121 = s2.wHome121 = wrapHome(s2.home121); }
+            document.body.classList.add('bl-x2'); watch(); ensure();
+            s2.tickT = setInterval(function () { if (!s2.on) return; if (s2.sheet && !sheetOk()) closeSheet(true); if (!tabActive() || typeof RM === 'undefined' || RM.view !== 'home') return; watch(); ensure(); }, 1200);   /* inert unless Raw materials home is on screen; ensure() is idempotent */
+        }
+        window.blx2Off = function () {
+            try {
+                s2.on = false; closeSheet(true); clearInterval(s2.tickT);
+                if (s2.wHome && window.rmView_home === s2.wHome) window.rmView_home = s2.home;
+                if (s2.wHome121 && window.rmView_homeV121 === s2.wHome121) window.rmView_homeV121 = s2.home121;
+                if (s2.mo) { try { s2.mo.disconnect(); } catch (e) { } s2.mo = null; s2.moEl = null; }
+                document.body.classList.remove('bl-x2');
+                var n = document.querySelectorAll('[data-x2]'); for (var i = 0; i < n.length; i++) if (n[i].parentNode) n[i].parentNode.removeChild(n[i]);
+                var h = document.querySelectorAll('.bl-x2-hid'); for (var j = 0; j < h.length; j++) h[j].classList.remove('bl-x2-hid');
+                try { localStorage.setItem('bl_x2_v1', 'off'); } catch (e) { }
+                try { if (tabActive() && typeof RM !== 'undefined' && RM.lk && RM.view === 'home' && typeof rmRender === 'function') rmRender(false); } catch (e) { }
+            } catch (e) { }
+        };
+        window.blx2On = function () { try { localStorage.setItem('bl_x2_v1', 'on'); } catch (e) { } on2(); };
+        window.bl2Sections = function () { return SECTIONS.map(function (s) { return { k: s.k, rows: s.rows.map(function (r) { return r.n; }) }; }); };
+        if (flag('bl_x2_v1', 'x2')) on2();
+    } catch (err2) { try { console.warn('x2 off:', err2 && err2.message); } catch (e) { } }
+})();
+
+</script>
+<style id="bl-x4m-css">
+/* RC33 X4M Customers menu: only under body.bl-x4m or own ids. Old buttons are hidden by their onclick text (also where a fold pass moved them). */
+body.bl-x4m .bl-x4m-hid { display: none !important; }
+body.bl-x4m #crm-tab .rm-act[onclick^="xmGo('crm','wty'"],
+body.bl-x4m #crm-tab .rm-act[onclick^="xmGo('crm','quotes'"],
+body.bl-x4m #crm-tab .rm-act[onclick^="xmGo('crm','deals'"],
+body.bl-x4m #crm-tab .rm-act[onclick^="xmGo('crm','segments'"],
+body.bl-x4m #crm-tab .rm-act[onclick^="xmGo('crm','tplCheck'"],
+body.bl-x4m #crm-tab .rm-act[onclick^="xmGo('crm','mergeUndo'"],
+body.bl-x4m #crm-tab .rm-act[onclick^="xmGo('crm','orders'"],
+body.bl-x4m #crm-tab .rm-act[onclick^="xmGo('crm','bulk'"],
+body.bl-x4m #crm-tab .rm-act[onclick^="xmGo('crm','exportv'"],
+body.bl-x4m #crm-tab .rm-act[onclick^="xmGo('crm','list',{})"],
+body.bl-x4m #crm-tab .rm-act[onclick^="xmGo('crm','list',{filters:{at_risk:true}})"],
+body.bl-x4m #crm-tab .rm-act[onclick^="xmGo('crm','dups'"] { display: none !important; }
+#bl-x4m-strip { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 8px; }
+#bl-x4m-strip .bl-x4m-tab, #bl-x4m-strip .bl-x4m-more { flex: 1 1 22%; min-width: 72px; min-height: 44px; border: 1px solid #1B3F6B; background: #fff; color: #1B3F6B; border-radius: 8px; font-weight: 700; font-size: .92em; padding: 6px 8px; white-space: normal; line-height: 1.15; }
+#bl-x4m-strip .bl-x4m-tab.on { background: #1B3F6B; color: #fff; }
+#bl-x4m-strip .bl-x4m-more { flex: 1 1 100%; background: #F1F5F9; }
+@media (max-width: 359px) { #bl-x4m-strip .bl-x4m-tab { flex: 1 1 44%; } }
+#bl-x4m-sheet-bg { position: fixed; inset: 0; background: rgba(10, 22, 40, .55); z-index: 9000; display: flex; align-items: flex-end; justify-content: center; }
+#bl-x4m-sheet { background: #fff; width: 100%; max-width: 560px; max-height: 85vh; overflow-y: auto; border-radius: 14px 14px 0 0; padding: 10px 12px 18px; box-sizing: border-box; }
+#bl-x4m-sheet .bl-x4m-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; font-size: 1.1em; color: #0A1628; }
+#bl-x4m-sheet .bl-x4m-close { min-width: 44px; min-height: 44px; border: 0; background: transparent; font-size: 1.3em; }
+#bl-x4m-sheet .bl-x4m-list { display: flex; flex-direction: column; gap: 6px; }
+#bl-x4m-sheet .bl-x4m-row { min-height: 56px; text-align: left; border: 1px solid #C9D3E0; border-radius: 10px; background: #fff; padding: 8px 12px; display: flex; flex-direction: column; gap: 2px; width: 100%; }
+#bl-x4m-sheet .bl-x4m-n { font-weight: 700; color: #1B3F6B; }
+#bl-x4m-sheet .bl-x4m-d { font-size: .88em; color: #4A5568; }
+
+</style>
+<script id="bl-x4m-js">
+/* RC33 X4M CUSTOMERS MENU: four tabs (All / Follow-ups / At risk / Possible duplicates) and ONE More menu on the Customers screens.
+   ADDITIVE and OFF by default: flag localStorage bl_x4m_v1 = on|off, or ?x4m=on|off. Plan: PLAN_X4M_CUSTOMERS_MENU_RC33.md + PLAN_X4M_ADDENDUM_RC33.md.
+   No database call, no PIN code. "Check late follow-ups" (the only write on the screen) is never touched or called. Old buttons are hidden by CSS only. */
+(function () {
+    function flag(key, qname) {
+        try {
+            var q = String(location.search || '');
+            if (new RegExp('[?&]' + qname + '=on').test(q)) localStorage.setItem(key, 'on');
+            else if (new RegExp('[?&]' + qname + '=off').test(q)) localStorage.setItem(key, 'off');
+            return localStorage.getItem(key) === 'on';
+        } catch (e) { return new RegExp('[?&]' + qname + '=on').test(String(location.search || '')); }
+    }
+    function need(names) { for (var i = 0; i < names.length; i++) { if (typeof window[names[i]] !== 'function') { try { console.warn('x4m off: missing ' + names[i]); } catch (e) { } return false; } } return true; }
+    function E(s) { return window.esc59(s == null ? '' : s); }
+    try {
+        var VIEWS = { home: 1, list: 1, dups: 1 };
+        var ROWS = [
+            { n: 'Warranty', d: 'Warranty claims', m: "xmGo('crm','wty',{})" },
+            { n: 'Quotes', d: 'Quotes sent to customers', m: "xmGo('crm','quotes',{})" },
+            { n: 'Deals', d: 'Deals in progress', m: "xmGo('crm','deals',{})" },
+            { n: 'Segments', d: 'Saved groups of customers', m: "xmGo('crm','segments',{})" },
+            { n: 'Check an import file', d: 'Test a customer file before loading it', m: "xmGo('crm','tplCheck',{})" },
+            { n: 'Undo a merge', d: 'Put two merged customers back (manager)', m: "xmGo('crm','mergeUndo',{})" },
+            { n: 'Orders', d: 'All orders and linking them to customers', m: "xmGo('crm','orders',{})" },
+            { n: 'Bulk import', d: 'Load many customers at once', m: "xmGo('crm','bulk',{})" },
+            { n: 'Export CSV', d: 'Download customers', m: "xmGo('crm','exportv',{})" }];
+        var s = { on: false, wRender: null, oRender: null, inR: false, mo: null, moEl: null, tickT: 0, sheet: null, prevFocus: null, onKey: null };
+        function tabActive() { var t = document.getElementById('crm-tab'); return !!(t && t.classList.contains('active')); }
+        function okNow() {
+            try { var X = XM.crm; return s.on && X && X.lk && !X.away && window.xmCan('crm') && tabActive() && VIEWS[X.view]; } catch (e) { return false; }
+        }
+        function selected() {
+            var X = XM.crm, F = X.form || {};
+            if (X.view === 'dups') return 'dups';
+            if (X.view === 'list') return F['cl-risk'] ? 'risk' : (F['cl-fu'] ? 'fu' : 'all');
+            return '';
+        }
+        function nodes() { var t = document.getElementById('crm-tab'); return t ? t.querySelectorAll('button[onclick]') : []; }
+        function oldNode(m) { var a = nodes(); for (var i = 0; i < a.length; i++) { if (a[i].classList.contains('rm-act') && !a[i].closest('#bl-x4m-strip') && (a[i].getAttribute('onclick') || '') === m) return a[i]; } return null; }   /* exact match on the old home acts only (a substring matched Link orders and the list's My segments) */
+        function refresh() {
+            if (!s.on) return;
+            try {
+                var body = document.getElementById('crm-body'), el = document.getElementById('bl-x4m-strip');
+                if (!okNow()) { if (el && el.style.display !== 'none') el.style.display = 'none'; closeSheet(true); hideEmptyMenus(); return; }
+                if (!body || !body.parentNode) return;
+                if (!el) {
+                    el = document.createElement('div'); el.id = 'bl-x4m-strip'; el.className = 'e2-keep'; el.setAttribute('data-x4m', '1'); el.setAttribute('role', 'tablist');
+                    el.addEventListener('click', onStrip);
+                    body.parentNode.insertBefore(el, body);
+                }
+                if (el.style.display !== '') el.style.display = '';
+                var sel = selected();
+                var h = '', T = [['all', 'All'], ['fu', 'Follow-ups'], ['risk', 'At risk'], ['dups', 'Possible duplicates']];
+                T.forEach(function (t) { h += '<button type="button" role="tab" class="pill-btn bl-x4m-tab' + (sel === t[0] ? ' on' : '') + '" data-t="' + t[0] + '" aria-selected="' + (sel === t[0] ? 'true' : 'false') + '">' + E(t[1]) + '</button>'; });
+                if (XM.crm.view === 'home') h += '<button type="button" class="pill-btn bl-x4m-more" data-more="1" aria-haspopup="dialog">More</button>';   /* the rows come from the home's own buttons, so More lives on the home only */
+                if (el.getAttribute('data-sig') !== h) { el.innerHTML = h; el.setAttribute('data-sig', h); }
+                hideEmptyMenus();
+            } catch (e) { }
+        }
+        function hideEmptyMenus() {
+            try {
+                var t = document.getElementById('crm-tab'); if (!t) return;
+                var ds = t.querySelectorAll('details.b25-more, details.e2-more');
+                for (var i = 0; i < ds.length; i++) {
+                    var bs = ds[i].querySelectorAll('button'), vis = 0;
+                    for (var j = 0; j < bs.length; j++) { if (bs[j].offsetParent !== null) vis++; }
+                    var want = !!(s.on && okNow() && !vis);
+                    if (want !== ds[i].classList.contains('bl-x4m-hid')) ds[i].classList.toggle('bl-x4m-hid', want);
+                }
+            } catch (e) { }
+        }
+        function go(t) {
+            var X = XM.crm; if (!okNow()) return;
+            var st = (X.stack || []).slice(), fromHome = X.view === 'home';
+            try {
+                if (t === 'all') window.xmGo('crm', 'list', {});
+                else if (t === 'fu') window.xmGo('crm', 'list', { filters: { follow_up_due: true } });
+                else if (t === 'risk') window.xmGo('crm', 'list', { filters: { at_risk: true } });
+                else if (t === 'dups') window.xmGo('crm', 'dups', {});
+            } finally { if (!fromHome) X.stack = st; }   /* from the home the app's own push stays (Back = home, and the app does not treat the list as opened from another place); from a tab the frame is replaced, so Back goes where Back from that tab would have gone */
+        }
+        function onStrip(ev) {
+            var b = ev.target && ev.target.closest ? ev.target.closest('[data-t],[data-more]') : null; if (!b || !okNow()) return;
+            if (b.getAttribute('data-more')) { openSheet(); return; }
+            go(b.getAttribute('data-t'));
+        }
+        function openSheet() {
+            closeSheet(true);
+            var rows = ROWS.filter(function (r) { return !!oldNode(r.m); });
+            var bg = document.createElement('div'); bg.id = 'bl-x4m-sheet-bg'; bg.setAttribute('data-x4m', '1');
+            var h = '<div id="bl-x4m-sheet" role="dialog" aria-modal="true" aria-labelledby="bl-x4m-h"><div class="bl-x4m-top"><b id="bl-x4m-h">More</b><button type="button" class="bl-x4m-close" aria-label="Close">&#10005;</button></div><div class="bl-x4m-list">';
+            rows.forEach(function (r, i) { h += '<button type="button" class="bl-x4m-row" data-r="' + i + '"><span class="bl-x4m-n">' + E(r.n) + '</span><span class="bl-x4m-d">' + E(r.d) + '</span></button>'; });
+            if (!rows.length) h += '<div class="rm-dim">Nothing more to show here.</div>';
+            h += '</div></div>'; bg.innerHTML = h; document.body.appendChild(bg);
+            s.sheet = { bg: bg, rows: rows }; s.prevFocus = document.activeElement;
+            bg.addEventListener('click', function (ev) {
+                if (ev.target === bg || (ev.target.closest && ev.target.closest('.bl-x4m-close'))) { closeSheet(); return; }
+                var b = ev.target.closest ? ev.target.closest('.bl-x4m-row') : null; if (!b) return;
+                var r = s.sheet && s.sheet.rows[+b.getAttribute('data-r')]; closeSheet(true);
+                if (r && okNow()) { var n = oldNode(r.m); if (n) { try { n.click(); } catch (e) { } } }
+            });
+            s.onKey = function (ev) {
+                if (!s.sheet) return;
+                if (ev.key === 'Escape') { ev.preventDefault(); ev.stopPropagation(); closeSheet(); return; }
+                if (ev.key === 'Tab') { var f = s.sheet.bg.querySelectorAll('button'); if (!f.length) return; var a = f[0], z = f[f.length - 1];
+                    if (ev.shiftKey && document.activeElement === a) { ev.preventDefault(); z.focus(); } else if (!ev.shiftKey && document.activeElement === z) { ev.preventDefault(); a.focus(); } else if (!s.sheet.bg.contains(document.activeElement)) { ev.preventDefault(); a.focus(); } }
+            };
+            document.addEventListener('keydown', s.onKey, true);
+            s.onPop = function () { closeSheet(true); };
+            window.addEventListener('popstate', s.onPop, true);   /* phone Back while the sheet is open closes it (the sheet has no history entry of its own) */
+            s.onTab = function (ev) { var t = ev.target && ev.target.closest ? ev.target.closest('.bottom-nav button, .nav-btn, [data-tab]') : null; if (t) closeSheet(true); };
+            document.addEventListener('click', s.onTab, true);
+            var f0 = bg.querySelector('.bl-x4m-row') || bg.querySelector('.bl-x4m-close'); if (f0) f0.focus();
+        }
+        function closeSheet(noFocus) {
+            if (!s.sheet) return;
+            try { if (s.sheet.bg.parentNode) s.sheet.bg.parentNode.removeChild(s.sheet.bg); } catch (e) { }
+            s.sheet = null; try { document.removeEventListener('keydown', s.onKey, true); window.removeEventListener('popstate', s.onPop, true); document.removeEventListener('click', s.onTab, true); } catch (e) { }
+            if (!noFocus && s.prevFocus && s.prevFocus.focus) { try { s.prevFocus.focus(); } catch (e) { } }
+        }
+        function mkRender(orig) { return function render4m(k, fetch) {
+            var r = orig.apply(this, arguments);
+            if (s.on && k === 'crm') { try { watch(); refresh(); } catch (e) { } }
+            return r;
+        }; }
+        function watch() {
+            var b = document.getElementById('crm-body'); if (!b || s.moEl === b) return;
+            if (s.mo) { try { s.mo.disconnect(); } catch (e) { } }
+            s.moEl = b; s.mo = new MutationObserver(function () { if (s.on) refresh(); });
+            s.mo.observe(b, { childList: true });
+        }
+        function on4m() {
+            if (s.on || !need(['xmRender', 'xmGo', 'xmCan', 'esc59']) || typeof XM === 'undefined' || !XM.crm) return;
+            s.on = true;
+            if (!s.inR) { s.oRender = window.xmRender; window.xmRender = s.wRender = mkRender(s.oRender); s.inR = true; }
+            document.body.classList.add('bl-x4m'); watch(); refresh();
+            s.tickT = setInterval(function () { if (!s.on) return; if (s.sheet && !okNow()) closeSheet(true); watch(); refresh(); }, 1200);
+        }
+        window.blx4mOff = function () {
+            try {
+                s.on = false; clearInterval(s.tickT); closeSheet(true);
+                if (window.xmRender === s.wRender) { window.xmRender = s.oRender; s.inR = false; }
+                if (s.mo) { try { s.mo.disconnect(); } catch (e) { } s.mo = null; s.moEl = null; }
+                document.body.classList.remove('bl-x4m');
+                var n = document.querySelectorAll('[data-x4m]'); for (var i = 0; i < n.length; i++) if (n[i].parentNode) n[i].parentNode.removeChild(n[i]);
+                var h = document.querySelectorAll('.bl-x4m-hid'); for (var j = 0; j < h.length; j++) h[j].classList.remove('bl-x4m-hid');
+                try { localStorage.setItem('bl_x4m_v1', 'off'); } catch (e) { }
+                try { if (tabActive() && XM.crm.lk) window.xmRender('crm', false); } catch (e) { }
+            } catch (e) { }
+        };
+        window.blx4mOn = function () { try { localStorage.setItem('bl_x4m_v1', 'on'); } catch (e) { } on4m(); };
+        window.bl4mRows = function () { return ROWS.map(function (r) { return r.n; }); };
+        if (flag('bl_x4m_v1', 'x4m')) on4m();
+    } catch (err) { try { console.warn('x4m off:', err && err.message); } catch (e) { } }
+})();
+
+</script>
 </body>
 </html>
