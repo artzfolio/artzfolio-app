@@ -4003,7 +4003,7 @@ button:focus-visible,select:focus-visible,input:focus-visible,textarea:focus-vis
 </style>
 </head>
 <body>
-<div class="ver-corner" id="verCornerBadge">v231a</div>
+<div class="ver-corner" id="verCornerBadge">v231b</div>
 <!-- v112: the full-screen SKU page (opened by a12OpenSku) -->
 <div class="a12-skupage" id="a12-skupage"><div class="a12-sphead"><button type="button" onclick="a12CloseSku()">&larr; Back</button><div id="a12-sp-title" style="flex:1"></div><button type="button" onclick="shOpen('sku')" aria-label="Share this product page">&#128228; Share</button></div><div class="a12-spbody" id="a12-sp-body"></div></div>
 <!-- v63: Gap 2 — offline write-queue indicator. Hidden (display:none) unless
@@ -5224,7 +5224,7 @@ button:focus-visible,select:focus-visible,input:focus-visible,textarea:focus-vis
 
             <!-- Version -->
             <div class="ver-badge">
-                <div class="ver-name">&#128230; ArtzFolio Super App v231a</div>
+                <div class="ver-name">&#128230; ArtzFolio Super App v231b</div>
                 <div class="ver-sub">Tap the button below to see what is new in this version.</div>
                 <button class="settings-btn" style="min-height:46px" onclick="wnOpen()">What is new and what is done</button>
             </div>
@@ -6842,7 +6842,7 @@ body.bl-x3 .bl-x3-make { min-height: 44px; min-width: 88px; background: #1B3F6B;
 
 </script>
 <style id="bl-x2-css">
-/* RC33 X2 Raw materials hub: styles only under body.bl-x2 or for the layer's own ids */
+/* RC34 B1 v2 (adds the glance details) of RC33 X2 Raw materials hub: styles only under body.bl-x2 or for the layer's own ids */
 body.bl-x2 .bl-x2-hid { display: none !important; }
 #bl-x2-hub { margin: 0 0 10px; }
 #bl-x2-hub .bl-x2-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
@@ -6857,10 +6857,14 @@ body.bl-x2 .bl-x2-hid { display: none !important; }
 #bl-x2-sheet .bl-x2-row { min-height: 56px; text-align: left; border: 1px solid #C9D3E0; border-radius: 10px; background: #fff; padding: 8px 12px; display: flex; flex-direction: column; gap: 2px; width: 100%; }
 #bl-x2-sheet .bl-x2-n { font-weight: 700; color: #1B3F6B; }
 #bl-x2-sheet .bl-x2-d { font-size: .88em; color: #4A5568; }
+body.bl-x2 #bl-x2-glance { margin: 8px 0; }
+body.bl-x2 #bl-x2-glance > summary { min-height: 44px; display: flex; align-items: center; font-weight: 700; color: #1B4F8A; cursor: pointer; border: 1.5px solid #1B4F8A; border-radius: 10px; padding: 0 12px; background: #fff; width: fit-content; max-width: 100%; box-sizing: border-box; white-space: normal; overflow-wrap: anywhere; }
+body.bl-x2 #bl-x2-glance[open] > summary { margin-bottom: 8px; }
 
 </style>
 <script id="bl-x2-js">
-/* RC33 X2 RAW MATERIALS HUB: six section tiles + Set up buttons at the top of the Raw materials home; each tile opens a sheet of the SAME actions the old buttons ran.
+/* RC34 B1 v2 of bl_x2.js: (1) the hub carries e2-keep, so the E2 fold pass can never move its tiles into the Tools menu and leave dead copies (cause of the 24-versus-30 control count: the E2 pass folds only when the page holds more than 7 controls, so it fired for some roles and sizes and not for others); (2) the ten number tiles of the old home are wrapped, not removed, in one closed details 'Numbers at a glance' (e2-keep), so the home body shows 6 section tiles + 2 add buttons + Warranty.
+   RC33 X2 RAW MATERIALS HUB: six section tiles + Set up buttons at the top of the Raw materials home; each tile opens a sheet of the SAME actions the old buttons ran.
    ADDITIVE and OFF by default: flag localStorage bl_x2_v1 = on|off, or ?x2=on|off. Parking flag bl_x2_park_v1 (default OFF = everything visible; no feature is parked yet).
    Plan: PLAN_X2_v2_RC33.md + PLAN_X2_X3_ADDENDUM_RC33.md; map X2_PLACEMENT_MAP_RC33.csv. No database call, no new network call, no PIN code.
    A row is shown only when the old home really has its button (so every permission and guard of the old button applies by itself); the old buttons are hidden with a class, never removed. */
@@ -6940,7 +6944,7 @@ body.bl-x2 .bl-x2-hid { display: none !important; }
                 var hub = document.getElementById('bl-x2-hub');
                 var list = oldBtns();
                 if (!hub) {
-                    hub = document.createElement('div'); hub.id = 'bl-x2-hub'; hub.setAttribute('data-x2', '1');
+                    hub = document.createElement('div'); hub.id = 'bl-x2-hub'; hub.className = 'e2-keep'; hub.setAttribute('data-x2', '1');
                     hub.addEventListener('click', onHub);
                     body.insertBefore(hub, body.firstChild);
                 }
@@ -6964,6 +6968,31 @@ body.bl-x2 .bl-x2-hid { display: none !important; }
                     if (hit && !b.classList.contains('bl-x2-hid')) b.classList.add('bl-x2-hid');
                 });
                 if (!shown && !su.length) { hub.innerHTML = ''; hub.removeAttribute('data-sig'); }
+                glance(body);
+            } catch (e) { }
+        }
+        /* the old home's number tiles (direct children .rm-tiles of the body) move, as the same elements, into one closed details; nothing is cloned or removed */
+        function glance(body) {
+            try {
+                var g = document.getElementById('bl-x2-glance'), kids = body.children, boxes = [], i, n = 0;
+                for (i = 0; i < kids.length; i++) { var k = kids[i]; if (k.classList && k.classList.contains('rm-tiles') && !k.querySelector('.bl-x2-tile') && k.querySelectorAll('.rm-tile').length >= 1) boxes.push(k); }
+                if (!boxes.length) return;
+                if (!g) {
+                    g = document.createElement('details'); g.id = 'bl-x2-glance'; g.className = 'bl-x2-glance e2-keep b25-row'; g.setAttribute('data-x2', '1');
+                    var sm = document.createElement('summary'); sm.setAttribute('data-x2', '1'); g.appendChild(sm);
+                    body.insertBefore(g, boxes[0]);
+                }
+                boxes.forEach(function (b) { g.appendChild(b); });
+                var all = g.querySelectorAll('.rm-tile'); n = all.length;
+                g.firstChild.textContent = 'Numbers at a glance (' + n + ')';
+            } catch (e) { }
+        }
+        function unglance() {
+            try {
+                var g = document.getElementById('bl-x2-glance'); if (!g) return;
+                var boxes = Array.prototype.slice.call(g.children).filter(function (c) { return c.tagName !== 'SUMMARY'; });
+                boxes.forEach(function (b) { g.parentNode.insertBefore(b, g); });
+                g.parentNode.removeChild(g);
             } catch (e) { }
         }
         function runRow(r) {
@@ -7028,7 +7057,7 @@ body.bl-x2 .bl-x2-hid { display: none !important; }
         }
         window.blx2Off = function () {
             try {
-                s2.on = false; closeSheet(true); clearInterval(s2.tickT);
+                s2.on = false; closeSheet(true); clearInterval(s2.tickT); unglance();
                 if (s2.wHome && window.rmView_home === s2.wHome) window.rmView_home = s2.home;
                 if (s2.wHome121 && window.rmView_homeV121 === s2.wHome121) window.rmView_homeV121 = s2.home121;
                 if (s2.mo) { try { s2.mo.disconnect(); } catch (e) { } s2.mo = null; s2.moEl = null; }
@@ -7074,10 +7103,15 @@ body.bl-x4m #crm-tab .rm-act[onclick^="xmGo('crm','dups'"] { display: none !impo
 #bl-x4m-sheet .bl-x4m-row { min-height: 56px; text-align: left; border: 1px solid #C9D3E0; border-radius: 10px; background: #fff; padding: 8px 12px; display: flex; flex-direction: column; gap: 2px; width: 100%; }
 #bl-x4m-sheet .bl-x4m-n { font-weight: 700; color: #1B3F6B; }
 #bl-x4m-sheet .bl-x4m-d { font-size: .88em; color: #4A5568; }
+body.bl-x4m.bl-x4m-strip #crm-tab .settings-btn[onclick="xmGo('crm','list',{})"] { display: none !important; }
+#bl-x4m-glance { margin: 8px 0; }
+#bl-x4m-glance > summary { min-height: 44px; display: flex; align-items: center; font-weight: 700; color: #1B4F8A; cursor: pointer; border: 1.5px solid #1B4F8A; border-radius: 10px; padding: 0 12px; background: #fff; width: fit-content; max-width: 100%; box-sizing: border-box; white-space: normal; overflow-wrap: anywhere; }
+#bl-x4m-glance[open] > summary { margin-bottom: 8px; }
 
 </style>
 <script id="bl-x4m-js">
-/* RC33 X4M CUSTOMERS MENU: four tabs (All / Follow-ups / At risk / Possible duplicates) and ONE More menu on the Customers screens.
+/* RC34 B1 v2 of bl_x4m.js: on the Customers home (a) the number tiles are wrapped, as the same elements, in one closed details 'Numbers at a glance' (e2-keep), (b) the duplicate 'All customers' button is hidden while the strip shows (the All tab opens the same list). Nothing is removed; blx4mOff puts the tiles back.
+   RC33 X4M CUSTOMERS MENU: four tabs (All / Follow-ups / At risk / Possible duplicates) and ONE More menu on the Customers screens.
    ADDITIVE and OFF by default: flag localStorage bl_x4m_v1 = on|off, or ?x4m=on|off. Plan: PLAN_X4M_CUSTOMERS_MENU_RC33.md + PLAN_X4M_ADDENDUM_RC33.md.
    No database call, no PIN code. "Check late follow-ups" (the only write on the screen) is never touched or called. Old buttons are hidden by CSS only. */
 (function () {
@@ -7120,7 +7154,8 @@ body.bl-x4m #crm-tab .rm-act[onclick^="xmGo('crm','dups'"] { display: none !impo
             if (!s.on) return;
             try {
                 var body = document.getElementById('crm-body'), el = document.getElementById('bl-x4m-strip');
-                if (!okNow()) { if (el && el.style.display !== 'none') el.style.display = 'none'; closeSheet(true); hideEmptyMenus(); return; }
+                if (!okNow()) { if (el && el.style.display !== 'none') el.style.display = 'none'; closeSheet(true); hideEmptyMenus(); try { document.body.classList.remove('bl-x4m-strip'); } catch (e) { } return; }
+                try { document.body.classList.add('bl-x4m-strip'); } catch (e) { }
                 if (!body || !body.parentNode) return;
                 if (!el) {
                     el = document.createElement('div'); el.id = 'bl-x4m-strip'; el.className = 'e2-keep'; el.setAttribute('data-x4m', '1'); el.setAttribute('role', 'tablist');
@@ -7134,6 +7169,29 @@ body.bl-x4m #crm-tab .rm-act[onclick^="xmGo('crm','dups'"] { display: none !impo
                 if (XM.crm.view === 'home') h += '<button type="button" class="pill-btn bl-x4m-more" data-more="1" aria-haspopup="dialog">More</button>';   /* the rows come from the home's own buttons, so More lives on the home only */
                 if (el.getAttribute('data-sig') !== h) { el.innerHTML = h; el.setAttribute('data-sig', h); }
                 hideEmptyMenus();
+                if (XM.crm.view === 'home') glance4(body);
+            } catch (e) { }
+        }
+        /* the number tiles of the Customers home (direct children .rm-tiles of the body) move, as the same elements, into one closed details; nothing is cloned or removed */
+        function glance4(body) {
+            try {
+                var g = document.getElementById('bl-x4m-glance'), kids = body.children, boxes = [], i;
+                for (i = 0; i < kids.length; i++) { var k = kids[i]; if (k.classList && k.classList.contains('rm-tiles') && k.querySelectorAll('.rm-tile').length >= 1) boxes.push(k); }
+                if (!boxes.length) return;
+                if (!g) {
+                    g = document.createElement('details'); g.id = 'bl-x4m-glance'; g.className = 'bl-x4m-glance e2-keep b25-row'; g.setAttribute('data-x4m', '1');
+                    var sm = document.createElement('summary'); sm.setAttribute('data-x4m', '1'); g.appendChild(sm);
+                    body.insertBefore(g, boxes[0]);
+                }
+                boxes.forEach(function (b) { g.appendChild(b); });
+                g.firstChild.textContent = 'Numbers at a glance (' + g.querySelectorAll('.rm-tile').length + ')';
+            } catch (e) { }
+        }
+        function unglance4() {
+            try {
+                var g = document.getElementById('bl-x4m-glance'); if (!g) return;
+                Array.prototype.slice.call(g.children).filter(function (c) { return c.tagName !== 'SUMMARY'; }).forEach(function (b) { g.parentNode.insertBefore(b, g); });
+                g.parentNode.removeChild(g);
             } catch (e) { }
         }
         function hideEmptyMenus() {
@@ -7217,10 +7275,10 @@ body.bl-x4m #crm-tab .rm-act[onclick^="xmGo('crm','dups'"] { display: none !impo
         }
         window.blx4mOff = function () {
             try {
-                s.on = false; clearInterval(s.tickT); closeSheet(true);
+                s.on = false; clearInterval(s.tickT); closeSheet(true); unglance4();
                 if (window.xmRender === s.wRender) { window.xmRender = s.oRender; s.inR = false; }
                 if (s.mo) { try { s.mo.disconnect(); } catch (e) { } s.mo = null; s.moEl = null; }
-                document.body.classList.remove('bl-x4m');
+                document.body.classList.remove('bl-x4m', 'bl-x4m-strip');
                 var n = document.querySelectorAll('[data-x4m]'); for (var i = 0; i < n.length; i++) if (n[i].parentNode) n[i].parentNode.removeChild(n[i]);
                 var h = document.querySelectorAll('.bl-x4m-hid'); for (var j = 0; j < h.length; j++) h[j].classList.remove('bl-x4m-hid');
                 try { localStorage.setItem('bl_x4m_v1', 'off'); } catch (e) { }
@@ -7537,6 +7595,521 @@ body.bl-x4m #crm-tab .rm-act[onclick^="xmGo('crm','dups'"] { display: none !impo
         window.blBulkOpen = openSheet;
     }
     if (ON) { try { if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function () { try { uiOn(); } catch (e) { } }); else uiOn(); } catch (e) { } }
+})();
+
+</script>
+<style id="bl-x6-css">
+/* RC34 B1 X6 Vendors screen. Every rule starts with body.bl-x6 / body.bl-x6-vendors or uses the layer's own ids (flag off = no effect). Sizes in rem/em; text wraps, never clipped. */
+body.bl-x6-vendors #fb-vendors { display: none !important; }
+body.bl-x6-vendors #rm-body > button.settings-btn.rm-big[onclick*="vendorEdit"] { display: none !important; }
+body.bl-x6-vendors #rm-tab details.b25-more { display: none !important; }
+#bl-x6 { margin: 0 0 .6rem; }
+#bl-x6 .bl-x6-bar { display: flex; gap: .5rem; flex-wrap: wrap; }
+#bl-x6 .bl-x6-bar .pill-btn { min-height: max(44px, 2.75rem); flex: 1 1 8rem; font-weight: 700; white-space: normal; overflow-wrap: anywhere; }
+#bl-x6 .bl-x6-sum { margin: .5rem 0 0; font-size: .92rem; color: #4A5568; overflow-wrap: anywhere; }
+body.bl-x6 #vr-res .bl-x6-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 17rem), 1fr)); gap: .6rem; }
+body.bl-x6 #vr-res .bl-x6-cardw { display: flex; flex-direction: column; gap: .4rem; border: 1px solid #C9D3E0; border-radius: .7rem; background: #fff; padding: .6rem .7rem; box-sizing: border-box; min-width: 0; margin: 0; }
+body.bl-x6 #vr-res .bl-x6-card { cursor: pointer; min-height: max(44px, 2.75rem); min-width: 0; }
+body.bl-x6 #vr-res .bl-x6-card:focus-visible, body.bl-x6 #vr-res .pill-btn:focus-visible { outline: 3px solid #1B4F8A; outline-offset: 2px; }
+body.bl-x6 #vr-res .bl-x6-name { font-weight: 700; color: #0A1628; font-size: 1.02rem; line-height: 1.3; overflow-wrap: anywhere; white-space: normal; }
+body.bl-x6 #vr-res .bl-x6-code { font-size: .86rem; color: #4A5568; margin: .1rem 0 .3rem; overflow-wrap: anywhere; }
+body.bl-x6 #vr-res .bl-x6-code .rm-badge { margin-left: .4rem; }
+body.bl-x6 #vr-res .bl-x6-facts { display: flex; gap: .5rem 1.2rem; flex-wrap: wrap; }
+body.bl-x6 #vr-res .bl-x6-facts > div { display: flex; flex-direction: column; min-width: 0; }
+body.bl-x6 #vr-res .bl-x6-facts span { font-size: .78rem; color: #4A5568; }
+body.bl-x6 #vr-res .bl-x6-facts b { font-size: .95rem; color: #1B3F6B; overflow-wrap: anywhere; }
+body.bl-x6 #vr-res .bl-x6-dim { margin-top: .35rem; font-size: .82rem; color: #4A5568; overflow-wrap: anywhere; }
+body.bl-x6 #vr-res .bl-x6-np { min-height: max(44px, 2.75rem); align-self: flex-start; white-space: normal; }
+body.bl-x6 #vr-res .bl-x6-hint { font-size: .88rem; color: #4A5568; margin: 0 0 .5rem; overflow-wrap: anywhere; }
+body.bl-x6 #vr-res .bl-x6-note { font-size: .92rem; line-height: 1.4; overflow-wrap: anywhere; }
+body.bl-x6 #vr-res .bl-x6-note .pill-btn { margin-top: .4rem; min-height: max(44px, 2.75rem); white-space: normal; }
+body.bl-x6 #vr-res .bl-x6-empty { border: 1px dashed #9FB0C6; border-radius: .7rem; padding: 1rem; text-align: center; overflow-wrap: anywhere; }
+body.bl-x6 #vr-res .bl-x6-empty .pill-btn { min-height: max(44px, 2.75rem); margin-top: .6rem; white-space: normal; }
+body.bl-x6 #vr-res .bl-x6-more { min-height: max(44px, 2.75rem); margin: .6rem 0; white-space: normal; }
+#bl-x6-sheet-bg { position: fixed; inset: 0; background: rgba(10, 22, 40, .55); z-index: 9000; display: flex; align-items: flex-end; justify-content: center; }
+#bl-x6-sheet { background: #fff; width: 100%; max-width: 560px; max-height: 88vh; overflow-y: auto; border-radius: 14px 14px 0 0; padding: .6rem .8rem 1.2rem; box-sizing: border-box; }
+#bl-x6-sheet .bl-x6-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: .4rem; font-size: 1.1em; color: #0A1628; }
+#bl-x6-sheet .bl-x6-close { min-width: max(44px, 2.75rem); min-height: max(44px, 2.75rem); border: 0; background: transparent; font-size: 1.3em; }
+#bl-x6-sheet .bl-x6-lab { display: block; font-weight: 700; margin: .4rem 0 .25rem; color: #1B3F6B; overflow-wrap: anywhere; }
+#bl-x6-sheet .bl-x6-in { width: 100%; box-sizing: border-box; min-height: max(44px, 2.75rem); }
+#bl-x6-sheet .bl-x6-fs { border: 1px solid #C9D3E0; border-radius: .6rem; margin: .7rem 0; padding: .3rem .6rem .5rem; }
+#bl-x6-sheet .bl-x6-fs legend { font-weight: 700; color: #1B3F6B; padding: 0 .3rem; }
+#bl-x6-sheet .bl-x6-rad { display: flex; align-items: center; gap: .6rem; min-height: max(44px, 2.75rem); }
+#bl-x6-sheet .bl-x6-rad input { width: 1.3rem; height: 1.3rem; flex: 0 0 auto; }
+#bl-x6-sheet .bl-x6-rad span { overflow-wrap: anywhere; }
+#bl-x6-sheet .bl-x6-applied { font-size: .92rem; color: #4A5568; margin: .2rem 0 .5rem; }
+#bl-x6-sheet .bl-x6-acts { display: flex; gap: .5rem; flex-wrap: wrap; margin: .4rem 0; }
+#bl-x6-sheet .bl-x6-acts .pill-btn { min-height: max(44px, 2.75rem); flex: 1 1 6rem; white-space: normal; overflow-wrap: anywhere; }
+#bl-x6-sheet .bl-x6-sec { font-weight: 700; margin: .9rem 0 .2rem; color: #1B3F6B; }
+#bl-x6 .bl-x6-bar .bl-x6-add { background: #1B7A3A; color: #fff; border-color: #1B7A3A; }
+
+</style>
+<script id="bl-x6-js">
+/* RC34 B1 X6 VENDORS SCREEN (Raw materials > Vendors, RM.view === 'vendors'): vendor cards (name, last order date, open purchase orders), ONE Add vendor button, ONE filter sheet
+   (Active / Archived / All + search, with the applied count), the 32-button Tools panel is hidden on this screen, archived-vendor note, empty state with Load many at once.
+   ADDITIVE and OFF by default: flag localStorage bl_x6_v1 = on|off, or ?x6=on|off. blx6Off() puts the old screen back exactly (the old screen is simply redrawn); blx6On() turns it on.
+   Data: the vendor list is the one the old screen already loads (rm_list_vendors, read in full by the app). Open orders and last order date come from the EXISTING read rm_po_list
+   (latest 200 orders; when more than 200 exist, the open statuses DRAFT, SENT, PARTIAL are read as well so the open count stays exact). No new server function, no write, no PIN code.
+   A failed or refused orders read shows "not loaded", never a zero. The old filter state (RM.data.vr) is the only filter state: the sheet sets it and calls the app's own rm8VrDraw. */
+(function () {
+    function flag(key, qname) {
+        try {
+            var q = String(location.search || '');
+            if (new RegExp('[?&]' + qname + '=on').test(q)) localStorage.setItem(key, 'on');
+            else if (new RegExp('[?&]' + qname + '=off').test(q)) localStorage.setItem(key, 'off');
+            return localStorage.getItem(key) === 'on';
+        } catch (e) { return new RegExp('[?&]' + qname + '=on').test(String(location.search || '')); }
+    }
+    function need(names) { for (var i = 0; i < names.length; i++) { if (typeof window[names[i]] !== 'function') { try { console.warn('x6 off: missing ' + names[i]); } catch (e) { } return false; } } return true; }
+    function E(s) { return window.esc59(s == null ? '' : s); }
+    try {
+        var OPEN_ST = { DRAFT: 1, SENT: 1, PARTIAL: 1 };
+        var s6 = { on: false, orig: null, inW: false, rr: null, inR: false, po: null, sheet: null, prevFocus: null, onKey: null, tickT: 0, shown: 60, debT: 0 };
+
+        function byId(i) { return document.getElementById(i); }
+        function tabActive() { var t = byId('rm-tab'); return !!(t && t.classList.contains('active')); }
+        function inVendors() { return typeof RM !== 'undefined' && RM.view === 'vendors'; }
+        function mark6() { try { document.body.classList.toggle('bl-x6-vendors', !!(s6.on && inVendors())); } catch (e) { } }
+        function loaded6() {
+            var R = (typeof RM !== 'undefined' && RM.data) ? RM.data.vrRows : null;
+            if (!R || R.loading || R.err) return null;
+            if (!R.rows) return null;
+            if (R.total != null && R.rows.length < Number(R.total) && !R.moreErr) return null;   /* the whole registry is read first (the app reads it 500 at a time) */
+            return R;
+        }
+        function dateIn(ts) {
+            if (!ts) return '';
+            try { var d = new Date(ts); if (isNaN(d.getTime())) return String(ts).slice(0, 10); return d.toLocaleDateString('en-GB', { timeZone: 'Asia/Kolkata', day: '2-digit', month: 'short', year: 'numeric' }); } catch (e) { return String(ts).slice(0, 10); }
+        }
+        function applied(S) { var n = 0; if (S && S.q && String(S.q).trim()) n++; if (S && S.show && S.show !== 'ACTIVE') n++; if (S && S.gst && S.gst !== 'ALL') n++; return n; }
+
+        /* ---- orders: one existing read, kept per registry object (a reload of the registry reads the orders again) ---- */
+        function loadPo(R) {
+            var st = { R: R, state: 'loading', by: {}, seen: {}, more: false };
+            s6.po = st;
+            var call = function (status) { return window.rmCall('rm_po_list', { p_status: status, p_vendor_id: null, p_limit: 200, p_offset: 0 }, { read: true, quiet: true }); };
+            function add(list, openOnly) {
+                (list || []).forEach(function (p) {
+                    var k = String(p.vendor_id), b = st.by[k] || (st.by[k] = { open: 0, last: '' });
+                    var ts = p.created_at || '';
+                    if (ts && (!b.last || String(ts) > String(b.last))) b.last = ts;
+                    if (!st.seen[p.po_id] && (openOnly || OPEN_ST[p.status])) { b.open++; }
+                    st.seen[p.po_id] = 1;
+                });
+            }
+            function done(ok) { if (s6.po !== st) return; st.state = ok ? 'ok' : 'err'; repaint(); }
+            try {
+                call(null).then(function (d) {
+                    if (s6.po !== st) return;
+                    if (!d || !d.ok) { done(false); return; }
+                    add(d.pos, false);
+                    if (d.more) {
+                        st.more = true;
+                        Promise.all(['DRAFT', 'SENT', 'PARTIAL'].map(call)).then(function (ds) {
+                            if (s6.po !== st) return;
+                            for (var i = 0; i < ds.length; i++) { if (!ds[i] || !ds[i].ok) { done(false); return; } }
+                            ds.forEach(function (x) { add(x.pos, true); });
+                            done(true);
+                        }, function () { done(false); });
+                    } else done(true);
+                }, function () { done(false); });
+            } catch (e) { done(false); }
+        }
+
+        /* ---- the screen ---- */
+        function ensureTop() {
+            var body = byId('rm-body'); if (!body) return null;
+            var top = byId('bl-x6');
+            if (!top) {
+                top = document.createElement('div'); top.id = 'bl-x6'; top.className = 'e2-keep'; top.setAttribute('data-x6', '1');
+                top.innerHTML = '<div class="bl-x6-bar"><button type="button" class="pill-btn bl-x6-add" data-act="add">+ Add vendor</button><button type="button" class="pill-btn bl-x6-fil" data-act="filter" aria-haspopup="dialog"></button></div><div class="bl-x6-sum" role="status" aria-live="polite"></div>';
+                top.addEventListener('click', onTop);
+                top.addEventListener('keydown', function (ev) { if ((ev.key === 'Enter' || ev.key === ' ') && ev.target && ev.target.classList && ev.target.classList.contains('bl-x6-card')) { ev.preventDefault(); onTop(ev); } });
+                var fb = byId('fb-vendors'); body.insertBefore(top, fb || body.firstChild);
+            }
+            return top;
+        }
+        function paintTop(shown, total) {
+            var top = ensureTop(); if (!top) return;
+            var S = RM.data.vr, n = applied(S), f = top.querySelector('.bl-x6-fil'), sm = top.querySelector('.bl-x6-sum');
+            if (f) f.textContent = n ? 'Filter (' + n + ' applied)' : 'Filter';
+            if (sm) sm.textContent = total == null ? '' : ('Showing ' + shown + ' of ' + total + ' vendor' + (total === 1 ? '' : 's') + (n ? ' - ' + n + ' filter' + (n === 1 ? '' : 's') + ' applied' : ''));
+        }
+        function orderFacts(v) {
+            var po = s6.po, k = String(v.vendor_id), b = (po && po.state === 'ok') ? po.by[k] : null;
+            if (!po || po.state === 'loading') return '<div><span>Last order</span><b>Loading...</b></div><div><span>Open orders</span><b>Loading...</b></div>';
+            if (po.state === 'err') return '<div><span>Last order</span><b>Not loaded</b></div><div><span>Open orders</span><b>Not loaded</b></div>';
+            var last = b && b.last ? dateIn(b.last) : (po.more ? 'Not in the latest 200 orders' : 'No order yet');
+            return '<div><span>Last order</span><b>' + E(last) + '</b></div><div><span>Open orders</span><b>' + (b ? b.open : 0) + '</b></div>';
+        }
+        function card(v) {
+            var id = Number(v.vendor_id), actv = v.active !== false && !v.merged_into_vendor_code, bad = '';
+            if (v.active === false) bad += '<span class="rm-badge grey">ARCHIVED</span>';
+            if (v.merged_into_vendor_code) bad += '<span class="rm-badge grey">MERGED &rarr; ' + E(v.merged_into_vendor_code) + '</span>';
+            return '<div class="rm-row bl-x6-cardw"><div class="bl-x6-card" role="button" tabindex="0" data-vid="' + id + '" aria-label="Open vendor ' + E(v.vendor_name) + '">' +
+                '<div class="bl-x6-name">' + E(v.vendor_name) + '</div><div class="bl-x6-code">' + E(v.vendor_code) + bad + '</div>' +
+                '<div class="bl-x6-facts">' + orderFacts(v) + '</div>' +
+                '<div class="bl-x6-dim">' + [v.gstin ? 'GSTIN ' + E(v.gstin) : 'No GSTIN', (Number(v.items_supplied) || 0) + ' item(s)', v.last_invoice_date ? 'last bill ' + E(typeof window.rm8Date === 'function' ? window.rm8Date(v.last_invoice_date) : v.last_invoice_date) : 'no bill yet'].join(' &middot; ') + '</div></div>' +
+                (actv ? '<button type="button" class="pill-btn bl-x6-np" data-np="' + id + '">New purchase</button>' : '') + '</div>';
+        }
+        function bulkOk() { return !!(window.blBulk && typeof window.blBulkOpen === 'function'); }
+        function render6() {
+            if (!s6.on || !inVendors()) return;
+            var res = byId('vr-res'), R = loaded6(); if (!res || !R) return;   /* loading and error states stay the app's own */
+            if (!s6.po || s6.po.R !== R) loadPo(R);
+            var S = RM.data.vr, rows, h = '', all = R.rows.length;
+            try { rows = window.rm8VrFiltered(); } catch (e) { rows = R.rows; }
+            var act = 0; R.rows.forEach(function (v) { if (v.active !== false) act++; });
+            var arch = all - act;
+            if (!all) {
+                h += '<div class="bl-x6-empty"><b>No vendors yet</b><div>Add the first vendor with the Add vendor button above' + (bulkOk() ? ', or load many at once from an Excel file.' : '.') + '</div>' + (bulkOk() ? '<button type="button" class="pill-btn bl-x6-bulk" data-act="bulk">Load many at once</button>' : '') + '</div>';
+            } else {
+                if (act === 0 && arch > 0) h += '<div class="rm-note bl-x6-note">There are no active vendors. ' + (S.show === 'ACTIVE' ? arch + ' archived vendor' + (arch === 1 ? ' is' : 's are') + ' hidden by the filter. <button type="button" class="pill-btn bl-x6-show" data-act="showall">Show archived and active</button>' : 'Showing the ' + arch + ' archived vendor' + (arch === 1 ? '' : 's') + '.') + '</div>';
+                else if (arch > 0 && S.show === 'ACTIVE') h += '<div class="bl-x6-hint">' + arch + ' archived vendor' + (arch === 1 ? ' is' : 's are') + ' hidden. Open Filter to see ' + (arch === 1 ? 'it' : 'them') + '.</div>';
+                if (!rows.length) h += '<div class="bl-x6-empty"><b>No vendor matches</b><div>Check the spelling, or clear the filters.</div><button type="button" class="pill-btn bl-x6-clr" data-act="clear">Clear filters</button></div>';
+                else {
+                    var cut = Math.min(rows.length, s6.shown);
+                    h += '<div class="bl-x6-grid">' + rows.slice(0, cut).map(card).join('') + '</div>';
+                    if (cut < rows.length) h += '<button type="button" class="pill-btn bl-x6-more" data-act="more">Show ' + Math.min(60, rows.length - cut) + ' more (' + (rows.length - cut) + ' left)</button>';
+                }
+                if (R.moreErr && window.rmMsgHtml) h += window.rmMsgHtml(R.moreErr);
+            }
+            if (!res.__x6) { res.__x6 = 1; res.addEventListener('click', onTop); res.addEventListener('keydown', function (ev) { if ((ev.key === 'Enter' || ev.key === ' ') && ev.target && ev.target.classList && ev.target.classList.contains('bl-x6-card')) { ev.preventDefault(); onTop(ev); } }); }   /* the list area is the app's own element: one delegated listener, gone when the app redraws the body */
+            res.innerHTML = h;
+            paintTop(all ? rows.length : 0, all);
+            if (s6.sheet) sheetCount();
+        }
+        function repaint() { try { if (s6.on && inVendors()) render6(); } catch (e) { } }
+        function draw6() {
+            var r = s6.orig.apply(this, arguments);
+            if (s6.on) { try { mark6(); if (inVendors()) { ensureTop(); render6(); } } catch (e) { } }
+            return r;
+        }
+        function render_rr() {
+            var r = s6.rr.apply(this, arguments);
+            if (s6.on) { try { mark6(); if (!inVendors() && s6.sheet) closeSheet(true); } catch (e) { } }
+            return r;
+        }
+
+        /* ---- clicks on the top bar and the cards ---- */
+        function onTop(ev) {
+            var t = ev.target && ev.target.closest ? ev.target.closest('[data-act],[data-vid],[data-np]') : null; if (!t || !s6.on) return;
+            var a = t.getAttribute('data-act');
+            if (a === 'add') { window.rmGo('vendorEdit', {}); return; }
+            if (a === 'filter') { openSheet(); return; }
+            if (a === 'showall') { window.rm8VrSet('show', 'ALL'); return; }
+            if (a === 'clear') { clearAll(); return; }
+            if (a === 'more') { s6.shown += 60; render6(); return; }
+            if (a === 'bulk') { openBulk(); return; }
+            if (t.getAttribute('data-np') != null) { if (typeof window.rm8NewPurchase === 'function') window.rm8NewPurchase(Number(t.getAttribute('data-np'))); return; }
+            if (t.getAttribute('data-vid') != null) window.rmGo('vendor', { vendor_id: Number(t.getAttribute('data-vid')) });
+        }
+        function openBulk() {
+            try {
+                if (!bulkOk()) return;
+                window.blBulkOpen();
+                setTimeout(function () { var b = document.querySelector('#bl-bulk-bg [data-dl="vendors"]'); if (b) { try { b.scrollIntoView({ block: 'center' }); b.focus(); } catch (e) { } } }, 0);
+            } catch (e) { }
+        }
+        function clearAll() {
+            var S = RM.data.vr; if (!S) return;
+            s6.shown = 60;
+            if (typeof window.rm8VrClear === 'function') window.rm8VrClear(); else { S.q = ''; S.show = 'ACTIVE'; S.gst = 'ALL'; window.rm8VrDraw(); }
+            var q = byId('bl-x6-q'); if (q) q.value = '';
+            syncRadios();
+        }
+
+        /* ---- the filter sheet: no history entry; Close / Escape / outside tap closes it; it closes if the person leaves Vendors or the app is paused ---- */
+        function sheetOk() { try { return tabActive() && typeof RM !== 'undefined' && !RM.away && inVendors(); } catch (e) { return false; } }
+        function syncRadios() { if (!s6.sheet) return; var S = RM.data.vr, v = S.show || 'ACTIVE', r = s6.sheet.bg.querySelectorAll('input[name="bl-x6-show"]'); for (var i = 0; i < r.length; i++) r[i].checked = (r[i].value === v); }
+        function sheetCount() {
+            if (!s6.sheet) return;
+            var b = s6.sheet.bg.querySelector('.bl-x6-go'), n = s6.sheet.bg.querySelector('.bl-x6-applied'), S = RM.data.vr, rows = [];
+            try { rows = window.rm8VrFiltered(); } catch (e) { }
+            if (b) b.textContent = 'Show ' + rows.length + ' vendor' + (rows.length === 1 ? '' : 's');
+            if (n) n.textContent = applied(S) + ' filter' + (applied(S) === 1 ? '' : 's') + ' applied';
+        }
+        function openSheet() {
+            if (!s6.on || !inVendors()) return;
+            closeSheet(true);
+            var S = RM.data.vr || {};
+            var bg = document.createElement('div'); bg.id = 'bl-x6-sheet-bg'; bg.setAttribute('data-x6', '1');
+            var h = '<div id="bl-x6-sheet" role="dialog" aria-modal="true" aria-labelledby="bl-x6-h"><div class="bl-x6-top"><b id="bl-x6-h">Filter vendors</b><button type="button" class="bl-x6-close" aria-label="Close">&#10005;</button></div>' +
+                '<label class="bl-x6-lab" for="bl-x6-q">Search by code, name, GSTIN or phone</label><input type="search" id="bl-x6-q" class="settings-input bl-x6-in" autocomplete="off" value="' + E(S.q || '') + '">' +
+                '<fieldset class="bl-x6-fs"><legend>Show</legend>' +
+                [['ACTIVE', 'Active vendors'], ['ARCHIVED', 'Archived vendors'], ['ALL', 'All vendors']].map(function (x) { return '<label class="bl-x6-rad"><input type="radio" name="bl-x6-show" value="' + x[0] + '"' + ((S.show || 'ACTIVE') === x[0] ? ' checked' : '') + '><span>' + x[1] + '</span></label>'; }).join('') +
+                '</fieldset><div class="bl-x6-applied" role="status" aria-live="polite"></div>' +
+                '<div class="bl-x6-acts"><button type="button" class="pill-btn bl-x6-go">Show vendors</button><button type="button" class="pill-btn bl-x6-clear">Clear filters</button></div>' +
+                '<div class="bl-x6-sec">Download these vendors</div><div class="bl-x6-acts"><button type="button" class="pill-btn" data-dl="csv">CSV</button><button type="button" class="pill-btn" data-dl="xlsx">Excel</button><button type="button" class="pill-btn" data-dl="pdf">PDF</button><button type="button" class="pill-btn" data-dl="share">Share</button></div>' +
+                '<div class="bl-x6-acts"><button type="button" class="pill-btn bl-x6-reload">Reload the list</button></div></div>';
+            bg.innerHTML = h; document.body.appendChild(bg);
+            s6.sheet = { bg: bg }; s6.prevFocus = document.activeElement;
+            sheetCount();
+            bg.addEventListener('click', function (ev) {
+                var t = ev.target;
+                if (t === bg || (t.closest && t.closest('.bl-x6-close')) || (t.closest && t.closest('.bl-x6-go'))) { closeSheet(); return; }
+                if (t.closest && t.closest('.bl-x6-clear')) { clearAll(); sheetCount(); return; }
+                if (t.closest && t.closest('.bl-x6-reload')) { closeSheet(true); try { window.rm8VrReload(); } catch (e) { } return; }
+                var d = t.closest ? t.closest('[data-dl]') : null; if (d) { try { window.rm8VrDl(d.getAttribute('data-dl')); } catch (e) { } }
+            });
+            bg.addEventListener('input', function (ev) {
+                if (!ev.target || ev.target.id !== 'bl-x6-q') return;
+                clearTimeout(s6.debT); var val = ev.target.value;
+                s6.debT = setTimeout(function () { try { RM.data.vr.q = val; s6.shown = 60; window.rm8VrDraw(); } catch (e) { } }, 150);
+            });
+            bg.addEventListener('change', function (ev) {
+                var t = ev.target; if (!t || t.name !== 'bl-x6-show') return;
+                try { RM.data.vr.show = t.value; s6.shown = 60; window.rm8VrDraw(); } catch (e) { }
+            });
+            s6.onKey = function (ev) {
+                if (!s6.sheet) return;
+                if (ev.key === 'Escape') { ev.preventDefault(); ev.stopPropagation(); closeSheet(); return; }
+                if (ev.key === 'Tab') { var f = s6.sheet.bg.querySelectorAll('button, input'); if (!f.length) return; var first = f[0], last = f[f.length - 1];
+                    if (ev.shiftKey && document.activeElement === first) { ev.preventDefault(); last.focus(); } else if (!ev.shiftKey && document.activeElement === last) { ev.preventDefault(); first.focus(); } else if (!s6.sheet.bg.contains(document.activeElement)) { ev.preventDefault(); first.focus(); } }
+            };
+            document.addEventListener('keydown', s6.onKey, true);
+            var f0 = bg.querySelector('#bl-x6-q'); if (f0) f0.focus();
+        }
+        function closeSheet(noFocus) {
+            if (!s6.sheet) return;
+            clearTimeout(s6.debT);
+            try { if (s6.sheet.bg.parentNode) s6.sheet.bg.parentNode.removeChild(s6.sheet.bg); } catch (e) { }
+            s6.sheet = null; try { document.removeEventListener('keydown', s6.onKey, true); } catch (e) { }
+            if (!noFocus && s6.prevFocus && s6.prevFocus.focus) { try { s6.prevFocus.focus(); } catch (e) { } }
+        }
+
+        function on6() {
+            if (s6.on || !need(['rm8VrDraw', 'rm8VrSet', 'rm8VrFiltered', 'rmGo', 'rmCall', 'rmRender', 'esc59']) || typeof RM === 'undefined' || typeof FB === 'undefined') return;
+            s6.on = true;
+            if (!s6.inW) { s6.orig = window.rm8VrDraw; window.rm8VrDraw = draw6; s6.inW = true; }   /* capture only when our wrapper is not already in the chain (the X3 pattern); draw6 passes straight through when s6.on is false */
+            if (!s6.inR) { s6.rr = window.rmRender; window.rmRender = render_rr; s6.inR = true; }
+            document.body.classList.add('bl-x6'); mark6();
+            s6.tickT = setInterval(function () { if (!s6.on) return; mark6(); if (s6.sheet && !sheetOk()) closeSheet(true); }, 1500);
+            try { if (inVendors() && tabActive() && typeof window.rmRender === 'function') window.rmRender(false); } catch (e) { }
+        }
+        window.blx6Off = function () {
+            try {
+                s6.on = false; closeSheet(true); clearInterval(s6.tickT); clearTimeout(s6.debT);
+                if (s6.orig && window.rm8VrDraw === draw6) { window.rm8VrDraw = s6.orig; s6.inW = false; }
+                if (s6.rr && window.rmRender === render_rr) { window.rmRender = s6.rr; s6.inR = false; }
+                document.body.classList.remove('bl-x6', 'bl-x6-vendors');
+                var n = document.querySelectorAll('[data-x6]'); for (var i = 0; i < n.length; i++) if (n[i].parentNode) n[i].parentNode.removeChild(n[i]);
+                s6.po = null; s6.shown = 60;
+                try { localStorage.setItem('bl_x6_v1', 'off'); } catch (e) { }
+                try { if (inVendors() && tabActive() && typeof window.rmRender === 'function') window.rmRender(false); } catch (e) { }
+            } catch (e) { }
+        };
+        window.blx6On = function () { try { localStorage.setItem('bl_x6_v1', 'on'); } catch (e) { } on6(); };
+        if (flag('bl_x6_v1', 'x6')) on6();
+    } catch (err6) { try { console.warn('x6 off:', err6 && err6.message); } catch (e) { } }
+})();
+
+</script>
+<style id="bl-x7-css">
+/* RC34 B2 X7: full titles in the Overview lists. Only applies when the layer is on (html.bl-x7). No clamp, no ellipsis: the title wraps. */
+html.bl-x7 .bl-x7-row { white-space: normal; height: auto; }
+html.bl-x7 .bl-x7-nm { display: block; font-size: 14px; line-height: 1.3; color: #0A1628; overflow: visible; text-overflow: clip; white-space: normal; }
+html.bl-x7 .bl-x7-full { display: block; margin-top: 2px; font-size: 12px; line-height: 1.35; color: #475569; overflow: visible; text-overflow: clip; white-space: normal; overflow-wrap: anywhere; }
+html.bl-x7 .bl-x7-ids { display: block; margin-top: 2px; font-size: 11px; line-height: 1.3; color: #64748B; overflow-wrap: anywhere; }
+html.bl-x7 .bl-x7-row small { display: block; margin-top: 3px; }
+html.bl-x7 .bl-x7-kp b { overflow-wrap: anywhere; }
+@media (max-width: 340px) { html.bl-x7 .bl-x7-full { font-size: 11px; } html.bl-x7 .bl-x7-row { padding: 8px 8px; } }
+
+</style>
+<script id="bl-x7-js">
+/* RC34 B2 X7 DASHBOARD MONEY + FULL TITLES + WAREHOUSE MOVE STOCK. Three small fixes in one additive layer.
+   OFF by default: flag localStorage bl_x7_v1 = on|off, or ?x7=on|off. window.bl7.off() puts every original function back.
+   D1  Overview 'Money today' shows SELLING value (invoice line net amount / unit price) where the order line has one, 'no price data yet' where it does not. It never shows MRP as money.
+       Money out is defined as: purchase bills dated in the last 30 days, with GST and freight (that is what rm_dashboard.tiles.spend_30d adds up). Label corrected, zero explained.
+   D2  Restock / Make first / Stuck / product pickers show the WHOLE title (wraps, no '...'); the short name line lists ALL sizes of a multi-size title.
+   D4  ROLE_PERMISSIONS.WAREHOUSE_STAFF.move = true (screen default). Staff with their own saved permission list are untouched (they are changed only by the audited admin function, see SQL_D4_*.sql).
+   Reads: oms_inventory_transactions (today, SCAN_OUT_ORDER + void rows), oms_order_lines (price columns, only when they exist). No write, no PIN, no new RPC. */
+(function () {
+    var KEY = 'bl_x7_v1';
+    function flag() {
+        try {
+            var q = String(location.search || '');
+            if (/[?&]x7=on/.test(q)) localStorage.setItem(KEY, 'on'); else if (/[?&]x7=off/.test(q)) localStorage.setItem(KEY, 'off');
+            return localStorage.getItem(KEY) === 'on';
+        } catch (e) { return /[?&]x7=on/.test(String(location.search || '')); }
+    }
+    function esc(s) { s = s == null ? '' : String(s); return (typeof window.esc59 === 'function') ? window.esc59(s) : s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
+    function num(v) { var n = Number(v); return isFinite(n) ? n : 0; }
+    function fmt(v) { return num(v).toLocaleString('en-IN'); }
+
+    /* ---------- D2: the name engine (pure) ---------- */
+    var UNIT_RE = /(\d+(?:\.\d+)?\s*[xX×]\s*\d+(?:\.\d+)?)\s*-\s*(\d+)\s*Units?\b/g;
+    var INCH_RE = /(\d+(?:\.\d+)?\s*[xX×]\s*\d+(?:\.\d+)?)\s*(inch|in|cm|mm)\b/i;
+    var ONE_RE = /(\d+(?:\.\d+)?\s*(?:inch|in|cm|mm|ml|gm|kg)\b)/i;
+    var PACK_RE = /(set of \d+(?:\s*(?:units?|sheets?|pcs|pieces))?|pack of \d+|combo of \d+|\d+\s*(?:pcs|pieces|sheets)\b)/i;
+    /* every size of a title, in the order printed: 'AxB - N Unit' entries when the title lists them, else the one size in inches/cm */
+    function sizesOf(title) {
+        var t = String(title == null ? '' : title), out = [], m, seen = {};
+        UNIT_RE.lastIndex = 0;
+        while ((m = UNIT_RE.exec(t)) !== null) {
+            var s = m[1].replace(/\s+/g, '') + ' - ' + m[2] + ' Unit', k = s.toLowerCase();
+            if (!seen[k]) { seen[k] = 1; out.push(s); }
+        }
+        if (out.length) return out;
+        m = INCH_RE.exec(t); if (m) return [m[1].replace(/\s*([xX×])\s*/, ' x ') + ' ' + m[2].toLowerCase()];
+        m = ONE_RE.exec(t); if (m) return [m[1]];
+        return [];
+    }
+    function sizeText(title) { return sizesOf(title).join(', '); }
+    function packText(title) { var m = PACK_RE.exec(String(title == null ? '' : title)); return m ? m[1].replace(/\s+/g, ' ') : ''; }
+    function shortName(title, sku, type, orig) {
+        var o = orig || {}, segs = (typeof window.afSegs === 'function') ? window.afSegs(title) : String(title || '').split('|');
+        var mat = (typeof window.afMaterial === 'function') ? window.afMaterial(title, type) : (String(type || '').trim() || String(segs[0] || '').replace(/^ArtzFolio\s+/i, '') || 'Product');
+        var code = (typeof window.afCode === 'function') ? window.afCode(sku) : '';
+        var parts = [mat, sizeText(title), packText(title)].filter(Boolean), seen = {};
+        parts = parts.filter(function (x) { var k = x.toLowerCase(); if (seen[k]) return false; seen[k] = 1; return true; });
+        var l1 = parts.join(' · '); if (code) l1 += ' · ' + code;
+        return l1 || String(title || sku || '(no title)');
+    }
+    /* one list row: short name (bold), the full title (wraps), ASIN and SKU, then the right-hand facts */
+    function rowHtml(r, right) {
+        var n = (typeof window.idNorm === 'function') ? window.idNorm(r) : { sku: String(r && r.sku_code || ''), asin: String(r && r.asin || ''), title: String(r && r.product_name || '') };
+        var nm = shortName(n.title, n.sku, (r && r.product_type) || '');
+        return '<button type="button" class="b5-row bl-x7-row" data-b5o="sku" data-sku="' + esc(r && r.sku_code) + '"><b class="bl-x7-nm">' + esc(nm) + '</b>' +
+            (n.title ? '<span class="bl-x7-full">' + esc(n.title) + '</span>' : '') +
+            '<span class="bl-x7-ids">' + esc([n.asin, n.sku].filter(Boolean).join(' | ')) + '</span><small>' + right + '</small></button>';
+    }
+
+    /* ---------- D1: selling value (pure) ---------- */
+    /* scans: SCAN_OUT_ORDER rows of today; voids: rows whose note says 'void - reverses txn #N'; lines: oms_order_lines rows (price columns may be missing) */
+    function money(scans, voids, lines) {
+        var gone = {}, i, j;
+        (voids || []).forEach(function (v) { var m = /^(Entry|Session) void - reverses txn #(\d+)/.exec(String(v.note || '')); if (m && String(v.entry_source || '') === 'APP') gone[m[2]] = 1; });
+        var byKey = {};
+        (lines || []).forEach(function (l) {
+            [l.invoice_no, l.amazon_order_no, l.tid].forEach(function (id) { if (!id) return; var k = String(id).toUpperCase() + '|' + String(l.sku_code || '').toUpperCase(); (byKey[k] = byKey[k] || []).push(l); });
+        });
+        var R = { units: 0, pricedUnits: 0, unpricedUnits: 0, noOrderLineUnits: 0, value: 0, bySource: {} };
+        (scans || []).forEach(function (s) {
+            if (String(s.txn_type || '') !== 'SCAN_OUT_ORDER' || String(s.channel || '') === 'WARRANTY' || gone[String(s.txn_id)]) return;
+            var q = -num(s.qty_delta); if (!(q > 0)) return;
+            R.units += q;
+            var cand = byKey[String(s.order_id || '').toUpperCase() + '|' + String(s.sku_code || '').toUpperCase()] || [], per = null, src = null;
+            if (!cand.length) { R.noOrderLineUnits += q; R.unpricedUnits += q; return; }
+            for (j = 0; j < cand.length && per === null; j++) {
+                var l = cand[j];
+                if (l.net_amount != null && l.net_amount !== '' && num(l.qty_ordered) > 0) { per = num(l.net_amount) / num(l.qty_ordered); src = l.price_source || 'INVOICE'; }
+                else if (l.unit_price != null && l.unit_price !== '') { per = num(l.unit_price); src = l.price_source || 'INVOICE'; }
+            }
+            if (per === null) { R.unpricedUnits += q; return; }
+            R.pricedUnits += q; R.value += per * q; R.bySource[src] = (R.bySource[src] || 0) + q;
+        });
+        R.value = Math.round(R.value * 100) / 100;
+        return R;
+    }
+    /* the 'Money in' tile text for a result; never MRP */
+    function moneyInTile(R, colsMissing) {
+        if (!R) return '<div><b>-</b><span>Money in today could not be read</span></div>';
+        if (R.units === 0) return '<div><b>&#8377; 0</b><span>Money in today: nothing sold yet today</span></div>';
+        if (R.pricedUnits === 0) return '<div><b>no price data yet</b><span>' + esc(fmt(R.units)) + ' units sold today, none of them has a selling price saved' + (colsMissing ? ' (prices are not being saved yet)' : '') + '</span></div>';
+        return '<div><b>&#8377; ' + esc(fmt(Math.round(R.value))) + '</b><span>Money in today: selling value of ' + esc(fmt(R.pricedUnits)) + ' of ' + esc(fmt(R.units)) + ' units sold' +
+            (R.unpricedUnits > 0 ? '. ' + esc(fmt(R.unpricedUnits)) + ' units have no price data yet and are not counted' : '') + '</span></div>';
+    }
+
+    var X = { on: false, orig: {}, obs: null, busy: false, seq: 0, res: null, patched: false };
+    function save(name) { if (!(name in X.orig)) X.orig[name] = window[name]; }
+
+    function istStart() { try { var d = (typeof window.a12Today === 'function') ? window.a12Today() : new Date(Date.now() + 19800000).toISOString().slice(0, 10); return new Date(d + 'T00:00:00+05:30').toISOString(); } catch (e) { return new Date(Date.now() - 864e5).toISOString(); } }
+    function Q(p) { return Promise.resolve(p).then(function (r) { return (r && r.error) ? { ok: false, err: r.error } : { ok: true, data: (r && r.data) || [] }; }, function (e) { return { ok: false, err: e }; }); }
+    function loadMoney() {
+        var my = ++X.seq; X.res = null;
+        if (typeof window.db === 'undefined' || !window.db) { X.res = { ok: false }; return Promise.resolve(); }
+        var db = window.db, start = istStart();
+        var sc = Q(db.from('oms_inventory_transactions').select('txn_id,order_id,sku_code,qty_delta,txn_type,note,entry_source,channel,created_at').eq('txn_type', 'SCAN_OUT_ORDER').gte('created_at', start).limit(5000));
+        var vd = Q(db.from('oms_inventory_transactions').select('txn_id,note,entry_source,created_at').like('note', '%void - reverses txn #%').gte('created_at', start).limit(5000));
+        return Promise.all([sc, vd]).then(function (a) {
+            if (!a[0].ok) { X.res = { ok: false }; return; }
+            var ids = {}; a[0].data.forEach(function (s) { if (s.order_id) ids[String(s.order_id)] = 1; });
+            var list = Object.keys(ids), chunks = [], i; for (i = 0; i < list.length; i += 80) chunks.push(list.slice(i, i + 80));
+            var cols = 'invoice_no,amazon_order_no,tid,sku_code,qty_ordered,unit_price,net_amount,price_source', colsMissing = false;
+            var fetchAll = function (c, sel) {
+                var qs = [];
+                ['invoice_no', 'amazon_order_no', 'tid'].forEach(function (f) { chunks.forEach(function (ch) { qs.push(Q(db.from('oms_order_lines').select(sel).in(f, ch).limit(2000))); }); });
+                return Promise.all(qs);
+            };
+            return fetchAll(0, cols).then(function (rs) {
+                if (rs.some(function (r) { return !r.ok; })) { colsMissing = true; return fetchAll(0, 'invoice_no,amazon_order_no,tid,sku_code,qty_ordered'); }
+                return rs;
+            }).then(function (rs) {
+                if (my !== X.seq) return;
+                var lines = []; rs.forEach(function (r) { if (r.ok) lines = lines.concat(r.data); });
+                X.res = { ok: true, R: money(a[0].data, a[1].ok ? a[1].data : [], lines), colsMissing: colsMissing };
+            });
+        }).catch(function () { X.res = { ok: false }; });
+    }
+
+    var RECON = { 'Money today': 'M1_units_today,M3_selling_value_today,M4_priced_units_today,O1_money_out_30d,O2_bills_30d', 'Restock first': 'R1_restock_count', 'Make first': 'R2_make_first_count', 'Stuck stock': 'R3_stuck_products,R3b_stuck_units', 'Late orders': 'R4_late_order_lines,R4b_late_order_lines_uncapped' };
+    function cardOf(p, title) { var cs = p.querySelectorAll('section.b5-card'), i, h; for (i = 0; i < cs.length; i++) { h = cs[i].querySelector('h3'); if (h && String(h.textContent || '').replace(/\s*\(.*$/, '').trim() === title) return cs[i]; } return null; }
+    function patch() {
+        var p = document.getElementById('b5-ov'); if (!p || X.busy || !X.on) return;
+        X.busy = true;
+        try {
+            Object.keys(RECON).forEach(function (t) { var c = cardOf(p, t); if (c) c.setAttribute('data-recon', RECON[t]); });
+            var c = cardOf(p, 'Money today');
+            if (c && c.getAttribute('data-x7') !== '1') {
+                var kp = c.querySelector('.b5-kp'), tiles = kp ? kp.children : [], outTile = tiles.length > 1 ? tiles[1] : null, outHtml = '';
+                if (outTile) {
+                    var b = outTile.querySelector('b'), sp = outTile.querySelector('span'), val = b ? String(b.textContent || '').trim() : '-';
+                    if (val === '-') outHtml = '<div>' + outTile.innerHTML + '</div>';
+                    else outHtml = '<div><b>' + esc(val) + '</b><span>Money out: purchase bills dated in the last 30 days, with GST and freight' + (/^₹\s*0$/.test(val) ? '. No purchase bills are entered yet, so this is 0' : '') + '</span></div>';
+                }
+                var ready = X.res !== null;
+                var inHtml = !ready ? '<div><b>...</b><span>Reading the selling prices of today’s sales</span></div>' : (X.res.ok ? moneyInTile(X.res.R, X.res.colsMissing) : moneyInTile(null));
+                var note = 'Money in is the selling value on the invoice, before tax. A sale with no saved price is listed as “no price data yet”, never guessed from the list price (MRP). Real payments come from the channel reports.';
+                c.innerHTML = '<h3>Money today</h3><div class="b5-sub">' + esc(note) + '</div><div class="b5-kp bl-x7-kp">' + inHtml + outHtml + '</div>';
+                c.setAttribute('data-x7', ready ? '1' : '0'); c.setAttribute('data-recon', RECON['Money today']);
+                if (!ready) c.setAttribute('data-x7', '0');
+            }
+        } catch (e) { try { console.warn('x7 patch: ' + e); } catch (e2) { } }
+        X.busy = false;
+    }
+    function watch() {
+        var p = document.getElementById('b5-ov'); if (!p) return;
+        if (X.obs) { try { X.obs.disconnect(); } catch (e) { } }
+        if (typeof MutationObserver !== 'function') return;
+        X.obs = new MutationObserver(function () { if (!X.busy) patch(); });
+        X.obs.observe(p, { childList: true, subtree: false });
+        patch();
+    }
+    function start() {
+        loadMoney().then(function () { var p = document.getElementById('b5-ov'); if (!p || !X.on) return; var c = cardOf(p, 'Money today'); if (c) c.setAttribute('data-x7', '0'); patch(); });
+        setTimeout(watch, 0); setTimeout(watch, 600);
+    }
+
+    function on() {
+        if (X.on) return; X.on = true;
+        document.documentElement.classList.add('bl-x7');
+        /* D2 */
+        ['afSize', 'afPack', 'afName', 'idText', 'b5OvRow'].forEach(save);
+        if (typeof window.afSize === 'function') window.afSize = function (title) { return sizeText(title); };
+        if (typeof window.afPack === 'function') window.afPack = function (title) { return packText(title); };
+        if (typeof window.afName === 'function') window.afName = function (title, sku, type) { return shortName(title, sku, type); };
+        if (typeof window.idText === 'function') { var oi = X.orig.idText; window.idText = function (p, o) { return oi(p, { max: 100000 }); }; }
+        if (typeof window.b5OvRow === 'function') window.b5OvRow = rowHtml;
+        /* D4 */
+        try { if (window.ROLE_PERMISSIONS && window.ROLE_PERMISSIONS.WAREHOUSE_STAFF) { X.orig.wsMove = window.ROLE_PERMISSIONS.WAREHOUSE_STAFF.move; window.ROLE_PERMISSIONS.WAREHOUSE_STAFF.move = true; try { if (typeof window.applyRolePermissions === 'function' && window.state && window.state.session) window.applyRolePermissions(); } catch (e) { } } } catch (e) { }
+        /* D1 */
+        if (typeof window.b5OvLoad === 'function') {
+            save('b5OvLoad'); var ol = X.orig.b5OvLoad;
+            window.b5OvLoad = function () { var r = ol.apply(this, arguments); try { if (X.on) start(); } catch (e) { } return r; };
+        }
+    }
+    function off() {
+        try { localStorage.setItem(KEY, 'off'); } catch (e) { }
+        if (!X.on) return; X.on = false;
+        document.documentElement.classList.remove('bl-x7');
+        Object.keys(X.orig).forEach(function (k) { if (k === 'wsMove') return; window[k] = X.orig[k]; });
+        try { if ('wsMove' in X.orig && window.ROLE_PERMISSIONS && window.ROLE_PERMISSIONS.WAREHOUSE_STAFF) window.ROLE_PERMISSIONS.WAREHOUSE_STAFF.move = X.orig.wsMove; } catch (e) { }
+        X.orig = {}; if (X.obs) { try { X.obs.disconnect(); } catch (e) { } X.obs = null; }
+        try { if (typeof window.b5OvLoad === 'function' && document.getElementById('b5-ov')) window.b5OvLoad(); } catch (e) { }
+    }
+    window.bl7 = { sizesOf: sizesOf, sizeText: sizeText, packText: packText, shortName: shortName, rowHtml: rowHtml, money: money, moneyInTile: moneyInTile, isOn: function () { return X.on; }, on: on, off: off, version: 'x7-1' };
+    try { if (flag()) on(); } catch (e) { try { console.warn('x7 off: ' + e); } catch (e2) { } }
 })();
 
 </script>
