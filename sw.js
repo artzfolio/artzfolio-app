@@ -116,7 +116,16 @@
 // v86 (2026-11-12, RC31): cache name bumped for App v228 (server token, names, Today, Stock, More, Sales). Nothing else changed.
 // v90 (2026-11-13, RC34b): cache name bumped for App v231b (RC34b: X2 and X4M v2 files, X6 Vendors cards, X7 dashboard selling value and full titles; every new screen is behind a flag that is OFF). Nothing else changed.
 // v91 (2026-11-14, RC34c): cache name bumped for App v231c (RC34c: X7 v3, X8 Overview and filter sheet, X13 dashboard tables, X9 Labels, X10 Chats and Proof Bank, X11 Bulk Center part 2, X12 control limits; every new screen is behind a flag that is OFF). Nothing else changed.
-const CACHE_NAME = 'artzfolio-oms-shell-v91';
+// v92 (2026-11-14, RC34e): cache name bumped for App v231e (RC34e = the ONE-PIN fix: stock correction / Remove lost / Add found reuse the signed-in session; token-safe PIN check). Nothing else changed.
+// v93 (2026-11-14, RC34f): cache name bumped for App v231f (RC34f = T3 honest errors: three plain messages for no internet / PIN not accepted / no permission; sign-in rules screen retries 3 times silently). Nothing else changed.
+// v94 (2026-11-14, RC34g): cache name bumped for App v231g (RC34g = fixes from the independent review of v231f: no internet is decided by error shape only, finished sentences pass through, LOCKED / PIN_NEEDED beat a bare 403, PIN check says No internet only for a real network failure). Nothing else changed.
+// v95 (2026-11-14, RC34h): cache name bumped for App v231h (RC34h = fixes from the second review: one classifier for plain messages, whole-message network match, locked / PIN beat 403 in any wording, never a blank or thrown message, plain text for server unreachable / slow database). Nothing else changed.
+// v96 (2026-11-14, RC34i): cache name bumped for App v231i (RC34i = fixes from the third review: plain-word wrong / needed PIN and locked texts beat a 403 in any wording, locked / PIN-needed say so plainly, details and hint read the same everywhere, no raw tokens or blank text, bounded input). Nothing else changed.
+// v97 (2026-11-14, RC34j): cache name bumped for App v231j (RC34j = error messages classified by structure only: our own codes, HTTP status, SQLSTATE, error type; a real server sentence is shown as written; no word guessing). Nothing else changed.
+// v98 (2026-11-14, RC34k): cache name bumped for App v231k (RC34k = fifth review fixes: timeouts and aborts read plainly, a write timeout says no answer in time, sign-in rules check first try 10 s, sentences with internals are never shown, 401 = sign in again, one text function). Nothing else changed.
+// v99 (2026-11-14, RC34l): cache name bumped for App v231l (RC34l = sixth review fixes: the leak guard now hides only real internals (database boilerplate, secrets, stack traces), ordinary server sentences are shown as written again; the neutral line warns to check before saving again). Nothing else changed.
+// v100 (2026-11-14, RC34m): cache name bumped for App v231m (RC34m = seventh review fixes: no raw permission text in the row-mover / extra screens, long SKU and pick-slip references are shown, more internal database phrases are mapped). Nothing else changed.
+const CACHE_NAME = 'artzfolio-oms-shell-v100';
 const OPTIONAL_FILES = ['./zxing_reader_3.1.4.js', './zxing_reader_3.1.4.wasm'];
 const SHELL_FILES = ['./index.html', './manifest.json', './icon.svg'];
 
