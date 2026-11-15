@@ -3006,7 +3006,7 @@ input[type=tel],input[type=email],input[type=search],input:not([type]),textarea{
   .tile-val{font-size:var(--t-title)}
   .a58-needs{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
-@media (max-width:1100px){
+@media (max-width:0px){   /* RC41-W13-T: was 1100px - the People table no longer folds rows into cards */
   #page-employees .table-wrap{overflow:visible;background:transparent;box-shadow:none}
   #page-employees table,#page-employees tbody{display:block;width:100%}
   #page-employees thead{display:block}
@@ -3032,6 +3032,36 @@ input[type=tel],input[type=email],input[type=search],input:not([type]),textarea{
   #page-employees .result-msg{width:100%}
 }
 
+/* RC41-W13 css (Admin v2.81): People and phones */
+#page-employees .table-wrap{max-height:72vh;overflow:auto}
+#page-employees thead th{position:sticky;top:0;z-index:2}
+.r41-tabs{display:flex;gap:8px;margin:10px 0;flex-wrap:wrap}
+.r41-tab{min-height:44px;padding:8px 18px;border:1px solid #c9d3e2;border-radius:10px;background:#fff;font-weight:700;color:#1B4F8A;cursor:pointer;font-size:var(--t-section)}
+.r41-tab.on{background:#1B4F8A;color:#fff;border-color:#1B4F8A}
+.r41-act{display:flex;gap:6px;flex-wrap:wrap;align-items:flex-start}
+.r41-more>summary{list-style:none;cursor:pointer;display:inline-flex;align-items:center}
+.r41-more>summary::-webkit-details-marker{display:none}
+.r41-menu{display:flex;flex-direction:column;gap:4px;margin-top:6px;min-width:200px}
+.r41-menu .btn{text-align:left;justify-content:flex-start}
+.r41-pill{display:inline-block;padding:3px 10px;border-radius:12px;font-weight:700;font-size:var(--t-body);color:#fff;white-space:nowrap}
+.r41-admin{background:#1B4F8A}
+.r41-sup{background:#7D3C98}
+.r41-staff{background:#7f8c8d}
+.r41-amber{margin-top:4px;font-size:var(--t-body);color:#7a4f00;background:#FFF4D6;border:1px solid #F0C36D;border-radius:6px;padding:3px 6px;white-space:normal;max-width:320px}
+.r41-grp td{background:#f3f6fb;font-weight:700}
+.r41-box{border:1px solid #c9d9ee;background:#eef4fb;border-radius:8px;padding:10px 12px;margin:10px 0;font-size:var(--t-body);line-height:1.5}
+.r41-box ul{margin:4px 0 8px 18px;padding:0}
+/* RC41-v282-6: every new button, menu item and tab is at least 44 px tall, on every screen size (not inside a media block) */
+.r41-tab,.r41-act .btn,.r41-more>summary,.r41-menu .btn,#r41-pane-phones .btn,#r41-phones-body .btn,#edit-emp-r41-note .btn{min-height:44px;box-sizing:border-box}
+.r41-act .btn,.r41-more>summary,.r41-menu .btn,#r41-phones-body .btn,#edit-emp-r41-note .btn{display:inline-flex;align-items:center}
+.r41-menu .btn.r41-danger{background:#fdecea;color:#B3261E;border-color:#f3c1bc}
+/* RC41-v283-5 (LOW L4): dark text on every amber badge, #3d2600 on #F39C12 = about 6.5:1 (was white, about 2.2:1) */
+.badge-amber{color:#3d2600}
+/* RC41-v283-2/3: new buttons 44 px; the red confirm button */
+#r41-pcs-body .btn,#r41-deltest-bar .btn,#r41-del-bg .btn{min-height:44px;box-sizing:border-box}
+#r41-deltest-bar .btn.r41-danger{background:#fdecea;color:#B3261E;border-color:#f3c1bc}
+#r41-del-bg .btn.r41-danger{background:#B3261E;color:#fff;border-color:#B3261E}
+/* RC41-W13 css end */
 /* ADM-v265 ===== v2.65 css ===== */
 /* quick strip (founder decision 5): a few top actions in one sideways-scrolling row, a fade on the edge that says "more this way" */
 .a65-strip{position:relative;margin:8px 0}
@@ -3121,6 +3151,11 @@ label:has(>input[type=checkbox]),label:has(>input[type=radio]){display:flex;alig
       <label for="emp-login-pin-input">PIN (4 digits)</label>
       <input type="text" class="pw-mask" inputmode="numeric" autocapitalize="off" spellcheck="false" id="emp-login-pin-input" data-1p-ignore data-lpignore="true" data-bwignore="true" data-form-type="other" placeholder="Type your PIN" autocomplete="off" maxlength="4">
     </div>
+    <label class="remember-device-row" for="emp-login-keep-input"><!-- RC41-v283-2 W12 -->
+      <input type="checkbox" id="emp-login-keep-input"><!-- RC41-v284-3 (M2, founder 2026-11-15): unticked by default -->
+      <span>Keep me signed in on this computer for 30 days</span>
+    </label>
+    <div class="login-hint" style="margin-top:2px;">For Admin and Supervisor. Tick it only on your own computer, never on a shared one. The Admin Password is still asked each time the panel is opened.</div>
     <button class="login-btn" id="emp-login-submit-btn" onclick="attemptEmployeeLogin()">Continue</button>
     <div class="login-err" id="emp-login-err-msg"></div>
     <div class="af-fs-login"><div class="af-fs-t" style="text-align:center;font-size:var(--t-body);color:#888;margin-bottom:4px">Text size</div><div id="af-fs-ctl-login"></div></div>
@@ -3191,6 +3226,31 @@ label:has(>input[type=checkbox]),label:has(>input[type=radio]){display:flex;alig
     <button class="login-btn" id="login-submit-btn" onclick="attemptAdminLogin()">Enter Admin Panel</button>
     <div class="login-err" id="login-err-msg"></div>
     <div class="login-hint">The Admin Password is asked every time. Your password is kept only in this browser tab's memory. It is never saved on the computer and is cleared when the tab closes.</div>
+
+    <div id="fp-wrap" style="display:none;margin-top:14px;text-align:center;"><!-- RC41-v283-1 (v2.80 merge) -->
+      <a href="#" id="fp-link" onclick="fpOpen();return false;" style="font-size:var(--t-body);color:#1d4ed8;text-decoration:underline;">Forgot Admin Password?</a>
+      <div class="login-err" id="fp-msg0" role="status"></div>
+      <div id="fp-s1" style="display:none;text-align:left;margin-top:12px;">
+        <div style="font-weight:700;">Step 1 of 2</div>
+        <div style="color:#4b5563;margin:4px 0 10px;line-height:1.5;">We will email a code to the owner address saved in Settings. The code works for 10 minutes.</div>
+        <button type="button" class="login-btn" id="fp-send-btn" onclick="fpSend()">Send me a code</button>
+        <div class="login-err" id="fp-msg1"></div>
+        <button type="button" class="login-btn" id="fp-have-btn" onclick="fpHaveCode()" style="display:none;margin-bottom:8px;">I already have a code</button><!-- RC41-v285-3 (N5): offered after the 15 s time limit -->
+        <a href="#" onclick="fpHaveCode();return false;" style="font-size:var(--t-body);color:#1d4ed8;">I already have a code</a>
+      </div>
+      <div id="fp-s2" style="display:none;text-align:left;margin-top:12px;">
+        <div style="font-weight:700;">Step 2 of 2</div>
+        <div style="color:#4b5563;margin:4px 0 10px;line-height:1.5;">Type the code from the email and choose a new Admin Password.</div>
+        <label for="fp-code">Code from the email (10 letters and numbers)</label>
+        <input type="text" id="fp-code" maxlength="10" autocomplete="one-time-code" autocapitalize="characters" spellcheck="false" placeholder="ABCDE23456" style="width:100%;margin-bottom:8px;">
+        <label for="fp-pw">New Admin Password (at least 12 characters)</label>
+        <div style="display:flex;gap:6px;"><input type="password" id="fp-pw" autocomplete="new-password" autocapitalize="off" spellcheck="false" oninput="fpMeter()" style="flex:1;"><button type="button" class="btn" id="fp-show" onclick="fpToggle()" style="min-width:64px;">Show</button></div>
+        <div id="fp-meter" style="height:6px;border-radius:3px;background:#e5e7eb;margin:6px 0 2px;"><div id="fp-meter-bar" style="height:6px;width:0;border-radius:3px;background:#c0392b;"></div></div>
+        <div id="fp-meter-txt" style="font-size:var(--t-body);color:#6B7280;margin-bottom:10px;">0 of 12 characters</div>
+        <button type="button" class="login-btn" id="fp-go-btn" onclick="fpConfirm()">Change my Admin Password</button>
+        <div class="login-err" id="fp-msg2"></div>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -3206,7 +3266,7 @@ label:has(>input[type=checkbox]),label:has(>input[type=radio]){display:flex;alig
       <li class="nav-item" data-page="audit" onclick="switchPage('audit')"><span class="nav-icon">📜</span><span class="nav-label">Permanent activity record</span></li>
       <!-- v2.17 (Master Prompt v21, Part 4.2) -->
       <li class="nav-item" data-page="sessions" onclick="switchPage('sessions')"><span class="nav-icon">🔄</span><span class="nav-label">Batch scans</span></li>
-      <li class="nav-item" data-page="employees" onclick="switchPage('employees')"><span class="nav-icon">👥</span><span class="nav-label">People and access</span></li>
+      <li class="nav-item" data-page="employees" title="People and phones (this was called User Management)" onclick="switchPage('employees')"><span class="nav-icon">👥</span><span class="nav-label">People and phones</span><!-- RC41-W13-1 --></li>
       <li class="nav-item" data-page="devices" onclick="switchPage('devices')"><span class="nav-icon">📱</span><span class="nav-label">Phones</span></li>
       <li class="nav-item" data-page="pcs" onclick="switchPage('pcs')"><span class="nav-icon">🖥</span><span class="nav-label">Computers (desktop app)</span></li>
       <li class="nav-item" data-page="sku" onclick="switchPage('sku')"><span class="nav-icon">📦</span><span class="nav-label">Product stock search</span></li>
@@ -3221,7 +3281,7 @@ label:has(>input[type=checkbox]),label:has(>input[type=radio]){display:flex;alig
     <div class="sidebar-footer">
       <div class="af-fs-side"><div class="af-fs-t">Text size</div><div id="af-fs-ctl-side"></div></div>
       <button class="logout-btn" onclick="adminLogout()">Sign out</button>   <!-- ADM-v258 A-01 -->
-      <div class="ver-footer">ArtzFolio Super App - Admin Panel v2.79</div>
+      <div class="ver-footer">ArtzFolio Super App - Admin Panel v2.85</div><!-- RC41-v282-V RC41-v283-V RC41-v284-V RC41-v285-V -->
     </div>
   </div>
 
@@ -3734,7 +3794,7 @@ label:has(>input[type=checkbox]),label:has(>input[type=radio]){display:flex;alig
     <div class="page" id="page-employees">
       <div class="page-header">
         <div>
-          <div class="page-title">People and access</div>
+          <div class="page-title">People and phones <span style="font-weight:400;font-size:var(--t-section);color:#546e7a;">(this was called User Management)</span></div><!-- RC41-W13-1 -->
           <div class="page-sub">Everyone who can use the phone app or this panel, with their access, PIN, phone code and lock status.</div>
         </div>
         <button class="btn btn-primary" onclick="loadEmployees()">↻ Refresh</button>
@@ -3780,6 +3840,12 @@ label:has(>input[type=checkbox]),label:has(>input[type=radio]){display:flex;alig
         <div class="result-msg" id="sup-pw-result"></div>
       </div>
       </div></details>
+      <!-- RC41-W1-8: two tabs, People and Phones -->
+      <div class="r41-tabs e2-keep" role="tablist" aria-label="People and signed-in phones" onkeydown="r41TabKey(event)"><!-- RC41-v283-6 --><!-- RC41-v282-5 e2-keep; RC41-v282-9 aria; RC41-v282-10 name -->
+        <button type="button" class="r41-tab on" id="r41-tab-people" role="tab" aria-selected="true" aria-controls="r41-pane-people" tabindex="0" onclick="r41PeopleTab('people')">People</button>
+        <button type="button" class="r41-tab" id="r41-tab-phones" role="tab" aria-selected="false" aria-controls="r41-pane-phones" tabindex="-1" onclick="r41PeopleTab('phones')">Signed-in phones</button>
+      </div>
+      <div id="r41-pane-people" role="tabpanel" aria-labelledby="r41-tab-people">
       <div class="filter-bar">
         <div class="filter-field" style="min-width:min(220px,100%)"><label>Search</label><input type="text" id="emp-search" placeholder="Name, code, or role..." oninput="renderEmployees()"></div>
         <div class="filter-field"><label>Status</label>
@@ -3792,8 +3858,12 @@ label:has(>input[type=checkbox]),label:has(>input[type=radio]){display:flex;alig
                  hidden from every other filter view by default (see
                  renderEmployees()) — this is the only way to see them. -->
             <option value="archived">Archived only</option>
+            <option value="deleted">Deleted only (Former staff)</option><!-- RC41-v283-3 W14 -->
           </select>
         </div>
+      </div>
+      <div class="e2-keep r41-keep" id="r41-deltest-bar" style="display:none;margin:6px 0;"><!-- RC41-v283-3 W14: full Admin only -->
+        <button type="button" class="btn btn-grey r41-danger" onclick="r41DeleteTestOpen()" title="Remove every TST_ test account and its test data. You see what will happen first.">Delete all test accounts (TST_)</button>
       </div>
       <div class="bulk-bar" id="emp-bulk-bar">
         <span id="emp-bulk-count">0 selected</span>
@@ -3808,6 +3878,42 @@ label:has(>input[type=checkbox]),label:has(>input[type=radio]){display:flex;alig
         </table>
       </div>
 
+      </div><!-- /r41-pane-people -->
+      <div id="r41-pane-phones" role="tabpanel" aria-labelledby="r41-tab-phones" style="display:none;"><!-- RC41-W1-8 RC41-v282-9 -->
+        <div class="hint-text" style="margin:8px 0;">Phones where someone typed their PIN and is kept signed in. <strong>Sign this phone out</strong> ends it on that one phone; the person types the PIN again there next time. <strong>Sign out everywhere</strong> does that on all of that person's phones and computers.</div><!-- RC41-v284-9 -->
+        <div class="e2-keep r41-keep"><button class="btn btn-primary" onclick="r41LoadPhones()">&#8635; Refresh phones</button></div><!-- RC41-v282-5 -->
+        <div class="result-msg" id="r41-phones-msg"></div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Person</th><th>Phone</th><th>Last used</th><th>Signed in until</th><th>Actions</th></tr></thead>
+            <tbody id="r41-phones-body"><tr class="empty-row"><td colspan="5">Open this tab to see the list.</td></tr></tbody>
+          </table>
+        </div>
+        <h4 style="margin:18px 0 6px;">Computers (Admin panel)</h4><!-- RC41-v283-2 W12 -->
+        <div class="hint-text" style="margin:0 0 8px;">Computers where an Admin or Supervisor is kept signed in for 30 days. <strong>Sign this computer out</strong> ends it; they type their code and PIN there again. The Admin Password is asked every time anyway.</div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Person</th><th>Computer</th><th>Last used</th><th>Signed in until</th><th>Actions</th></tr></thead>
+            <tbody id="r41-pcs-body"><tr class="empty-row"><td colspan="5">Open this tab to see the list.</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-bg" id="r41-del-bg" onkeydown="r41DelKey(event)"><!-- RC41-v283-3 W14 Delete permanently; RC41-v284-6 keyboard -->
+      <div class="modal" role="dialog" aria-modal="true" aria-labelledby="r41-del-title">
+        <h3 id="r41-del-title">Delete permanently</h3>
+        <div class="hint-text" id="r41-del-what"></div>
+        <div class="form-field"><label for="r41-del-typed" id="r41-del-typed-lbl">Type the employee code to confirm</label><input type="text" id="r41-del-typed" autocomplete="off" autocapitalize="characters" spellcheck="false"></div>
+        <div class="form-field"><label for="r41-del-secret">Admin Password (a Supervisor Password cannot delete)</label><input type="text" class="pw-mask" id="r41-del-secret" autocomplete="off" autocapitalize="off" spellcheck="false" data-1p-ignore data-lpignore="true" data-bwignore="true" data-form-type="other"></div>
+        <div class="r41-box" id="r41-del-plan" style="display:none;"></div>
+        <div class="result-msg" id="r41-del-msg" role="status"></div>
+        <div class="e2-keep" style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;">
+          <button type="button" class="btn btn-primary" id="r41-del-check" onclick="r41DeleteCheck()">Check what will happen</button>
+          <button type="button" class="btn r41-danger" id="r41-del-go" onclick="r41DeleteRun()" style="display:none;">Yes, delete permanently</button>
+          <button type="button" class="btn btn-grey" id="r41-del-cancel" onclick="r41DeleteClose()">Cancel</button>
+        </div>
+      </div>
     </div>
 
     <!-- ══════════════ EDIT ACCESS MODAL (v2.14, Master Prompt v17 Part C) ══════════════
@@ -3820,7 +3926,30 @@ label:has(>input[type=checkbox]),label:has(>input[type=radio]){display:flex;alig
       <div class="modal">
         <h3>Edit Access</h3>
         <div class="hint-text">Employee: <strong class="mono" id="edit-emp-code-display">—</strong></div>
+        <div id="edit-emp-r41-note" class="e2-keep"></div><!-- RC41-W13-4 RC41-v282-5 -->
         <div id="edit-emp-perm-container"></div>
+        <div class="r41-box" id="edit-emp-r41-sup"><!-- RC41-W13-4: read from the database code 2026-11-15 -->
+          <strong>What a Supervisor can do</strong> (signs in with their own code and PIN, then the Supervisor Password):
+          <ul>
+            <li>Reset the PIN of a staff member.</li>
+            <li>Unlock a staff member who typed a wrong PIN too many times.</li>
+            <li>Rename a staff member.</li>
+            <li>Turn the phone code on for a staff member, or reset it when they lose their phone.</li>
+            <li>Sign a staff member's phone out (after the next update).</li>
+            <li>Block a lost phone with their own PIN.</li>
+            <li>Do any of the above on their own account.</li>
+          </ul>
+          <strong>What a Supervisor cannot do</strong> (for these account actions the database itself refuses it, whatever this page shows):<!-- RC41-v282-11 -->
+          <ul>
+            <li>Change anything on an Admin or on another Supervisor.</li>
+            <li>Add a person, or switch an account off or on.</li>
+            <li>Change anyone's access or role (this Edit Access box).</li>
+            <li>Archive an account.</li>
+            <li>Change the Admin Password or the Supervisor Password.</li>
+            <li>Use the Supervisor Password with an account that is not a Supervisor for the account actions in the first list (reset PIN, unlock, rename, phone code, phone sign-out). Some other screens, such as the phone list and stock, accept the Supervisor Password on its own.</li>
+          </ul>
+          <div class="hint-text" id="edit-emp-r41-pw"></div>
+        </div>
         <button class="btn btn-primary" onclick="submitUpdateEmployeePermissions()">✓ Save Access</button>
         <div class="result-msg" id="edit-emp-result"></div>
         <div class="modal-close"><button class="btn btn-grey" onclick="closeEditAccessModal()">Cancel</button></div>
@@ -4311,6 +4440,17 @@ label:has(>input[type=checkbox]),label:has(>input[type=radio]){display:flex;alig
         <button class="btn btn-primary" id="rotate-secret-btn" onclick="submitRotateSecret()">✓ Change Password</button>
         <div class="result-msg" id="rotate-secret-result"></div>
       </div></div></details>
+
+      <div class="card" id="fp-email-card" style="display:none;"><!-- RC41-v283-1 (v2.80 merge) -->
+        <h3>Recovery email for a forgotten Admin Password</h3>
+        <div class="hint-text">If the Admin Password is ever forgotten, a code is sent to this address. Use an address only the owner can open, and turn on 2-step sign-in for that mailbox.</div>
+        <div class="form-row">
+          <div class="form-field"><label>Admin Password (to confirm it is you)</label><input type="text" class="pw-mask" autocapitalize="off" spellcheck="false" id="fp-set-secret" autocomplete="off"></div>
+          <div class="form-field"><label>Owner email address</label><input type="email" id="fp-set-email" autocomplete="off" autocapitalize="off" spellcheck="false"></div>
+        </div>
+        <button class="btn btn-primary" onclick="fpSetEmail()">Save recovery email</button>
+        <div class="result-msg" id="fp-set-result"></div>
+      </div>
 
       <div class="card">
         <h3>🏢 Company Info</h3>
@@ -4828,6 +4968,7 @@ function attemptEmployeeLogin() {
       return;
     }
     if (!row || !row.ok) { errEl.textContent = (row && row.message) ? row.message : 'Login failed.'; return; }
+    try { w12AfterPin(row, code, pin); } catch (w12e) {}   /* RC41-v283-2 W12: one token for this computer, the PIN is not kept */
     proceedPastEmployeeLogin(row);
   }).catch(function (err) { if (btn) btn.disabled = false; errEl.textContent = a64LoginUnsure(); });   /* ADM-v264 H-1: a login writes (log, device, failed-PIN count, TOTP / backup code): never say 'Nothing was changed' */
 }
@@ -4922,12 +5063,15 @@ function submitEmployeeTotpCode() {
       codeEl.value = '';
       return;
     }
+    var w12Pend = pendingEmployeeLogin;   /* RC41-v283-2 W12 */
     pendingEmployeeLogin = null;
     codeEl.value = '';
     errEl.textContent = '';
     if (row.backup_codes_left !== null && row.backup_codes_left !== undefined && row.backup_codes_left <= 2 && String(row.message || '').indexOf('Backup code used') >= 0) {
       setTimeout(function () { alert('Only ' + row.backup_codes_left + ' backup codes left.\n\nAsk an Admin to issue you a fresh set from People and access.'); }, 400);
     }
+    try { if (w12Pend) w12AfterPin(row, w12Pend.code, w12Pend.pin); } catch (w12e) {}   /* RC41-v283-2 W12 */
+    w12Pend = null;
     proceedPastEmployeeLogin(row);
   }).catch(function (err) { errEl.textContent = a64LoginUnsure(); });   /* ADM-v264 H-1: the code or backup code may already be used */
 }
@@ -5128,6 +5272,7 @@ function attemptAdminLogin() {
     // never appears "already idle" if the tab was left open on this screen.
     lastActivityAt = Date.now();
     if (remember) { saveRememberedSecret(val, rememberDays); } else { clearRememberedSecret(); }
+    if (typeof W12 !== 'undefined' && W12 && W12.locked) { W12.locked = false; try { location.reload(); return; } catch (w12e) {} }   /* RC41-v284-1: after a lock the page is rebuilt */
     showAppShell();
   }, function (msg) {
     recordLoginFailure();
@@ -5161,11 +5306,22 @@ function ensureSecretScreenEscapeHatch() {
     '<div style="font-size:var(--t-body);color:#6B7280;margin-top:4px;">Use this if you do not have the Admin Password.</div>';
   card.appendChild(wrap);
   document.getElementById('login-escape-btn').addEventListener('click', function () {
+    var w12r = null; try { w12r = w12Get(); } catch (w12e0) {}
     clearAdminSecret();
     clearRememberedSecret();
+    try { w12Forget(); } catch (w12e) {}   /* RC41-v283-2 W12: a different person on this computer */
     clearAdminPanelSession();
-    document.getElementById('login-screen').style.display = 'none';
-    showEmployeeLoginScreen('');
+    /* RC41-v284-2 (review M1b): end this computer's 30-day sign-in on the server, then rebuild the page from scratch, exactly
+       like Logout (v2.29: "a reload is the only way to be certain"). The next person never gets the earlier person's page. */
+    var w12p = null; try { w12p = w12EndOld(w12r, null); } catch (w12e1) {}
+    var w12m = document.getElementById('login-err-msg'); if (w12m) w12m.textContent = 'One moment...';
+    var w12done = false, w12go = function () {
+      if (w12done) return; w12done = true;
+      try { location.reload(); return; } catch (w12e2) {}
+      document.getElementById('login-screen').style.display = 'none';
+      showEmployeeLoginScreen('');
+    };
+    if (w12p && w12p.then) { w12p.then(w12go, w12go); setTimeout(w12go, 3000); } else w12go();
   });
 }
 function showLoginScreen(message) {
@@ -5197,10 +5353,12 @@ function showAppShell() {
   document.getElementById('login-screen').style.display = 'none';
   document.getElementById('employee-login-screen').style.display = 'none';
   document.getElementById('app-shell').style.display = 'flex';
+  try { var w12sh = document.getElementById('app-shell'); w12sh.removeAttribute('inert'); w12sh.removeAttribute('aria-hidden'); } catch (w12e) {}   /* RC41-v284-1 */
   initAppShell();
   applyReadOnlyModeToUI();
 }
 function adminLogout() {
+  var w12p = null; try { w12p = w12RevokeHere(); } catch (w12e) {}   /* RC41-v283-2 W12: Logout forgets this computer */
   clearAdminSecret();
   clearAdminPanelSession();
   // v2.14 (Master Prompt v17, Part A): Logout also forgets a remembered
@@ -5214,8 +5372,164 @@ function adminLogout() {
   // panel on one warehouse PC, and without this the next person inherits the
   // previous person's already-loaded tables and whatever controls were
   // switched off for them. A reload is the only way to be certain.
+  if (w12p && w12p.then) {   /* RC41-v283-2: wait (at most 4 s) for the server sign-out before the page is rebuilt */
+    var w12done = false, w12go = function () { if (w12done) return; w12done = true; try { location.reload(); } catch (e1) { showEmployeeLoginScreen(''); } };
+    w12p.then(w12go, w12go); setTimeout(w12go, 4000); return;
+  }
   try { location.reload(); return; } catch (e) {}
   showEmployeeLoginScreen('');
+}
+
+// RC41-v283-2 W12: "Keep me signed in on this computer for 30 days" (trusted computer).
+// Same server design as the phones (W1): after the code + PIN, oms_issue_txn_token(code, PIN, 'admin_pc') gives a random token
+// that the database keeps only as a sha256; oms_tok_ping(code, token) on reopen checks it and slides its 30 days. The database
+// ends it by itself on a PIN change, a role change, Deactivate, Archive, a lock, or 30 days without use (W1 rules).
+// Kept in localStorage: employee code, name, role, the token and its short id. NEVER the Admin Password and NEVER the PIN.
+// Every admin call needs the Admin Password, so it stays in this tab only (sessionStorage, as before): on reopen the person
+// skips the code + PIN and types only the Admin Password. 30 minutes without use locks the panel (password only) instead
+// of signing out. Logout and "Sign in as a different employee" forget this computer.
+var W12_KEY = 'oms_admin_pc_signin_v1';
+var W12_LABEL = 'admin_pc';
+var W12_DAYS = 30;
+var W12 = { last: null };
+function w12Get() {
+  try {
+    var r = JSON.parse(localStorage.getItem(W12_KEY) || 'null');
+    if (!r) return null;
+    if (r.v !== 1 || !r.code || !r.token || String(r.token).indexOf('tok1.') !== 0 || r.secret !== undefined || r.pin !== undefined ||
+        (r.role !== 'ADMIN' && r.role !== 'SUPERVISOR') || !r.lastOk || Date.now() - r.lastOk > W12_DAYS * 86400000) {
+      localStorage.removeItem(W12_KEY); return null;
+    }
+    return r;
+  } catch (e) { try { localStorage.removeItem(W12_KEY); } catch (x) {} return null; }
+}
+function w12Put(r) { try { localStorage.setItem(W12_KEY, JSON.stringify(r)); } catch (e) {} }
+function w12Forget() { try { localStorage.removeItem(W12_KEY); } catch (e) {} }
+function w12Has() { return !!w12Get(); }
+function w12Wanted() { var b = document.getElementById('emp-login-keep-input'); return !!(b && b.checked); }
+function w12Missing(err) {
+  var raw = String((err && err.message) || '') + ' ' + String((err && err.code) || '') + ' ' + String((err && err.details) || '');
+  return /could not find the function|schema cache|PGRST202|42883|does not exist/i.test(raw);
+}
+// The list on the server shows a short id = the first 12 hex of sha256(token). Worked out here once, so this computer can be
+// marked "This computer" in the list and signed out on Logout.
+function w12HashId(tok) {
+  try {
+    var c = (typeof window !== 'undefined' && window.crypto) || null;
+    if (!c || !c.subtle || typeof TextEncoder === 'undefined') return Promise.resolve('');
+    return c.subtle.digest('SHA-256', new TextEncoder().encode(tok)).then(function (buf) {
+      var a = new Uint8Array(buf), h = '', i;
+      for (i = 0; i < 6; i++) h += ('0' + a[i].toString(16)).slice(-2);
+      return h;
+    }, function () { return ''; });
+  } catch (e) { return Promise.resolve(''); }
+}
+function w12AfterPin(row, code, pin) {
+  var role = row && row.role;
+  var prev = w12Get();   /* RC41-v284-5 (L2): the sign-in this computer kept until now is ended once it is replaced or forgotten */
+  if (role !== 'ADMIN' && role !== 'SUPERVISOR') { w12Forget(); w12EndOld(prev, null); return null; }
+  if (!w12Wanted()) { w12Forget(); w12EndOld(prev, null); return null; }
+  if (typeof db === 'undefined' || !db) return null;
+  W12.last = withTimeout(db.rpc('oms_issue_txn_token', { p_employee_code: code, p_pin: pin, p_device_hint: W12_LABEL }), 10000, 'Keep me signed in').then(function (res) {
+    var d = res && res.data;
+    if (typeof d === 'string') { try { d = JSON.parse(d); } catch (e0) { d = null; } }
+    if (!res || res.error || !d || d.ok !== true || !d.token) { w12Forget(); w12EndOld(prev, null); return false; }
+    var rec = { v: 1, code: String(row.employee_code || code), name: String(row.display_name || ''), role: role, token: String(d.token), id: '',
+                days: Number(d.valid_days) || W12_DAYS, savedAt: Date.now(), lastOk: Date.now() };
+    return w12HashId(rec.token).then(function (id) { rec.id = id; w12Put(rec); w12EndOld(prev, rec.token); return true; });
+  }).catch(function () { return false; });
+  return W12.last;
+}
+// Reopen: no employee session in this tab yet. Returns true when a remembered computer is being checked.
+function w12Resume() {
+  var r = w12Get();
+  if (!r || typeof db === 'undefined' || !db) return false;
+  showEmployeeLoginScreen('Checking this computer...');
+  var w12Unsure = function () { showEmployeeLoginScreen('Could not check this computer just now. Sign in with your code and PIN.'); return false; };
+  W12.last = withTimeout(db.rpc('oms_tok_ping', { p_employee_code: r.code, p_token: r.token }), 10000, 'This computer').then(function (res) {
+    if (res && !res.error && res.data === true) {
+      /* RC41-v284-4 (review L1): the saved role is not trusted. The role is read again from the server (the same PIN-less read the
+         staff App uses); not Admin / Supervisor any more, or switched off -> this computer is forgotten and the code + PIN is asked. */
+      return withTimeout(db.rpc('oms_get_employee_permissions', { p_employee_code: r.code }), 10000, 'Access level').then(function (pr) {
+        var rows = (pr && !pr.error) ? pr.data : null;
+        if (typeof rows === 'string') { try { rows = JSON.parse(rows); } catch (e1) { rows = null; } }
+        if (!Array.isArray(rows)) return w12Unsure();
+        var er = rows[0], role = er ? String(er.role || '') : '';
+        if (!er || er.active === false || er.archived === true || (role !== 'ADMIN' && role !== 'SUPERVISOR')) {
+          w12Forget(); w12EndOld(r, null);
+          showEmployeeLoginScreen('Your access has changed since this computer last signed you in. Sign in with your code and PIN.');
+          return false;
+        }
+        r.role = role; r.lastOk = Date.now(); w12Put(r);
+        setAdminPanelSession({ employee_code: r.code, display_name: r.name, role: role });
+        showLoginScreen('Welcome back' + (r.name ? ', ' + r.name : '') + '. This computer keeps you signed in, so no code or PIN is needed. Type the Admin Password to open the panel.');
+        return true;
+      }, w12Unsure);
+    }
+    if (res && res.error && !w12Missing(res.error)) { showEmployeeLoginScreen('Could not check this computer just now. Sign in with your code and PIN.'); return false; }
+    w12Forget();
+    showEmployeeLoginScreen('This computer is no longer signed in. Sign in with your code and PIN.');
+    return false;
+  }).catch(function () { showEmployeeLoginScreen('Could not check this computer just now. Sign in with your code and PIN.'); return false; });
+  return true;
+}
+// 30 minutes idle on a remembered computer: forget the Admin Password (this tab only) and ask only for it.
+// RC41-v284-1 (review M1): the lock also scrubs the page - every modal closed (also the ones outside #app-shell), every
+// password / secret / PIN box blanked, the held cost PIN forgotten, every loaded table emptied, the hidden panel made inert.
+// The first Admin Password typed after a lock reloads the page, so nothing from before the lock is re-used.
+function w12Lock() {
+  clearAdminSecret();
+  try { unsubscribeDashboardRealtime(); unsubscribeAuditRealtime(); } catch (e) {}
+  W12.locked = true;
+  try { w12Scrub(); } catch (e2) {}
+  showLoginScreen('Locked after 30 minutes without use. This computer still keeps you signed in: type the Admin Password to carry on.');
+}
+function w12Scrub() {
+  var d = document, i, L;
+  try { costaPinCancel(); } catch (e0) {}
+  try { a59PinCancel(); } catch (e1) {}
+  try { if (typeof COSTA !== 'undefined' && COSTA) { COSTA.pin = null; COSTA.since = 0; } } catch (e2) {}
+  try { if (typeof R41_DEL !== 'undefined' && R41_DEL) { R41_DEL.planOk = false; R41_DEL.planKey = ''; } } catch (e3) {}
+  try { L = d.querySelectorAll('.modal-bg'); for (i = 0; i < L.length; i++) L[i].classList.remove('active'); } catch (e4) {}
+  try { L = d.querySelectorAll('input[type="password"], input.pw-mask, input[id*="secret"], input[autocomplete="one-time-code"]'); for (i = 0; i < L.length; i++) L[i].value = ''; } catch (e5) {}
+  try { L = d.querySelectorAll('#app-shell tbody, .modal-bg tbody'); for (i = 0; i < L.length; i++) L[i].innerHTML = ''; } catch (e6) {}
+  try { var sh = d.getElementById('app-shell'); if (sh && sh.setAttribute) { sh.setAttribute('inert', ''); sh.setAttribute('aria-hidden', 'true'); } } catch (e7) {}
+  /* RC41-v285-1 (review N1): nothing from before the lock stays in the page, not even hidden. The 2FA setup box is closed
+     the normal way, the 2FA secret key, QR, backup codes and the Details / Relocate lists are blanked, then the whole hidden
+     panel and every modal box are emptied. After a lock the page is always rebuilt (the password reloads it, the escape
+     hatch reloads it), so nothing emptied here is needed again. */
+  try { closeTotpSetupModal(); } catch (e8) {}
+  var W12_SCRUB_IDS = ['totp-setup-key', 'totp-setup-qr', 'totp-setup-step2', 'totp-setup-result', 'totp-choice-result', 'details-modal-content',
+    'relocate-bin-detail', 'relocate-bin-result', 'relocate-bin-sum', 'adjust-stock-sku', 'adjust-stock-current-qty', 'bin-toggle-modal-desc',
+    'bin-toggle-result', 'costa-pin-code', 'a59-pin-code', 'a59-pin-warn', 'ax-toast', 'idc-toast'];
+  for (i = 0; i < W12_SCRUB_IDS.length; i++) {
+    try { var x = d.getElementById(W12_SCRUB_IDS[i]); if (x) { x.innerHTML = ''; x.textContent = ''; if (x.removeAttribute) x.removeAttribute('data-codes'); } } catch (e9) {}
+  }
+  try { L = d.querySelectorAll('[data-codes]'); for (i = 0; i < L.length; i++) { L[i].removeAttribute('data-codes'); L[i].innerHTML = ''; } } catch (e10) {}
+  try { L = d.querySelectorAll('.modal-bg'); for (i = 0; i < L.length; i++) L[i].innerHTML = ''; } catch (e11) {}
+  try { var sh2 = d.getElementById('app-shell'); if (sh2) sh2.innerHTML = ''; } catch (e12) {}
+}
+// RC41-v284-5 (review L2): end an older sign-in token that this computer no longer keeps (best effort, no password needed:
+// oms_revoke_txn_token only ends the token it is given). Nobody can use such a token any more; it only used up one of the
+// 10 sign-ins the server keeps per person (shared with phones).
+function w12EndOld(prev, keepTok) {
+  if (!prev || !prev.token || prev.token === keepTok || typeof db === 'undefined' || !db) return null;
+  return withTimeout(db.rpc('oms_revoke_txn_token', { p_employee_code: prev.code, p_token: prev.token }), 6000, 'End the older sign-in')
+    .then(function () { return true; }, function () { return false; });
+}
+// Logout: forget this computer here, and end its sign-in on the server too (best effort, needs the password of this tab).
+function w12RevokeHere() {
+  var r = w12Get(), sec = '', me = '';
+  try { me = String(getAdminPanelEmployeeCode() || '').toUpperCase(); } catch (e0) {}
+  if (!r) return null;
+  if (me && String(r.code || '').toUpperCase() !== me) return null;   /* RC41-v284-8 (L5): another person's computer sign-in (other tab) is theirs to end */
+  w12Forget();
+  if (!me) return null;
+  try { sec = getAdminSecret(); } catch (e) {}
+  if (!r.id || !sec) return w12EndOld(r, null);   /* no password in this tab: end it by its own token */
+  if (typeof db === 'undefined' || !db) return null;
+  return withTimeout(db.rpc('oms_admin_signout_phone', { p_admin_secret: sec, p_employee_code: r.code, p_id: r.id, p_caller_employee_code: me }), 4000, 'Sign this computer out')
+    .then(function () { return true; }, function () { return false; });
 }
 
 // ── v2: SESSION INACTIVITY AUTO-LOGOUT ───────────────────────────
@@ -5238,6 +5552,7 @@ setInterval(function () {
   // clears and returns null once expired, so this check alone is sufficient.
   // Unchecked (default) behaviour is completely unchanged below.
   if (loadRememberedSecret()) return;
+  if (w12Has() && getAdminPanelSession() && Date.now() - lastActivityAt >= SESSION_IDLE_LIMIT_MS) { w12Lock(); return; }   /* RC41-v283-2 W12: lock, keep the 30-day sign-in */
   if (Date.now() - lastActivityAt >= SESSION_IDLE_LIMIT_MS) {
     adminLogout();
     var errEl = document.getElementById('login-err-msg');
@@ -5260,7 +5575,7 @@ setInterval(function () {
   // not re-verified against the server every time — same tradeoff already
   // accepted throughout this codebase for the employee-PIN session.
   var empSession = getAdminPanelSession();
-  if (!empSession) { showEmployeeLoginScreen(''); return; }
+  if (!empSession) { if (w12Resume()) return; showEmployeeLoginScreen(''); return; }   /* RC41-v283-2 W12 */
   if (empSession.role === 'READ_ONLY_ADMIN') {
     showAppShell();
     applyReadOnlyModeToUI();
@@ -10213,6 +10528,7 @@ function renderEmployees() {
   try { smxReg('empq', { input: 'emp-search', clear: function () { var s = document.getElementById('emp-search'); if (s) s.value = ''; renderEmployees(); } }); smxDecorate('emp-search', 'empq'); } catch (e0) {}
   var q = (document.getElementById('emp-search').value || '').toLowerCase().trim();
   var statusFilter = document.getElementById('emp-status-filter').value;
+  try { r41DelBarSync(); } catch (e1) {}   /* RC41-v283-3 W14 */
   var now = new Date();
 
   // v2.14 (Master Prompt v17, Part B): archived employees are hidden from
@@ -10221,7 +10537,8 @@ function renderEmployees() {
   // way, not that it disappears entirely.
   var r73Known = employeesCache.some(function (e) { return Object.prototype.hasOwnProperty.call(e, 'locked_until'); });   /* R23b: was the lock field returned at all? */
   var rows = employeesCache.filter(function (e) {
-    var isLocked = e.locked_until && new Date(e.locked_until) > now;
+    var isLocked = r41IsLocked(e, now);   /* RC41-W13-2 */
+    if (statusFilter === 'deleted') return r41IsDeleted(e);   /* RC41-v283-3 W14 */
     if (statusFilter === 'archived') return !!e.archived;
     if (e.archived) return false;
     if (statusFilter === 'active' && !e.active) return false;
@@ -10237,9 +10554,9 @@ function renderEmployees() {
   if (!rows.length) { body.innerHTML = '<tr class="empty-row"><td colspan="9">No employees match this filter. ' + (q ? '<span class="sm-dim">Try fewer letters, a part of the code, or Clear all.</span> <button type="button" class="sm-act sm-clear" data-act="clearall" data-box="empq">&#10005; Clear all</button>' : '') + '</td></tr>'; return; }
 
   body.innerHTML = rows.map(function (e) {
-    var isLocked = e.locked_until && new Date(e.locked_until) > now;
+    var isLocked = r41IsLocked(e, now);   /* RC41-W13-2 */
     var statusBadge = e.archived ? '<span class="badge badge-grey">Archived</span>' : (e.active ? '<span class="badge badge-green">Active</span>' : '<span class="badge badge-grey">Switched off</span>');   /* ADM-v265 A-28 */
-    var lockBadge = isLocked ? '<span class="badge badge-red">Locked</span>' : '<span class="badge badge-grey">—</span>';
+    var lockBadge = isLocked ? '<span class="badge badge-red">Locked</span>' : (r41AtLimit(e, now) ? '<span class="badge badge-amber" title="The lock has ended. One more wrong PIN locks this person again.">Next wrong PIN locks</span>' : '<span class="badge badge-grey">—</span>');   /* RC41-v282-7 */
     var r73Need = '<span class="badge badge-grey" title="Only an Admin PIN shows this. Sign in to this list with an Admin PIN to see it.">Admin PIN needed</span>';   /* R23b */
     if (!Object.prototype.hasOwnProperty.call(e, 'locked_until')) lockBadge = r73Need;
     // v2.19: two-factor status, read from the only two 2FA columns the app's
@@ -10262,22 +10579,7 @@ function renderEmployees() {
     var checked = selectedEmployeeCodes[e.employee_code] ? ' checked' : '';
     var actionsHtml = e.archived
       ? '<span class="result-msg">Archived ' + (e.archived_at ? fmtDateTime(e.archived_at) : '') + '</span>'
-      : '<div class="a58-act" style="display:flex;gap:6px;flex-wrap:wrap;">' +   /* ADM-v258 A-02 */
-        '<button class="btn btn-sm ' + (e.active ? 'btn-grey' : 'btn-green') + '" onclick="toggleEmployeeActive(\'' + jsq(e.employee_code) + '\', ' + !!e.active + ')" title="' + (e.active ? 'Stop this account from being able to sign in. Their history and access settings are kept exactly as they are, and switching them back on undoes this completely.' : 'Let this account sign in again, with the same access it had before.') + '">' + (e.active ? 'Deactivate' : 'Reactivate') + '</button>' +
-        '<button class="btn btn-sm btn-primary" onclick="resetEmployeePin(\'' + jsq(e.employee_code) + '\')" title="Set a new 4-digit PIN for this person. Use this if they forgot theirs or it needs to change for any reason.">Reset PIN</button>' +
-        (!Object.prototype.hasOwnProperty.call(e, 'locked_until') ? '' : '<button class="btn btn-sm btn-gold" onclick="unlockEmployee(\'' + jsq(e.employee_code) + '\')" title="Clears an automatic lockout caused by too many wrong PIN attempts, so they can try again immediately instead of waiting it out.">Unlock</button>') +
-        // v2.22: ONE button, not three. Three buttons called "Set up 2FA",
-        // "Require 2FA" and "Clear 2FA" were impossible to tell apart. Now it
-        // is simply on or off, and the question of WHOSE phone is asked inside
-        // the box where it actually matters.
-        ((e.totp_enabled || e.totp_required)
-           ? '<button class="btn btn-sm btn-grey" onclick="turnOffPhoneCode(\'' + jsq(e.employee_code) + '\')" title="Go back to PIN only for this person. Use this if they lose their phone.">Turn off phone code</button>'
-           : (!Object.prototype.hasOwnProperty.call(e, 'totp_enabled') && !Object.prototype.hasOwnProperty.call(e, 'totp_required') ? '' : '<button class="btn btn-sm btn-primary" onclick="openPhoneCodeChoice(\'' + jsq(e.employee_code) + '\')" title="Make this person enter a 6-digit code from a phone as well as their PIN">Turn on phone code</button>')) +
-        '<button class="btn btn-sm btn-primary a58-pri" onclick="openEditAccessModal(\'' + jsq(e.employee_code) + '\')" title="Change this person&#39;s role and exactly which sections of the app they can use.">Edit Access</button>' +
-        '<button class="btn btn-sm btn-grey" onclick="openEmployeeRename(\'' + jsq(e.employee_code) + '\')" title="Change the full name shown for this person everywhere in the panel, including the Activity record. Their employee code and history do not change.">✎ Rename</button>' +
-        '<button class="btn btn-sm btn-grey a58-arch" onclick="archiveEmployee(\'' + jsq(e.employee_code) + '\')" title="Retire this account for good and free up its employee code for reuse. Everything they ever did stays in the Activity record and Transactions exactly as it is - this cannot be undone from here.">Archive &amp; Free Code</button>' +
-        '<button type="button" class="btn btn-sm btn-grey a58-morebtn" data-a58="more" aria-expanded="false">More actions</button>' +   /* ADM-v258 A-02: shown on narrow screens only */
-        '</div>';
+      : r41ActionsHtml(e, now);   /* RC41-W13-2: one Edit button + More menu; Unlock only when locked */
     // v2.29: rows a Supervisor must not act on are marked here, where the
     // role is actually known, and disabled by applySupervisorModeToUI().
     var privRow = (e.role === 'ADMIN' || e.role === 'SUPERVISOR') ? ' data-privileged-row="1"' : '';
@@ -10285,7 +10587,7 @@ function renderEmployees() {
       '<td class="chk-col"><input type="checkbox" class="emp-row-chk" data-code="' + code + '"' + checked + (e.archived ? ' disabled' : '') + ' onchange="toggleEmployeeSelected(\'' + jsq(e.employee_code) + '\', this.checked)"></td>' +
       '<td class="mono a58-cd" data-label="Code">' + displayCode + '</td>' +
       '<td class="a58-nm">' + esc(e.display_name) + '</td>' +
-      '<td data-label="Role">' + esc(a65Role(e.role)) + (e.permission_preset && e.permission_preset !== e.role ? ' <span class="badge badge-grey" title="App section access">' + esc(e.permission_preset) + '</span>' : '') + '</td>' +
+      '<td data-label="Role">' + r41RolePill(e) + '</td>' +   /* RC41-W13-3: one pill, no preset badge */
       '<td data-label="Status">' + statusBadge + '</td>' +
       '<td data-label="Locked">' + lockBadge + '</td>' +
       '<td data-label="Phone code">' + twofaBadge + '</td>' +
@@ -11214,11 +11516,11 @@ function buildPermissionUIHtml(prefix) {
     /* B9-END */
     '<div class="perm-grid">' + boxes + '</div>' +
     '<div class="admin-access-card">' +
-      '<label><input type="checkbox" id="' + prefix + '-admin-access" onchange="toggleAdminAccessSub(\'' + prefix + '\')"> Can log into Admin Panel</label>' +
+      '<label><input type="checkbox" id="' + prefix + '-admin-access" onchange="toggleAdminAccessSub(\'' + prefix + '\'); r41AdminBoxChanged(\'' + prefix + '\')"> Admin Panel Access (can log into this panel)</label>' +
       '<div class="hint-text" style="margin:4px 0 0 21px;">Kept separate from the App-section boxes above — this is the Admin Panel, which is protected by its own password, not the phone App.</div>' +
       '<div id="' + prefix + '-admin-level-row" style="display:none;margin:8px 0 0 21px;">' +
-        '<label style="margin-right:14px;display:block;margin-bottom:4px;"><input type="radio" name="' + prefix + '-admin-level" value="ADMIN" checked> <strong>Full Admin</strong> &mdash; can change anything, including accounts and both passwords</label>' +
-        '<label style="display:block;"><input type="radio" name="' + prefix + '-admin-level" value="SUPERVISOR"> <strong>Supervisor</strong> &mdash; runs the panel on your behalf: batches, phones, stock, bins, and rescuing staff. Cannot add or switch off accounts, cannot change anyone\'s access level, and cannot touch either password. Signs in with the separate <em>Supervisor Password</em> set on the People and access page.</label>' +
+        '<label style="margin-right:14px;display:block;margin-bottom:4px;"><input type="radio" name="' + prefix + '-admin-level" value="ADMIN" onchange="r41LevelChanged(\'' + prefix + '\')"> <strong>Full Admin</strong> &mdash; can change anything, including accounts and both passwords</label>' +
+        '<label style="display:block;"><input type="radio" name="' + prefix + '-admin-level" value="SUPERVISOR" checked onchange="r41LevelChanged(\'' + prefix + '\')">' + /* RC41-v282-3 */ ' <strong>Supervisor</strong> &mdash; runs the panel on your behalf: batches, phones, stock, bins, and rescuing staff. Cannot add or switch off accounts, cannot change anyone\'s access level, and cannot touch either password. Signs in with the separate <em>Supervisor Password</em> set on the People and access page.</label>' +
         // v2.31: the old "Read-Only Admin" level is retired. It was a half-built
         // account type whose job the Supervisor role now does properly, and it
         // carried a route into the audit log that needed no password at all.
@@ -11268,7 +11570,7 @@ function applyPermissionPreset(prefix, preset) {
     var scopeEl = document.querySelector('input[name="' + prefix + '-log-scope"][value="' + (p.logScope || 'own') + '"]');
     if (scopeEl) scopeEl.checked = true;
   }
-  if (preset === 'ADMIN' || preset === 'SUPERVISOR') {
+  if (preset === 'SUPERVISOR' || (preset === 'ADMIN' && r41CallerIsFullAdmin(prefix))) {   /* RC41-W13-4: Admin only for a full-Admin caller */
     var accessEl = document.getElementById(prefix + '-admin-access');
     if (accessEl) accessEl.checked = true;
     var fullEl = document.querySelector('input[name="' + prefix + '-admin-level"][value="' + preset + '"]');
@@ -11334,7 +11636,7 @@ function prefillPermissionUI(prefix, e) {
   // sitting there. Editing a Supervisor and then opening a warehouse hand used
   // to show "Supervisor" pre-selected, which is a quiet way to promote the
   // wrong person.
-  var wantLevel = isAdminRole ? e.role : 'ADMIN';
+  var wantLevel = isAdminRole ? e.role : 'SUPERVISOR';   /* RC41-v282-4: a non-admin account never opens with Full Admin pre-selected */
   var lvlEl = document.querySelector('input[name="' + prefix + '-admin-level"][value="' + wantLevel + '"]');
   if (lvlEl) lvlEl.checked = true;
   // ── 4: an account still carrying the retired Read-Only level ──────────
@@ -11365,6 +11667,7 @@ function openEditAccessModal(code) {
   var resEl = document.getElementById('edit-emp-result');
   if (resEl) { resEl.className = 'result-msg'; resEl.textContent = ''; }
   prefillPermissionUI('edit-emp', e);
+  try { r41AfterPrefill('edit-emp', e); } catch (r41e) {}   /* RC41-W13-4 */
   editAccessTargetCode = code;
   document.getElementById('edit-access-modal-bg').classList.add('active');
 }
@@ -13871,6 +14174,547 @@ function a67Strip(root) {
     t = setTimeout(function () { var g = document.getElementById('af-fs-fab'); if (g) g.classList.remove('r74-off'); }, 1200);
   }
   try { document.addEventListener('scroll', off, { capture: true, passive: true }); } catch (e) {}
+})();
+</script>
+<script>
+/* RC41 (Admin v2.81-v2.85): W13 People and phones + W1-8 Phones tab. v2.80 (Forgot Admin Password) is merged in v2.83 (RC41-v283-1). v2.84 = review fixes (RC41-v284-n). v2.85 = review N1 N2 N5 (RC41-v285-n). */
+var R41_PIN_LIMIT = 5;   /* oms_verify_login: locked_until is set when failed_pin_count + 1 >= 5 */
+var R41_PH_MISSING = 'Phone list will appear after the next update.';
+var R41_PH = { rows: [] };
+function r41Up(v) { return String(v == null ? '' : v).toUpperCase(); }
+function r41IsLocked(e, now) {   /* RC41-v282-7: Locked = locked_until in the future, nothing else */
+  if (!e || !e.locked_until) return false;
+  return new Date(e.locked_until) > (now || new Date());
+}
+function r41AtLimit(e, now) {   /* RC41-v282-7: the lock has ended but the wrong-PIN count is still at the limit, so one more wrong PIN locks again */
+  if (!e || r41IsLocked(e, now)) return false;
+  var n = Number(e.failed_pin_count);
+  return e.failed_pin_count != null && isFinite(n) && n >= R41_PIN_LIMIT;
+}
+function r41RoleWord(role) {
+  var k = r41Up(role);
+  if (k === 'ADMIN') return 'Admin';
+  if (k === 'SUPERVISOR') return 'Supervisor';
+  if (k === 'OWNER') return 'Owner';
+  if (k === 'READ_ONLY_ADMIN') return 'Read only (old)';
+  return 'Staff';
+}
+function r41RolePill(e) {
+  var k = r41Up(e && e.role), p = r41Up(e && e.permission_preset);
+  var cls = k === 'ADMIN' ? 'r41-admin' : (k === 'SUPERVISOR' ? 'r41-sup' : 'r41-staff');
+  var h = '<span class="r41-pill ' + cls + '">' + esc(r41RoleWord(k)) + '</span>';
+  if (k !== 'ADMIN' && k !== 'SUPERVISOR' && k !== 'OWNER') {
+    if (p === 'SUPERVISOR') h += '<div class="r41-amber">Set up as Supervisor but not finished - open Edit and press Finish: make Supervisor</div>';   /* RC41-v282-1 */
+    else if (p === 'ADMIN') h += '<div class="r41-amber">Set up as Admin but not finished - a full Admin opens Edit, ticks Admin Panel Access and presses Full Admin</div>';   /* RC41-v282-1 */
+  }
+  return h;
+}
+function r41On(fn, code, extra) { return fn + '(&#39;' + jsq(code) + '&#39;' + (extra === undefined ? '' : ', ' + extra) + ')'; }
+function r41ActionsHtml(e, now) {
+  var has = function (k) { return Object.prototype.hasOwnProperty.call(e, k); };
+  var c = e.employee_code;
+  var h = '<div class="r41-act e2-keep">';   /* RC41-v282-5 */
+  h += '<button class="btn btn-sm btn-primary" onclick="' + r41On('openEditAccessModal', c) + '" title="Change this person&#39;s role and which parts of the app they can use.">Edit</button>';
+  if (r41IsLocked(e, now)) h += '<button class="btn btn-sm btn-gold" onclick="' + r41On('unlockEmployee', c) + '" title="Clears the lock after too many wrong PINs, so they can try again now.">Unlock</button>';
+  else if (r41AtLimit(e, now)) h += '<button class="btn btn-sm btn-gold" onclick="' + r41On('unlockEmployee', c) + '" title="The lock has ended, but one more wrong PIN locks them again. Unlock clears the count.">Unlock</button>';   /* RC41-v282-7 */
+  var phone = '';
+  if (e.totp_enabled || e.totp_required) phone = '<button class="btn btn-sm btn-grey" onclick="' + r41On('turnOffPhoneCode', c) + '" title="Go back to PIN only for this person. Use this if they lose their phone.">Phone code off</button>';
+  else if (has('totp_enabled') || has('totp_required')) phone = '<button class="btn btn-sm btn-grey" onclick="' + r41On('openPhoneCodeChoice', c) + '" title="Make this person enter a 6-digit code from a phone as well as their PIN.">Phone code on</button>';
+  h += '<details class="r41-more"><summary class="btn btn-sm btn-grey" title="More things you can do for this person">More &#8943;</summary><div class="r41-menu">' +
+    '<button class="btn btn-sm btn-grey" onclick="' + r41On('resetEmployeePin', c) + '" title="Set a new 4-digit PIN for this person.">Reset PIN</button>' +
+    phone +
+    '<button class="btn btn-sm btn-grey" onclick="' + r41On('openEmployeeRename', c) + '" title="Change the name shown for this person. Their code and history do not change.">Rename</button>' +
+    '<button class="btn btn-sm btn-grey" onclick="' + r41On('toggleEmployeeActive', c, e.active ? 'true' : 'false') + '" title="' + (e.active ? 'Stop this account from signing in. Switching it back on undoes this completely.' : 'Let this account sign in again, with the same access as before.') + '">' + (e.active ? 'Deactivate' : 'Reactivate') + '</button>' +
+    '<button class="btn btn-sm btn-grey r41-danger" onclick="' + r41On('archiveEmployee', c) + '" title="Retire this account for good and free its code for a new person. Their history stays. Cannot be undone from here.">Archive &amp; free code</button>' +
+    (r41IsFullAdminCaller() ? '<button class="btn btn-sm btn-grey r41-danger" onclick="' + r41On('r41DeleteOpen', c) + '" title="Remove this person for good. You type their code and the Admin Password, see what will happen, then confirm.">Delete permanently</button>' : '') +   /* RC41-v283-3 W14: full Admin only */
+    '</div></details>';
+  return h + '</div>';
+}
+/* ---- W13-4 Edit Access ---- */
+var R41_PREFILL_ROLE = {};   /* RC41-v282-2: the role the account had when Edit Access was opened */
+function r41IsFullAdminCaller() { var s = null; try { s = getAdminPanelSession(); } catch (e0) {} return !!s && r41Up(s.role) === 'ADMIN'; }
+function r41PickLevel(prefix, v) { var el = document.querySelector('input[name="' + prefix + '-admin-level"][value="' + v + '"]'); if (el) el.checked = true; }
+function r41LevelChanged(prefix) {   /* RC41-v282-3: Full Admin only by an explicit press from a full Admin */
+  var a = document.querySelector('input[name="' + prefix + '-admin-level"][value="ADMIN"]');
+  var n = document.getElementById(prefix + '-r41-note');
+  var keepFinish = !!n && String(n.innerHTML || '').indexOf('r41FinishSupervisor') >= 0;   /* RC41-v283-4 (L3): the Finish note is never wiped */
+  if (a && a.checked && !r41IsFullAdminCaller()) {
+    r41PickLevel(prefix, 'SUPERVISOR');
+    if (n && !keepFinish) n.innerHTML = '<div class="r41-amber">Only a full Admin can make someone a Full Admin. Supervisor is selected.</div>';
+    return;
+  }
+  if (!n || keepFinish) return;
+  n.innerHTML = (a && a.checked)   /* RC41-v283-4 (L2): the note always says the level that will be saved */
+    ? '<div class="hint-text">Full Admin is selected. This person will be able to do everything in this panel. Press Save Access to keep it.</div>'
+    : '<div class="hint-text">Supervisor is selected.</div>';
+}
+function r41CallerIsFullAdmin(prefix) {
+  var s = null;
+  try { s = getAdminPanelSession(); } catch (e0) {}
+  var ok = !!s && r41Up(s.role) === 'ADMIN';
+  if (!ok && prefix) {
+    var n = document.getElementById(prefix + '-r41-note');
+    if (n) n.innerHTML = '<div class="r41-amber">Only a full Admin can make someone an Admin. Admin Panel Access was not ticked.</div>';
+  }
+  return ok;
+}
+function r41AdminBoxChanged(prefix) {
+  var box = document.getElementById(prefix + '-admin-access');
+  var presetEl = document.getElementById(prefix + '-preset');
+  var n = document.getElementById(prefix + '-r41-note');
+  if (box && !box.checked && presetEl && (presetEl.value === 'SUPERVISOR' || presetEl.value === 'ADMIN')) {
+    presetEl.value = 'CUSTOM';
+    if (n) n.innerHTML = '<div class="r41-amber">Admin Panel Access is off, so this person will be Staff. The role box now says Custom.</div>';
+  } else if (box && box.checked) {   /* RC41-v282-2: ticking the box by hand never picks Full Admin */
+    var keepAdmin = R41_PREFILL_ROLE[prefix] === 'ADMIN' && r41IsFullAdminCaller();
+    r41PickLevel(prefix, keepAdmin ? 'ADMIN' : 'SUPERVISOR');
+    if (n && String(n.innerHTML || '').indexOf('r41FinishSupervisor') < 0) {   /* the Finish note is never cleared */
+      n.innerHTML = keepAdmin ? '' : '<div class="hint-text">Supervisor is selected below. Full Admin is chosen only by pressing it, and only a full Admin can.</div>';
+    }
+  }
+}
+function r41AfterPrefill(prefix, e) {
+  var n = document.getElementById(prefix + '-r41-note');
+  var k = r41Up(e && e.role), p = r41Up(e && e.permission_preset);
+  R41_PREFILL_ROLE[prefix] = k;   /* RC41-v282-2 */
+  if (n) {
+    if (p === 'SUPERVISOR' && k !== 'SUPERVISOR' && k !== 'ADMIN') {
+      n.innerHTML = '<div class="r41-amber" style="max-width:none;font-size:var(--t-section);padding:8px 10px;">This person was set up as a Supervisor, but it was not finished: Admin Panel Access is not ticked, so today they are Staff. ' +
+        '<button type="button" class="btn btn-sm btn-primary" onclick="r41FinishSupervisor(&#39;' + prefix + '&#39;)">Finish: make Supervisor</button> then press Save Access.</div>';
+    } else { n.innerHTML = ''; }
+  }
+  r41SupPwLine(prefix);
+}
+function r41FinishSupervisor(prefix) {
+  var box = document.getElementById(prefix + '-admin-access');
+  if (box) box.checked = true;
+  var lvl = document.querySelector('input[name="' + prefix + '-admin-level"][value="SUPERVISOR"]');
+  if (lvl) lvl.checked = true;
+  var presetEl = document.getElementById(prefix + '-preset');
+  if (presetEl) presetEl.value = 'SUPERVISOR';
+  toggleAdminAccessSub(prefix);
+  var n = document.getElementById(prefix + '-r41-note');
+  if (n) n.innerHTML = '<div class="hint-text">Ready: press Save Access to make this person a Supervisor.</div>';
+}
+function r41SupPwLine(prefix) {
+  var el = document.getElementById(prefix + '-r41-pw');
+  if (!el) return;
+  var how = 'To set it: close this box, open "More tools: add a person and others" at the top of this page, and use Supervisor Password.';
+  var sec = '';
+  try { sec = getAdminSecret(); } catch (e0) {}
+  if (typeof db === 'undefined' || !db || !sec) { el.textContent = 'Supervisor Password: could not be checked from here. A Supervisor needs it to sign in. ' + how; return; }
+  el.textContent = 'Supervisor Password: checking...';
+  withTimeout(db.rpc('oms_supervisor_password_status', { p_admin_secret: sec }), 10000, 'Supervisor password status').then(function (res) {
+    if (!res || res.error) { el.textContent = 'Supervisor Password: could not be checked just now. ' + how; return; }
+    var d = res.data || {};
+    el.textContent = d.is_set
+      ? 'Supervisor Password: set' + (d.updated_at ? ' (last changed ' + fmtDateTime(d.updated_at) + ')' : '') + '. Give it only to the Supervisor.'
+      : 'Supervisor Password: NOT set yet, so a Supervisor cannot sign in to this panel. ' + how;
+  }).catch(function () { el.textContent = 'Supervisor Password: could not be checked just now. ' + how; });
+}
+/* ---- W1-8 Phones tab ---- */
+function r41PeopleTab(which) {
+  var ph = which === 'phones';
+  var a = document.getElementById('r41-pane-people'), b = document.getElementById('r41-pane-phones');
+  if (a) a.style.display = ph ? 'none' : '';
+  if (b) b.style.display = ph ? '' : 'none';
+  var ta = document.getElementById('r41-tab-people'), tb = document.getElementById('r41-tab-phones');
+  if (ta) ta.classList[ph ? 'remove' : 'add']('on');
+  if (tb) tb.classList[ph ? 'add' : 'remove']('on');
+  if (ta && ta.setAttribute) ta.setAttribute('aria-selected', ph ? 'false' : 'true');   /* RC41-v282-9 */
+  if (tb && tb.setAttribute) tb.setAttribute('aria-selected', ph ? 'true' : 'false');
+  if (ta && ta.setAttribute) ta.setAttribute('tabindex', ph ? '-1' : '0');   /* RC41-v283-6: roving tabindex */
+  if (tb && tb.setAttribute) tb.setAttribute('tabindex', ph ? '0' : '-1');
+  if (ph) return r41LoadPhones();
+}
+function r41Missing(err) {
+  var raw = String((err && err.message) || '') + ' ' + String((err && err.code) || '') + ' ' + String((err && err.details) || '') + ' ' + String((err && err.hint) || '');
+  return /could not find the function|schema cache|PGRST202|42883|function [^ ]* does not exist/i.test(raw);
+}
+function r41PhMsg(t, cls) { var m = document.getElementById('r41-phones-msg'); if (m) { m.className = 'result-msg' + (cls ? ' ' + cls : ''); m.textContent = t; } }
+function r41PhBody(html) { var b = document.getElementById('r41-phones-body'); if (b) b.innerHTML = html; }
+function r41PhRow(t) { return '<tr class="empty-row"><td colspan="5">' + esc(t) + '</td></tr>'; }
+function r41Name(code) {
+  var i;
+  try { for (i = 0; i < employeesCache.length; i++) if (employeesCache[i].employee_code === code) return employeesCache[i].display_name || ''; } catch (e0) {}
+  try { if (employeeDirectory && employeeDirectory[code]) return employeeDirectory[code].display_name || ''; } catch (e1) {}
+  return '';
+}
+function r41LoadPhones() {
+  if (typeof db === 'undefined' || !db) { r41PhBody(r41PhRow('Cannot reach the database right now. Check your internet, then press Refresh phones.')); return Promise.resolve(false); }
+  var sec = getAdminSecret();
+  if (!sec) { r41PhBody(r41PhRow('Your panel password is needed to see phones. Sign in to this panel again.')); return Promise.resolve(false); }
+  r41PhMsg('', '');
+  r41PhBody(r41PhRow('Loading...'));
+  return withTimeout(db.rpc('oms_admin_list_phones', { p_admin_secret: sec, p_caller_employee_code: getAdminPanelEmployeeCode() }), 10000, 'Phone list').then(function (res) {
+    if (res && res.error) {
+      if (r41Missing(res.error)) { r41PhBody(r41PhRow(R41_PH_MISSING)); return false; }
+      if (isBadSecretError(res.error)) { handleBadSecret('the phone list'); return false; }
+      r41PhBody(r41PhRow('The phone list could not be read. ' + friendlyError(res.error, 1)));
+      return false;
+    }
+    var d = res ? res.data : null;
+    if (typeof d === 'string') { try { d = JSON.parse(d); } catch (e0) { d = null; } }
+    R41_PH.rows = Array.isArray(d) ? d : [];
+    r41RenderPhones();
+    return true;
+  }).catch(function (err) {
+    if (r41Missing(err)) { r41PhBody(r41PhRow(R41_PH_MISSING)); return false; }
+    r41PhBody(r41PhRow('The phone list could not be read. ' + friendlyError(err, 1)));
+    return false;
+  });
+}
+function r41RenderPhones() {
+  var all = (R41_PH.rows || []).slice();
+  var rows = all.filter(function (p) { return String(p.label || '') !== 'admin_pc'; });   /* RC41-v283-2: computers have their own list */
+  try { r41RenderPcs(all.filter(function (p) { return String(p.label || '') === 'admin_pc'; })); } catch (e0) {}
+  if (!rows.length) { r41PhBody(r41PhRow('No phones are signed in right now.')); return; }
+  var now = Date.now(), groups = {}, order = [];
+  rows.forEach(function (p) { var k = String(p.employee_code || ''); if (!groups[k]) { groups[k] = []; order.push(k); } groups[k].push(p); });
+  order.sort();
+  var html = order.map(function (code) {
+    var items = groups[code], name = r41Name(code);
+    var live = items.filter(function (p) { return !p.revoked && !(p.signed_in_until && new Date(p.signed_in_until).getTime() <= now); });
+    var head = '<tr class="r41-grp"><td colspan="5">' + esc(name || code) + ' <span class="mono">' + esc(code) + '</span> &middot; ' + live.length + ' phone' + (live.length === 1 ? '' : 's') + ' signed in' +
+      (live.length ? ' <button class="btn btn-sm btn-grey" onclick="' + r41On('r41SignOutPhone', code, 'null') + '" title="Sign this person out on every phone and computer. They type the code and PIN again on each one next time.">Sign out everywhere</button>' : '') + '</td></tr>';
+    return head + items.map(function (p) {
+      var ended = p.signed_in_until && new Date(p.signed_in_until).getTime() <= now;
+      var act = p.revoked ? '<span class="badge badge-grey">Signed out' + (p.revoked_at ? ' ' + esc(fmtDateTime(p.revoked_at)) : '') + '</span>'
+        : (ended ? '<span class="badge badge-grey">Ended</span>'
+          : '<button class="btn btn-sm btn-grey" onclick="r41SignOutPhone(&#39;' + jsq(code) + '&#39;, &#39;' + jsq(p.id) + '&#39;)">Sign this phone out</button>');
+      return '<tr><td>' + esc(name || code) + ' <span class="mono">' + esc(code) + '</span></td><td>' + esc(p.label || 'Phone') + '</td><td>' + esc(fmtDateTime(p.last_used_at)) + '</td><td>' + (ended || p.revoked ? '-' : esc(fmtDateTime(p.signed_in_until))) + '</td><td>' + act + '</td></tr>';
+    }).join('');
+  }).join('');
+  r41PhBody(html);
+  try { if (isReadOnlyAdmin()) applyReadOnlyModeToUI(); } catch (e0) {}
+}
+function r41SignOutPhone(code, id) {
+  if (typeof db === 'undefined' || !db) return;
+  var q = id ? 'Sign this phone out? ' + code + ' will type the PIN again on that phone next time.' : 'Sign ' + code + ' out on every phone and computer? They will type the code and PIN again on each one next time.';   /* RC41-v284-9 (L6) */
+  if (!confirm(q)) return;
+  r41PhMsg('Signing out...', '');
+  return withTimeout(db.rpc('oms_admin_signout_phone', { p_admin_secret: getAdminSecret(), p_employee_code: code, p_id: id || null, p_caller_employee_code: getAdminPanelEmployeeCode() }), 10000, 'Sign phone out').then(function (res) {
+    if (res && res.error) {
+      if (r41Missing(res.error)) { r41PhMsg(R41_PH_MISSING, ''); return; }
+      if (isBadSecretError(res.error)) { handleBadSecret('signing a phone out'); return; }
+      r41PhMsg(friendlyError(res.error), 'err'); return;
+    }
+    var d = (res && res.data) || {};
+    if (d.ok === false) { r41PhMsg(d.message || 'Not signed out.', 'err'); return; }
+    r41PhMsg(id ? 'Done: ' + (d.signed_out || 0) + ' phone' + (d.signed_out === 1 ? '' : 's') + ' signed out.'
+      : 'Done: ' + (d.signed_out || 0) + ' phone and computer sign-in' + (d.signed_out === 1 ? '' : 's') + ' ended.', 'ok');   /* RC41-v284-9 */
+    r41LoadPhones();
+  }).catch(function (err) { r41PhMsg(friendlyError(err), 'err'); });
+}
+/* ---- RC41-v283-3 W14 Delete permanently (functions staged in RC41/db/W14_delete_employee_v2LF.sql) ---- */
+var R41_DEL = { mode: '', code: '', planOk: false, planKey: '' };
+var R41_DEL_OFF = 'Delete permanently is not switched on yet - it needs the next database update. Nothing was changed.';
+try { SUPERVISOR_BLOCKED_FNS.r41DeleteOpen = 1; SUPERVISOR_BLOCKED_FNS.r41DeleteTestOpen = 1; SUPERVISOR_BLOCKED_FNS.r41DeleteCheck = 1; SUPERVISOR_BLOCKED_FNS.r41DeleteRun = 1; } catch (e0) {}
+function r41IsDeleted(e) { return !!(e && (e.deleted_at || String(e.display_name || '').indexOf('Former staff') === 0)); }
+function r41DelBarSync() { var b = document.getElementById('r41-deltest-bar'); if (b) b.style.display = r41IsFullAdminCaller() ? '' : 'none'; }
+function r41DelEl(id) { return document.getElementById(id); }
+function r41DelMsg(t, cls) { var m = r41DelEl('r41-del-msg'); if (m) { m.className = 'result-msg' + (cls ? ' ' + cls : ''); m.textContent = t; } }
+function r41DelReset() {
+  R41_DEL.planOk = false; R41_DEL.planKey = '';
+  var p = r41DelEl('r41-del-plan'); if (p) { p.style.display = 'none'; p.textContent = ''; }
+  var g = r41DelEl('r41-del-go'); if (g) { g.style.display = 'none'; g.disabled = false; }
+  var c = r41DelEl('r41-del-check'); if (c) c.disabled = false;
+  r41DelMsg('', '');
+}
+function r41DelShow(mode, code, title, what, label) {
+  if (!r41IsFullAdminCaller()) { try { alert('Only a full Admin can delete. Nothing was changed.'); } catch (e0) {} return false; }
+  R41_DEL.mode = mode; R41_DEL.code = String(code || '');
+  r41DelEl('r41-del-title').textContent = title;
+  r41DelEl('r41-del-what').textContent = what;
+  r41DelEl('r41-del-typed-lbl').textContent = label;
+  r41DelEl('r41-del-typed').value = ''; r41DelEl('r41-del-secret').value = '';
+  r41DelReset();
+  r41DelEl('r41-del-bg').classList.add('active');
+  try { r41DelEl('r41-del-typed').focus(); } catch (e1) {}   /* RC41-v284-6 (L3): focus moves into the dialog */
+  return true;
+}
+/* RC41-v284-6 (L3): Escape closes the dialog (not while a check or delete is running); Tab and Shift+Tab stay inside it */
+var R41_DEL_FOCUS = ['r41-del-typed', 'r41-del-secret', 'r41-del-check', 'r41-del-go', 'r41-del-cancel'];
+function r41DelBusy() { var g = r41DelEl('r41-del-go'), c = r41DelEl('r41-del-check'); return !!((g && g.disabled && g.style.display !== 'none') || (c && c.disabled)); }
+function r41DelKey(ev) {
+  var k = ev && ev.key, bg = r41DelEl('r41-del-bg');
+  if (!bg || !bg.classList.contains('active')) return;
+  if (k === 'Escape') { if (ev.preventDefault) ev.preventDefault(); if (!r41DelBusy()) r41DeleteClose(); return; }
+  if (k !== 'Tab') return;
+  var list = R41_DEL_FOCUS.map(r41DelEl).filter(function (el) { return el && !el.disabled && (!el.style || el.style.display !== 'none'); });
+  if (!list.length) return;
+  var at = list.indexOf(document.activeElement), n = list.length;
+  var next = ev.shiftKey ? (at <= 0 ? n - 1 : at - 1) : (at < 0 || at >= n - 1 ? 0 : at + 1);
+  if (ev.preventDefault) ev.preventDefault();
+  try { list[next].focus(); } catch (e0) {}
+}
+/* RC41-v285-2 (review N2): the menu item that opened the dialog sits in a <details> menu that closes, so it cannot take the focus
+   back. The focus goes to the menu's own "More" button instead; if the list was redrawn, to that person's new "More" button;
+   if the person is no longer in the list, to the People table. */
+function r41DelSummaryOf(el) {
+  try { var dm = (el && el.closest) ? el.closest('details.r41-more') : null; var sm = (dm && dm.querySelector) ? dm.querySelector('summary') : null; return sm || null; } catch (e0) { return null; }
+}
+function r41DelRowMore(code) {
+  try {
+    var L = document.querySelectorAll('input.emp-row-chk'), i, tr, sm;
+    for (i = 0; i < L.length; i++) {
+      if (String(L[i].getAttribute('data-code') || '') !== String(code || '')) continue;
+      tr = L[i].closest ? L[i].closest('tr') : null;
+      sm = (tr && tr.querySelector) ? tr.querySelector('details.r41-more > summary') : null;
+      if (sm) return sm;
+    }
+  } catch (e0) {}
+  return null;
+}
+function r41DelTable() {
+  try { var bd = document.getElementById('emp-body'), tb = (bd && bd.closest) ? bd.closest('table') : null; if (tb && tb.setAttribute && tb.getAttribute && tb.getAttribute('tabindex') === null) tb.setAttribute('tabindex', '-1'); return tb || null; } catch (e0) { return null; }
+}
+function r41DeleteOpen(code) {
+  try { var ae = document.activeElement || null; R41_DEL.ret = r41DelSummaryOf(ae) || r41DelRowMore(code) || ae; } catch (e1) {}   /* RC41-v284-6, RC41-v285-2 */
+  try { r41CloseMenus(null); } catch (e0) {}
+  return r41DelShow('one', code, 'Delete permanently: ' + String(code || ''),
+    'First you see what will happen. Nothing is deleted until you press the red button. A person with history is kept as "Former staff" so the records stay; only a person with no history, or a test account, is removed completely.',
+    'Type the employee code (' + String(code || '') + ') to confirm');
+}
+function r41DeleteTestOpen() {
+  if (r41Up(getAdminPanelEmployeeCode()).indexOf('TST_') === 0) {   /* RC41-v284-7 (L4): a test account would delete itself */
+    try { alert('You are signed in with a test account (TST_). It cannot delete all test accounts, because it would delete itself. Sign in with your own account. Nothing was changed.'); } catch (e0) {}
+    return false;
+  }
+  try { R41_DEL.ret = document.activeElement || null; } catch (e1) {}
+  return r41DelShow('test', '', 'Delete all test accounts (TST_)',
+    'Every account whose code starts with TST_ is removed with its test data. First you see the list and the numbers. Nothing is deleted until you press the red button.',
+    'Type DELETE TEST ACCOUNTS to confirm');
+}
+function r41DeleteClose() {
+  var bg = r41DelEl('r41-del-bg'); if (bg) bg.classList.remove('active'); var sp = r41DelEl('r41-del-secret'); if (sp) sp.value = ''; R41_DEL.planOk = false;
+  var rt = R41_DEL.ret; R41_DEL.ret = null;
+  if (R41_DEL.mode === 'one' && (!rt || rt.isConnected === false)) rt = r41DelRowMore(R41_DEL.code) || r41DelTable();   /* RC41-v285-2: list redrawn or person gone */
+  if (rt && rt.focus) { try { rt.focus(); } catch (e0) {} }   /* RC41-v284-6 */
+}
+function r41DelArgs(dry) {
+  var typed = String(r41DelEl('r41-del-typed').value || '').trim(), sec = String(r41DelEl('r41-del-secret').value || '');
+  var me = getAdminPanelEmployeeCode();
+  if (R41_DEL.mode === 'one') {
+    if (!typed || typed.toUpperCase() !== R41_DEL.code.toUpperCase()) return { err: 'The code you typed is not ' + R41_DEL.code + '. Type it exactly. Nothing was changed.' };
+    if (R41_DEL.code.toUpperCase() === r41Up(me)) return { err: 'You cannot delete your own account. Nothing was changed.' };
+  } else if (typed !== 'DELETE TEST ACCOUNTS') {
+    return { err: 'Type DELETE TEST ACCOUNTS (in capital letters) to confirm. Nothing was changed.' };
+  } else if (r41Up(me).indexOf('TST_') === 0) {   /* RC41-v284-7 (L4) */
+    return { err: 'A test account (TST_) cannot delete all test accounts, because it would delete itself. Nothing was changed.' };
+  }
+  if (!sec) return { err: 'Type the Admin Password. Nothing was changed.' };
+  if (R41_DEL.mode === 'one') return { key: 'one|' + R41_DEL.code + '|' + typed.toUpperCase(), fn: 'oms_admin_delete_employee', a: { p_admin_secret: sec, p_employee_code: R41_DEL.code, p_typed_code: typed, p_caller_employee_code: me, p_dry_run: dry } };
+  return { key: 'test|' + typed, fn: 'oms_admin_delete_test_accounts', a: { p_admin_secret: sec, p_typed: typed, p_caller_employee_code: me, p_dry_run: dry } };
+}
+function r41N(v) { var n = Number(v); return isFinite(n) ? n : 0; }
+function r41Pl(n, one, many) { n = r41N(n); return n + ' ' + (n === 1 ? one : many); }
+function r41DelData(res) { var d = res ? res.data : null; if (typeof d === 'string') { try { d = JSON.parse(d); } catch (e0) { d = null; } } return d; }
+function r41DelErr(err) {
+  if (r41Missing(err)) return R41_DEL_OFF;
+  var raw = String((err && err.message) || '');
+  if (String(err && err.code) === '28000' || raw.indexOf('Only the Admin password') >= 0 || /invalid admin secret/i.test(raw)) return 'The Admin Password was not accepted. Only the Admin Password can delete (a Supervisor Password cannot). Nothing was changed.';
+  return 'Could not do it just now: ' + friendlyError(err, 1) + ' Nothing was changed.';
+}
+function r41DelPlanText(d, done) {
+  var code = R41_DEL.code, m = String((d && d.mode) || '');
+  var tok = r41Pl(d.tokens, 'sign-in', 'sign-ins'), lg = r41Pl(d.login_log, 'login line', 'login lines'), st = r41Pl(d.stock_entries, 'stock entry', 'stock entries'),
+      vd = r41Pl(d.voids, 'void', 'voids'), au = r41Pl(d.activity_lines_kept, 'activity line', 'activity lines');
+  var will = done ? 'was' : 'will be', wills = done ? 'were' : 'will be';
+  if (R41_DEL.mode === 'test') {
+    var codes = Array.isArray(d.codes) ? d.codes.map(String).join(', ') : '';
+    return r41Pl(d.accounts, 'test account', 'test accounts') + (codes ? ' (' + codes + ')' : '') + ' ' + wills + ' removed completely with their test data. ' +
+      'Removed: ' + tok + ', ' + lg + ', ' + r41Pl(d.stock_entries, 'test stock entry', 'test stock entries') + ' (they cancel out, so stock totals do not change) and ' + vd + '. ' +
+      'Kept: ' + au + ' (activity lines can never be deleted; they read as a deleted test account).';
+  }
+  if (m === 'FORMER_STAFF') return code + ' has history, so the account ' + will + ' kept as "Former staff (' + code + ')". Their PIN, phone code and sign-ins are removed, they can never sign in again, and the code is never given to anyone else. ' +
+    'Removed: ' + tok + '. Kept unchanged: ' + lg + ', ' + st + ', ' + vd + ' and ' + au + '.';
+  if (m === 'HARD_DELETE_NO_HISTORY') return code + ' has no history, so the account ' + will + ' removed completely. Removed: ' + tok + ' and ' + lg + '. Kept: ' + au + '.';
+  if (m === 'TEST_WIPE') return code + ' is a test account, so it ' + will + ' removed completely with its test data. Removed: ' + tok + ', ' + lg + ', ' +
+    r41Pl(d.stock_entries, 'test stock entry', 'test stock entries') + ' (they cancel out, so stock totals do not change) and ' + vd + '. Kept: ' + au + ' (activity lines can never be deleted; they read as a deleted test account).';
+  return '';
+}
+function r41DeleteCheck() {
+  r41DelReset();
+  var x = r41DelArgs(true);
+  if (x.err) { r41DelMsg(x.err, 'err'); return Promise.resolve(false); }
+  if (typeof db === 'undefined' || !db) { r41DelMsg('Cannot reach the database right now. Nothing was changed.', 'err'); return Promise.resolve(false); }
+  var chk = r41DelEl('r41-del-check'); if (chk) chk.disabled = true;
+  r41DelMsg('Checking... nothing is deleted at this step.', '');
+  return withTimeout(db.rpc(x.fn, x.a), 15000, 'Delete check').then(function (res) {
+    if (chk) chk.disabled = false;
+    if (res && res.error) { r41DelMsg(r41DelErr(res.error), 'err'); return false; }
+    var d = r41DelData(res);
+    if (!d || d.ok !== true) { r41DelMsg(String((d && d.message) || 'Not accepted.') + ' Nothing was changed.', 'err'); return false; }
+    if (R41_DEL.mode === 'test' && !r41N(d.accounts)) { r41DelMsg(String(d.message || 'No test accounts left.'), 'ok'); return false; }
+    var txt = r41DelPlanText(d, false);
+    if (!txt) { r41DelMsg('The database answered in a way this page does not know. Nothing was changed.', 'err'); return false; }
+    var p = r41DelEl('r41-del-plan'); p.textContent = 'What will happen: ' + txt; p.style.display = '';
+    R41_DEL.planOk = true; R41_DEL.planKey = x.key;
+    var g = r41DelEl('r41-del-go'); g.style.display = ''; g.disabled = false;
+    g.textContent = R41_DEL.mode === 'test' ? 'Yes, delete all test accounts' : 'Yes, delete ' + R41_DEL.code + ' permanently';
+    r41DelMsg('Nothing has been deleted yet. Read the box above, then press the red button to do it.', '');
+    return true;
+  }).catch(function (err) { if (chk) chk.disabled = false; r41DelMsg(r41DelErr(err), 'err'); return false; });
+}
+function r41DeleteRun() {
+  if (!R41_DEL.planOk) { r41DelMsg('Press "Check what will happen" first. Nothing was changed.', 'err'); return Promise.resolve(false); }
+  var x = r41DelArgs(false);
+  if (x.err) { r41DelMsg(x.err, 'err'); return Promise.resolve(false); }
+  if (x.key !== R41_DEL.planKey) { r41DelReset(); r41DelMsg('What you typed changed after the check. Press "Check what will happen" again. Nothing was changed.', 'err'); return Promise.resolve(false); }
+  if (typeof db === 'undefined' || !db) { r41DelMsg('Cannot reach the database right now. Nothing was changed.', 'err'); return Promise.resolve(false); }
+  var g = r41DelEl('r41-del-go'); if (g) g.disabled = true;
+  r41DelMsg('Deleting...', '');
+  return withTimeout(db.rpc(x.fn, x.a), 20000, 'Delete permanently').then(function (res) {
+    if (res && res.error) { if (g) g.disabled = false; r41DelMsg(r41DelErr(res.error), 'err'); return false; }
+    var d = r41DelData(res);
+    if (!d || d.ok !== true) { if (g) g.disabled = false; r41DelMsg(String((d && d.message) || 'Not accepted.') + ' Nothing was changed.', 'err'); return false; }
+    R41_DEL.planOk = false; R41_DEL.planKey = '';
+    if (g) g.style.display = 'none';
+    r41DelEl('r41-del-secret').value = '';
+    r41DelMsg('Done. ' + (r41DelPlanText(d, true) || ''), 'ok');
+    try { loadEmployees(); } catch (e0) {}
+    return true;
+  }).catch(function () { if (g) g.disabled = false; r41DelMsg('The answer did not arrive, so this page cannot tell whether it was done. Open People again and look before trying again.', 'err'); return false; });
+}
+/* ---- RC41-v283-2 W12 Computers list ---- */
+function r41PcId() { try { var r = JSON.parse(localStorage.getItem('oms_admin_pc_signin_v1') || 'null'); return (r && r.id) ? String(r.id) : ''; } catch (e0) { return ''; } }
+function r41RenderPcs(list) {
+  var b = document.getElementById('r41-pcs-body'); if (!b) return;
+  list = (list || []).slice();
+  if (!list.length) { b.innerHTML = '<tr class="empty-row"><td colspan="5">No computer is kept signed in right now.</td></tr>'; return; }
+  var now = Date.now(), mine = r41PcId();
+  b.innerHTML = list.map(function (p) {
+    var code = String(p.employee_code || ''), name = r41Name(code);
+    var ended = p.signed_in_until && new Date(p.signed_in_until).getTime() <= now;
+    var act = p.revoked ? '<span class="badge badge-grey">Signed out' + (p.revoked_at ? ' ' + esc(fmtDateTime(p.revoked_at)) : '') + '</span>'
+      : (ended ? '<span class="badge badge-grey">Ended</span>'
+        : '<button class="btn btn-sm btn-grey" onclick="r41SignOutPc(&#39;' + jsq(code) + '&#39;, &#39;' + jsq(p.id) + '&#39;)">Sign this computer out</button>');
+    return '<tr><td>' + esc(name || code) + ' <span class="mono">' + esc(code) + '</span></td><td>' + (mine && p.id === mine ? 'This computer' : 'Computer') + '</td><td>' + esc(fmtDateTime(p.last_used_at)) + '</td><td>' +
+      (ended || p.revoked ? '-' : esc(fmtDateTime(p.signed_in_until))) + '</td><td>' + act + '</td></tr>';
+  }).join('');
+}
+function r41SignOutPc(code, id) {
+  if (typeof db === 'undefined' || !db || !id) return;
+  if (!confirm('Sign this computer out? ' + code + ' will type the code and PIN there again next time.')) return;
+  r41PhMsg('Signing out...', '');
+  return withTimeout(db.rpc('oms_admin_signout_phone', { p_admin_secret: getAdminSecret(), p_employee_code: code, p_id: id, p_caller_employee_code: getAdminPanelEmployeeCode() }), 10000, 'Sign computer out').then(function (res) {
+    if (res && res.error) {
+      if (r41Missing(res.error)) { r41PhMsg(R41_PH_MISSING, ''); return; }
+      if (isBadSecretError(res.error)) { handleBadSecret('signing a computer out'); return; }
+      r41PhMsg(friendlyError(res.error), 'err'); return;
+    }
+    var d = (res && res.data) || {};
+    if (d.ok === false) { r41PhMsg(d.message || 'Not signed out.', 'err'); return; }
+    if (id === r41PcId()) { try { localStorage.removeItem('oms_admin_pc_signin_v1'); } catch (e0) {} }
+    r41PhMsg('Done: the computer is signed out.', 'ok');
+    r41LoadPhones();
+  }).catch(function (err) { r41PhMsg(friendlyError(err), 'err'); });
+}
+/* ---- RC41-v283-6 (LOW L5): arrow keys between the tabs ---- */
+function r41TabKey(ev) {
+  var k = ev && ev.key;
+  if (k !== 'ArrowRight' && k !== 'ArrowLeft' && k !== 'Home' && k !== 'End') return;
+  var t = ev.target, onPhones = !!(t && t.id === 'r41-tab-phones');
+  var next = k === 'Home' ? 'people' : (k === 'End' ? 'phones' : (onPhones ? 'people' : 'phones'));
+  if (ev.preventDefault) ev.preventDefault();
+  r41PeopleTab(next);
+  var el = document.getElementById(next === 'phones' ? 'r41-tab-phones' : 'r41-tab-people');
+  if (el && el.focus) el.focus();
+}
+/* RC41-v282-8: row More menus close on an outside tap, on Escape, after an item is chosen, and when another opens */
+function r41CloseMenus(keep) {
+  var list = document.querySelectorAll('details.r41-more[open]'), i;
+  for (i = 0; i < list.length; i++) { if (list[i] !== keep) list[i].open = false; }
+}
+var R41_MENUS_BOUND = false;
+function r41BindMenus() {
+  if (R41_MENUS_BOUND) return;
+  R41_MENUS_BOUND = true;
+  document.addEventListener('click', function (ev) {
+    var t = ev && ev.target, d = (t && t.closest) ? t.closest('details.r41-more') : null;
+    if (d && t.closest('.r41-menu')) { r41CloseMenus(null); return; }
+    r41CloseMenus(d);
+  });
+  document.addEventListener('keydown', function (ev) { if (ev && (ev.key === 'Escape' || ev.key === 'Esc')) r41CloseMenus(null); });
+  document.addEventListener('toggle', function (ev) { var d = ev && ev.target; if (d && d.open && d.classList && d.classList.contains('r41-more')) r41CloseMenus(d); }, true);
+}
+try { r41BindMenus(); } catch (e0) {}
+/* RC41 end */
+</script>
+
+<script id="fp-js">
+/* RC41-v283-1: v2.80 Forgot Admin Password (D-RC34-06), merged into the v2.82 line. Shown by default; ?fp=off hides it.
+   The server parts (admin-reset-mailer, oms_admin_reset_confirm, oms_admin_set_recovery_email) need an email-sending key and are
+   not live yet: a 404 / "function does not exist" answer switches the link to one plain sentence and nothing else changes.
+   The code is never in the browser until the owner types it from the email. */
+(function () {
+  var OFF_MSG = 'Password reset by email is not switched on yet - ask the owner.';
+  var HIDE = /[?&]fp=off(&|$)/.test(String((typeof location !== 'undefined' && location.search) || ''));
+  var st = { off: false };
+  window.FP_STATE = st;
+  function $(i) { return document.getElementById(i); }
+  function say(id, t, good) { var e = $(id); if (e) { e.textContent = t; e.style.color = good ? '#15803d' : ''; } }
+  function missing(err) {
+    if (!err) return false;
+    var raw = String(err.message || '') + ' ' + String(err.code || '') + ' ' + String(err.details || '') + ' ' + String(err.hint || '');
+    return String(err.status) === '404' || /could not find the function|schema cache|PGRST202|42883|does not exist|NOT_FOUND|function was not found/i.test(raw);
+  }
+  function switchOff() { st.off = true; window.fpStep(0); say('fp-msg0', OFF_MSG, false); }
+  window.fpStep = function (n) { var a = $('fp-s1'), b = $('fp-s2'); if (a) a.style.display = n === 1 ? '' : 'none'; if (b) b.style.display = n === 2 ? '' : 'none'; };
+  window.fpOpen = function () { if (st.off) { say('fp-msg0', OFF_MSG, false); return; } say('fp-msg0', '', false); window.fpStep(1); };
+  window.fpToggle = function () { var p = $('fp-pw'), b = $('fp-show'); var h = p.type === 'password'; p.type = h ? 'text' : 'password'; b.textContent = h ? 'Hide' : 'Show'; };
+  window.fpMeter = function () { var n = ($('fp-pw').value || '').length, pct = Math.min(100, Math.round(n / 12 * 100)); var bar = $('fp-meter-bar'); bar.style.width = pct + '%'; bar.style.background = n >= 12 ? '#15803d' : '#c0392b'; $('fp-meter-txt').textContent = n >= 12 ? 'Long enough' : n + ' of 12 characters'; };
+  /* RC41-v285-3 (review N5): go to the code box without sending a new code (a new code would replace one that is still on its way) */
+  function haveBtn(on) { var h = $('fp-have-btn'); if (h) h.style.display = on ? '' : 'none'; }
+  window.fpHaveCode = function () { haveBtn(false); window.fpStep(2); var c = $('fp-code'); if (c && c.focus) { try { c.focus(); } catch (e0) {} } };
+  window.fpSend = function () {
+    var btn = $('fp-send-btn'); if (btn) btn.disabled = true; say('fp-msg1', 'Sending...', false); haveBtn(false);
+    var go;
+    try {
+      go = fetch(DB_URL + '/functions/v1/admin-reset-mailer', { method: 'POST', headers: { 'content-type': 'application/json', apikey: DB_ANON_KEY, authorization: 'Bearer ' + DB_ANON_KEY }, body: '{}' });
+      if (typeof withTimeout === 'function') go = withTimeout(go, 15000, 'Sending the code');   /* RC41-v284-10 (I1): 15 s at most */
+    } catch (e0) { go = Promise.reject(e0); }
+    return Promise.resolve(go).then(function (r) {
+      if (r && (r.status === 404 || r.status === 501)) { say('fp-msg1', '', false); switchOff(); if (btn) btn.disabled = false; return false; }
+      return Promise.resolve(r && r.json ? r.json().catch(function () { return {}; }) : {}).then(function () {
+        say('fp-msg1', 'If this is set up, a code was sent. Check the owner mailbox (also the spam folder).', true);
+        setTimeout(function () { window.fpStep(2); if (btn) btn.disabled = false; }, 1500);
+        return true;
+      });
+    }).catch(function (e2) {
+      var slow = /timed out/i.test(String((e2 && e2.message) || ''));   /* RC41-v284-10 */
+      say('fp-msg1', slow ? 'The email service did not answer within 15 seconds. Look in the owner mailbox in a minute. If a code came, press "I already have a code" (do not send again: a new code replaces it). If no code came, try again.' : 'No signal. Try again.', false);
+      if (slow) haveBtn(true);   /* RC41-v285-3 */
+      if (btn) btn.disabled = false; return false;
+    });
+  };
+  window.fpConfirm = function () {
+    var code = ($('fp-code').value || '').trim(), pw = $('fp-pw').value || '';
+    code = code.toUpperCase().split('').filter(function (ch) { return ch !== ' ' && ch !== '-'; }).join('');
+    if (!/^[A-HJ-NP-Z2-9]{10}$/.test(code)) { say('fp-msg2', 'The code has 10 letters and numbers.', false); return Promise.resolve(false); }
+    if (pw.length < 12 || pw !== pw.trim() || pw.length > 72) { say('fp-msg2', 'Use 12 to 72 characters, with no space at the start or end.', false); return Promise.resolve(false); }
+    var btn = $('fp-go-btn'); if (btn) btn.disabled = true; say('fp-msg2', 'Checking...', false);
+    return Promise.resolve(db.rpc('oms_admin_reset_confirm', { p_code: code, p_new_password: pw })).then(function (res) {
+      if (btn) btn.disabled = false; var d = res && res.data;
+      if (res && res.error) { if (missing(res.error)) { say('fp-msg2', '', false); switchOff(); return false; } say('fp-msg2', 'Could not check just now. Try again.', false); return false; }
+      say('fp-msg2', (d && d.message) || 'Not accepted.', !!(d && d.ok));
+      if (d && d.ok) { $('fp-pw').value = ''; $('fp-code').value = ''; window.fpMeter(); window.fpStep(0); }
+      return !!(d && d.ok);
+    }, function (err) { if (btn) btn.disabled = false; if (missing(err)) { switchOff(); return false; } say('fp-msg2', 'No signal. Try again.', false); return false; });
+  };
+  window.fpSetEmail = function () {
+    var sec = ($('fp-set-secret').value || ''), m = ($('fp-set-email').value || '').trim();
+    if (!sec || !m) { say('fp-set-result', 'Type the Admin Password and the email address.', false); return Promise.resolve(false); }
+    say('fp-set-result', 'Saving...', false);
+    return Promise.resolve(db.rpc('oms_admin_set_recovery_email', { p_secret: sec, p_email: m })).then(function (res) {
+      var d = res && res.data; $('fp-set-secret').value = '';
+      if (res && res.error) { say('fp-set-result', missing(res.error) ? OFF_MSG : 'Could not save just now. Try again.', false); return false; }
+      say('fp-set-result', d && d.ok ? 'Saved. Codes will go to ' + d.masked + '.' : ((d && d.message) || 'Not saved.'), !!(d && d.ok));
+      return !!(d && d.ok);
+    }, function (err) { $('fp-set-secret').value = ''; say('fp-set-result', missing(err) ? OFF_MSG : 'No signal. Try again.', false); return false; });
+  };
+  try { if (!HIDE) { var w = $('fp-wrap'); if (w) w.style.display = ''; var c = $('fp-email-card'); if (c) c.style.display = ''; } } catch (e1) {}
 })();
 </script>
 </body>
