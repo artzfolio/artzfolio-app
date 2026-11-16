@@ -3049,6 +3049,7 @@ input[type=tel],input[type=email],input[type=search],input:not([type]),textarea{
 .r41-staff{background:#7f8c8d}
 .r41-amber{margin-top:4px;font-size:var(--t-body);color:#7a4f00;background:#FFF4D6;border:1px solid #F0C36D;border-radius:6px;padding:3px 6px;white-space:normal;max-width:320px}
 .r41-grp td{background:#f3f6fb;font-weight:700}
+.r41-finish{cursor:pointer}/* RC41-v286-2 */
 .r41-box{border:1px solid #c9d9ee;background:#eef4fb;border-radius:8px;padding:10px 12px;margin:10px 0;font-size:var(--t-body);line-height:1.5}
 .r41-box ul{margin:4px 0 8px 18px;padding:0}
 /* RC41-v282-6: every new button, menu item and tab is at least 44 px tall, on every screen size (not inside a media block) */
@@ -3281,7 +3282,7 @@ label:has(>input[type=checkbox]),label:has(>input[type=radio]){display:flex;alig
     <div class="sidebar-footer">
       <div class="af-fs-side"><div class="af-fs-t">Text size</div><div id="af-fs-ctl-side"></div></div>
       <button class="logout-btn" onclick="adminLogout()">Sign out</button>   <!-- ADM-v258 A-01 -->
-      <div class="ver-footer">ArtzFolio Super App - Admin Panel v2.85</div><!-- RC41-v282-V RC41-v283-V RC41-v284-V RC41-v285-V -->
+      <div class="ver-footer">ArtzFolio Super App - Admin Panel v2.86</div><!-- RC41-v282-V RC41-v283-V RC41-v284-V RC41-v285-V RC41-v286-V -->
     </div>
   </div>
 
@@ -11561,6 +11562,7 @@ function permissionsEqual(a, b) {
 // still freely editable afterward (e.g. to build a "full App access, no
 // Admin Panel" custom employee).
 function applyPermissionPreset(prefix, preset) {
+  try { if (preset !== 'SUPERVISOR') r41FinishClear(prefix); } catch (r41e) {}   /* RC41-v286-3 */
   var p = ROLE_PERMISSION_PRESETS[preset];
   if (p) {
     PERMISSION_SECTIONS.forEach(function (s) {
@@ -11675,7 +11677,9 @@ function closeEditAccessModal() { document.getElementById('edit-access-modal-bg'
 var editAccessTargetCode = null;
 function submitUpdateEmployeePermissions() {
   if (!db || !editAccessTargetCode) return;
+  if (!r41SaveGuard('edit-emp')) return;   /* RC41-v286-1: never silently save "set up as Supervisor but not finished" */
   var role = computeEffectiveRole('edit-emp');
+  var r41words = r41SavedWords(editAccessTargetCode, role);   /* RC41-v286-4 */
   var permissions = readSectionPermissions('edit-emp');
   var preset = document.getElementById('edit-emp-preset').value;
   var resEl = document.getElementById('edit-emp-result');
@@ -11690,9 +11694,11 @@ function submitUpdateEmployeePermissions() {
       resEl.className = 'result-msg err'; resEl.textContent = friendlyError(res.error);
       return;
     }
-    resEl.className = 'result-msg ok'; resEl.textContent = '✓ Saved.';
+    if (res.data === false) { resEl.className = 'result-msg err'; resEl.textContent = 'Not saved: this person was not found (they may have been archived). Close this box and refresh the list.'; return; }   /* RC41-v286-4 */
+    try { r41FinishClear('edit-emp'); } catch (r41e) {}
+    resEl.className = 'result-msg ok'; resEl.textContent = '✓ Saved. ' + r41words;   /* RC41-v286-4 */
     loadEmployees();
-    setTimeout(closeEditAccessModal, 700);
+    setTimeout(closeEditAccessModal, 1500);
   }).catch(function (err) { resEl.className = 'result-msg err'; resEl.textContent = friendlyError(err); });
 }
 
@@ -14177,7 +14183,7 @@ function a67Strip(root) {
 })();
 </script>
 <script>
-/* RC41 (Admin v2.81-v2.85): W13 People and phones + W1-8 Phones tab. v2.80 (Forgot Admin Password) is merged in v2.83 (RC41-v283-1). v2.84 = review fixes (RC41-v284-n). v2.85 = review N1 N2 N5 (RC41-v285-n). */
+/* RC41 (Admin v2.81-v2.86): W13 People and phones + W1-8 Phones tab. v2.80 (Forgot Admin Password) is merged in v2.83 (RC41-v283-1). v2.84 = review fixes (RC41-v284-n). v2.85 = review N1 N2 N5 (RC41-v285-n). v2.86 = Finish then Save sends SUPERVISOR (RC41-v286-n). */
 var R41_PIN_LIMIT = 5;   /* oms_verify_login: locked_until is set when failed_pin_count + 1 >= 5 */
 var R41_PH_MISSING = 'Phone list will appear after the next update.';
 var R41_PH = { rows: [] };
@@ -14264,6 +14270,7 @@ function r41AdminBoxChanged(prefix) {
   var n = document.getElementById(prefix + '-r41-note');
   if (box && !box.checked && presetEl && (presetEl.value === 'SUPERVISOR' || presetEl.value === 'ADMIN')) {
     presetEl.value = 'CUSTOM';
+    r41FinishClear(prefix);   /* RC41-v286-3: unticked by hand = Finish undone */
     if (n) n.innerHTML = '<div class="r41-amber">Admin Panel Access is off, so this person will be Staff. The role box now says Custom.</div>';
   } else if (box && box.checked) {   /* RC41-v282-2: ticking the box by hand never picks Full Admin */
     var keepAdmin = R41_PREFILL_ROLE[prefix] === 'ADMIN' && r41IsFullAdminCaller();
@@ -14277,15 +14284,73 @@ function r41AfterPrefill(prefix, e) {
   var n = document.getElementById(prefix + '-r41-note');
   var k = r41Up(e && e.role), p = r41Up(e && e.permission_preset);
   R41_PREFILL_ROLE[prefix] = k;   /* RC41-v282-2 */
+  r41FinishClear(prefix);   /* RC41-v286-2: every opening starts unfinished */
   if (n) {
     if (p === 'SUPERVISOR' && k !== 'SUPERVISOR' && k !== 'ADMIN') {
-      n.innerHTML = '<div class="r41-amber" style="max-width:none;font-size:var(--t-section);padding:8px 10px;">This person was set up as a Supervisor, but it was not finished: Admin Panel Access is not ticked, so today they are Staff. ' +
-        '<button type="button" class="btn btn-sm btn-primary" onclick="r41FinishSupervisor(&#39;' + prefix + '&#39;)">Finish: make Supervisor</button> then press Save Access.</div>';
+      /* RC41-v286-2: the whole amber box is the press target (the button inside it presses the box), so a tap on the box text finishes too */
+      n.innerHTML = '<div class="r41-amber r41-finish" onclick="r41FinishSupervisor(&#39;' + prefix + '&#39;)" title="Press to finish: ticks Admin Panel Access and selects Supervisor" style="max-width:none;font-size:var(--t-section);padding:8px 10px;">This person was set up as a Supervisor, but it was not finished: Admin Panel Access is not ticked, so today they are Staff. ' +
+        '<button type="button" class="btn btn-sm btn-primary">Finish: make Supervisor</button> then press Save Access.</div>';
     } else { n.innerHTML = ''; }
   }
   r41SupPwLine(prefix);
 }
+/* RC41-v286-1/2/3: "Finish: make Supervisor" is remembered for this opening (the person's code), so Save sends SUPERVISOR
+   even if Admin Panel Access was reset in between; Save never silently writes the unfinished state. */
+var R41_FINISH = {};
+function r41FinishClear(prefix) { R41_FINISH[prefix] = null; }
+function r41FinishOn(prefix) {
+  var f = R41_FINISH[prefix], tc = null;
+  if (!f) return false;
+  try { tc = editAccessTargetCode; } catch (e0) {}
+  return f === true || !tc || f === tc;
+}
+function r41SavedWords(code, role) {
+  var w = role === 'SUPERVISOR' ? 'a Supervisor' : (role === 'ADMIN' ? 'a Full Admin' : 'Staff (no Admin Panel access)');
+  return String(code || 'This person') + ' is now ' + w + '.';
+}
+function r41SaveGuard(prefix) {
+  var box = document.getElementById(prefix + '-admin-access'), pe = document.getElementById(prefix + '-preset'), res = document.getElementById(prefix + '-result');
+  if (r41FinishOn(prefix)) {
+    if (box && !box.checked) { box.checked = true; toggleAdminAccessSub(prefix); }
+    if (!document.querySelector('input[name="' + prefix + '-admin-level"]:checked')) r41PickLevel(prefix, 'SUPERVISOR');
+    return true;
+  }
+  var pv = pe ? String(pe.value || '') : '';
+  if (box && !box.checked && (pv === 'SUPERVISOR' || pv === 'ADMIN')) {
+    if (res) {
+      res.className = 'result-msg';
+      res.innerHTML = '<div class="r41-amber" style="max-width:none;">Not saved yet. This person is set up as ' + (pv === 'ADMIN' ? 'Admin' : 'Supervisor') +
+        ' but Admin Panel Access is not ticked, so saving now would keep them as Staff. ' +
+        (pv === 'ADMIN' ? 'To make a Full Admin, tick Admin Panel Access and press Full Admin (full Admin only). ' : '') + 'Choose one:</div>' +
+        '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:6px;">' +
+        (pv === 'SUPERVISOR' ? '<button type="button" class="btn btn-sm btn-primary" onclick="r41SaveAsSupervisor(&#39;' + prefix + '&#39;)">Make Supervisor and save</button>' : '') +
+        '<button type="button" class="btn btn-sm btn-grey" onclick="r41SaveAsStaff(&#39;' + prefix + '&#39;)">Save as Staff (no Admin Panel)</button></div>';
+    }
+    return false;
+  }
+  return true;
+}
+function r41SaveAsSupervisor(prefix) {
+  r41FinishSupervisor(prefix);
+  if (r41FinishOn(prefix)) submitUpdateEmployeePermissions();
+}
+function r41SaveAsStaff(prefix) {
+  var pe = document.getElementById(prefix + '-preset'), box = document.getElementById(prefix + '-admin-access');
+  if (pe) pe.value = 'CUSTOM';
+  if (box) box.checked = false;
+  r41FinishClear(prefix);
+  toggleAdminAccessSub(prefix);
+  submitUpdateEmployeePermissions();
+}
 function r41FinishSupervisor(prefix) {
+  var n0 = document.getElementById(prefix + '-r41-note');
+  if (!r41IsFullAdminCaller()) {   /* RC41-v286-2: the server (oms_require_full_admin) refuses anyone else */
+    if (n0) n0.innerHTML = '<div class="r41-amber" style="max-width:none;">Only a full Admin can finish this. Sign in with a full Admin account, then open Edit again. Nothing was changed.</div>';
+    return;
+  }
+  var tc0 = null;
+  try { tc0 = editAccessTargetCode; } catch (e0) {}
+  R41_FINISH[prefix] = tc0 || true;   /* RC41-v286-2 */
   var box = document.getElementById(prefix + '-admin-access');
   if (box) box.checked = true;
   var lvl = document.querySelector('input[name="' + prefix + '-admin-level"][value="SUPERVISOR"]');
@@ -14294,7 +14359,7 @@ function r41FinishSupervisor(prefix) {
   if (presetEl) presetEl.value = 'SUPERVISOR';
   toggleAdminAccessSub(prefix);
   var n = document.getElementById(prefix + '-r41-note');
-  if (n) n.innerHTML = '<div class="hint-text">Ready: press Save Access to make this person a Supervisor.</div>';
+  if (n) n.innerHTML = '<div class="hint-text" style="font-weight:600;">Ready: Admin Panel Access is ticked and Supervisor is selected. Press Save Access to make this person a Supervisor.</div>';   /* RC41-v286-2 */
 }
 function r41SupPwLine(prefix) {
   var el = document.getElementById(prefix + '-r41-pw');
