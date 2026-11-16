@@ -126,7 +126,8 @@
 // v99 (2026-11-14, RC34l): cache name bumped for App v231l (RC34l = sixth review fixes: the leak guard now hides only real internals (database boilerplate, secrets, stack traces), ordinary server sentences are shown as written again; the neutral line warns to check before saving again). Nothing else changed.
 // v100 (2026-11-14, RC34m): cache name bumped for App v231m (RC34m = seventh review fixes: no raw permission text in the row-mover / extra screens, long SKU and pick-slip references are shown, more internal database phrases are mapped). Nothing else changed.
 // v101 (2026-11-15, RC41): cache name bumped for App v232h (RC41 = trusted phone 30 days + typed PIN for money/approvals/undo/cancel/merge + task sizes + person prefs + delete test accounts). Nothing else changed.
-const CACHE_NAME = 'artzfolio-oms-shell-v101';
+// v102 (2026-11-15, RC41): cache name bumped for App v232l (RC41 = trusted phone 30 days + typed PIN for money/approvals/undo/cancel/merge + task sizes + person prefs + delete test accounts). Nothing else changed.
+const CACHE_NAME = 'artzfolio-oms-shell-v102';
 const OPTIONAL_FILES = ['./zxing_reader_3.1.4.js', './zxing_reader_3.1.4.wasm'];
 const SHELL_FILES = ['./index.html', './manifest.json', './icon.svg'];
 
