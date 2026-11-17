@@ -127,7 +127,8 @@
 // v100 (2026-11-14, RC34m): cache name bumped for App v231m (RC34m = seventh review fixes: no raw permission text in the row-mover / extra screens, long SKU and pick-slip references are shown, more internal database phrases are mapped). Nothing else changed.
 // v101 (2026-11-15, RC41): cache name bumped for App v232h (RC41 = trusted phone 30 days + typed PIN for money/approvals/undo/cancel/merge + task sizes + person prefs + delete test accounts). Nothing else changed.
 // v102 (2026-11-15, RC41): cache name bumped for App v232l (RC41 = trusted phone 30 days + typed PIN for money/approvals/undo/cancel/merge + task sizes + person prefs + delete test accounts). Nothing else changed.
-const CACHE_NAME = 'artzfolio-oms-shell-v102';
+// v103 (2026-11-17, v42a): cache name bumped for App v233a (v42a = Dashboard rebuild, screens clean-up, Chats + FAQ (v232m..r), made-to-order scan flow (MTO v2), staff stock access (ACC42)). Nothing else changed.
+const CACHE_NAME = 'artzfolio-oms-shell-v103';
 const OPTIONAL_FILES = ['./zxing_reader_3.1.4.js', './zxing_reader_3.1.4.wasm'];
 const SHELL_FILES = ['./index.html', './manifest.json', './icon.svg'];
 
