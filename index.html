@@ -4005,7 +4005,7 @@ button:focus-visible,select:focus-visible,input:focus-visible,textarea:focus-vis
 </style>
 </head>
 <body>
-<div class="ver-corner" id="verCornerBadge">v233g</div>
+<div class="ver-corner" id="verCornerBadge">v233j</div>
 <!-- v112: the full-screen SKU page (opened by a12OpenSku) -->
 <div class="a12-skupage" id="a12-skupage"><div class="a12-sphead"><button type="button" onclick="a12CloseSku()">&larr; Back</button><div id="a12-sp-title" style="flex:1"></div><button type="button" onclick="shOpen('sku')" aria-label="Share this product page">&#128228; Share</button></div><div class="a12-spbody" id="a12-sp-body"></div></div>
 <!-- v63: Gap 2 — offline write-queue indicator. Hidden (display:none) unless
@@ -5224,7 +5224,7 @@ button:focus-visible,select:focus-visible,input:focus-visible,textarea:focus-vis
 
             <!-- Version -->
             <div class="ver-badge">
-                <div class="ver-name">&#128230; ArtzFolio Super App v233g</div>
+                <div class="ver-name">&#128230; ArtzFolio Super App v233j</div>
                 <div class="ver-sub">Tap the button below to see what is new in this version.</div>
                 <button class="settings-btn" style="min-height:46px" onclick="wnOpen()">What is new and what is done</button>
             </div>
@@ -14028,6 +14028,1614 @@ html.w2-on #nyh-bg .nv-top > details.w2-inhead { float: none !important; margin:
   window.vgateCheckNow = function () { VG.last = 0; check(); };
 })();
 // RC45-VGATE-END
+</script>
+<style id="simple-css">
+/* RC42w-SIMPLE: every rule is scoped to html.w3-on, html.lean25 or to the w3 components. Raw materials is not styled here (Lane 3). */
+/* (1) Stock: six move tiles, 2 rows x 3, always open; the old 'Move stock' fold is not shown */
+html.w3-on #stock-tab #af-stock-acts { display: none !important; }
+.w3-moves { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; margin: 0 0 8px; }
+.w3-moves[hidden] { display: none; }
+.w3-tile { display: flex; flex-direction: row; align-items: center; justify-content: flex-start; gap: 6px; min-height: 48px; padding: 4px 6px; border: 1px solid #C9D3E0; border-radius: 10px; background: #fff; color: #0A1628; cursor: pointer; font: inherit; text-align: left; box-sizing: border-box; }
+.w3-tile:active { background: #EAF0FB; }
+.w3-tile .w3-ti { color: #1B4F8A; line-height: 0; flex: 0 0 auto; }
+.w3-tile .w3-ti .w2-ic { width: 20px; height: 20px; }
+.w3-tile .w3-tl { display: flex; flex-direction: column; min-width: 0; font-weight: 700; font-size: .88rem; line-height: 1.15; }
+.w3-tile .w3-ts { font-size: .68rem; font-weight: 400; color: #5B6470; line-height: 1.15; }
+.w3-tile.w3-off { opacity: .6; background: #F4F6F9; }
+.w3-tile.w3-off .w3-ti { color: #8A95A5; }
+/* (2) one primary per screen: the others look secondary */
+html.w3-on button.w3-sec { background: #fff !important; color: #1B4F8A !important; border: 1px solid #1B4F8A !important; }
+/* Settings: rarely used tools under one More */
+html.w3-on .w3-more { margin-top: 16px; border-top: 1px solid #E2E8F0; padding-top: 8px; }
+html.w3-on .w3-more > summary { min-height: 48px; display: flex; align-items: center; font-weight: 700; color: #1B4F8A; cursor: pointer; }
+/* (3) lean_v25: the Orders 'New order' button belongs to Customers, which the flag removes */
+html.lean25 #b15-neworder { display: none !important; }
+/* (2) Stock: the 'Search tips' button shows when the search card is in use (the box has focus), not all the time */
+html.w3-on #stock-tab .sm-tools .sm-tip-b { display: none; }
+html.w3-on #stock-tab :focus-within > .sm-tools .sm-tip-b { display: inline-flex; }
+</style>
+<script id="simple-js">
+/* RC42w-SIMPLE-BEGIN  Master prompt v25.0 (18 Nov): lean operations app. Runtime layer only: no app function text changes; the 33 protected
+   scan / pick / PIN / offline functions stay byte-identical (make_r42w_simple.py proves it by strip-and-compare).
+   Flag simple_v1 (ON by default; ?simple=off = v233g look):
+     (1) Stock: the six stock moves as a 2 x 3 tile grid at the top of Stock, always open (no 'Move stock' fold); each tile opens the existing
+         form (afMoveGo); a move the person's access does not allow is a greyed tile with the reason, and a tap gives the ACC42 message (acc42Why).
+     (2) Noise sweep: one primary button per screen (the rest look secondary), shorter button labels, Practice mode under one 'More settings'.
+   Flag lean_v25 (OFF by default; ?lean=on / localStorage lean_v25=on). Stays OFF until the Lane-1 dependency map clears each area:
+     (3) Warranty, CRM (customers, quotes, deals, segments), Chats / Connections / assistant / Leads / Results, and the ERP entry points that sit
+         OUTSIDE Raw materials are not rendered: the permission gates the app already uses (xmCan('crm'), nvInfo('crm'), ccCan) answer 'no' for
+         everyone, their entry functions are replaced by a refusal, the Chats overlay is taken out of the page, and the bar / More / New / search reflow.
+         Raw materials is not touched (Lane 3 rebuilds it). */
+(function () {
+    'use strict';
+    var S = { on: false, mo: null, t: 0 };
+    function qs() { try { return String(location.search || ''); } catch (e) { return ''; } }
+    function flagOn() {
+        var q = qs();
+        if (/[?&]simple=off/.test(q)) { try { localStorage.setItem('simple_v1', 'off'); } catch (e) { } return false; }
+        if (/[?&]simple=on/.test(q)) { try { localStorage.removeItem('simple_v1'); } catch (e) { } return true; }
+        try { return localStorage.getItem('simple_v1') !== 'off'; } catch (e) { return true; }
+    }
+    function $(id) { return document.getElementById(id); }
+    function E(x) { return String(x == null ? '' : x).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
+    function ic(name) { try { if (window.r42v && r42v.svg) return r42v.svg(name); } catch (e) { } return ''; }
+
+    /* ---------- (1) Stock: six move tiles ---------- */
+    var MOVES = [
+        ['NEW_STOCK_IN', 'Add stock', 'Units arrived', 'inbox', 'move'],
+        ['SCAN_OUT_ORDER', 'Send out', 'Units leave', 'share', 'send'],
+        ['BIN_TRANSFER', 'Move bins', 'Same units, new bin', 'swap', 'move'],
+        ['MANUAL_CORRECTION', 'Correct count', 'Fix a wrong number', 'scale', 'stock_correction'],
+        ['RETURN_IN', 'Return', 'Customer sent back', 'orders', 'move'],
+        ['ADJUSTMENT_LOST_THEFT', 'Remove lost', 'Lost or damaged', 'minus', 'stock_correction']
+    ];
+    function can(key) { try { if (typeof acc42Can === 'function') return acc42Can(key); } catch (e) { } return true; }
+    var TICK = { move: 'Move', send: 'Move', stock_correction: 'Correct stock' };
+    function why(m) {
+        try { if (typeof acc42Why === 'function') return acc42Why(m[4], m[0]); } catch (e) { }
+        return 'Your access does not allow this. Ask an Admin to switch on "' + TICK[m[4]] + '" for you in Admin Panel, People and access.';
+    }
+    function moveAllowed() { try { var mi = nvInfo('move'); return !!(mi && !mi.hidden); } catch (e) { return true; } }
+    function stockTiles() {
+        var tab = $('stock-tab'); if (!tab) return;
+        var g = $('w3-moves'), ok = moveAllowed(), signed = false; try { signed = !!state.session; } catch (e) { }
+        if (!ok || !signed) { if (g) g.hidden = true; return; }
+        var key = MOVES.map(function (m) { return can(m[4]) ? '1' : '0'; }).join('');
+        if (g && g.getAttribute('data-k') === key) { g.hidden = false; if (tab.firstElementChild !== g) tab.insertBefore(g, tab.firstChild); return; }
+        if (!g) { g = document.createElement('div'); g.id = 'w3-moves'; g.className = 'w3-moves'; g.setAttribute('role', 'group'); g.setAttribute('aria-label', 'Stock moves'); g.addEventListener('click', tileTap); }
+        g.innerHTML = MOVES.map(function (m) {
+            var c = can(m[4]);
+            return '<button type="button" class="w3-tile' + (c ? '' : ' w3-off') + '" data-w3m="' + m[0] + '"' + (c ? '' : ' aria-disabled="true"') + ' title="' + E(c ? m[2] : 'Not allowed for you. Ask an Admin to switch on "' + TICK[m[4]] + '".') + '">' +
+                '<span class="w3-ti">' + ic(m[3]) + '</span><span class="w3-tl">' + E(m[1]) + (c ? '' : '<small class="w3-ts">Not allowed for you</small>') + '</span></button>';
+        }).join('');
+        g.setAttribute('data-k', key); g.hidden = false;
+        tab.insertBefore(g, tab.firstChild);
+    }
+    function tileTap(ev) {
+        var b = ev.target.closest && ev.target.closest('[data-w3m]'); if (!b) return;
+        var mode = b.getAttribute('data-w3m'), m = MOVES.filter(function (x) { return x[0] === mode; })[0]; if (!m) return;
+        if (b.classList.contains('w3-off')) { var t = why(m); try { exToast('err', t); } catch (e) { try { alert(t); } catch (x) { } } return; }
+        try { afMoveGo(mode); } catch (e) { }
+    }
+
+    /* ---------- (2) noise sweep ---------- */
+    var SHORT = {
+        'Save this stock change': 'Save', 'Show my latest actions': 'Show my actions',
+        'Forget the pick I had in progress': 'Forget my half-done pick', 'Scan pick list QR code': 'Scan pick list', 'SCAN PICK LIST QR CODE': 'SCAN PICK LIST',
+        'Turn practice mode on': 'Practice mode on', 'Turn practice mode off': 'Practice mode off'
+    };
+    function shortLabels(root) {
+        var w = document.createTreeWalker(root || document.body, 4, null), n, list = [];
+        while ((n = w.nextNode())) { var v = (n.nodeValue || '').trim(); if (v && SHORT.hasOwnProperty(v) && n.parentNode && n.parentNode.closest && n.parentNode.closest('button, summary, [role=button]')) list.push(n); }
+        list.forEach(function (n) { var v = n.nodeValue, k = v.trim(); n.nodeValue = v.replace(k, SHORT[k]); });
+    }
+    /* one primary per screen: the first visible primary-looking button of the active screen stays filled, the others look secondary.
+       The More / group menu sheets are lists of equal links, so they are left as they are. */
+    var PRIM = 'button.settings-btn:not(.danger):not(.rm-sm):not(.rm-xs), button.rm-big, button.b4-main, button.emp-save-btn';
+    function onePrimary() {
+        var roots = [].filter.call(document.querySelectorAll('.tab-content.active'), function (r) { return r.getBoundingClientRect().width > 0; });
+        roots.forEach(function (r) {
+            if (r.id === 'rm-tab') return;   /* Raw materials is left to the Lane-3 rebuild */
+            var bs = [].filter.call(r.querySelectorAll(PRIM), function (b) { return b.getBoundingClientRect().width > 0 && !b.closest('details:not([open]) > :not(summary)'); });
+            var keep = bs[0];
+            bs.forEach(function (b) { var sec = b !== keep; if (b.classList.contains('w3-sec') !== sec) b.classList.toggle('w3-sec', sec); });
+        });
+    }
+    /* Settings: Practice mode (training only) goes under one 'More settings' at the end; Text size stays first (most asked for by staff) */
+    function settingsMore() {
+        var tab = $('settings-tab'); if (!tab) return;
+        var demo = $('b3-demo-sec');
+        var more = $('w3-setmore');
+        if (!more) {
+            if (!demo) return;
+            more = document.createElement('details'); more.id = 'w3-setmore'; more.className = 'w3-more';
+            more.innerHTML = '<summary>More settings: practice mode</summary><div class="w3-morebody"></div>';
+        }
+        var mb = more.querySelector('.w3-morebody');
+        [demo].forEach(function (n) { if (n && n.parentNode !== mb) { if (!S.home) S.home = []; S.home.push({ n: n, p: n.parentNode, nx: n.nextSibling }); mb.appendChild(n); } });
+        if (more.parentNode !== tab || tab.lastElementChild !== more) tab.appendChild(more);
+    }
+    function settingsBack() {
+        (S.home || []).slice().reverse().forEach(function (h) { try { if (h.p) h.p.insertBefore(h.n, h.nx && h.nx.parentNode === h.p ? h.nx : null); } catch (e) { } });
+        S.home = []; var m = $('w3-setmore'); if (m && m.parentNode) m.parentNode.removeChild(m);
+    }
+
+    function pass(root) {
+        if (!S.on) return;
+        try { stockTiles(); } catch (e) { }
+        try { settingsMore(); } catch (e) { }
+        try { shortLabels(root); } catch (e) { }
+        try { onePrimary(); } catch (e) { }
+    }
+    function on() {
+        S.on = true; document.documentElement.classList.add('w3-on');
+        pass(document.body);
+        if (typeof MutationObserver === 'function' && !S.mo) {
+            var pend = [];
+            S.mo = new MutationObserver(function (ms) {
+                ms.forEach(function (m) { if (m.target && m.target.closest && m.target.closest('#w3-moves')) return; for (var i = 0; i < m.addedNodes.length; i++) pend.push(m.addedNodes[i]); if (m.type === 'attributes') pend.push(null); });
+                if (!S.t) S.t = setTimeout(function () { S.t = 0; var a = pend; pend = []; if (!a.length) return; try { stockTiles(); settingsMore(); onePrimary(); } catch (e) { } a.forEach(function (n) { if (n && n.nodeType === 1 && n.isConnected) { try { shortLabels(n); } catch (e) { } } }); }, 90);
+            });
+            S.mo.observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ['class', 'hidden'] });
+        }
+    }
+    function off() {
+        S.on = false; try { localStorage.setItem('simple_v1', 'off'); } catch (e) { }
+        document.documentElement.classList.remove('w3-on'); if (S.mo) { S.mo.disconnect(); S.mo = null; }
+        var g = $('w3-moves'); if (g) g.parentNode.removeChild(g);
+        settingsBack();
+        [].forEach.call(document.querySelectorAll('.w3-sec'), function (b) { b.classList.remove('w3-sec'); });
+    }
+
+    /* ---------- (3) lean_v25: removal of Warranty, CRM, Chats and the ERP entry points outside Raw materials ---------- */
+    var L = { on: false, orig: {}, cc: null, ccAt: null };
+    /* every item the flag takes out of the app, for the report and the tests: [area, where, what] */
+    var REMOVED = [
+        ['Chats', 'Bottom bar', 'Chats tab (bar reflows to Today, Stock, Orders, Labels or Dashboard, More)'],
+        ['Chats', 'Chats overlay', 'To do / Needs you, All chats, one chat, Results (Numbers), Leads, Robot setup, Connections (AI key, WhatsApp, Gmail, Voice), How chats work: the overlay is taken out of the page; ccOpen / ccFromMenu / ccGo refuse'],
+        ['CRM', 'More', 'Customers'],
+        ['CRM', 'New (+) menu', 'New customer, New order (manual order: writes crm_order_add)'],
+        ['CRM', 'Orders screen', 'New order button (manual order: writes crm_order_add)'],
+        ['CRM', 'Customers screen', 'every Customers view (home, list, customer, contacts, addresses, preferences, notes, order add, orders, link order, duplicates, merge undo, erase, bulk import, export, quotes, deals, segments, template check): switchTab(crm) goes to Orders, xmRender(crm) draws nothing'],
+        ['CRM', 'Sign-in landing', 'never lands on Customers'],
+        ['CRM', 'Morning brief / Today sections', 'Customers follow-ups section'],
+        ['CRM', 'Bell / Needs help cards', 'Customer alerts'],
+        ['Warranty', 'Customers screen', 'Warranty home, register, list, start, claims, claim, card, terms, reports, thresholds, batch trace: wtyOpen refuses'],
+        ['Warranty', 'Today', 'Warranty ending within 30 days'],
+        ['Warranty', 'Bell / Needs help cards', 'Warranty claims waiting'],
+        ['ERP', 'Header search', 'Purchase orders, New purchase order'],
+        ['ERP', 'Today', 'Purchase bills due and not paid'],
+        ['CRM / Warranty', 'Header search', 'Customers, Warranty, New customer, New order']
+    ];
+    var SEARCH_OUT = { customers: 1, warranty: 1, newcust: 1, neworder: 1, po: 1, newpo: 1 };
+    var TD_OUT = /^(Warranty ending|Purchase bills due)/;
+    function leanFlag() {
+        var q = qs();
+        if (/[?&]lean=on/.test(q)) { try { localStorage.setItem('lean_v25', 'on'); } catch (e) { } return true; }
+        if (/[?&]lean=off/.test(q)) { try { localStorage.removeItem('lean_v25'); } catch (e) { } return false; }
+        try { return localStorage.getItem('lean_v25') === 'on'; } catch (e) { return false; }
+    }
+    function gone(what) { try { exToast('err', what + ' is no longer part of the app.'); } catch (e) { } }
+    function wrap(name, mk) {
+        var f = window[name]; if (typeof f !== 'function' || f.lean25) return;
+        L.orig[name] = f; var w = mk(f); w.lean25 = true; window[name] = w;
+    }
+    function unwrap() {
+        Object.keys(L.orig).forEach(function (name) {
+            var cur = window[name];
+            if (cur && cur.lean25) window[name] = L.orig[name];
+            else { /* a later layer wrapped ours: leave its wrapper, our part switches itself off through L.on */ }
+        });
+        L.orig = {};
+    }
+    function leanOn() {
+        if (L.on) return; L.on = true; document.documentElement.classList.add('lean25');
+        /* the permission gates the app already uses: Customers / Chats / Warranty are 'not allowed' for everyone */
+        wrap('xmCan', function (f) { return function (k) { if (L.on && k === 'crm') return false; return f.apply(this, arguments); }; });
+        wrap('nvInfo', function (f) { return function (k) { var r = f.apply(this, arguments); if (L.on && k === 'crm' && r) { var c = {}; for (var q in r) c[q] = r[q]; c.hidden = true; c.active = false; return c; } return r; }; });
+        wrap('ccCan', function () { return function () { return false; }; });
+        /* entry functions refuse */
+        wrap('ccOpen', function () { return function () { gone('Chats'); }; });
+        wrap('ccFromMenu', function () { return function () { try { if (NV.open) nvClose(); } catch (e) { } gone('Chats'); }; });
+        wrap('ccGo', function () { return function () { gone('Chats'); }; });
+        wrap('wtyOpen', function () { return function () { gone('Warranty'); }; });
+        wrap('b15NewOrder', function () { return function () { gone('New order (Customers)'); }; });
+        wrap('switchTab', function (f) { return function (t) { if (L.on && t === 'crm') { arguments[0] = 'pick'; } return f.apply(this, arguments); }; });
+        wrap('xmRender', function (f) { return function (k) { if (L.on && k === 'crm') return; return f.apply(this, arguments); }; });
+        wrap('xmGo', function (f) { return function (k) { if (L.on && k === 'crm') { gone('Customers'); return; } return f.apply(this, arguments); }; });
+        wrap('usaTable', function (f) { return function () { var a = f.apply(this, arguments); return L.on && a && a.filter ? a.filter(function (x) { return !(x && SEARCH_OUT[x.id]); }) : a; }; });
+        wrap('e2AddChoices', function (f) { return function () { var a = f.apply(this, arguments); return L.on && a && a.filter ? a.filter(function (x) { return !(x && (x[0] === 'order' || x[0] === 'cust')); }) : a; }; });
+        wrap('tdDraw', function (f) { return function () { try { if (L.on && window.TD && TD.parts) TD.parts.forEach(function (p, i) { if (p && TD_OUT.test(String(p.title || ''))) delete TD.parts[i]; }); } catch (e) { } return f.apply(this, arguments); }; });
+        /* the Chats overlay is taken out of the page (kept in memory only so the flag can be switched off again) */
+        var cc = $('cc-bg'); if (cc && cc.parentNode) { try { if (!cc.hidden && typeof ccClose === 'function') ccClose(true); } catch (e) { } L.cc = cc; L.ccAt = { p: cc.parentNode, nx: cc.nextSibling }; cc.parentNode.removeChild(cc); }
+        var no = $('b15-neworder'); if (no) no.style.display = 'none';
+        try { if (state.tab === 'crm') switchTab('pick'); } catch (e) { }
+        try { nvSoon(); } catch (e) { }
+    }
+    function leanOff() {
+        if (!L.on) return; L.on = false; document.documentElement.classList.remove('lean25');
+        try { localStorage.removeItem('lean_v25'); } catch (e) { }
+        unwrap();
+        if (L.cc && L.ccAt) { try { L.ccAt.p.insertBefore(L.cc, L.ccAt.nx && L.ccAt.nx.parentNode === L.ccAt.p ? L.ccAt.nx : null); } catch (e) { } L.cc = null; L.ccAt = null; }
+        try { nvSoon(); } catch (e) { }
+    }
+
+    window.r42w = { on: on, off: off, isOn: function () { return S.on; }, version: 'simple + lean_v25 (v233h)', MOVES: MOVES, SHORT: SHORT, can: can,
+        lean: { on: leanOn, off: leanOff, isOn: function () { return L.on; }, REMOVED: REMOVED, SEARCH_OUT: SEARCH_OUT } };
+    window.SIMPLE_ON = flagOn();
+    window.LEAN_V25 = leanFlag();
+    function start() {
+        if (window.LEAN_V25) { try { leanOn(); } catch (e) { try { console.warn('lean_v25', e); } catch (x) { } } }
+        if (window.SIMPLE_ON) { try { on(); } catch (e) { try { console.warn('simple', e); } catch (x) { } } }
+    }
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start); else start();
+})();
+/* RC42w-SIMPLE-END */
+</script>
+<style id="fulfil-css">
+/* RC43-FULFIL: TO MAKE clarity, pending bills sheet, badge, sign-in banner. Every rule is scoped to html.ful-on or a ful- component. */
+html.ful-on #mto-panel .ful-instr{font-size:var(--t-body,15px);color:#0A1628;line-height:1.4}
+html.ful-on #mto-panel .ful-instr b{display:block;font-weight:800}
+.ful-sub{display:block;margin-top:2px;font-size:var(--t-meta,13px);color:#6B7280}
+.ful-photo{display:block;width:100%;max-width:220px;max-height:220px;object-fit:contain;margin:0 auto 6px;border-radius:8px;background:#F8FAFC}
+.ful-match{margin-top:6px;padding:4px 8px;border-radius:6px;background:#EEF2F8;color:#1B3F6B;font-size:var(--t-meta,13px)}
+.ful-auto{margin-top:8px;font-size:var(--t-meta,13px);color:#6B7280}
+html.ful-on #mto-panel [data-mto="refresh"][hidden]{display:none !important}
+.ful-badge{display:block;width:100%;box-sizing:border-box;min-height:48px;margin:8px 0;padding:10px 14px;border-radius:12px;border:2px solid #CBD5E1;background:#fff;color:#0A1628;font-weight:800;font-size:var(--t-body,15px);text-align:left;cursor:pointer}
+.ful-badge.ful-warn{border-color:#B3261E;background:#FDEDEC;color:#8A1C14}
+.ful-badge.ful-wait{border-color:#F0B429;background:#FFF4E5;color:#5C3B00}
+.ful-badge.ful-ok{border-color:#1B7A3A;background:#F0FAF3;color:#14532D;font-weight:700}
+.ful-bg{position:fixed;inset:0;z-index:9001;background:rgba(10,22,40,.45);display:flex;align-items:flex-end;justify-content:center}
+.ful-bg[hidden]{display:none}
+.ful-box{background:#fff;width:100%;max-width:640px;max-height:92vh;overflow:auto;border-radius:14px 14px 0 0;padding:12px 14px 22px;box-sizing:border-box;color:#0A1628}
+.ful-head{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:var(--t-body,15px)}
+.ful-btn{min-height:44px;min-width:44px;padding:0 14px;border-radius:10px;border:1.5px solid #1B4F8A;background:#fff;color:#1B4F8A;font-weight:700;cursor:pointer;font-size:var(--t-body,15px)}
+.ful-btn.ful-main{background:#1B4F8A;color:#fff}
+.ful-hint{margin:8px 0 4px;font-size:var(--t-meta,13px);color:#6B7280}
+.ful-filters{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0}
+.ful-fl{display:flex;flex-direction:column;flex:1 1 140px;font-size:var(--t-meta,13px);color:#374151;font-weight:700}
+.ful-fl select{min-height:44px;margin-top:2px;border:1.5px solid #94A3B8;border-radius:8px;background:#fff;font-size:16px;max-width:100%}
+.ful-count{margin:6px 0 2px;font-size:var(--t-meta,13px);color:#374151}
+.ful-row{display:block;width:100%;box-sizing:border-box;text-align:left;margin-top:8px;padding:8px 10px;border:2px solid #E2E8F0;border-radius:10px;background:#fff;color:#0A1628;cursor:pointer;min-height:44px}
+.ful-row.ful-row-over{border-color:#B3261E}
+.ful-r1,.ful-r2,.ful-r3{display:block;word-break:break-word}
+.ful-r1{font-size:var(--t-body,15px)}
+.ful-r2{margin-top:2px;font-size:var(--t-body,15px)}
+.ful-r3{margin-top:2px;font-size:var(--t-meta,13px);color:#6B7280}
+.ful-dim{color:#6B7280;font-weight:400}
+.ful-chip{display:inline-block;margin-left:6px;padding:1px 8px;border-radius:999px;background:#EEF2F8;color:#1B3F6B;font-size:var(--t-meta,13px);font-weight:700}
+.ful-chip.ful-st-new{background:#F1F5F9;color:#374151}
+.ful-chip.ful-st-part{background:#FFF4E5;color:#7A4A00}
+.ful-chip.ful-st-old{background:#EDE9FE;color:#4C1D95}
+.ful-chip.ful-over{background:#FDEDEC;color:#8A1C14}
+.ful-untr{color:#7A4A00;font-weight:700}
+.ful-msg{margin-top:8px;padding:8px 10px;border-radius:8px;font-size:var(--t-body,15px)}
+.ful-msg.ful-err{background:#FDEDEC;color:#8A1C14;border:1px solid #B3261E}
+.ful-info{margin-top:10px;color:#6B7280;font-size:var(--t-body,15px)}
+.ful-back{margin-top:10px}
+.ful-dh{margin-top:10px;font-size:var(--t-body,15px);word-break:break-word}
+.ful-sum{margin-top:4px;font-size:var(--t-body,15px);font-weight:800}
+.ful-acts{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.ful-task{margin-top:8px;padding:8px 10px;border:2px solid #E2E8F0;border-radius:10px}
+.ful-task.ful-t-todo{border-color:#B3261E}
+.ful-task.ful-t-done{border-color:#1B7A3A;background:#F0FAF3}
+.ful-task.ful-t-off{border-color:#CBD5E1;background:#F8FAFC;color:#6B7280}
+.ful-t1{font-weight:700;font-size:var(--t-body,15px);word-break:break-word}
+.ful-t1 .ful-chip{margin-left:0}
+.ful-t2,.ful-t3{margin-top:2px;font-size:var(--t-meta,13px);color:#374151;word-break:break-word}
+.ful-t3{color:#7A4A00}
+.ful-banner{position:fixed;left:8px;right:8px;top:max(8px,env(safe-area-inset-top));z-index:9002;display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:10px 12px;border-radius:12px;background:#FFF4E5;border:2px solid #F0B429;color:#5C3B00;box-shadow:0 4px 14px rgba(10,22,40,.18);font-size:var(--t-body,15px)}
+.ful-banner[hidden]{display:none}
+.ful-bt{flex:1 1 220px;font-weight:700}
+.ful-bb{display:flex;gap:8px}
+</style>
+<script id="fulfil-js">
+/* RC43-FULFIL-BEGIN  WP-MAKE-COMPLETE phases 1, 2 and 5 (app part). Flag fulfil_v1: ON by default; ?fulfil=off = the input file exactly.
+   Runtime layer only: no app function text changes (make_r43_fulfil.py proves the protected functions are byte-identical); the TO MAKE scan,
+   the AF3M code, the PIN, the offline queue and the in-stock pick run unchanged.
+   Phase 1 (TO MAKE screen, decorated after each draw): one plain instruction line at the top; a product photo per card when the workspace
+     setting photo_url_template names a same-site picture (the page's content rules allow only its own pictures; none is set today);
+     "Done for now (list stays open)" instead of "Close TO MAKE"; no manual Refresh (the screen already reads itself every 12 s; the button
+     comes back as "Try again now" only after a failed read); "matched by product" only on a card whose product is on more than one make slip
+     of the order.
+   Phase 2 (reads the FUL46 views; dormant until FOUNDER_25_FULFIL_VIEWS_v1.cmd is run): "Pending bills" sheet (one row per order, oldest first,
+     filters channel / product type / age, tap = roll-up + the TO MAKE screen or Pick), a badge
+     "N bills pending (k overdue)" on Today and on Pick.
+   Phase 5: a banner at sign-in when bills are pending; Today's to-do card "N bills pending" (made by the database) opens the sheet.
+   Wording, alert hours, banner on/off and the photo address are workspace settings (oms_fulfil_counts_v1.settings), never code. */
+(function () {
+    'use strict';
+    var W = window;
+    var F = { on: false, counts: null, countsAt: 0, noDb: false, rows: null, rowsAt: 0, tab: 'pending', filt: { ch: '', pt: '', age: '' }, detail: null, tasks: null,
+              loading: false, err: '', emp: '', bannerDue: false, lastLoad: 0, wasLoading: false, panelMo: null, timers: [], wrapped: {}, open: false };
+    var WORDS = {
+        make_instruction: 'Make each piece, stick the back label, scan the barcode on it. Repeat until the count shows N of N.',
+        order_summary: '{done} of {total} items done - {to_make} to make',
+        badge: '{pending} bills pending ({overdue} overdue)',
+        banner: '{pending} bills are not finished yet: {overdue} overdue, oldest {oldest_days} days.',
+        done_for_now: 'Done for now (list stays open)',
+        matched_by_product: 'matched by product'
+    };
+    var STATE_TXT = { NOT_STARTED: 'Not started', PARTLY_DONE: 'Partly done', DONE: 'Done', OLD_REVIEW: 'Old - review', CANCELLED: 'Cancelled', RELEASED: 'Released',
+                      CLOSED_WITH_EXCEPTIONS: 'Closed with exceptions' };
+    var TYPE_TXT = { PICK: 'To pick', MAKE: 'To make', CHECK: 'To check' };
+
+    function flagOn() {
+        var q = ''; try { q = String(location.search || ''); } catch (e) { }
+        if (/[?&]fulfil=off/.test(q)) { try { localStorage.setItem('fulfil_v1', 'off'); } catch (e) { } return false; }
+        if (/[?&]fulfil=on/.test(q)) { try { localStorage.removeItem('fulfil_v1'); } catch (e) { } return true; }
+        try { return localStorage.getItem('fulfil_v1') !== 'off'; } catch (e) { return true; }
+    }
+    function $(id) { return document.getElementById(id); }
+    function E(x) { return String(x == null ? '' : x).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;'); }
+    function up(s) { return String(s == null ? '' : s).trim().toUpperCase(); }
+    function now() { return Date.now(); }
+    function st() { try { return (typeof state !== 'undefined' && state) ? state : {}; } catch (e) { return {}; } }
+    function hasDb() { try { return typeof db !== 'undefined' && !!db && typeof db.from === 'function'; } catch (e) { return false; } }
+    function offline() { return !hasDb() || (typeof navigator !== 'undefined' && navigator.onLine === false); }
+    function timed(p, ms, label) { try { return (typeof withTimeout === 'function') ? withTimeout(p, ms, label) : Promise.resolve(p); } catch (e) { return Promise.resolve(p); } }
+    function settings() { return (F.counts && F.counts.settings && typeof F.counts.settings === 'object') ? F.counts.settings : {}; }
+    function cfgv(k, d) { var s = settings(); return (s[k] === undefined || s[k] === null) ? d : s[k]; }
+    function fill(tpl, vals) {
+        var r = String(tpl == null ? '' : tpl);
+        Object.keys(vals || {}).forEach(function (k) { r = r.split('{' + k + '}').join(String(vals[k] == null ? '' : vals[k])); });
+        return r;
+    }
+    function words(key, vals) { var w = cfgv('words', {}) || {}; return fill((typeof w[key] === 'string' && w[key]) ? w[key] : WORDS[key], vals); }
+    function noDbErr(e) {
+        if (!e) return false;
+        var c = String(e.code || ''), m = String(e.message || e.details || e.hint || '');
+        return c === 'PGRST205' || c === '42P01' || c === 'PGRST202' || /does not exist|could not find the table|schema cache|404/i.test(m);
+    }
+    function signedEmp() { try { var s = st().session; if (s && s.employee_code) return up(s.employee_code); } catch (e) { } return ''; }
+    function canSee() {
+        if (!signedEmp()) return false;
+        try { var r = up(st().session.role); if (r === 'OWNER' || r === 'ADMIN' || r === 'SUPERVISOR') return true; } catch (e) { }
+        try { if (typeof nvInfo === 'function') { var pi = nvInfo('pick'); return !!(pi && !pi.hidden); } } catch (e) { }
+        return true;
+    }
+    function ageText(h) { h = Number(h) || 0; if (h < 1) return 'under 1 h'; if (h < 48) return Math.floor(h) + ' h'; return Math.floor(h / 24) + ' days'; }
+    function when(ts) { if (!ts) return ''; try { return new Date(ts).toLocaleString('en-IN', { timeZone: String(cfgv('timezone', 'Asia/Kolkata')), day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' }); } catch (e) { return String(ts).slice(0, 16); } }
+    function hms(t) { try { var d = new Date(t); return ('0' + d.getHours()).slice(-2) + ':' + ('0' + d.getMinutes()).slice(-2) + ':' + ('0' + d.getSeconds()).slice(-2); } catch (e) { return ''; } }
+    function every(fn, ms) { var t = setInterval(function () { if (!F.on) return; try { fn(); } catch (e) { } }, ms); F.timers.push(t); return t; }
+
+    /* ---------- Phase 1: the TO MAKE screen ---------- */
+    function photoUrl(sku, asin) {
+        var t = String(cfgv('photo_url_template', '') || '');
+        if (!t || !sku) return '';
+        var u = t.split('{sku}').join(encodeURIComponent(sku)).split('{asin}').join(encodeURIComponent(asin || ''));
+        if (u.charAt(0) !== '/' || u.charAt(1) === '/') return '';   /* same site only: the page allows no outside pictures */
+        return u;
+    }
+    function skuCounts(M) {
+        var n = {};
+        (M.slips || []).concat(M.stock || []).forEach(function (s) { if (s && s.status === 'SHORT') { var k = up(s.sku_code); n[k] = (n[k] || 0) + 1; } });
+        return n;
+    }
+    function decorate() {
+        if (!F.on) return;
+        var el = $('mto-panel'), M = W.MTO || {};
+        if (!el || el.style.display === 'none' || !el.firstChild) return;
+        if (el.querySelector('.ful-sent')) return;
+        if (F.wasLoading && !M.loading) F.lastLoad = now();
+        F.wasLoading = !!M.loading;
+        var sent = document.createElement('span'); sent.className = 'ful-sent'; sent.hidden = true; el.appendChild(sent);
+        var hint = el.querySelector('.mto-hint');
+        if (hint) { hint.classList.add('ful-instr'); hint.innerHTML = '<b>' + E(words('make_instruction')) + '</b> <span class="ful-sub">In-stock lines: scan their pick slip as usual.</span>'; }
+        var n = skuCounts(M);
+        [].forEach.call(el.querySelectorAll('.mto-card'), function (card) {
+            var bs = card.querySelectorAll('.mto-ids b'), sku = bs[0] ? up(bs[0].textContent) : '', asin = bs[1] ? String(bs[1].textContent).trim() : '';
+            var u = photoUrl(sku, asin);
+            if (u) {
+                var img = document.createElement('img'); img.className = 'ful-photo'; img.alt = ''; img.setAttribute('loading', 'lazy'); img.decoding = 'async';
+                img.addEventListener('error', function () { if (img.parentNode) img.parentNode.removeChild(img); });
+                img.src = u; card.insertBefore(img, card.firstChild); card.classList.add('ful-has-photo');
+            }
+            if (card.getAttribute('data-res') && sku && n[sku] > 1) {
+                var d = document.createElement('div'); d.className = 'ful-match';
+                d.textContent = 'This product is on ' + n[sku] + ' lines of this order: each scan counts on the first of them that still needs pieces (' + words('matched_by_product') + ').';
+                card.appendChild(d);
+            }
+        });
+        var close = el.querySelector('[data-mto="close"]'); if (close) close.textContent = words('done_for_now');
+        var rf = el.querySelector('[data-mto="refresh"]'), need = !!(M.err || M.stockErr || (!M.loading && !(M.slips || []).length));
+        if (rf) { rf.hidden = !need; if (need) rf.textContent = 'Try again now'; }
+        var btns = el.querySelector('.mto-btns');
+        if (btns) {
+            var a = document.createElement('div'); a.className = 'ful-auto';
+            a.textContent = 'This list updates by itself every 12 seconds' + (F.lastLoad ? ' (last checked ' + hms(F.lastLoad) + ')' : '') + '. Done for now keeps the order open in Pending bills.';
+            btns.parentNode.insertBefore(a, btns);
+        }
+    }
+    function watchPanel() {
+        var el = $('mto-panel');
+        if (!el || F.panelMo || typeof MutationObserver !== 'function') { if (el) decorate(); return; }
+        F.panelMo = new MutationObserver(function () { try { decorate(); } catch (e) { } });
+        F.panelMo.observe(el, { childList: true });
+        decorate();
+    }
+
+    /* ---------- Phase 2: counts, badge, pending sheet ---------- */
+    function loadCounts() {
+        if (!F.on || offline() || !signedEmp()) return Promise.resolve(null);
+        return timed(db.from('oms_fulfil_counts_v1').select('*').limit(5), 12000, 'Pending bills count').then(function (r) {
+            if (!r || r.error) { if (r && noDbErr(r.error)) F.noDb = true; paintBadges(); return null; }
+            F.noDb = false;
+            var rows = Array.isArray(r.data) ? r.data : [];
+            F.counts = rows[0] || { pending_orders: 0, overdue_orders: 0, oldest_days: 0, old_review_orders: 0, settings: (F.counts && F.counts.settings) || {} };
+            F.countsAt = now();
+            paintBadges();
+            if (F.bannerDue) { F.bannerDue = false; banner(); }
+            return F.counts;
+        }, function () { paintBadges(); return null; });
+    }
+    function badgeHtml() {
+        var c = F.counts || {}, p = Number(c.pending_orders) || 0, o = Number(c.overdue_orders) || 0;
+        var t = p > 0 ? words('badge', { pending: p, overdue: o, oldest_days: Number(c.oldest_days) || 0 }) : 'No bills pending';
+        return { cls: 'ful-badge' + (p > 0 ? (o > 0 ? ' ful-warn' : ' ful-wait') : ' ful-ok'), text: t, p: p, o: o };
+    }
+    function badgeIn(host, id, first) {
+        if (!host) return;
+        var b = $(id);
+        if (F.noDb || !F.counts || !canSee()) { if (b) b.parentNode.removeChild(b); return; }
+        var h = badgeHtml();
+        if (!b) { b = document.createElement('button'); b.type = 'button'; b.id = id; b.addEventListener('click', function () { openSheet('pending'); }); }
+        b.className = h.cls; b.textContent = h.text; b.setAttribute('aria-label', h.text + '. Open the pending bills list.');
+        if (b.parentNode !== host) { if (first && first.parentNode === host) host.insertBefore(b, first); else host.insertBefore(b, host.firstChild); }
+    }
+    function paintBadges() {
+        if (!F.on) return;
+        try { var t = $('b4-today'); if (t) badgeIn(t, 'ful-badge-today', $('b4-need') || $('b4-checking') || t.children[2] || null); } catch (e) { }
+        try { var pk = $('pick-tab'); if (pk) badgeIn(pk, 'ful-badge-pick', pk.firstElementChild); } catch (e) { }
+    }
+    function bg() {
+        var b = $('ful-bg');
+        if (b) return b;
+        b = document.createElement('div'); b.id = 'ful-bg'; b.className = 'ful-bg'; b.hidden = true;
+        b.setAttribute('role', 'dialog'); b.setAttribute('aria-modal', 'true'); b.setAttribute('aria-label', 'Pending bills');
+        (document.body || document.documentElement).appendChild(b);
+        b.addEventListener('click', function (ev) {
+            if (ev.target === b) { closeSheet(); return; }
+            var t = ev.target && ev.target.closest ? ev.target.closest('[data-ful]') : null;
+            if (!t) return;
+            var a = t.getAttribute('data-ful');
+            if (a === 'close') closeSheet();
+            else if (a === 'row') openDetail(t.getAttribute('data-key'));
+            else if (a === 'back') { F.detail = null; F.tasks = null; render(); }
+            else if (a === 'make') goMake();
+            else if (a === 'pick') goPick();
+            else if (a === 'retry') loadRows();
+        });
+        b.addEventListener('change', function (ev) {
+            var t = ev.target; if (!t || !t.getAttribute) return;
+            var k = t.getAttribute('data-fulf'); if (!k) return;
+            F.filt[k] = String(t.value || ''); render();
+        });
+        return b;
+    }
+    function openSheet(tab) {
+        if (!F.on) return;
+        F.open = true; F.tab = 'pending'; F.detail = null; F.tasks = null;
+        var b = bg(); b.hidden = false; render(); loadRows(); loadCounts();
+    }
+    function closeSheet() { F.open = false; F.detail = null; var b = $('ful-bg'); if (b) { b.hidden = true; b.innerHTML = ''; } }
+    var COLS = 'workspace_code,order_key,order_ref,bill_no,channel_order_no,channel,product_types,items_total,items_done,to_make,to_pick,to_check,state,pending,overdue,age_hours,age_days,created_at,last_scan_at,who,summary_text,make_res_ids,untracked_open,pieces_made,pieces_to_make';
+    function loadRows() {
+        if (!F.on) return Promise.resolve();
+        if (offline()) { F.err = 'This phone has no connection. The list comes back by itself when it is online.'; render(); return Promise.resolve(); }
+        F.loading = true; render();
+        var q = db.from('oms_fulfil_order_v1').select(COLS);
+        q = q.eq('pending', true);   /* D42-33: no Old-review list; pre-17-Nov lines are closed by FUL47 */
+        var tab = F.tab;
+        return timed(q.order('created_at', { ascending: true }).limit(500), 15000, 'Pending bills').then(function (r) {
+            if (tab !== F.tab) return;
+            F.loading = false;
+            if (!r || r.error) {
+                if (r && noDbErr(r.error)) { F.noDb = true; F.err = 'The pending-bills list needs the database update FOUNDER_25_FULFIL_VIEWS_v1.cmd. It is not on yet.'; }
+                else F.err = 'The list could not be read (' + E(String((r && r.error && (r.error.message || r.error.code)) || 'no answer')).slice(0, 120) + ').';
+                render(); return;
+            }
+            F.noDb = false; F.err = ''; F.rows = Array.isArray(r.data) ? r.data : []; F.rowsAt = now(); render();
+        }, function (e) { F.loading = false; F.err = 'The list could not be read (' + E(String(e && e.message || e)).slice(0, 120) + ').'; render(); });
+    }
+    function filtered() {
+        var f = F.filt;
+        return (F.rows || []).filter(function (r) {
+            if (f.ch && String(r.channel || '').split(', ').indexOf(f.ch) < 0) return false;
+            if (f.pt && String(r.product_types || '').split(', ').indexOf(f.pt) < 0) return false;
+            var h = Number(r.age_hours) || 0;
+            if (f.age === 'overdue' && !r.overdue) return false;
+            if (f.age === 'd1' && h < 24) return false;
+            if (f.age === 'd3' && h < 72) return false;
+            if (f.age === 'd7' && h < 168) return false;
+            return true;
+        }).sort(function (a, b) { return String(a.created_at || '') < String(b.created_at || '') ? -1 : (String(a.created_at || '') > String(b.created_at || '') ? 1 : 0); });
+    }
+    function opts(list, cur, all) {
+        return '<option value="">' + E(all) + '</option>' + list.map(function (v) { return '<option value="' + E(v) + '"' + (v === cur ? ' selected' : '') + '>' + E(v) + '</option>'; }).join('');
+    }
+    function distinct(field) {
+        var s = {}; (F.rows || []).forEach(function (r) { String(r[field] || '').split(', ').forEach(function (v) { if (v) s[v] = 1; }); });
+        return Object.keys(s).sort();
+    }
+    function rowHtml(r) {
+        var stc = r.state === 'PARTLY_DONE' ? 'ful-st-part' : (r.state === 'OLD_REVIEW' ? 'ful-st-old' : 'ful-st-new');
+        return '<button type="button" class="ful-row' + (r.overdue ? ' ful-row-over' : '') + '" data-ful="row" data-key="' + E(r.order_key) + '">' +
+            '<span class="ful-r1"><b>' + E(r.order_ref) + '</b>' + (r.bill_no && r.bill_no !== r.order_ref ? ' <span class="ful-dim">bill ' + E(r.bill_no) + '</span>' : '') +
+            '<span class="ful-chip ' + stc + '">' + E(STATE_TXT[r.state] || r.state) + '</span>' + (r.overdue ? '<span class="ful-chip ful-over">Overdue</span>' : '') + '</span>' +
+            '<span class="ful-r2">' + E(r.summary_text || '') + (Number(r.untracked_open) > 0 ? ' &middot; <span class="ful-untr">' + E(r.untracked_open) + ' with no code yet</span>' : '') + '</span>' +
+            '<span class="ful-r3">' + E(r.channel || '') + ' &middot; ' + E(ageText(r.age_hours)) + ' old' + (r.last_scan_at ? ' &middot; last scan ' + E(when(r.last_scan_at)) : ' &middot; nothing scanned yet') +
+            (r.who ? ' &middot; by ' + E(r.who) : '') + '</span></button>';
+    }
+    function listHtml() {
+        var c = F.counts || {}, rows = filtered(), h = '';
+        h += '<p class="ful-hint">' + (c.pending_orders != null ? '<b>' + E(c.pending_orders) + ' pending</b> &middot; ' : '') + 'Every item of a bill must be picked or made and scanned. Oldest first. Tap a bill to see what is left.</p>';
+        if (F.rows && F.rows.length) {
+            h += '<div class="ful-filters">' +
+                '<label class="ful-fl">Channel<select data-fulf="ch">' + opts(distinct('channel'), F.filt.ch, 'All channels') + '</select></label>' +
+                '<label class="ful-fl">Product type<select data-fulf="pt">' + opts(distinct('product_types'), F.filt.pt, 'All product types') + '</select></label>' +
+                '<label class="ful-fl">Age<select data-fulf="age">' + [['', 'Any age'], ['overdue', 'Overdue only'], ['d1', 'Older than 1 day'], ['d3', 'Older than 3 days'], ['d7', 'Older than 7 days']].map(function (o) {
+                    return '<option value="' + o[0] + '"' + (o[0] === F.filt.age ? ' selected' : '') + '>' + o[1] + '</option>'; }).join('') + '</select></label></div>';
+        }
+        if (F.err) h += '<div class="ful-msg ful-err">' + F.err + (F.noDb ? '' : ' <button type="button" class="ful-btn" data-ful="retry">Try again now</button>') + '</div>';
+        if (F.loading && !F.rows) h += '<div class="ful-info">Reading the list...</div>';
+        if (F.rows && !rows.length && !F.err) h += '<div class="ful-info">' + (F.rows.length ? 'No bill matches these filters.' : 'No bill is pending. Every item is picked or made.') + '</div>';
+        if (rows.length) h += '<div class="ful-count">' + rows.length + ' bill' + (rows.length === 1 ? '' : 's') + (rows.length < (F.rows || []).length ? ' of ' + F.rows.length : '') + '</div>' + rows.map(rowHtml).join('');
+        h += '<div class="ful-auto">This list updates by itself every 30 seconds' + (F.rowsAt ? ' (last checked ' + hms(F.rowsAt) + ')' : '') + '.</div>';
+        return h;
+    }
+    function taskHtml(t) {
+        var done = t.state === 'DONE', q = Number(t.qty_needed) || 0, d = Number(t.qty_done) || 0;
+        return '<div class="ful-task ' + (done ? 'ful-t-done' : (t.state === 'CANCELLED' || t.state === 'RELEASED' ? 'ful-t-off' : 'ful-t-todo')) + '">' +
+            '<div class="ful-t1"><span class="ful-chip">' + E(TYPE_TXT[t.task_type] || t.task_type) + '</span> ' + E(t.title || t.sku_code) + '</div>' +
+            '<div class="ful-t2">SKU <b>' + E(t.sku_code) + '</b> &middot; ' + (t.task_type === 'CHECK' ? 'needs checking' : (t.task_type === 'MAKE' ? 'made ' : 'picked ') + '<b>' + d + '</b> of <b>' + q + '</b>') +
+            ' &middot; ' + E(STATE_TXT[t.state] || t.state) + '</div>' +
+            (t.source === 'UNTRACKED' && !done && t.state !== 'CANCELLED' && t.state !== 'RELEASED' ? '<div class="ful-t3">No code to scan yet (this line has no slip). Make or pick it as usual; it is counted here so it is not forgotten.</div>' : '') +
+            (t.closure_reason ? '<div class="ful-t3">' + E(t.closure_reason) + '</div>' : '') + '</div>';
+    }
+    function detailHtml() {
+        var r = F.detail || {}, h = '<button type="button" class="ful-btn ful-back" data-ful="back">&larr; All pending bills</button>';
+        h += '<div class="ful-dh"><b>' + E(r.order_ref) + '</b>' + (r.bill_no ? ' &middot; bill ' + E(r.bill_no) : '') + (r.channel_order_no && r.channel_order_no !== r.order_ref ? ' &middot; ' + E(r.channel_order_no) : '') + '</div>';
+        h += '<div class="ful-sum">' + E(r.summary_text || '') + '</div>';
+        h += '<div class="ful-r3">' + E(r.channel || '') + ' &middot; ' + E(ageText(r.age_hours)) + ' old' + (r.overdue ? ' &middot; overdue' : '') + (r.last_scan_at ? ' &middot; last scan ' + E(when(r.last_scan_at)) : '') + (r.who ? ' &middot; by ' + E(r.who) : '') + '</div>';
+        var acts = '';
+        if ((r.make_res_ids || []).length && Number(r.to_make) > 0) acts += '<button type="button" class="ful-btn ful-main" data-ful="make">Open the TO MAKE screen</button>';
+        if (Number(r.to_pick) > 0) acts += '<button type="button" class="ful-btn" data-ful="pick">Open Pick</button>';
+        if (acts) h += '<div class="ful-acts">' + acts + '</div>';
+        if (!F.tasks) h += '<div class="ful-info">Reading the items...</div>';
+        else if (F.tasks.error) h += '<div class="ful-msg ful-err">' + E(F.tasks.error) + '</div>';
+        else h += F.tasks.rows.map(taskHtml).join('');
+        return h;
+    }
+    function render() {
+        var b = $('ful-bg'); if (!b || !F.open) return;
+        b.innerHTML = '<div class="ful-box"><div class="ful-head"><b>Pending bills</b><button type="button" class="ful-btn" data-ful="close" aria-label="Close">Close</button></div>' +
+            (F.detail ? detailHtml() : listHtml()) + '</div>';
+        b.hidden = false;
+    }
+    function openDetail(key) {
+        var r = (F.rows || []).filter(function (x) { return String(x.order_key) === String(key); })[0];
+        if (!r) return;
+        F.detail = r; F.tasks = null; render();
+        if (offline()) { F.tasks = { error: 'This phone has no connection.' }; render(); return; }
+        timed(db.from('oms_fulfil_task_v1').select('order_key,line_no,sku_code,title,task_type,qty_needed,qty_done,state,source,closure_reason,res_ids').eq('order_key', r.order_key).order('line_no', { ascending: true }).limit(200), 12000, 'Bill items').then(function (x) {
+            if (F.detail !== r) return;
+            F.tasks = (!x || x.error) ? { error: 'The items could not be read. Try again in a moment.' } : { rows: Array.isArray(x.data) ? x.data : [] };
+            render();
+        }, function () { if (F.detail === r) { F.tasks = { error: 'The items could not be read. Try again in a moment.' }; render(); } });
+    }
+    function goMake() {
+        var r = F.detail; if (!r) return;
+        var ids = (r.make_res_ids || []).map(Number).filter(function (n) { return n > 0; }).slice(0, 50);
+        if (!ids.length) return;
+        closeSheet(); closeToday();
+        try { if (typeof switchTab === 'function') switchTab('pick'); } catch (e) { }
+        try { if (W.mtoApi && typeof W.mtoApi.openCode === 'function') W.mtoApi.openCode('AF3M|' + ids.join(',')); } catch (e) { }
+    }
+    function closeToday() { try { if (typeof b4Close === 'function' && typeof B4 !== 'undefined' && B4 && B4.open) b4Close(); } catch (e) { } }
+    function goPick() { closeSheet(); closeToday(); try { if (typeof switchTab === 'function') switchTab('pick'); } catch (e) { } }
+
+    /* ---------- Phase 5: banner at sign-in; Today's to-do card opens the sheet ---------- */
+    function banner() {
+        var c = F.counts || {}, p = Number(c.pending_orders) || 0, emp = signedEmp();
+        if (!F.on || F.noDb || !emp || !canSee() || p <= 0 || cfgv('banner_enabled', true) === false) return;
+        var key = 'fulfil_banner_' + emp, last = 0;
+        try { last = Number(localStorage.getItem(key)) || 0; } catch (e) { }
+        if (now() - last < 3600000) return;   /* dismissed less than an hour ago (for example a PIN lock and sign-in again) */
+        var b = $('ful-banner');
+        if (!b) {
+            b = document.createElement('div'); b.id = 'ful-banner'; b.className = 'ful-banner'; b.setAttribute('role', 'status');
+            b.addEventListener('click', function (ev) {
+                var t = ev.target && ev.target.closest ? ev.target.closest('[data-fulb]') : null; if (!t) return;
+                try { localStorage.setItem(key, String(now())); } catch (e) { }
+                b.hidden = true;
+                if (t.getAttribute('data-fulb') === 'open') openSheet('pending');
+            });
+            (document.body || document.documentElement).appendChild(b);
+        }
+        b.innerHTML = '<span class="ful-bt">' + E(words('banner', { pending: p, overdue: Number(c.overdue_orders) || 0, oldest_days: Number(c.oldest_days) || 0 })) + '</span>' +
+            '<span class="ful-bb"><button type="button" class="ful-btn ful-main" data-fulb="open">Open the list</button><button type="button" class="ful-btn" data-fulb="later">Later</button></span>';
+        b.hidden = false;
+    }
+    function watchSignIn() {
+        var e = signedEmp();
+        if (e && e !== F.emp) { F.emp = e; F.bannerDue = true; loadCounts(); }
+        if (!e && F.emp) { F.emp = ''; var b = $('ful-banner'); if (b) b.hidden = true; paintBadges(); }
+    }
+    function wrap(name, make) {
+        try { var f = W[name]; if (typeof f === 'function' && !f.ful43) { var g = make(f); g.ful43 = 1; F.wrapped[name] = f; W[name] = g; } } catch (e) { }
+    }
+    function unwrap() { Object.keys(F.wrapped).forEach(function (k) { try { W[k] = F.wrapped[k]; } catch (e) { } }); F.wrapped = {}; }
+
+    function on() {
+        if (F.on) return;
+        F.on = true; document.documentElement.classList.add('ful-on');
+        wrap('b4Paint', function (f) { return function () { var r = f.apply(this, arguments); try { paintBadges(); } catch (e) { } return r; }; });
+        wrap('b4GoTask', function (f) {
+            return function (id) {
+                try { var t = (typeof b4Find === 'function') ? b4Find(id) : null; if (t && String(t.source_screen) === 'fulfil') { try { if (typeof b4Close === 'function') b4Close(); } catch (e) { } openSheet('pending'); return; } } catch (e) { }
+                return f.apply(this, arguments);
+            };
+        });
+        every(watchPanel, 1500);
+        every(watchSignIn, 1500);
+        every(function () { try { if (document.hidden) return; } catch (e) { } if (signedEmp() && now() - F.countsAt > 60000) loadCounts(); }, 5000);
+        every(function () { try { if (document.hidden) return; } catch (e) { } if (F.open && !F.detail && !F.loading && now() - F.rowsAt > 30000) loadRows(); }, 5000);
+        every(paintBadges, 4000);
+        try { W.addEventListener('online', function () { if (F.on) { loadCounts(); if (F.open) loadRows(); } }); } catch (e) { }
+        watchPanel(); watchSignIn();
+    }
+    function off() {
+        F.on = false; try { localStorage.setItem('fulfil_v1', 'off'); } catch (e) { }
+        document.documentElement.classList.remove('ful-on');
+        F.timers.forEach(function (t) { clearInterval(t); }); F.timers = [];
+        if (F.panelMo) { F.panelMo.disconnect(); F.panelMo = null; }
+        unwrap(); closeSheet();
+        ['ful-badge-today', 'ful-badge-pick', 'ful-banner', 'ful-bg'].forEach(function (id) { var x = $(id); if (x && x.parentNode) x.parentNode.removeChild(x); });
+    }
+    W.r43ful = { on: on, off: off, isOn: function () { return F.on; }, version: 'fulfil (v233i)', F: F, WORDS: WORDS, fill: fill, words: words, photoUrl: photoUrl,
+                 skuCounts: skuCounts, decorate: decorate, loadCounts: loadCounts, loadRows: loadRows, openSheet: openSheet, closeSheet: closeSheet, filtered: filtered,
+                 rowHtml: rowHtml, listHtml: listHtml, taskHtml: taskHtml, badgeHtml: badgeHtml, paintBadges: paintBadges, banner: banner, noDbErr: noDbErr, ageText: ageText,
+                 openDetail: openDetail, goMake: goMake, canSee: canSee };
+    W.FULFIL_ON = flagOn();
+    function start() { if (W.FULFIL_ON) { try { on(); } catch (e) { try { console.warn('fulfil', e); } catch (x) { } } } }
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start); else start();
+})();
+/* RC43-FULFIL-END */
+</script>
+<style id="rm50-css">
+/* RM50 UI (Lane 3): every rule is scoped to html.rm50-on, so with ?rm50=off nothing here applies. */
+html.rm50-on #rm-bell-rm, html.rm50-on #rm-share, html.rm50-on #rm-related, html.rm50-on #rm-crumbs, html.rm50-on #bl-x2-hub, html.rm50-on #bl-x2-glance, html.rm50-on #w3-rmtop { display: none !important; }
+html.rm50-on .rm50-acts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin: 4px 0 10px; }
+html.rm50-on .rm50-big { min-height: 72px; border: 1.5px solid #1B4F8A; border-radius: 12px; background: #fff; color: #0A1628; padding: 8px; display: flex; flex-direction: column; align-items: flex-start; justify-content: center; gap: 2px; text-align: left; cursor: pointer; }
+html.rm50-on .rm50-big b { font-size: 1.05em; }
+html.rm50-on .rm50-big small { color: #4A5568; font-size: .85em; }
+html.rm50-on .rm50-primary { background: #1B4F8A; color: #fff; }
+html.rm50-on .rm50-primary small { color: #DDE6F2; }
+html.rm50-on .rm50-low { background: #FDECEA; color: #8A1C14; border-radius: 10px; padding: 8px 10px; margin: 0 0 8px; font-weight: 600; }
+html.rm50-on .rm50-bar { display: flex; gap: 8px; align-items: center; margin: 0 0 8px; }
+html.rm50-on .rm50-bar .rm50-in { flex: 1; }
+html.rm50-on .rm50-row { width: 100%; min-height: 56px; border: 1px solid #C9D3E0; border-radius: 10px; background: #fff; padding: 8px 12px; margin: 0 0 6px; display: flex; flex-direction: column; gap: 3px; text-align: left; cursor: pointer; }
+html.rm50-on .rm50-row.rm50-isLow { border-color: #B3261E; }
+html.rm50-on .rm50-nm { font-weight: 700; color: #1B3F6B; }
+html.rm50-on .rm50-nums { display: flex; gap: 14px; flex-wrap: wrap; color: #4A5568; font-size: .92em; }
+html.rm50-on .rm50-badge { background: #B3261E; color: #fff; border-radius: 6px; padding: 1px 6px; font-size: .8em; font-weight: 700; }
+html.rm50-on .rm50-head { display: flex; flex-direction: column; gap: 2px; margin: 0 0 8px; color: #0A1628; }
+html.rm50-on .rm50-head b { font-size: 1.15em; }
+html.rm50-on .rm50-head small, html.rm50-on .rm50-dim { color: #4A5568; font-size: .9em; }
+html.rm50-on .rm50-l { display: flex; flex-direction: column; gap: 3px; margin: 0 0 8px; font-weight: 600; color: #1B3F6B; font-size: .92em; }
+html.rm50-on .rm50-in { min-height: 44px; box-sizing: border-box; width: 100%; }
+html.rm50-on .rm50-two { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+html.rm50-on .rm50-conv { font-weight: 700; color: #1B4F8A; margin: -2px 0 8px; min-height: 1em; }
+html.rm50-on .rm50-prev { background: #F2F6FB; border-radius: 10px; padding: 8px 10px; margin: 0 0 8px; min-height: 1em; }
+html.rm50-on .rm50-prev:empty { display: none; }
+html.rm50-on .rm50-warn { background: #FFF4E5; color: #7A4100; border: 1px solid #F0B35B; border-radius: 10px; padding: 8px 10px; margin: 6px 0; }
+html.rm50-on .rm50-seg { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin: 0 0 8px; }
+html.rm50-on .rm50-seg button { min-height: 44px; border: 1.5px solid #1B4F8A; border-radius: 10px; background: #fff; color: #1B4F8A; font-weight: 700; }
+html.rm50-on .rm50-seg button.on { background: #1B4F8A; color: #fff; }
+html.rm50-on .rm50-cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin: 0 0 8px; }
+html.rm50-on .rm50-cards > div { border: 1px solid #C9D3E0; border-radius: 10px; padding: 8px 10px; display: flex; flex-direction: column; gap: 2px; }
+html.rm50-on .rm50-cards small { color: #4A5568; font-size: .82em; }
+html.rm50-on .rm50-cards b { font-size: 1.1em; color: #0A1628; }
+html.rm50-on .rm50-sec { font-weight: 800; color: #0A1628; margin: 12px 0 6px; }
+html.rm50-on .rm50-use { background: #F2F6FB; border-radius: 10px; padding: 8px 10px; margin: 6px 0; }
+html.rm50-on .rm50-tr { border-bottom: 1px solid #E2E8F0; padding: 6px 0; display: flex; flex-direction: column; gap: 2px; }
+html.rm50-on .rm50-tr span, html.rm50-on .rm50-tr small { color: #4A5568; font-size: .88em; }
+html.rm50-on .rm50-void { opacity: .55; text-decoration: line-through; }
+html.rm50-on .rm50-vbtn { align-self: flex-start; min-height: 36px; }
+html.rm50-on .rm50-set { margin: 12px 0 0; }
+@media (max-width: 420px) { html.rm50-on .rm50-acts { grid-template-columns: 1fr; } html.rm50-on .rm50-two { grid-template-columns: 1fr; } }
+</style>
+<script id="rm50-js">
+/* RM50-UI-BEGIN  Lane 3 (master prompt v25.0): Raw materials, rebuilt simple. ONE home (item list with stock / average price / low flag)
+   and 3 big actions: Stock in, Fix a count, Stock out (wastage or return). Database: the rm50_* functions (RM50 v1 kit).
+   Flag rm50: ON by default; ?rm50=off (remembered) = the old Raw materials screens exactly; ?rm50=on clears it.
+   If the database part is not installed yet, the old home is shown automatically (nothing breaks).
+   Nothing here touches scan, PIN, offline queue or stock-move code: it only adds views to the Raw materials tab. */
+(function () {
+    'use strict';
+    var RM50 = window.RM50 = { on: false, off: false, h: null, f: {}, busy: false, prevHome: null, orig: {}, period: 7 };
+    function flagOn() {
+        var q = ''; try { q = String(location.search || ''); } catch (e) { }
+        if (/[?&]rm50=off/.test(q)) { try { localStorage.setItem('rm50_v1', 'off'); } catch (e) { } return false; }
+        if (/[?&]rm50=on/.test(q)) { try { localStorage.removeItem('rm50_v1'); } catch (e) { } return true; }
+        try { return localStorage.getItem('rm50_v1') !== 'off'; } catch (e) { return true; }
+    }
+    function E(s) { return esc59(s == null ? '' : String(s)); }
+    function $(id) { return document.getElementById(id); }
+    function num(v) { var t = String(v == null ? '' : v).trim().replace(/,/g, ''); if (!/^[0-9]+([.][0-9]+)?$/.test(t) && !/^[.][0-9]+$/.test(t)) return null; var n = Number(t); return isFinite(n) ? n : null; }
+    function q3(n) { return rmQty(n, 3); }
+    function inr(n) { return rmInr(n); }
+    function today() { try { return rmTodayIst(); } catch (e) { return new Date().toISOString().slice(0, 10); } }
+    function addDays(iso, d) { var t = new Date(iso + 'T00:00:00Z'); t.setUTCDate(t.getUTCDate() + d); return t.toISOString().slice(0, 10); }
+    function rid() { return 'rm50-' + rmUuid(); }
+    function msg(d, okText) { return rmMsgHtml(d, okText); }
+    function item(id) { var a = (RM50.h && RM50.h.items) || []; for (var i = 0; i < a.length; i++) if (String(a[i].item_id) === String(id)) return a[i]; return null; }
+    function units(it) { var u = [it.unit]; (it.buy_units || []).forEach(function (b) { u.push(b.unit); }); return u; }
+    function factor(it, unit) { if (!it || !unit || unit === it.unit) return 1; var b = (it.buy_units || []).filter(function (x) { return x.unit === unit; })[0]; return b ? Number(b.factor) : null; }
+    RM50.factor = factor; RM50.num = num;
+    /* conversion line: '5 ROLL = 250 FT' */
+    function convText(qty, unit, f, base) { if (qty == null || !f) return ''; return q3(qty) + ' ' + unit + ' = ' + q3(Math.round(qty * f * 1000) / 1000) + ' ' + base; }
+    RM50.convText = convText;
+    /* the cost preview the Stock in form shows (same rounding as the database) */
+    function costPreview(qty, price, f, gst, transport) {
+        if (qty == null || price == null || !f) return null;
+        var sq = Math.round(qty * f * 1000) / 1000; if (!(sq > 0)) return null;
+        var goods = Math.round(qty * price * 100) / 100, val = Math.round((goods + (transport || 0)) * 100) / 100;
+        var g = Math.round(goods * (gst || 0)) / 100;
+        return { stockQty: sq, perUnit: Math.round(price / f * 10000) / 10000, landed: Math.round(val / sq * 10000) / 10000, gst: g, total: Math.round((val + g) * 100) / 100 };
+    }
+    RM50.costPreview = costPreview;
+    function jumpPct(newPerUnit, lastPerUnit) { if (!(lastPerUnit > 0) || newPerUnit == null) return null; return Math.round((newPerUnit - lastPerUnit) / lastPerUnit * 1000) / 10; }
+    RM50.jumpPct = jumpPct;
+    function itemOptions(sel) {
+        var a = (RM50.h && RM50.h.items) || [];
+        return '<option value="">Pick an item</option>' + a.map(function (it) { return '<option value="' + E(it.item_id) + '"' + (String(sel) === String(it.item_id) ? ' selected' : '') + '>' + E(it.name) + ' (' + E(it.unit) + ')</option>'; }).join('');
+    }
+    function locRow(id) {
+        var l = (RM50.h && RM50.h.locations) || [];
+        if (l.length < 2) return '';
+        return '<label class="rm50-l">Store place<select id="' + id + '" class="settings-input rm50-in">' + l.map(function (x) { return '<option value="' + E(x.id) + '"' + (x.code === 'MAIN' ? ' selected' : '') + '>' + E(x.name) + '</option>'; }).join('') + '</select></label>';
+    }
+    function locVal(id) { var el = $(id); return el && el.value ? Number(el.value) : null; }
+    function head(t, sub) { return '<div class="rm50-head"><b>' + E(t) + '</b>' + (sub ? '<small>' + E(sub) + '</small>' : '') + '</div>'; }
+    function busy(on) { RM50.busy = on; var b = document.querySelectorAll('#rm-body .rm50-save'); for (var i = 0; i < b.length; i++) b[i].disabled = on; }
+    function isMissing(d) { return d && /^NO_M[0-9]+$/.test(String(d.error || '')); }
+    function loadHome(cb) {
+        rmCall('rm50_home', {}, { read: true, reason: 'Open raw materials: type your own employee code and PIN.' }).then(function (d) {
+            if (isMissing(d)) { RM50.off = true; document.documentElement.classList.remove('rm50-on'); restoreOld(); try { rmRender(true); } catch (e) { } return; }
+            if (d && d.ok) RM50.h = d;
+            cb(d);
+        });
+    }
+
+    /* ---------- home ---------- */
+    function home(fetch) {
+        if (RM50.off) { return RM50.prevHome ? RM50.prevHome(fetch) : undefined; }
+        try { if (typeof window.blx2Off === 'function') window.blx2Off(); } catch (e) { }   /* the old hub layer stays off while this home shows */
+        var body = $('rm-body'); if (!body) return;
+        if (fetch || !RM50.h) { body.innerHTML = '<div class="rm-note">Loading raw materials...</div>'; loadHome(function (d) { if (RM.view === 'home') drawHome(d); }); return; }
+        drawHome(RM50.h);
+    }
+    function drawHome(d) {
+        var body = $('rm-body'); if (!body) return;
+        if (!d || !d.ok) { body.innerHTML = msg(d) + '<button class="settings-btn rm-big" onclick="RM50.go(&quot;home&quot;)">Try again</button>'; return; }
+        var a = d.items || [], low = a.filter(function (x) { return x.low; });
+        var q = String((RM50.f.q || '')).toLowerCase();
+        var list = a.filter(function (x) { return !q || String(x.name).toLowerCase().indexOf(q) >= 0; });
+        var h = '<div class="rm50-acts">' +
+            '<button type="button" class="rm50-big rm50-primary" onclick="RM50.go(&quot;rm50in&quot;)"><b>Stock in</b><small>A delivery came in</small></button>' +
+            '<button type="button" class="rm50-big" onclick="RM50.go(&quot;rm50fix&quot;)"><b>Fix a count</b><small>You counted the shelf</small></button>' +
+            '<button type="button" class="rm50-big" onclick="RM50.go(&quot;rm50out&quot;)"><b>Stock out</b><small>Wastage or return to supplier</small></button>' +
+            '</div>';
+        if (low.length) h += '<div class="rm50-low">' + low.length + (low.length === 1 ? ' item is' : ' items are') + ' at or below the reorder level: ' + low.slice(0, 5).map(function (x) { return E(x.name); }).join(', ') + (low.length > 5 ? ' ...' : '') + '</div>';
+        h += '<div class="rm50-bar"><input type="search" id="rm50-q" class="settings-input rm50-in" placeholder="Search items" value="' + E(RM50.f.q || '') + '" oninput="RM50.search(this.value)" autocomplete="off">' +
+             '<button type="button" class="csv-btn" onclick="RM50.go(&quot;rm50add&quot;)">+ Add item</button></div>';
+        h += '<div id="rm50-list">' + listHtml(list, a.length) + '</div>';
+        if (d.can_manage) h += '<div class="rm50-dim rm50-set">Price warning when a price is more than <b>' + E(q3(d.price_jump_pct)) + '%</b> above the last price. <button type="button" class="csv-btn" onclick="RM50.setJump()">Change</button></div>';
+        body.innerHTML = h;
+    }
+    function listHtml(list, total) {
+        if (!total) return '<div class="rm-note">No items yet. Tap <b>+ Add item</b> to add your first raw material.</div>';
+        if (!list.length) return '<div class="rm-note">No item matches the search.</div>';
+        return list.map(function (x) {
+            return '<button type="button" class="rm50-row' + (x.low ? ' rm50-isLow' : '') + '" onclick="RM50.go(&quot;rm50item&quot;,{item_id:' + Number(x.item_id) + '})">' +
+                '<span class="rm50-nm">' + E(x.name) + (x.low ? ' <span class="rm50-badge">Low</span>' : '') + '</span>' +
+                '<span class="rm50-nums"><span>Stock <b>' + E(q3(x.stock)) + ' ' + E(x.unit) + '</b></span>' +
+                '<span>Avg price <b>' + (x.avg_price == null ? '-' : E(inr(x.avg_price)) + ' / ' + E(x.unit)) + '</b></span></span></button>';
+        }).join('');
+    }
+    RM50.search = function (v) { RM50.f.q = v; var a = (RM50.h && RM50.h.items) || [], q = String(v || '').toLowerCase(); var el = $('rm50-list'); if (el) el.innerHTML = listHtml(a.filter(function (x) { return !q || String(x.name).toLowerCase().indexOf(q) >= 0; }), a.length); };
+    RM50.go = function (view, params) { if (RM50.busy) return; if (view === 'home') { RM50.h = null; rmHome(); return; } rmGo(view, params || {}); };
+    RM50.setJump = function () {
+        var cur = RM50.h ? RM50.h.price_jump_pct : 10;
+        var v = window.prompt('Warn when a price is more than how many % above the last price? (1 to 100)', String(cur));
+        if (v == null) return;
+        rmCall('rm50_setting_set', { p_client_request_id: rid(), p_key: 'price_jump_pct', p_value: String(v).trim() }, { reason: 'Change the price warning: type your PIN.' }).then(function (d) {
+            if (d.ok) { RM50.h = null; home(true); } else { window.alert(d.text || d.message || 'Not saved.'); }
+        });
+    };
+
+    /* ---------- shared form bits ---------- */
+    function qtyUnitRow(prefix, it, withOther) {
+        var opts = it ? units(it).map(function (u) { return '<option value="' + E(u) + '">' + E(u) + '</option>'; }).join('') : '';
+        if (it && withOther) opts += '<option value="__other">Other unit...</option>';
+        return '<div class="rm50-two"><label class="rm50-l">How many<input id="' + prefix + '-qty" class="settings-input rm50-in" inputmode="decimal" autocomplete="off" oninput="RM50.upd()"></label>' +
+               '<label class="rm50-l">Unit<select id="' + prefix + '-unit" class="settings-input rm50-in" onchange="RM50.upd()"' + (it ? '' : ' disabled') + '>' + opts + '</select></label></div>' +
+               (withOther ? '<div id="' + prefix + '-other" class="rm50-two" style="display:none"><label class="rm50-l">Unit name<input id="' + prefix + '-oname" class="settings-input rm50-in" placeholder="for example BOX" oninput="RM50.upd()"></label>' +
+               '<label class="rm50-l"><span id="' + prefix + '-oflab">How many in one?</span><input id="' + prefix + '-ofac" class="settings-input rm50-in" inputmode="decimal" oninput="RM50.upd()"></label></div>' : '') +
+               '<div class="rm50-conv" id="' + prefix + '-conv"></div>';
+    }
+    function readQtyUnit(prefix, it) {
+        var qty = num(($(prefix + '-qty') || {}).value), sel = ($(prefix + '-unit') || {}).value || (it && it.unit), unit = sel, f = factor(it, sel), other = false;
+        if (sel === '__other') { other = true; unit = String(($(prefix + '-oname') || {}).value || '').trim().toUpperCase(); f = num(($(prefix + '-ofac') || {}).value); }
+        return { qty: qty, unit: unit, f: f, other: other };
+    }
+    function itemPick(prefix, sel) {
+        return '<label class="rm50-l">Item<select id="' + prefix + '-item" class="settings-input rm50-in" onchange="RM50.pick(&quot;' + prefix + '&quot;, this.value)">' + itemOptions(sel) + '</select></label>';
+    }
+    RM50.pick = function (prefix, id) { var p = {}; for (var k in RM.params) p[k] = RM.params[k]; p.item_id = id ? Number(id) : null; RM.params = p; rmRender(false); };
+    function needHome(fetch, draw) { if (!RM50.h || fetch === 'force') { var b = $('rm-body'); if (b) b.innerHTML = '<div class="rm-note">Loading...</div>'; loadHome(function (d) { if (!d.ok) { if (b) b.innerHTML = msg(d); return; } draw(); }); } else draw(); }
+
+    /* ---------- Stock in ---------- */
+    function viewIn() {
+        needHome(false, function () {
+            var it = item(RM.params.item_id), d = RM50.h, body = $('rm-body');
+            var sup = (d.suppliers || []).map(function (s) { return '<option value="' + E(s.name) + '"></option>'; }).join('');
+            body.innerHTML = head('Stock in', 'Enter what came in. A new supplier name is saved by itself.') + itemPick('si', it && it.item_id) +
+                (it ? qtyUnitRow('si', it, true) +
+                '<label class="rm50-l">Supplier<input id="si-sup" class="settings-input rm50-in" list="si-sups" placeholder="Pick or type a name" autocomplete="off" oninput="RM50.upd()"><datalist id="si-sups">' + sup + '</datalist></label>' +
+                '<div class="rm50-dim" id="si-supnew"></div>' +
+                '<div class="rm50-two"><label class="rm50-l">Date<input id="si-date" type="date" class="settings-input rm50-in" value="' + today() + '" max="' + today() + '" min="' + addDays(today(), -90) + '"></label>' +
+                '<label class="rm50-l">Bill number (optional)<input id="si-bill" class="settings-input rm50-in" autocomplete="off" maxlength="60"></label></div>' +
+                '<div class="rm50-two"><label class="rm50-l"><span id="si-plab">Price per unit (before GST)</span><input id="si-price" class="settings-input rm50-in" inputmode="decimal" oninput="RM50.upd()"></label>' +
+                '<label class="rm50-l">GST %<select id="si-gst" class="settings-input rm50-in" onchange="RM50.upd()">' + [0, 5, 12, 18, 28].map(function (g) { return '<option value="' + g + '"' + (g === 18 ? ' selected' : '') + '>' + g + '%</option>'; }).join('') + '</select></label></div>' +
+                '<label class="rm50-l">Transport cost, Rs (optional, spread into the cost per unit)<input id="si-tr" class="settings-input rm50-in" inputmode="decimal" oninput="RM50.upd()"></label>' +
+                locRow('si-loc') +
+                '<div class="rm50-prev" id="si-prev"></div><div id="si-msg"></div>' +
+                '<button type="button" class="settings-btn rm-big rm50-save" onclick="RM50.saveIn(false)">Save stock in</button>' : '<div class="rm-note">Item not in the list? <button type="button" class="csv-btn" onclick="RM50.go(&quot;rm50add&quot;)">+ Add item</button></div>');
+            RM50.upd();
+        });
+    }
+    function inForm() {
+        var it = item(RM.params.item_id); if (!it) return null;
+        var qu = readQtyUnit('si', it), sup = String(($('si-sup') || {}).value || '').trim();
+        var known = ((RM50.h && RM50.h.suppliers) || []).filter(function (s) { return String(s.name).trim().toLowerCase() === sup.toLowerCase(); })[0];
+        return { it: it, qty: qu.qty, unit: qu.unit, f: qu.f, other: qu.other, sup: sup, supId: known ? known.id : null, price: num(($('si-price') || {}).value),
+                 gst: Number(($('si-gst') || {}).value || 0), tr: num(($('si-tr') || {}).value) || 0, trRaw: String(($('si-tr') || {}).value || '').trim(),
+                 date: ($('si-date') || {}).value || today(), bill: String(($('si-bill') || {}).value || '').trim() };
+    }
+    function updIn() {
+        var v = inForm(); if (!v) return;
+        var o = $('si-other'); if (o) o.style.display = v.other ? '' : 'none';
+        var ofl = $('si-oflab'); if (ofl) ofl.textContent = 'How many ' + v.it.unit + ' in one ' + (v.unit || '...') + '?';
+        var c = $('si-conv'); if (c) c.textContent = v.qty != null && v.f && v.unit !== v.it.unit ? convText(v.qty, v.unit, v.f, v.it.unit) : '';
+        var pl = $('si-plab'); if (pl) pl.textContent = 'Price per ' + (v.unit || 'unit') + ' (before GST)';
+        var sn = $('si-supnew'); if (sn) sn.textContent = v.sup && !v.supId ? 'New supplier - it will be saved.' : '';
+        var p = costPreview(v.qty, v.price, v.f, v.gst, v.tr), pr = $('si-prev'); if (!pr) return;
+        if (!p) { pr.innerHTML = ''; return; }
+        var jp = jumpPct(p.perUnit, v.it.last_price), lim = RM50.h ? Number(RM50.h.price_jump_pct) : 10;
+        pr.innerHTML = 'Cost per ' + E(v.it.unit) + ' with transport: <b>' + E(inr(p.landed)) + '</b> &middot; GST ' + E(inr(p.gst)) + ' &middot; Total ' + E(inr(p.total)) +
+            (jp != null && jp > lim ? '<div class="rm50-warn">This price is ' + E(q3(jp)) + '% more than last time (' + E(inr(v.it.last_price)) + ' per ' + E(v.it.unit) + '). Check it before saving.</div>' : '');
+    }
+    RM50.saveIn = function (confirmed) {
+        var v = inForm(), m = $('si-msg'); if (!v || RM50.busy) return;
+        var err = !v.qty ? 'Type how many came in.' : (!v.unit ? 'Type the unit name.' : (!v.f ? 'Type how many ' + v.it.unit + ' are in one ' + v.unit + '.' : (!v.sup ? 'Pick or type the supplier.' : (v.price == null ? 'Type the price per ' + v.unit + ' (before GST).' : (v.trRaw && num(v.trRaw) == null ? 'Transport cost must be a number.' : '')))));
+        if (err) { m.innerHTML = '<div class="move-result err">' + E(err) + '</div>'; return; }
+        if (!RM50.inRid || RM50.inRidFor !== RM.params.item_id) { RM50.inRid = rid(); RM50.inRidFor = RM.params.item_id; }
+        busy(true); m.innerHTML = '<div class="rm-note">Saving...</div>';
+        rmCall('rm50_stock_in', { p_client_request_id: RM50.inRid, p_item_id: v.it.item_id, p_qty: v.qty, p_unit: v.unit, p_factor: v.other ? v.f : null,
+            p_supplier_id: v.supId, p_supplier_name: v.supId ? null : v.sup, p_date: v.date, p_price: v.price, p_gst_pct: v.gst, p_transport: v.tr,
+            p_bill_no: v.bill || null, p_location_id: locVal('si-loc'), p_confirm_price: !!confirmed }, { reason: 'Save stock in: type your PIN.' }).then(function (d) {
+            busy(false);
+            if (d && d.error === 'PRICE_CHECK') {
+                m.innerHTML = '<div class="rm50-warn"><b>Price check.</b> ' + E(d.message) + '</div>' +
+                    '<div class="rm50-two"><button type="button" class="settings-btn rm50-save" onclick="RM50.saveIn(true)">Yes, the price is right - save</button>' +
+                    '<button type="button" class="csv-btn" onclick="document.getElementById(&quot;si-price&quot;).focus()">Change the price</button></div>';
+                return;
+            }
+            if (!d.ok) { m.innerHTML = msg(d); return; }
+            RM50.inRid = null; RM50.h = null; logEvent('', 'Raw material stock in: ' + (d.name || '') + ' ' + (d.conversion_text || ''));
+            done(d.message + (d.warnings && d.warnings.length ? ' ' + d.warnings.join(' ') : ''), 'rm50in', d.item_id);
+        });
+    };
+    function done(text, again, itemId) {
+        var body = $('rm-body'); if (!body) return;
+        body.innerHTML = '<div class="move-result ok">' + E(text) + '</div><div class="rm50-acts">' +
+            '<button type="button" class="rm50-big rm50-primary" onclick="RM50.again(&quot;' + again + '&quot;)"><b>Another one</b></button>' +
+            (itemId ? '<button type="button" class="rm50-big" onclick="RM50.go(&quot;rm50item&quot;,{item_id:' + Number(itemId) + '})"><b>Open the item</b></button>' : '') +
+            '<button type="button" class="rm50-big" onclick="RM50.go(&quot;home&quot;)"><b>Back to the list</b></button></div>';
+    }
+    RM50.again = function (v) { RM50.h = null; RM.view = v; RM.params = {}; rmRender(true); };
+
+    /* ---------- Fix a count ---------- */
+    function viewFix() {
+        needHome(false, function () {
+            var it = item(RM.params.item_id), body = $('rm-body');
+            var rs = (RM50.h.fix_reasons || []).map(function (r) { return '<option value="' + E(r.code) + '">' + E(r.label) + '</option>'; }).join('');
+            body.innerHTML = head('Fix a count', 'Count the shelf and type the real number. The difference is what was used.') + itemPick('fc', it && it.item_id) +
+                (it ? '<div class="rm50-dim">The system says: <b>' + E(q3(it.stock)) + ' ' + E(it.unit) + '</b></div>' + qtyUnitRow('fc', it, false).replace('How many', 'Counted') +
+                '<label class="rm50-l">Reason<select id="fc-reason" class="settings-input rm50-in" onchange="RM50.upd()">' + rs + '</select></label>' +
+                '<label class="rm50-l">Note<input id="fc-note" class="settings-input rm50-in" maxlength="500" placeholder="needed for Other"></label>' + locRow('fc-loc') +
+                '<div class="rm50-prev" id="fc-prev"></div><div id="fc-msg"></div><button type="button" class="settings-btn rm-big rm50-save" onclick="RM50.saveFix()">Save count</button>' : '');
+            RM50.upd();
+        });
+    }
+    function updFix() {
+        var it = item(RM.params.item_id); if (!it) return;
+        var qu = readQtyUnit('fc', it), c = $('fc-conv'), p = $('fc-prev');
+        if (c) c.textContent = qu.qty != null && qu.f && qu.unit !== it.unit ? convText(qu.qty, qu.unit, qu.f, it.unit) : '';
+        if (!p) return;
+        if (qu.qty == null && String(($('fc-qty') || {}).value || '').trim() !== '0') { p.innerHTML = ''; return; }
+        var cb = Math.round((qu.qty || 0) * qu.f * 1000) / 1000, dlt = Math.round((cb - Number(it.stock)) * 1000) / 1000;
+        p.innerHTML = dlt === 0 ? 'Count matches the system.' : 'Change: <b>' + (dlt > 0 ? '+' : '') + E(q3(dlt)) + ' ' + E(it.unit) + '</b>' + (dlt < 0 ? ' (used or lost since the last count)' : '');
+    }
+    RM50.saveFix = function () {
+        var it = item(RM.params.item_id), m = $('fc-msg'); if (!it || RM50.busy) return;
+        var raw = String(($('fc-qty') || {}).value || '').trim(), qu = readQtyUnit('fc', it), reason = ($('fc-reason') || {}).value, note = String(($('fc-note') || {}).value || '').trim();
+        if (qu.qty == null && raw !== '0') { m.innerHTML = '<div class="move-result err">Type the number you counted (0 if the shelf is empty).</div>'; return; }
+        if (reason === 'OTHER_ADJUST' && note.length < 3) { m.innerHTML = '<div class="move-result err">Write a short note for Other.</div>'; return; }
+        if (!RM50.fixRid || RM50.fixRidFor !== it.item_id) { RM50.fixRid = rid(); RM50.fixRidFor = it.item_id; }
+        busy(true); m.innerHTML = '<div class="rm-note">Saving...</div>';
+        rmCall('rm50_count_fix', { p_client_request_id: RM50.fixRid, p_item_id: it.item_id, p_counted_qty: qu.qty || 0, p_unit: qu.unit, p_reason_code: reason, p_note: note || null,
+            p_location_id: locVal('fc-loc') }, { reason: 'Save the count: type your PIN.' }).then(function (d) {
+            busy(false);
+            if (!d.ok) { m.innerHTML = msg(d); return; }
+            RM50.fixRid = null; RM50.h = null; logEvent('', 'Raw material count: ' + (d.name || '') + ' ' + (d.message || ''));
+            done(d.message, 'rm50fix', d.item_id);
+        });
+    };
+
+    /* ---------- Stock out (wastage / return) ---------- */
+    function viewOut() {
+        needHome(false, function () {
+            var it = item(RM.params.item_id), body = $('rm-body'), kind = RM.params.kind === 'RETURN' ? 'RETURN' : 'WASTAGE';
+            var rs = (RM50.h.waste_reasons || []).map(function (r) { return '<option value="' + E(r.code) + '">' + E(r.label) + '</option>'; }).join('');
+            var sups = (RM50.h.suppliers || []).map(function (s) { return '<option value="' + E(s.id) + '">' + E(s.name) + '</option>'; }).join('');
+            body.innerHTML = head('Stock out', 'Only for wastage or a return to the supplier. Normal use is found by the weekly count.') +
+                '<div class="rm50-seg"><button type="button" class="' + (kind === 'WASTAGE' ? 'on' : '') + '" onclick="RM50.kind(&quot;WASTAGE&quot;)">Wastage</button>' +
+                '<button type="button" class="' + (kind === 'RETURN' ? 'on' : '') + '" onclick="RM50.kind(&quot;RETURN&quot;)">Return to supplier</button></div>' + itemPick('so', it && it.item_id) +
+                (it ? '<div class="rm50-dim">In stock: <b>' + E(q3(it.stock)) + ' ' + E(it.unit) + '</b></div>' + qtyUnitRow('so', it, false) +
+                (kind === 'WASTAGE' ? '<label class="rm50-l">Reason<select id="so-reason" class="settings-input rm50-in">' + rs + '</select></label>'
+                                    : '<label class="rm50-l">Supplier it goes back to<select id="so-sup" class="settings-input rm50-in"><option value="">Pick the supplier</option>' + sups + '</select></label>') +
+                '<label class="rm50-l">Note (optional)<input id="so-note" class="settings-input rm50-in" maxlength="500"></label>' + locRow('so-loc') +
+                '<div id="so-msg"></div><button type="button" class="settings-btn rm-big rm50-save" onclick="RM50.saveOut()">Save ' + (kind === 'WASTAGE' ? 'wastage' : 'return') + '</button>' : '');
+            RM50.upd();
+        });
+    }
+    RM50.kind = function (k) { var p = {}; for (var x in RM.params) p[x] = RM.params[x]; p.kind = k; RM.params = p; rmRender(false); };
+    function updOut() { var it = item(RM.params.item_id); if (!it) return; var qu = readQtyUnit('so', it), c = $('so-conv'); if (c) c.textContent = qu.qty != null && qu.f && qu.unit !== it.unit ? convText(qu.qty, qu.unit, qu.f, it.unit) : ''; }
+    RM50.saveOut = function () {
+        var it = item(RM.params.item_id), m = $('so-msg'); if (!it || RM50.busy) return;
+        var kind = RM.params.kind === 'RETURN' ? 'RETURN' : 'WASTAGE', qu = readQtyUnit('so', it), sup = ($('so-sup') || {}).value;
+        if (!qu.qty) { m.innerHTML = '<div class="move-result err">Type how many go out.</div>'; return; }
+        if (kind === 'RETURN' && !sup) { m.innerHTML = '<div class="move-result err">Pick the supplier it goes back to.</div>'; return; }
+        if (!RM50.outRid || RM50.outRidFor !== it.item_id + kind) { RM50.outRid = rid(); RM50.outRidFor = it.item_id + kind; }
+        busy(true); m.innerHTML = '<div class="rm-note">Saving...</div>';
+        rmCall('rm50_stock_out', { p_client_request_id: RM50.outRid, p_item_id: it.item_id, p_kind: kind, p_qty: qu.qty, p_unit: qu.unit,
+            p_reason_code: kind === 'WASTAGE' ? (($('so-reason') || {}).value || 'WASTAGE') : null, p_supplier_id: kind === 'RETURN' ? Number(sup) : null,
+            p_note: String(($('so-note') || {}).value || '').trim() || null, p_location_id: locVal('so-loc') }, { reason: 'Save stock out: type your PIN.' }).then(function (d) {
+            busy(false);
+            if (!d.ok) { m.innerHTML = msg(d); return; }
+            RM50.outRid = null; RM50.h = null; logEvent('', 'Raw material ' + (kind === 'WASTAGE' ? 'wastage' : 'return') + ': ' + (d.name || ''));
+            done(d.message, 'rm50out', d.item_id);
+        });
+    };
+
+    /* ---------- Add / edit item ---------- */
+    function viewAdd() {
+        needHome(false, function () {
+            var it = RM.params.item_id ? item(RM.params.item_id) : null, body = $('rm-body');
+            var ul = ((RM50.h && RM50.h.units) || []).map(function (u) { return '<option value="' + E(u) + '"></option>'; }).join('');
+            var bu = it ? (it.buy_units || []) : [];
+            var rows = ''; for (var i = 0; i < Math.max(2, bu.length + 1); i++) rows += '<div class="rm50-two rm50-bu"><label class="rm50-l">You buy in (unit)<input class="settings-input rm50-in" id="ai-bu' + i + '" list="ai-units" value="' + E(bu[i] ? bu[i].unit : '') + '" placeholder="for example ROLL" oninput="RM50.upd()"></label>' +
+                '<label class="rm50-l"><span class="ai-bl" id="ai-bl' + i + '">How many in one?</span><input class="settings-input rm50-in" id="ai-bf' + i + '" inputmode="decimal" value="' + E(bu[i] ? bu[i].factor : '') + '" oninput="RM50.upd()"></label></div>';
+            body.innerHTML = head(it ? 'Edit item' : 'Add item', 'Stock is kept in one unit (feet, pieces, kg). Buying units turn into it by themselves.') +
+                '<label class="rm50-l">Name<input id="ai-name" class="settings-input rm50-in" maxlength="200" value="' + E(it ? it.name : '') + '"></label>' +
+                '<div class="rm50-two"><label class="rm50-l">Stock unit<input id="ai-unit" class="settings-input rm50-in" list="ai-units" value="' + E(it ? it.unit : '') + '" placeholder="for example FT" oninput="RM50.upd()"' + (it && Number(it.stock) !== 0 ? ' disabled' : '') + '></label>' +
+                '<label class="rm50-l">Reorder level (in the stock unit)<input id="ai-lvl" class="settings-input rm50-in" inputmode="decimal" value="' + E(it ? q3(it.reorder_level).replace(/,/g, '') : '') + '"></label></div>' +
+                '<datalist id="ai-units">' + ul + '</datalist>' + rows + '<div id="ai-msg"></div>' +
+                '<button type="button" class="settings-btn rm-big rm50-save" onclick="RM50.saveItem()">' + (it ? 'Save item' : 'Add item') + '</button>';
+            RM50.upd();
+        });
+    }
+    function updAdd() {
+        var u = String(($('ai-unit') || {}).value || '').trim().toUpperCase() || 'stock units';
+        for (var i = 0; i < 12; i++) { var l = $('ai-bl' + i); if (!l) break; var b = String(($('ai-bu' + i) || {}).value || '').trim().toUpperCase(); l.textContent = 'How many ' + u + ' in one ' + (b || '...') + '?'; }
+    }
+    RM50.saveItem = function () {
+        var m = $('ai-msg'); if (RM50.busy) return;
+        var it = RM.params.item_id ? item(RM.params.item_id) : null, name = String(($('ai-name') || {}).value || '').trim(), unit = String(($('ai-unit') || {}).value || '').trim();
+        var lvlRaw = String(($('ai-lvl') || {}).value || '').trim(), lvl = lvlRaw === '' ? 0 : num(lvlRaw), bu = [], bad = '';
+        for (var i = 0; i < 12; i++) { var e = $('ai-bu' + i); if (!e) break; var b = String(e.value || '').trim(), f = String(($('ai-bf' + i) || {}).value || '').trim(); if (!b && !f) continue; if (!b || num(f) == null || !(num(f) > 0)) { bad = 'Each buying unit needs a name and how many ' + (unit || 'stock units') + ' are in one.'; break; } bu.push({ unit: b, factor: String(num(f)) }); }
+        var err = !name ? 'Type the item name.' : (!unit && !it ? 'Type the stock unit (for example FT, PCS, KG).' : (lvl == null ? 'The reorder level must be a number.' : bad));
+        if (err) { m.innerHTML = '<div class="move-result err">' + E(err) + '</div>'; return; }
+        if (!RM50.itRid) RM50.itRid = rid();
+        busy(true); m.innerHTML = '<div class="rm-note">Saving...</div>';
+        rmCall('rm50_item_save', { p_client_request_id: RM50.itRid, p_item_id: it ? it.item_id : null, p_name: name, p_stock_unit: it ? (($('ai-unit') || {}).disabled ? null : unit) : unit,
+            p_reorder_level: lvl, p_buy_units: bu }, { reason: 'Save the item: type your PIN.' }).then(function (d) {
+            busy(false);
+            if (!d.ok) { m.innerHTML = msg(d); return; }
+            RM50.itRid = null; RM50.h = null; logEvent('', 'Raw material item ' + (d.created ? 'added' : 'saved') + ': ' + (d.name || ''));
+            RM.stack.pop(); RM.view = 'rm50item'; RM.params = { item_id: d.item_id }; rmRender(true);
+        });
+    };
+
+    /* ---------- Item ---------- */
+    function viewItem(fetch) {
+        var body = $('rm-body'), id = RM.params.item_id; if (!body) return;
+        if (!id) { RM.view = 'home'; home(true); return; }
+        var to = RM.params.to || today(), from = RM.params.from || addDays(to, -6);
+        body.innerHTML = '<div class="rm-note">Loading...</div>';
+        var go = function () {
+            rmCall('rm50_item', { p_item_id: Number(id), p_from: from, p_to: to }, { read: true }).then(function (d) {
+                if (RM.view !== 'rm50item') return;
+                if (!d.ok) { body.innerHTML = msg(d); return; }
+                drawItem(d, from, to);
+            });
+        };
+        if (!RM50.h) loadHome(function () { go(); }); else go();
+    }
+    function drawItem(d, from, to) {
+        var it = d.item, u = d.usage, body = $('rm-body'), un = E(it.unit);
+        var h = '<div class="rm50-head"><b>' + E(it.name) + '</b>' + (it.low ? ' <span class="rm50-badge">Low</span>' : '') + '</div>' +
+            '<div class="rm50-cards"><div><small>Stock now</small><b>' + E(q3(it.stock)) + ' ' + un + '</b></div>' +
+            '<div><small>Average price</small><b>' + (it.avg_price == null ? '-' : E(inr(it.avg_price))) + '</b><small>per ' + un + ', with transport</small></div>' +
+            '<div><small>Last price</small><b>' + (it.last_price == null ? '-' : E(inr(it.last_price))) + '</b><small>per ' + un + ', before GST</small></div>' +
+            '<div><small>Reorder level</small><b>' + (Number(it.reorder_level) > 0 ? E(q3(it.reorder_level)) + ' ' + un : 'not set') + '</b></div></div>';
+        if ((it.buy_units || []).length) h += '<div class="rm50-dim">Buying units: ' + it.buy_units.map(function (b) { return '1 ' + E(b.unit) + ' = ' + E(q3(b.factor)) + ' ' + un; }).join(' &middot; ') + '</div>';
+        h += '<div class="rm50-acts rm50-acts3">' +
+            '<button type="button" class="rm50-big rm50-primary" onclick="RM50.go(&quot;rm50in&quot;,{item_id:' + Number(it.item_id) + '})"><b>Stock in</b></button>' +
+            '<button type="button" class="rm50-big" onclick="RM50.go(&quot;rm50fix&quot;,{item_id:' + Number(it.item_id) + '})"><b>Fix a count</b></button>' +
+            '<button type="button" class="rm50-big" onclick="RM50.go(&quot;rm50out&quot;,{item_id:' + Number(it.item_id) + '})"><b>Stock out</b></button></div>';
+        h += '<div class="rm50-sec">Usage</div><div class="rm50-two"><label class="rm50-l">From<input type="date" id="ui-from" class="settings-input rm50-in" value="' + E(from) + '" max="' + today() + '"></label>' +
+            '<label class="rm50-l">To<input type="date" id="ui-to" class="settings-input rm50-in" value="' + E(to) + '" max="' + today() + '"></label></div>' +
+            '<button type="button" class="csv-btn" onclick="RM50.period()">Show</button>' +
+            '<div class="rm50-use">Opening ' + E(q3(u.opening)) + ' + bought ' + E(q3(u.bought)) + (Number(u.returned) ? ' &minus; returned ' + E(q3(u.returned)) : '') + ' &minus; ' + (u.last_count_on ? 'counted' : 'in stock') + ' ' + E(q3(u.closing)) +
+            ' = <b>used ' + E(q3(u.used)) + ' ' + un + '</b>' + (Number(u.wasted) ? ' (of it wastage ' + E(q3(u.wasted)) + ')' : '') + '</div>' +
+            (u.last_count_on ? '' : '<div class="rm50-dim">No count in this period, so "used" only shows wastage. Fix a count to see the real use.</div>');
+        h += '<div class="rm50-sec">Price by supplier</div>' + ((d.by_supplier || []).length ? '<div class="rm50-tbl">' + d.by_supplier.map(function (s) {
+            return '<div class="rm50-tr"><b>' + E(s.supplier) + '</b><span>last ' + E(inr(s.last_price)) + ' &middot; avg ' + E(inr(s.avg_price)) + ' per ' + un + '</span><small>' + E(s.times) + ' time(s), ' + E(q3(s.qty)) + ' ' + un + ', last on ' + E(s.last_date) + '</small></div>';
+        }).join('') + '</div>' : '<div class="rm-note">No stock in yet.</div>');
+        h += '<div class="rm50-sec">Recent entries</div>' + ((d.entries || []).length ? d.entries.map(function (e) {
+            return '<div class="rm50-tr' + (e.voided ? ' rm50-void' : '') + '"><b>' + E(e.label) + ' ' + (Number(e.qty) > 0 ? '+' : '') + E(q3(e.qty)) + ' ' + un + '</b>' +
+                '<span>' + E(e.date) + (e.entered ? ' &middot; typed ' + E(e.entered) : '') + (e.supplier ? ' &middot; ' + E(e.supplier) : '') + (e.price != null ? ' &middot; ' + E(inr(e.price)) + '/' + un : '') + (e.bill_no ? ' &middot; bill ' + E(e.bill_no) : '') + (e.reason ? ' &middot; ' + E(e.reason) : '') + ' &middot; by ' + E(e.by) + '</span>' +
+                (e.voided ? '<small>Voided</small>' : '') + (d.can_manage && e.can_void ? '<button type="button" class="csv-btn rm50-vbtn" onclick="RM50.voidIt(' + Number(e.txn_id) + ')">Void</button>' : '') + '</div>';
+        }).join('') : '<div class="rm-note">No entries yet.</div>');
+        h += '<button type="button" class="csv-btn" onclick="RM50.go(&quot;rm50add&quot;,{item_id:' + Number(it.item_id) + '})">Edit item (name, reorder level, buying units)</button>';
+        body.innerHTML = h;
+    }
+    RM50.period = function () { var f = ($('ui-from') || {}).value, t = ($('ui-to') || {}).value; var p = { item_id: RM.params.item_id, from: f || null, to: t || null }; RM.params = p; rmRender(true); };
+    RM50.voidIt = function (txn) {
+        var r = window.prompt('Void this entry? It is not deleted: a balancing line is added. Write why it is wrong (5 letters or more):', '');
+        if (r == null) return;
+        if (String(r).trim().length < 5) { window.alert('Write why it is wrong (5 letters or more). Nothing was changed.'); return; }
+        rmCall('rm50_void', { p_client_request_id: rid(), p_txn_id: txn, p_reason: String(r).trim() }, { reason: 'Void an entry: type your PIN (Admin or Supervisor).' }).then(function (d) {
+            if (!d.ok) { window.alert(d.text || d.message || 'Not voided.'); return; }
+            RM50.h = null; logEvent('', 'Raw material entry voided: #' + txn); rmRender(true);
+        });
+    };
+    RM50.upd = function () { try { if (RM.view === 'rm50in') updIn(); else if (RM.view === 'rm50fix') updFix(); else if (RM.view === 'rm50out') updOut(); else if (RM.view === 'rm50add') updAdd(); } catch (e) { } };
+
+    /* ---------- wiring ---------- */
+    var OLD_REDIRECT = { item: function (p) { return ['rm50item', { item_id: p && (p.item_id || p.id) }]; }, receive: function () { return ['rm50in', {}]; },
+                         count: function (p) { return ['rm50fix', { item_id: p && p.item_id }]; }, adjust: function (p) { return ['rm50fix', { item_id: p && p.item_id }]; },
+                         loss: function (p) { return ['rm50out', { item_id: p && p.item_id }]; } };
+    function restoreOld() { for (var k in RM50.orig) if (Object.prototype.hasOwnProperty.call(RM50.orig, k)) window[k] = RM50.orig[k]; RM50.on = false; }
+    RM50.restoreOld = restoreOld;
+    function install() {
+        if (typeof window.rmView_home !== 'function' || typeof rmCall !== 'function' || typeof RM === 'undefined' || typeof RM_TITLES === 'undefined') return false;
+        RM50.prevHome = window.rmView_home;
+        var names = Object.keys(window).filter(function (k) { return /^rmView_[A-Za-z0-9]+$/.test(k) && typeof window[k] === 'function'; });
+        names.forEach(function (k) {
+            RM50.orig[k] = window[k];
+            if (k === 'rmView_home') return;
+            var v = k.slice(7);
+            window[k] = function () { if (RM50.off) return RM50.orig[k].apply(this, arguments); var r = OLD_REDIRECT[v] ? OLD_REDIRECT[v](RM.params) : ['home', {}]; if (r[0] !== 'home' && (r[0] !== 'rm50item' || r[1].item_id)) { RM.view = r[0]; RM.params = r[1]; } else { RM.view = 'home'; RM.params = {}; } rmRender(true); };
+        });
+        window.rmView_home = function (fetch) { return RM50.off ? RM50.prevHome(fetch) : home(fetch); };
+        window.rmView_rm50in = function () { return viewIn(); };
+        window.rmView_rm50fix = function () { return viewFix(); };
+        window.rmView_rm50out = function () { return viewOut(); };
+        window.rmView_rm50add = function () { return viewAdd(); };
+        window.rmView_rm50item = function (fetch) { return viewItem(fetch); };
+        RM_TITLES.home = 'Raw materials'; RM_TITLES.rm50in = 'Stock in'; RM_TITLES.rm50fix = 'Fix a count'; RM_TITLES.rm50out = 'Stock out'; RM_TITLES.rm50add = 'Item'; RM_TITLES.rm50item = 'Item';
+        try { if (typeof window.blx2Off === 'function') window.blx2Off(); } catch (e) { }
+        document.documentElement.classList.add('rm50-on');
+        RM50.on = true;
+        return true;
+    }
+    RM50.flagOn = flagOn;
+    if (flagOn()) {
+        if (!install()) { var n = 0, t = setInterval(function () { n++; if (install() || n > 40) clearInterval(t); }, 250); }
+    }
+})();
+/* RM50-UI-END */
+</script>
+<style id="up51-css">
+/* UP51 upload sheet (More > Upload sheet) */
+.up51-menu { min-height: 48px; margin: 6px 0 4px; width: 100%; background: #1B3F6B; }
+.up51-bg { position: fixed; inset: 0; background: rgba(10, 22, 40, .55); z-index: 9100; display: flex; align-items: flex-end; justify-content: center; }
+.up51-d { background: #fff; width: 100%; max-width: 720px; max-height: 92vh; overflow-y: auto; border-radius: 14px 14px 0 0; padding: 10px 12px 18px; box-sizing: border-box; }
+.up51-top { display: flex; justify-content: space-between; align-items: center; font-size: 1.1em; }
+.up51-x { min-width: 44px; min-height: 44px; border: 0; background: transparent; font-size: 1.6em; cursor: pointer; }
+.up51-p { margin: 4px 0 10px; color: #333; }
+.up51-b { display: flex; align-items: center; justify-content: center; width: 100%; min-height: 48px; margin: 6px 0; box-sizing: border-box; cursor: pointer; }
+.up51-b[disabled] { opacity: .45; cursor: default; }
+.up51-go { background: #1B7A3A; }
+.up51-undo { background: #8B1A1A; margin-top: 14px; }
+.up51-dim { color: #666; font-size: .9em; margin: 2px 0 6px; }
+.up51-sum { margin: 6px 0; padding: 6px 8px; border: 1px solid #C9D3E0; border-radius: 8px; }
+.up51-row { margin: 2px 0; }
+.up51-msg { margin: 8px 0; font-weight: 600; color: #0A1628; }
+.up51-tw { max-height: 46vh; overflow: auto; border: 1px solid #C9D3E0; border-radius: 8px; margin: 6px 0; }
+.up51-t { border-collapse: collapse; width: 100%; font-size: .9em; }
+.up51-t th, .up51-t td { border-bottom: 1px solid #E3E8EF; padding: 6px; text-align: left; vertical-align: top; }
+.up51-t th { position: sticky; top: 0; background: #F2F5F9; }
+.up51-h2 { font-weight: 700; margin: 14px 0 4px; color: #1B3F6B; }
+.up51-link { border: 0; background: transparent; color: #1B4F8A; text-decoration: underline; min-height: 44px; cursor: pointer; padding: 0; }
+</style>
+<script id="up51-js">
+/* UP51-UPLOAD-BEGIN  (v1.3: parts of 500 rows, raw materials 100; orders kept whole; raw uploads undone part by part) Lane 5 item 1: Upload sheet (More > Upload sheet). Owner / Admin only. Flag up51_v1: ON by default; ?upload=off hides it.
+   Runtime layer only: no app function text changes (make_up51_ui.py proves the protected functions are byte-identical).
+   Download the template (the exact UPLOAD_SHEET_TEMPLATE_v1.0 file, embedded), choose a filled .xlsx or .csv, Check (dry run: nothing saved,
+   every problem by sheet / row / column in plain words), Save (typed PIN; the server saves each sheet all-or-nothing with an import batch
+   number, in the order Bins, Products, Raw materials, Finished stock, Orders), Undo last upload (typed PIN, within 24 hours).
+   Server functions: up51_check, up51_apply, up51_undo_last, up51_batches (FOUNDER_28_UPLOAD_SHEET_v1.cmd). Dormant until they exist. */
+(function () {
+    'use strict';
+    var W = window;
+    var SPEC = {"version":"UP51 v1.0","order":["bins","products","raw","stock","orders"],"sheets":{"bins":{"title":"Bins","what":"Every shelf, rack or box where you keep finished products.","cols":[{"key":"bin_code","head":"Bin code","req":true,"hint":"e.g. A-01-03","ex":["A-01-01","A-01-02"],"aliases":["bin","bin code","location code"]},{"key":"description","head":"Description","req":false,"hint":"e.g. Rack A, shelf 1","ex":["Rack A shelf 1","Rack A shelf 2"]},{"key":"pickable","head":"Pick from here","req":false,"hint":"YES or NO (blank = YES)","list":["YES","NO"],"ex":["YES","YES"]},{"key":"warehouse","head":"Warehouse","req":false,"hint":"blank = MAIN","ex":["MAIN","MAIN"]}]},"products":{"title":"Products","what":"Your products and listings: one row per SKU.","cols":[{"key":"sku_code","head":"SKU code","req":true,"hint":"capital letters, digits, _ - . : / +","ex":["MUG-RED-01","FRAME-A4-BLK"],"aliases":["sku","seller sku"]},{"key":"product_name","head":"Product name","req":true,"hint":"the name staff see","ex":["Red coffee mug","A4 photo frame black"],"aliases":["title","name","product title"]},{"key":"product_type","head":"Product type","req":true,"hint":"e.g. Mug, Frame, Poster","ex":["Mug","Frame"],"aliases":["type","category"]},{"key":"asin","head":"ASIN or listing ID","req":false,"hint":"Amazon ASIN or your shop listing ID","ex":["","B0EXAMPLE1"],"aliases":["asin","listing id"]},{"key":"mrp","head":"MRP (Rs)","req":false,"hint":"number, e.g. 499","num":"dec","ex":[299,899],"aliases":["mrp","price"]},{"key":"set_size","head":"Pieces in a set","req":false,"hint":"whole number, blank = 1","num":"int","ex":[1,1],"aliases":["set size","pack of"]}]},"raw":{"title":"Raw materials","what":"Materials you buy to make products, with the stock you have today.","cols":[{"key":"item_code","head":"Item code","req":true,"hint":"your short code, e.g. MDF-6MM","ex":["MDF-6MM","GLUE-WHT"],"aliases":["code","item"]},{"key":"item_name","head":"Item name","req":true,"hint":"e.g. MDF board 6 mm","ex":["MDF board 6 mm","White glue"],"aliases":["name","material"]},{"key":"unit","head":"Unit","req":true,"hint":"the unit you count stock in","list_from":"units","ex":["SHEET","KG"],"aliases":["uom","unit of measure"]},{"key":"category","head":"Category","req":false,"hint":"e.g. BOARD, ADHESIVE, PACKING (blank = OTHER)","ex":["BOARD","ADHESIVE"]},{"key":"reorder_level","head":"Reorder level","req":false,"hint":"warn when stock falls to this","num":"dec","ex":[10,5]},{"key":"gst_rate","head":"GST %","req":false,"hint":"0, 5, 12, 18 or 28","num":"dec","list":["0","5","12","18","28"],"ex":[18,18]},{"key":"hsn","head":"HSN code","req":false,"hint":"4 to 8 digits","ex":["4411","3506"]},{"key":"opening_qty","head":"Stock today","req":false,"hint":"blank = 0","num":"dec","ex":[40,12.5],"aliases":["opening qty","opening stock","quantity"]},{"key":"location","head":"Store location","req":false,"hint":"blank = your main store","ex":["",""]},{"key":"price","head":"Price per unit before GST","req":false,"hint":"number, e.g. 650","num":"dec","ex":[650,180],"aliases":["rate","price"]}]},"stock":{"title":"Finished stock","what":"How many of each product you have today, and in which bin.","cols":[{"key":"sku_code","head":"SKU code","req":true,"hint":"must be in Products (this file or the app)","ex":["MUG-RED-01","FRAME-A4-BLK"],"aliases":["sku"]},{"key":"bin_code","head":"Bin code","req":true,"hint":"must be in Bins (this file or the app)","ex":["A-01-01","A-01-02"],"aliases":["bin"]},{"key":"qty","head":"Quantity","req":true,"hint":"whole number, more than 0","num":"int","ex":[24,6],"aliases":["quantity","stock","count"]},{"key":"note","head":"Note","req":false,"hint":"optional","ex":["","counted 18 Nov"]}]},"orders":{"title":"Orders","what":"Open orders that still have to be packed: one row per product in the order.","cols":[{"key":"invoice_no","head":"Invoice or order number","req":true,"hint":"same number on every line of one order","ex":["INV-1001","INV-1001"],"aliases":["invoice","order number","invoice no"]},{"key":"line_no","head":"Line number","req":true,"hint":"1, 2, 3 ... inside the order","num":"int","ex":[1,2],"aliases":["line","line no"]},{"key":"channel","head":"Channel","req":true,"hint":"where the order came from","list":["AMAZON","FLIPKART","SHOPIFY","WEBSITE","MEESHO","OFFLINE","OTHER"],"ex":["SHOPIFY","SHOPIFY"]},{"key":"order_date","head":"Order date","req":true,"hint":"YYYY-MM-DD, e.g. 2026-11-18","date":true,"ex":["2026-11-18","2026-11-18"],"aliases":["date"]},{"key":"sku_code","head":"SKU code","req":true,"hint":"must be in Products (this file or the app)","ex":["MUG-RED-01","FRAME-A4-BLK"],"aliases":["sku"]},{"key":"qty","head":"Quantity","req":true,"hint":"whole number, more than 0","num":"int","ex":[2,1],"aliases":["quantity","qty ordered"]},{"key":"channel_order_no","head":"Channel order ID","req":false,"hint":"e.g. the Amazon or Shopify order ID","ex":["#5001","#5001"],"aliases":["order id","amazon order no"]},{"key":"fill_from","head":"How to fill","req":false,"hint":"STOCK, MAKE or CHECK (blank = CHECK: staff decide)","list":["STOCK","MAKE","CHECK"],"ex":["STOCK","MAKE"]},{"key":"batch_label","head":"Batch name","req":false,"hint":"blank = UPLOAD-date","ex":["",""]}]}},"units_default":["PCS","KG","GM","MTR","SQFT","SHEET","ROLL","LTR","ML","BOX","SET"]};
+    var TEMPLATE_B64 = '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';
+    var TEMPLATE_NAME = 'UPLOAD_SHEET_TEMPLATE_v1.0_2026-11.xlsx';
+    var NL = String.fromCharCode(10);
+    var U = { on: false, sheet: null, file: null, parsed: null, check: null, busy: false, msg: '', saved: null, batches: null, noDb: false, mo: null };
+    W.UP51 = U;
+
+    function flagOn() {
+        var q = ''; try { q = String(location.search || ''); } catch (e) { }
+        if (/[?&]upload=off/.test(q)) { try { localStorage.setItem('up51_v1', 'off'); } catch (e) { } return false; }
+        if (/[?&]upload=on/.test(q)) { try { localStorage.removeItem('up51_v1'); } catch (e) { } return true; }
+        try { return localStorage.getItem('up51_v1') !== 'off'; } catch (e) { return true; }
+    }
+    function E(x) { return String(x == null ? '' : x).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;'); }
+    function up(s) { return String(s == null ? '' : s).trim().toUpperCase(); }
+    function st() { try { return (typeof state !== 'undefined' && state) ? state : {}; } catch (e) { return {}; } }
+    function role() { try { return up(st().session && st().session.role); } catch (e) { return ''; } }
+    function me() { try { return up(st().session && st().session.employee_code); } catch (e) { return ''; } }
+    function canUse() { var r = role(); return !!me() && (r === 'ADMIN' || r === 'OWNER'); }
+    function ws() {
+        try { var s = st().session; if (s && s.workspace_code) return up(s.workspace_code); } catch (e) { }
+        try { if (W.OMS_WORKSPACE) return up(W.OMS_WORKSPACE); } catch (e) { }
+        return 'ARTZFOLIO';
+    }
+    function hasDb() { try { return typeof db !== 'undefined' && !!db && typeof db.rpc === 'function'; } catch (e) { return false; } }
+    function norm(h) { return String(h == null ? '' : h).toLowerCase().replace(/[*]/g, '').replace(/[^a-z0-9]+/g, ''); }
+    function noDbErr(e) {
+        if (!e) return false;
+        var c = String(e.code || ''), m = String(e.message || e.details || e.hint || '');
+        return c === 'PGRST202' || c === '42883' || /could not find the function|does not exist|schema cache/i.test(m);
+    }
+    function uuid() {
+        try { if (W.crypto && crypto.randomUUID) return crypto.randomUUID(); } catch (e) { }
+        return 'up51-' + Date.now() + '-' + Math.floor(Math.random() * 1e9);
+    }
+
+    /* ---------- reading the file (pure; unit-tested) ---------- */
+    function colMap(spec, header) {
+        var map = {}, unknown = [], seen = {};
+        header.forEach(function (h, i) {
+            var n = norm(h); if (!n) return;
+            var hit = null;
+            spec.cols.forEach(function (c) {
+                if (hit) return;
+                if (norm(c.head) === n || norm(c.key) === n) hit = c.key;
+                else (c.aliases || []).forEach(function (a) { if (!hit && norm(a) === n) hit = c.key; });
+            });
+            if (hit && !seen[hit]) { map[i] = hit; seen[hit] = 1; } else if (!hit) unknown.push(String(h));
+        });
+        var missing = spec.cols.filter(function (c) { return c.req && !seen[c.key]; }).map(function (c) { return c.head; });
+        return { map: map, unknown: unknown, missing: missing, found: Object.keys(seen).length };
+    }
+    function serialDate(v) {
+        var n = Number(v);
+        if (!isFinite(n) || n < 20000 || n > 80000) return String(v);
+        var d = new Date(Date.UTC(1899, 11, 30) + Math.round(n) * 86400000);
+        return d.getUTCFullYear() + '-' + ('0' + (d.getUTCMonth() + 1)).slice(-2) + '-' + ('0' + d.getUTCDate()).slice(-2);
+    }
+    function matrixRows(key, matrix) {
+        var spec = SPEC.sheets[key], hdr = null, out = [], i;
+        for (i = 0; i < matrix.length; i++) {
+            var c0 = String((matrix[i].cells || [])[0] || '').trim();
+            if (c0.charAt(0) === '#') continue;
+            if ((matrix[i].cells || []).join('').trim() === '') continue;
+            hdr = matrix[i]; break;
+        }
+        if (!hdr) return { key: key, rows: [], missing: [], unknown: [] };
+        var cm = colMap(spec, hdr.cells || []);
+        var dateKeys = {}; spec.cols.forEach(function (c) { if (c.date) dateKeys[c.key] = 1; });
+        for (i = i + 1; i < matrix.length; i++) {
+            var cells = matrix[i].cells || [];
+            var first = String(cells[0] == null ? '' : cells[0]).trim();
+            if (first.charAt(0) === '#') continue;
+            if (cells.join('').trim() === '') continue;
+            var r = { _row: matrix[i].row };
+            Object.keys(cm.map).forEach(function (ci) {
+                var k = cm.map[ci], v = cells[ci] == null ? '' : String(cells[ci]).trim();
+                if (dateKeys[k] && /^[0-9]+([.][0-9]+)?$/.test(v)) v = serialDate(v);
+                if (v !== '') r[k] = v;
+            });
+            out.push(r);
+        }
+        return { key: key, rows: out, missing: cm.missing, unknown: cm.unknown };
+    }
+    function guessKey(header) {
+        var best = null, bestN = 0;
+        SPEC.order.forEach(function (k) {
+            var cm = colMap(SPEC.sheets[k], header);
+            if (!cm.missing.length && cm.found > bestN) { best = k; bestN = cm.found; }
+        });
+        return best;
+    }
+    function firstHeader(matrix) {
+        for (var i = 0; i < matrix.length; i++) {
+            var c = matrix[i].cells || [], c0 = String(c[0] || '').trim();
+            if (c0.charAt(0) === '#' || c.join('').trim() === '') continue;
+            return c;
+        }
+        return [];
+    }
+    function fromMatrices(list) {   /* list: [{name, matrix}] -> {sheets:{key:{rows,missing,unknown,title}}, problems:[]} */
+        var res = { sheets: {}, problems: [] };
+        var byTitle = {}; SPEC.order.forEach(function (k) { byTitle[norm(SPEC.sheets[k].title)] = k; });
+        byTitle[norm('Products and listings')] = 'products'; byTitle[norm('Listings')] = 'products'; byTitle[norm('Stock')] = 'stock'; byTitle[norm('Raw material')] = 'raw';
+        list.forEach(function (s) {
+            var k = byTitle[norm(s.name)];
+            if (!k) {
+                if (norm(s.name) === norm('Start here') || norm(s.name) === 'lists') return;
+                k = guessKey(firstHeader(s.matrix));
+                if (!k) { if (s.matrix.length) res.problems.push({ sheet: s.name, row: '', col: '', msg: 'This sheet name is not one of ours and its headers do not match any sheet. It was not read.' }); return; }
+            }
+            if (res.sheets[k]) { res.problems.push({ sheet: s.name, row: '', col: '', msg: 'A second sheet for ' + SPEC.sheets[k].title + ' was found. Only the first one is read.' }); return; }
+            var m = matrixRows(k, s.matrix); m.title = SPEC.sheets[k].title;
+            if (!m.rows.length) return;
+            if (m.missing.length) res.problems.push({ sheet: m.title, row: 1, col: m.missing.join(', '), msg: 'Required column missing: ' + m.missing.join(', ') + '. Do not rename the headers in row 1.' });
+            if (m.rows.length > 2000) res.problems.push({ sheet: m.title, row: '', col: '', msg: 'More than 2,000 rows (' + m.rows.length + '). Split it into two uploads.' });
+            res.sheets[k] = m;
+        });
+        return res;
+    }
+    function readFile(f) {
+        return new Promise(function (ok) {
+            var rd = new FileReader();
+            var isCsv = /[.](csv|txt)$/i.test(String(f.name || ''));
+            rd.onload = function () {
+                if (isCsv) {
+                    var parsed = (typeof W.rmParseCsv === 'function') ? W.rmParseCsv(String(rd.result || '')) : [];
+                    var rows = Array.isArray(parsed) ? parsed : (parsed && parsed.rows) || [];
+                    ok(fromMatrices([{ name: '(csv)', matrix: rows }]));
+                    return;
+                }
+                var bytes = new Uint8Array(rd.result);
+                if (typeof W.rmXlsxReadSheet !== 'function') { ok({ sheets: {}, problems: [{ sheet: '', row: '', col: '', msg: 'This app version cannot read .xlsx. Save each sheet as CSV.' }] }); return; }
+                W.rmXlsxReadSheet(bytes, '__up51_names__').then(function (r0) {
+                    var names = (r0 && r0.names) || [];
+                    if (r0 && r0.ok && names.length === 1) { ok(fromMatrices([{ name: '(single)', matrix: r0.matrix }])); return; }
+                    if (!names.length) { ok({ sheets: {}, problems: [{ sheet: '', row: '', col: '', msg: (r0 && r0.message) || 'The file could not be read.' }] }); return; }
+                    var p = Promise.resolve(), list = [];
+                    names.forEach(function (n) {
+                        p = p.then(function () { return W.rmXlsxReadSheet(bytes, n).then(function (r) { if (r && r.ok && r.sheet === n) list.push({ name: n, matrix: r.matrix }); }); });
+                    });
+                    p.then(function () { ok(fromMatrices(list)); });
+                }, function () { ok({ sheets: {}, problems: [{ sheet: '', row: '', col: '', msg: 'The file could not be read.' }] }); });
+            };
+            rd.onerror = function () { ok({ sheets: {}, problems: [{ sheet: '', row: '', col: '', msg: 'The file could not be opened.' }] }); };
+            if (isCsv) rd.readAsText(f); else rd.readAsArrayBuffer(f);
+        });
+    }
+    function payload(rows) { return rows.map(function (r) { var o = {}; Object.keys(r).forEach(function (k) { o[k] = r[k]; }); return o; }); }
+    function alsoFor(parsed, key) {   /* codes that earlier sheets of this same file will add (dry run only) */
+        var a = { sku: [], bin: [], item: [] }, i;
+        var ord = SPEC.order, pos = ord.indexOf(key);
+        for (i = 0; i < pos; i++) {
+            var s = parsed.sheets[ord[i]]; if (!s) continue;
+            s.rows.forEach(function (r) {
+                if (ord[i] === 'bins' && r.bin_code) a.bin.push(up(r.bin_code));
+                if (ord[i] === 'products' && r.sku_code) a.sku.push(up(r.sku_code));
+                if (ord[i] === 'raw' && r.item_code) a.item.push(up(r.item_code));
+            });
+        }
+        return a;
+    }
+
+    /* ---------- server calls ---------- */
+    function pin(why) {
+        if (typeof W.requirePin !== 'function') return Promise.resolve(null);
+        return W.requirePin(why).then(function (c) { return (c && c.code && c.pin && !c.other) ? c : null; });
+    }
+    function call(fn, args, c) {
+        var a = {}; Object.keys(args).forEach(function (k) { a[k] = args[k]; });
+        a.p_ws = ws(); a.p_employee_code = c.code; a.p_pin = c.pin;
+        var p = db.rpc(fn, a);
+        try { if (typeof W.withTimeout === 'function') p = W.withTimeout(p, 110000, fn); } catch (e) { }
+        return Promise.resolve(p).then(function (res) {
+            if (res && res.error) { if (noDbErr(res.error)) U.noDb = true; return { ok: false, error: res.error.code || 'CALL_FAILED', message: noDbErr(res.error) ? 'The upload sheet needs the database update FOUNDER_28_UPLOAD_SHEET_v1.cmd first.' : String(res.error.message || 'The server did not answer.') }; }
+            var d = res && res.data; if (typeof d === 'string') { try { d = JSON.parse(d); } catch (e) { } }
+            return d || { ok: false, message: 'Empty answer from the server.' };
+        }, function (e) { return { ok: false, message: 'No answer from the server (' + String((e && e.message) || e) + '). Check the signal and try again.' }; });
+    }
+    /* v1.2 (review finding 2): each sheet goes in parts of at most 500 rows, one after another (never in parallel), one request id per part.
+       An order is never split across parts (its slips are reserved per order). A code listed twice across parts is caught here. */
+    var PART = 500, PART_BY = { raw: 100 };   /* v1.3 (review v1.2 finding 1): each raw row checks the PIN again inside RM50 (bcrypt), so raw parts are 100 rows */
+    function partSize(key) { return PART_BY[key] || PART; }
+    function partsOf(key, rows) {
+        var groups = [], byInv = {};
+        rows.forEach(function (r) {
+            if (key === 'orders') {
+                var inv = up(r.invoice_no);
+                if (inv && byInv[inv]) { byInv[inv].push(r); return; }
+                var g = [r]; if (inv) byInv[inv] = g; groups.push(g); return;
+            }
+            groups.push([r]);
+        });
+        var out = [], cur = [];
+        groups.forEach(function (g) {
+            if (cur.length && cur.length + g.length > partSize(key)) { out.push(cur); cur = []; }
+            cur = cur.concat(g);
+        });
+        if (cur.length) out.push(cur);
+        return out;
+    }
+    function rowKey(key, r) {
+        if (key === 'bins') return up(r.bin_code);
+        if (key === 'products') return up(r.sku_code);
+        if (key === 'raw') return up(r.item_code);
+        if (key === 'stock') return up(r.sku_code) + ' in bin ' + up(r.bin_code);
+        if (key === 'orders') return up(r.invoice_no) + ' line ' + up(r.line_no);
+        return '';
+    }
+    function crossPartDups(key, parts) {
+        var seen = {}, probs = [];
+        parts.forEach(function (part, pi) {
+            var mine = {};
+            part.forEach(function (r) {
+                var k = rowKey(key, r); if (!k || k === ' in bin ' || k === ' line ') return;
+                if (seen[k] !== undefined && !mine[k]) probs.push({ sheet: SPEC.sheets[key].title, row: r._row, col: '', msg: k + ' is listed twice in this sheet (also row ' + seen[k] + ').' });
+                if (seen[k] === undefined) { seen[k] = r._row; mine[k] = 1; }
+            });
+        });
+        return probs;
+    }
+    function plan() {
+        var out = [];
+        SPEC.order.forEach(function (k) {
+            var sh = U.parsed.sheets[k]; if (!sh) return;
+            var parts = partsOf(k, sh.rows);
+            parts.forEach(function (rows, i) { out.push({ k: k, rows: rows, n: i + 1, of: parts.length }); });
+        });
+        return out;
+    }
+    function partName(x) { return SPEC.sheets[x.k].title + (x.of > 1 ? ' part ' + x.n + ' of ' + x.of : ''); }
+    function doCheck() {
+        if (!U.parsed || U.busy) return;
+        var steps = plan();
+        if (!steps.length) { U.msg = 'No rows found. Fill at least one sheet below the grey example rows.'; paint(); return; }
+        U.busy = true; U.check = null; U.msg = 'Checking...'; paint();
+        pin('Check the upload sheet.').then(function (c) {
+            if (!c) { U.busy = false; U.msg = 'PIN not entered. Nothing was checked.'; paint(); return; }
+            var out = { sheets: {}, problems: U.parsed.problems.slice(), fileKey: U.fileKey }, p = Promise.resolve(), stop = null;
+            SPEC.order.forEach(function (k) { var sh = U.parsed.sheets[k]; if (sh) out.problems = out.problems.concat(crossPartDups(k, partsOf(k, sh.rows))); });
+            steps.forEach(function (x) {
+                p = p.then(function () {
+                    if (stop) return;
+                    U.msg = 'Checking ' + partName(x) + '...'; paint();
+                    return call('up51_check', { p_sheet: x.k, p_rows: payload(x.rows), p_also: alsoFor(U.parsed, x.k) }, c).then(function (d) {
+                        var a = out.sheets[x.k] || (out.sheets[x.k] = { ok: true, total: 0, new_rows: 0, skipped: 0, error_rows: 0 });
+                        if (d.ok === false && !(d.errors || []).length) { a.ok = false; stop = true; out.problems.push({ sheet: SPEC.sheets[x.k].title, row: '', col: '', msg: d.message || 'The check did not run.' }); return; }
+                        a.total += Number(d.total) || 0; a.new_rows += Number(d.new_rows) || 0; a.skipped += Number(d.skipped) || 0; a.error_rows += Number(d.error_rows) || 0;
+                        (d.errors || []).forEach(function (e) { out.problems.push({ sheet: SPEC.sheets[x.k].title, row: e.row, col: e.column || '', msg: e.message }); });
+                    });
+                });
+            });
+            return p.then(function () {
+                U.check = out; U.busy = false;
+                U.msg = stop ? 'The check stopped: ' + out.problems[out.problems.length - 1].msg + ' Nothing was saved.' : (out.problems.length ? out.problems.length + ' problem(s). Fix them in the file and check again. Nothing was saved.' : 'No problems. Press Save to add these rows.');
+                paint();
+            });
+        });
+    }
+    function doSave() {
+        if (!U.check || U.check.problems.length || U.busy || U.check.fileKey !== U.fileKey) return;
+        var steps = plan();
+        U.busy = true; U.msg = 'Saving...'; paint();
+        pin('Save the upload sheet (type your PIN).').then(function (c) {
+            if (!c) { U.busy = false; U.msg = 'PIN not entered. Nothing was saved.'; paint(); return; }
+            var group = uuid(), done = [], stop = null, p = Promise.resolve();
+            steps.forEach(function (x) {
+                p = p.then(function () {
+                    if (stop) return;
+                    U.msg = 'Saving ' + partName(x) + '...'; paint();
+                    return call('up51_apply', { p_sheet: x.k, p_rows: payload(x.rows), p_group: group, p_file_name: String((U.file && U.file.name) || '').slice(0, 200), p_client_request_id: group + ':' + x.k + ':' + x.n }, c).then(function (d) {
+                        if (d && d.ok) done.push({ x: x, d: d }); else stop = { x: x, d: d || {} };
+                    });
+                });
+            });
+            return p.then(function () {
+                U.busy = false; U.saved = { done: done, stop: stop, group: group }; U.check = null;
+                var by = {};
+                done.forEach(function (o) { var b = by[o.x.k] || (by[o.x.k] = { added: 0, skipped: 0, nos: [], open: 0, short: 0 }); b.added += Number(o.d.added) || 0; b.skipped += Number(o.d.skipped) || 0; b.nos.push(o.d.batch_id);
+                    if (o.d.slips) { b.open += Number(o.d.slips.open) || 0; b.short += Number(o.d.slips.short) || 0; } });
+                var words = SPEC.order.filter(function (k) { return by[k]; }).map(function (k) { var b = by[k];
+                    return SPEC.sheets[k].title + ': ' + b.added + ' added' + (b.skipped ? ', ' + b.skipped + ' already there' : '') + (k === 'orders' && (b.open || b.short) ? ' (' + b.open + ' pick slips, ' + b.short + ' to make)' : '') + ' (upload no. ' + b.nos.join(', ') + ')'; });
+                U.msg = (words.length ? 'Saved. ' + words.join('; ') + '.' : '') +
+                    (stop ? ' Stopped at ' + partName(stop.x) + ': ' + (stop.d.message || 'not saved') + ' Nothing from that part or later was saved.' + (done.length ? ' Undo last upload removes the parts that were saved.' : '') : '');
+                loadBatches(c); paint();
+            });
+        });
+    }
+    function doUndo() {
+        if (U.busy) return;
+        var last = (U.batches || []).filter(function (b) { return b.status === 'APPLIED' && b.can_undo; })[0];
+        var what = last ? 'Undo the last upload (' + (last.sheets || last.sheet_title || last.sheet) + ', saved ' + String(last.created_at || '').slice(0, 16).replace('T', ' ') + ')?' : 'Undo the last upload?';
+        if (typeof W.confirm === 'function' && !W.confirm(what + ' Rows it added are removed; stock it added is taken back out. This works only if nothing was used since.')) return;
+        U.busy = true; U.msg = 'Undoing...'; paint();
+        pin('Undo the last upload (type your PIN).').then(function (c) {
+            if (!c) { U.busy = false; U.msg = 'PIN not entered. Nothing was undone.'; paint(); return; }
+            return call('up51_batches', { p_limit: 50 }, c).then(function (d0) {
+                var list = (d0 && d0.ok) ? (d0.batches || []) : [];
+                var top = list.filter(function (b) { return b.status === 'APPLIED'; })[0];
+                var group = top ? top.group_id : null;
+                var mine = group ? list.filter(function (b) { return b.group_id === group && b.status === 'APPLIED'; }) : [];
+                /* v1.3: an upload with a raw-materials part is undone one saved part at a time, newest first (each raw part has at most 100 rows,
+                   each voids its stock-ins through RM50); any other upload is undone in one go, all or nothing, as before */
+                if (!mine.some(function (b) { return b.sheet === 'raw'; })) {
+                    return call('up51_undo_last', {}, c).then(function (d) {
+                        U.busy = false;
+                        U.msg = (d && d.ok) ? ('Undone: ' + (d.undone || []).map(function (x) { return x.sheet_title + ' (upload no. ' + x.batch_id + ')'; }).join(', ') + '.') : ('Not undone: ' + ((d && d.message) || 'the server refused.'));
+                        loadBatches(c); paint();
+                    });
+                }
+                var done = [], stop = null, p = Promise.resolve();
+                mine.sort(function (a, b) { return Number(b.batch_id) - Number(a.batch_id); }).forEach(function (b, ix) {
+                    p = p.then(function () {
+                        if (stop) return;
+                        U.msg = 'Undoing ' + (b.sheet_title || b.sheet) + ' (upload no. ' + b.batch_id + ', ' + (ix + 1) + ' of ' + mine.length + ')...'; paint();
+                        return call('up51_undo', { p_batch_id: Number(b.batch_id) }, c).then(function (d) { if (d && d.ok) done.push(b); else stop = { b: b, d: d || {} }; });
+                    });
+                });
+                return p.then(function () {
+                    U.busy = false;
+                    U.msg = (done.length ? 'Undone: ' + done.map(function (b) { return (b.sheet_title || b.sheet) + ' (upload no. ' + b.batch_id + ')'; }).join(', ') + '.' : '') +
+                        (stop ? ' Stopped at upload no. ' + stop.b.batch_id + ': ' + (stop.d.message || 'the server refused.') + (done.length ? ' The parts listed above were undone; the rest of this upload is still saved.' : ' Nothing was undone.') : '');
+                    loadBatches(c); paint();
+                });
+            });
+        });
+    }
+    function loadBatches(c) {
+        var go = function (cc) { return call('up51_batches', { p_limit: 10 }, cc).then(function (d) { U.batches = (d && d.ok) ? (d.batches || []) : null; paint(); }); };
+        if (c) return go(c);
+        return pin('See recent uploads.').then(function (cc) { if (cc) return go(cc); });
+    }
+
+    /* ---------- screen ---------- */
+    function saveBlob(blob, name) {
+        if (typeof W.rmSaveBlob === 'function') { try { W.rmSaveBlob(blob, name); return; } catch (e) { } }
+        var a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = name; document.body.appendChild(a); a.click();
+        setTimeout(function () { URL.revokeObjectURL(a.href); if (a.parentNode) a.parentNode.removeChild(a); }, 1000);
+    }
+    function downloadTemplate() {
+        var bin = atob(TEMPLATE_B64), u8 = new Uint8Array(bin.length);
+        for (var i = 0; i < bin.length; i++) u8[i] = bin.charCodeAt(i);
+        saveBlob(new Blob([u8], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' }), TEMPLATE_NAME);
+    }
+    function problemsCsv() {
+        var q = function (v) { v = String(v == null ? '' : v); if (/^[=+@-]/.test(v)) v = "'" + v; return '"' + v.replace(/"/g, '""') + '"'; };
+        var lines = ['Sheet,Row,Column,Problem'];
+        (U.check ? U.check.problems : []).forEach(function (p) { lines.push([q(p.sheet), q(p.row), q(p.col), q(p.msg)].join(',')); });
+        saveBlob(new Blob([lines.join(NL) + NL], { type: 'text/csv' }), 'Upload_problems_' + new Date().toISOString().slice(0, 10) + '.csv');
+    }
+    function summaryHtml() {
+        if (!U.parsed) return '';
+        var h = '<div class="up51-sum">';
+        SPEC.order.forEach(function (k) {
+            var s = U.parsed.sheets[k]; if (!s) return;
+            var c = U.check && U.check.sheets[k];
+            h += '<div class="up51-row"><b>' + E(SPEC.sheets[k].title) + '</b>: ' + s.rows.length + ' row(s)' +
+                (c && c.ok !== false ? ' - ' + (c.new_rows || 0) + ' new, ' + (c.skipped || 0) + ' already there, ' + (c.error_rows || 0) + ' with problems' : '') +
+                (s.unknown && s.unknown.length ? ' <span class="up51-dim">(columns not used: ' + E(s.unknown.join(', ')) + ')</span>' : '') + '</div>';
+        });
+        return h + '</div>';
+    }
+    function problemsHtml() {
+        if (!U.check || !U.check.problems.length) return '';
+        var P = U.check.problems, h = '<div class="up51-tw"><table class="up51-t"><thead><tr><th>Sheet</th><th>Row</th><th>Column</th><th>Problem</th></tr></thead><tbody>';
+        P.slice(0, 300).forEach(function (p) { h += '<tr><td>' + E(p.sheet) + '</td><td>' + E(p.row) + '</td><td>' + E(p.col) + '</td><td>' + E(p.msg) + '</td></tr>'; });
+        h += '</tbody></table></div>';
+        if (P.length > 300) h += '<div class="up51-dim">Showing the first 300 of ' + P.length + '. Download the full list.</div>';
+        return h + '<button type="button" class="settings-btn up51-b" data-a="csv">Download the problem list (CSV)</button>';
+    }
+    function batchesHtml() {
+        if (!U.batches || !U.batches.length) return '';
+        var h = '<div class="up51-h2">Recent uploads</div><div class="up51-tw"><table class="up51-t"><thead><tr><th>No.</th><th>Sheet</th><th>Rows</th><th>When</th><th>State</th></tr></thead><tbody>';
+        U.batches.forEach(function (b) {
+            h += '<tr><td>' + E(b.batch_id) + '</td><td>' + E(b.sheet_title || b.sheet) + '</td><td>' + E(b.added) + '</td><td>' + E(String(b.created_at || '').slice(0, 16).replace('T', ' ')) + '</td><td>' +
+                E(b.status === 'UNDONE' ? 'Undone' : (b.can_undo ? 'Saved (undo until ' + String(b.expires_at || '').slice(11, 16) + ')' : 'Saved')) + '</td></tr>';
+        });
+        return h + '</tbody></table></div>';
+    }
+    function paint() {
+        var S = U.sheet; if (!S) return;
+        var ready = U.check && !U.check.problems.length && U.check.fileKey === U.fileKey;
+        var canUndo = (U.batches || []).some(function (b) { return b.status === 'APPLIED' && b.can_undo; });
+        S.body.innerHTML =
+            '<div class="up51-p">Set up your business from one Excel file: bins, products, raw materials, stock today and open orders.</div>' +
+            '<button type="button" class="settings-btn up51-b" data-a="tpl">1. Download the template</button>' +
+            '<label class="settings-btn up51-b up51-file">2. Choose the filled file (.xlsx or .csv)<input type="file" accept=".xlsx,.csv" data-a="file" hidden></label>' +
+            (U.file ? '<div class="up51-dim">File: ' + E(U.file.name) + '</div>' : '') + summaryHtml() +
+            '<button type="button" class="settings-btn up51-b" data-a="check"' + (U.parsed && !U.busy ? '' : ' disabled') + '>3. Check (nothing is saved)</button>' +
+            '<button type="button" class="settings-btn up51-b up51-go" data-a="save"' + (ready && !U.busy ? '' : ' disabled') + '>4. Save</button>' +
+            '<div class="up51-msg" role="status" aria-live="polite">' + E(U.msg) + '</div>' + problemsHtml() +
+            '<button type="button" class="settings-btn up51-b up51-undo" data-a="undo"' + (canUndo && !U.busy ? '' : ' disabled') + '>Undo last upload (within 24 hours)</button>' +
+            (U.batches === null ? '<button type="button" class="up51-link" data-a="list">Show recent uploads</button>' : '') + batchesHtml();
+    }
+    function close() { if (U.sheet) { try { document.removeEventListener('keydown', U.sheet.key, true); U.sheet.bg.parentNode.removeChild(U.sheet.bg); } catch (e) { } U.sheet = null; } }
+    function open() {
+        close();
+        if (!canUse()) return;
+        var bg = document.createElement('div'); bg.className = 'up51-bg'; bg.setAttribute('data-up51', '1');
+        bg.innerHTML = '<div class="up51-d" role="dialog" aria-modal="true" aria-labelledby="up51-h"><div class="up51-top"><b id="up51-h">Upload sheet</b>' +
+            '<button type="button" data-x="1" aria-label="Close" class="up51-x">&times;</button></div><div class="up51-body"></div></div>';
+        document.body.appendChild(bg);
+        var key = function (ev) { if (ev.key === 'Escape') { ev.preventDefault(); ev.stopPropagation(); close(); } };
+        document.addEventListener('keydown', key, true);
+        U.sheet = { bg: bg, body: bg.querySelector('.up51-body'), key: key };
+        bg.addEventListener('click', function (ev) {
+            var t = ev.target; if (t === bg || (t.closest && t.closest('[data-x]'))) { close(); return; }
+            var b = t.closest ? t.closest('button[data-a]') : null; if (!b || b.disabled) return;
+            var a = b.getAttribute('data-a');
+            if (a === 'tpl') downloadTemplate(); else if (a === 'check') doCheck(); else if (a === 'save') doSave(); else if (a === 'undo') doUndo(); else if (a === 'csv') problemsCsv(); else if (a === 'list') loadBatches();
+        });
+        bg.addEventListener('change', function (ev) {
+            var t = ev.target; if (!t || t.getAttribute('data-a') !== 'file' || !t.files || !t.files[0]) return;
+            var f = t.files[0];
+            if (f.size > 8 * 1024 * 1024) { U.msg = 'The file is larger than 8 MB. Split it.'; paint(); return; }
+            U.file = f; U.fileKey = f.name + '|' + f.size + '|' + f.lastModified; U.check = null; U.parsed = null; U.msg = 'Reading the file...'; paint();
+            readFile(f).then(function (p) {
+                U.parsed = p;
+                var n = 0; Object.keys(p.sheets).forEach(function (k) { n += p.sheets[k].rows.length; });
+                U.msg = n ? n + ' row(s) read. Press Check.' : 'No rows found below the grey example rows.';
+                if (p.problems.length) U.check = { sheets: {}, problems: p.problems.slice(), fileKey: '' };
+                paint();
+            });
+        });
+        paint();
+    }
+    function addButton() {
+        try {
+            if (!U.on || typeof NV === 'undefined' || !NV.open || NV.grp !== 'more' || !canUse()) return;
+            var body = document.getElementById('nv-body'); if (!body || body.querySelector('[data-up51b]')) return;
+            var b = document.createElement('button'); b.type = 'button'; b.className = 'settings-btn up51-menu'; b.setAttribute('data-up51b', '1');
+            b.textContent = 'Upload sheet: set up from one Excel file';
+            b.addEventListener('click', function () { try { NV.after = open; nvClose(); } catch (e) { open(); } });
+            body.appendChild(b);
+        } catch (e) { }
+    }
+    function start() {
+        if (!flagOn()) return;
+        U.on = true;
+        try {
+            var tgt = document.getElementById('nv-more') || document.body;
+            U.mo = new MutationObserver(function () { addButton(); });
+            U.mo.observe(tgt, { childList: true, subtree: true, attributes: true, attributeFilter: ['hidden'] });
+        } catch (e) { setInterval(addButton, 800); }
+        addButton();
+    }
+    W.up51Open = open;
+    W.up51Test = { partSize: partSize, partsOf: partsOf, crossPartDups: crossPartDups, colMap: colMap, matrixRows: matrixRows, fromMatrices: fromMatrices, guessKey: guessKey, serialDate: serialDate, alsoFor: alsoFor, spec: SPEC, flagOn: flagOn, canUse: canUse };
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start); else start();
+})();
+/* UP51-UPLOAD-END */
 </script>
 </body>
 </html>
