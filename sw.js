@@ -128,7 +128,8 @@
 // v101 (2026-11-15, RC41): cache name bumped for App v232h (RC41 = trusted phone 30 days + typed PIN for money/approvals/undo/cancel/merge + task sizes + person prefs + delete test accounts). Nothing else changed.
 // v102 (2026-11-15, RC41): cache name bumped for App v232l (RC41 = trusted phone 30 days + typed PIN for money/approvals/undo/cancel/merge + task sizes + person prefs + delete test accounts). Nothing else changed.
 // v103 (2026-11-17, v42a): cache name bumped for App v233a (v42a = Dashboard rebuild, screens clean-up, Chats + FAQ (v232m..r), made-to-order scan flow (MTO v2), staff stock access (ACC42)). Nothing else changed.
-const CACHE_NAME = 'artzfolio-oms-shell-v103';
+// v104 (2026-11-18, v42b): cache name bumped for App v233d (v42b = numbers fix (RC42t) + Folio design system ds1/ds1b (RC42u) on v233a; Admin v2.89b). Nothing else changed.
+const CACHE_NAME = 'artzfolio-oms-shell-v104';
 const OPTIONAL_FILES = ['./zxing_reader_3.1.4.js', './zxing_reader_3.1.4.wasm'];
 const SHELL_FILES = ['./index.html', './manifest.json', './icon.svg'];
 
