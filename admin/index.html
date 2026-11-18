@@ -3266,6 +3266,24 @@ body[data-a89leaf="home.overview"] .main{max-width:none}
 .a89b-more .btn{background:var(--c-surface);color:var(--c-brand);border:1px solid var(--c-brand);border-radius:var(--r-md);min-height:44px}
 .a89b-note{font-size:var(--t-body);color:var(--c-muted);align-self:center}
 </style>
+<style id="ceo52-css">/* CEO52 (v25 Lane 8): CEO Brief page */
+.ceo52-sec{margin:18px 0}.ceo52-sec h2{font-size:var(--t-section,18px);margin:0 0 8px}.ceo52-n{display:inline-block;min-width:22px;padding:0 6px;border-radius:11px;background:#e2e8f0;font-size:13px;text-align:center}
+.ceo52-card{border:1px solid #d9dee5;border-radius:10px;padding:12px 14px;margin:0 0 10px;background:#fff}.ceo52-card h3{margin:0;font-size:16px}
+.ceo52-ask{border-color:#b7791f;background:#fffaf0}.ceo52-bad{border-color:#c53030}.ceo52-top{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.ceo52-chip{display:inline-block;padding:2px 8px;border-radius:10px;background:#edf2f7;font-size:12px}.ceo52-risk{background:#fed7d7;color:#822727;font-weight:600}.ceo52-on{background:#c6f6d5;color:#22543d}
+.ceo52-q{background:#fefcbf;padding:6px 8px;border-radius:6px}.ceo52-lines{margin:6px 0 0 18px;padding:0}.ceo52-meta{color:#4a5568;font-size:12px;margin-top:6px}
+.ceo52-btns{display:flex;gap:8px;margin-top:10px}.ceo52-btns .btn{min-height:44px;min-width:110px}.ceo52-ok{display:block;margin-top:8px;font-weight:600}
+.ceo52-why{margin-top:8px}.ceo52-why input{width:100%;max-width:520px;min-height:40px}.ceo52-bot{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:8px 0}.ceo52-empty{color:#4a5568}
+@media (prefers-color-scheme: dark){.ceo52-card{background:#1a202c;border-color:#4a5568}.ceo52-ask{background:#2d2410}.ceo52-q{background:#3b3510}.ceo52-chip{background:#2d3748;color:#e2e8f0}.ceo52-meta,.ceo52-empty{color:#cbd5e0}}
+</style>
+<style id="a90-css">
+/* A90 (Admin v2.90): lean_v25 - hide what belongs to the deleted modules; show the lean-only lines. */
+.a90-leanonly{display:none!important}
+body.a90-lean .a90-leanonly{display:block!important}
+body.a90-lean .a90-old{display:none!important}
+body.a90-lean .perm-row:has(#edit-emp-perm-customers),body.a90-lean .perm-row:has(#edit-emp-perm-customer_data_erase_export),
+body.a90-lean .perm-row:has(#add-emp-perm-customers),body.a90-lean .perm-row:has(#add-emp-perm-customer_data_erase_export){display:none!important}
+</style>
 </head>
 <body>
 
@@ -3409,6 +3427,9 @@ body[data-a89leaf="home.overview"] .main{max-width:none}
       <li class="nav-item a89-nav" data-a89="buying" onclick="a89Go('buying')" role="link" tabindex="0" title="Buying"><span class="nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 8h6M9 12h6M9 16h3"/></svg></span><span class="nav-label">Buying</span><span class="nav-short">Buying</span></li>
       <li class="nav-item a89-nav" data-a89="safety" onclick="a89Go('safety')" role="link" tabindex="0" title="Records &amp; safety"><span class="nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 3v6c0 4.5-3.4 8-8 9-4.6-1-8-4.5-8-9V6z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg></span><span class="nav-label">Records &amp; safety</span><span class="nav-short">Safety</span></li>
       <li class="nav-item a89-nav" data-a89="company" onclick="a89Go('company')" role="link" tabindex="0" title="Company settings"><span class="nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 21V5a1 1 0 0 1 1-1h9a1 1 0 0 1 1 1v16M15 9h4a1 1 0 0 1 1 1v11M3 21h18M8 8h3M8 12h3M8 16h3"/></svg></span><span class="nav-label">Company settings</span><span class="nav-short">Company</span></li>
+      <li class="nav-item a89-nav" data-a89="ceo" onclick="a89Go('ceo')" role="link" tabindex="0" title="CEO Brief"><span class="nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H8l-4 4z"/><path d="M8 9h8M8 12h5"/></svg></span><span class="nav-label">CEO Brief</span><span class="nav-short">Brief</span></li><!-- CEO52 -->
+      <li class="nav-item" data-page="a89ceo" style="display:none"></li>
+      <li class="nav-item" data-page="a90rm" style="display:none"></li>
       <li class="nav-item" data-page="a89signed" style="display:none"></li>
       <li class="nav-item" data-page="a89adminpcs" style="display:none"></li>
       <li class="nav-item" data-page="a89rare" style="display:none"></li>
@@ -3432,7 +3453,7 @@ body[data-a89leaf="home.overview"] .main{max-width:none}
     <div class="sidebar-footer">
       <div class="af-fs-side"><div class="af-fs-t">Text size</div><div id="af-fs-ctl-side"></div></div>
       <button class="logout-btn" onclick="adminLogout()">Sign out</button>   <!-- ADM-v258 A-01 -->
-      <div class="ver-footer">ArtzFolio Super App - Admin Panel v2.89b</div><!-- RC41-v282-V RC41-v283-V RC41-v284-V RC41-v285-V RC41-v286-V -->
+      <div class="ver-footer">ArtzFolio Super App - Admin Panel v2.90</div><!-- RC41-v282-V RC41-v283-V RC41-v284-V RC41-v285-V RC41-v286-V -->
     </div>
   </div>
 
@@ -4439,6 +4460,7 @@ body[data-a89leaf="home.overview"] .main{max-width:none}
         <strong>Who can do what</strong>
         <div class="rmc-hint">Yes means allowed, No means refused. "Manager" is not a separate account type: it means Admin or Supervisor. Items marked (v) were not fully settled when this table was written. This table is a copy kept inside the panel. Ask your developer to update it if the rules change.</div>
         <div id="sec-body-roles"></div>
+        <div class="rmc-hint a90-leanonly">Raw materials: a person needs the Raw materials switch (Team &gt; People &gt; Edit).</div>
       </div>
 
     </div>
@@ -4594,7 +4616,7 @@ body[data-a89leaf="home.overview"] .main{max-width:none}
       </div>
         </div>
       </div>
-      <div class="a89-card">
+      <div class="a89-card a90-old">
         <h3>Undo a raw-material import</h3>
         <p>Puts every row of a recent import back as it was. It works for 24 hours after the import. It opens in Buying, where you type your PIN.</p>
         <div class="a89-type"><label for="a89-rare-undo-in">Type UNDO IMPORT to open it</label><input type="text" id="a89-rare-undo-in" autocomplete="off" spellcheck="false" data-a89-phrase="1" data-a89-rare="undo" placeholder="UNDO IMPORT"><button type="button" class="btn btn-grey" data-a89-rare-go="undo" disabled>Open it</button></div>
@@ -4602,12 +4624,30 @@ body[data-a89leaf="home.overview"] .main{max-width:none}
       <div class="a89-card">
         <h3>Import templates</h3>
         <p>Bulk upload template (Excel): <a id="a89-tpl-link" href="#" download style="color:#1B4F8A;font-weight:600;">&#11015; Download (.xlsx)</a></p>
-        <p>Raw materials (items, vendors, opening stock, purchase bills, barcodes): open the phone app, go to Raw materials, then Import / Export. Customers and Production: open that section in the phone app and use its Import button. Each one downloads a ready-to-fill sheet with instructions.</p>
+        <p class="a90-leanonly">Production: open Production in the phone app and use its Import button. It downloads a ready-to-fill sheet with instructions.</p>
+        <p class="a90-old">Raw materials (items, vendors, opening stock, purchase bills, barcodes): open the phone app, go to Raw materials, then Import / Export. Customers and Production: open that section in the phone app and use its Import button. Each one downloads a ready-to-fill sheet with instructions.</p>
       </div>
       <div class="a89-card a89-quiet">
         <h3>Taken out of this panel</h3>
         <p>Reset all stock to zero, and Delete all test accounts, are no longer here. They were one-time tools. If one is ever needed, your developer runs it once, with a backup first.</p>
       </div>
+      </div>
+    </div>
+    <!-- CEO52 (v25 Lane 8): CEO Brief (Admin only) -->
+    <div class="page" id="page-a89ceo">
+      <div class="page-header"><div><div class="page-title">CEO Brief</div></div><button type="button" class="btn btn-primary" id="ceo52-load">Show the brief</button></div>
+      <div id="ceo52-msg" class="result-msg e2-keep"></div>
+      <div id="ceo52-body" class="e2-keep"></div>
+      <p class="a89-note e2-keep">Approve = the Builder Bot on the office laptop builds it tonight on a copy and a separate checker reviews it. It never puts anything live by itself: when it is ready, this page shows the exact file the lead or you run to put it live. Anything that deletes data, spends money or turns on something customers see asks you once more. Your PIN is asked for each step and is not kept.</p>
+    </div>
+    <!-- A90: Raw materials (lean_v25 only) -->
+    <div class="page" id="page-a90rm">
+      <div class="page-header"><div><div class="page-title">Raw materials</div></div></div>
+      <div class="e2-keep">
+      <div class="a89-card"><h3>Where raw materials are kept</h3><p>In the phone app, on the Raw materials screen. There you record stock in (item, quantity, unit, supplier, price, GST and transport), stock out with a reason, and fix a count. Each item shows stock now, the average and last price, the price by supplier and its reorder level.</p></div>
+      <div class="a89-card"><h3>Who can use it</h3><p>A person needs the Raw materials switch. Change it under Team &gt; People: Add person, or Edit on their row.</p><button type="button" class="btn btn-grey" data-a89-go="team.people">Open Team &gt; People</button></div>
+      <div class="a89-card"><h3>Price warning</h3><p>The app warns when a price is more than 10% above the last price for that item. The percentage is changed on the Raw materials screen in the phone app; it asks for your PIN.</p></div>
+      <div class="a89-card a89-quiet"><h3>Taken out of the app</h3><p>Purchase orders, goods received, bills and payments, GST register, HSN summary, recipes (BOM), lots, vendor scores and purchase requests are no longer part of the app. Customers, warranty and chats are gone too.</p></div>
       </div>
     </div>
     <!-- A89: Company settings > Modules (read only) -->
@@ -8047,8 +8087,8 @@ function secLoadBackup() {
     var rc = d.row_counts || {};
     h += '<div class="table-wrap"><table><thead><tr><th>What</th><th>Rows</th></tr></thead><tbody>' +
       '<tr><td>Audit trail</td><td>' + fmtNum(rc.audit_rows) + '</td></tr><tr><td>Raw-material stock ledger</td><td>' + fmtNum(rc.raw_material_ledger_rows) + '</td></tr>' +
-      '<tr><td>Customers</td><td>' + fmtNum(rc.customers) + '</td></tr><tr><td>Warranty claims</td><td>' + fmtNum(rc.warranty_claims) + '</td></tr>' +
-      '<tr><td>Quotes</td><td>' + fmtNum(rc.quotes) + '</td></tr></tbody></table></div>';
+      ((typeof a90Lean === 'function' && a90Lean()) ? '' : '<tr><td>Customers</td><td>' + fmtNum(rc.customers) + '</td></tr><tr><td>Warranty claims</td><td>' + fmtNum(rc.warranty_claims) + '</td></tr>' +
+      '<tr><td>Quotes</td><td>' + fmtNum(rc.quotes) + '</td></tr>') + '</tbody></table></div>';   /* A90: lean has no customers, warranty or quotes */
     var lx = d.last_export_everything;
     h += '<div class="rmc-hint">Last full export: ' + (lx && lx.at_ist ? esc(lx.at_ist) + ' IST by ' + esc(showVal(lx.by)) : 'none recorded yet') + '.</div>';
     var lr = d.last_reconcile;
@@ -14987,6 +15027,8 @@ var A89_IA = [
       { id: 'retention', label: 'How long data is kept', page: 'secdata', sec: 'retention', desc: 'What is stored and how old it is. Deletes nothing. Type your PIN first.' } ] },
     { id: 'signout', label: 'Sign out everywhere', page: 'secdata', sec: 'signout', desc: 'Sign a person out of every phone and computer at once, for example when a phone is lost.' },
     { id: 'rare', label: 'Rare tools', page: 'a89rare', desc: 'Tools needed once in a long while. Each one stays hidden until you type its name, so it cannot be pressed by mistake.' } ] },
+  { id: 'ceo', label: 'CEO Brief', adminOnly: true, tabs: [   /* CEO52 */
+    { id: 'brief', label: 'CEO Brief', page: 'a89ceo', desc: 'What happened, what is broken and what needs you. Approve or Reject each item. Type your PIN when asked.' } ] },
   { id: 'company', label: 'Company settings', adminOnly: true, tabs: [
     { id: 'profile', label: 'Company profile', page: 'settings', part: 'profile', desc: 'Company name and system numbers.' },
     { id: 'security', label: 'Passwords and sign-in', page: 'settings', part: 'security', desc: 'The Admin Password, the Supervisor Password and the recovery email for a forgotten Admin Password.' },
@@ -15032,6 +15074,7 @@ function a89LeafForPage(name) {
 function a89Go(id) {
   var lf = a89Resolve(id); if (!lf) return;
   if (lf.sid === 'company' && a89IsSup()) return;
+  if (lf.sid === 'ceo' && a89IsSup()) return;   /* CEO52: Admin only */
   if (lf.id === 'buying.imports' && !A89.rmcImports) return;   /* A89b A3: only through Rare tools */
   A89.pending = lf;
   switchPage(lf.page);
@@ -15040,7 +15083,7 @@ function a89After(name) {
   var fromTab = !!(A89.pending && A89.pending.page === name);
   var lf = fromTab ? A89.pending : a89LeafForPage(name);
   A89.pending = null;
-  if (name === 'secdata' && !fromTab) { try { secShow('today'); } catch (e) {} lf = A89_LEAVES['safety.checks.today']; }   /* A89b A4 */
+  if (name === 'secdata' && !fromTab) { var a90n = (typeof a90Neutral === 'function') ? a90Neutral() : ['today', 'safety.checks.today']; try { secShow(a90n[0]); } catch (e) {} lf = A89_LEAVES[a90n[1]]; }   /* A89b A4 + A90: lean has no Today list */
   if (name === 'rmctl' && !A89.rmcImports) { try { if (rmcCurrent === 'imports') { rmcShow('settings'); lf = A89_LEAVES['buying.settings']; } } catch (e) {} }
   var prev = A89.leaf;
   if (prev && prev.page === 'a89rare' && name !== 'a89rare') a89RareReset();
@@ -15055,6 +15098,7 @@ function a89After(name) {
   if (name === 'a89signed' || name === 'a89adminpcs') { try { r41LoadPhones(); } catch (e) {} }
   if (name === 'a89modules') a89ModulesPaint();
   if (name === 'a89rare') a89RareInit();
+  if (name === 'a89ceo') ceo52Init(); else if (prev && prev.page === 'a89ceo') ceo52Leave();   /* CEO52 */
   try { document.body.setAttribute('data-a89leaf', lf ? lf.id : ''); document.body.setAttribute('data-a89part', lf && lf.part ? lf.part : ''); } catch (e) {}
   a89Paint();
 }
@@ -15077,7 +15121,7 @@ function a89Paint() {
     var k = n.getAttribute('data-a89'), on = !!lf && lf.sid === k;
     n.classList.toggle('active', on);
     if (on) n.setAttribute('aria-current', 'page'); else n.removeAttribute('aria-current');
-    n.style.display = (k === 'company' && sup) ? 'none' : '';
+    n.style.display = ((k === 'company' || k === 'ceo') && sup) ? 'none' : '';   /* CEO52 */
   });
   document.querySelectorAll('.a53-tabs, .a89-head').forEach(function (b) { if (b.parentNode) b.parentNode.removeChild(b); });
   document.querySelectorAll('.page.a89-on').forEach(function (p) { p.classList.remove('a89-on'); });
@@ -15505,6 +15549,221 @@ function a89bHomeGo(g) {
     if (m) { A89B.open = !A89B.open; a89bHome(); if (A89B.open) { try { loadDashboard(); } catch (x) {} } }
   });
   try { a89bAddBtn(); a89bHome(); if (document.querySelector('#page-dashboard.active')) a89bLoadPhones(); } catch (e) {}
+})();
+</script>
+<script id="ceo52-js">
+/* CEO52 v1.2 (v25 Lane 8): CEO Brief page. v1.2: READY_FOR_LIVE (the Builder Bot never deploys), honest bot banner, reason kept on repaint.
+   Admin only. Reads and writes ONLY through ceo_admin_brief / ceo_admin_decide / ceo_admin_set_pause.
+   The PIN is typed for each call (a59AskPin), used for that one call, and not kept anywhere. Nothing else is sent to the database. */
+var CEO52 = { data: null, busy: false, risk: {}, rejecting: {} };
+var CEO52_RISK = { DELETES_DATA: 'Deletes data', SPENDS_MONEY: 'Spends money', CUSTOMER_FACING: 'Customers will see it' };
+var CEO52_STATUS = { PROPOSED: 'Waiting for you', NEEDS_FOUNDER: 'The Builder Bot paused: one question', APPROVED: 'Approved - waiting for the Builder Bot', READY_FOR_LIVE: 'Built and checked - ready to go live (the lead or you run it)',
+  BUILDING: 'The Builder Bot is building it', BUILT: 'Built and checked - nothing to put live', LIVE: 'Live', FAILED: 'Did not work - nothing was deployed', INFO: '', REJECTED: 'You said no' };
+function ceo52Esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+function ceo52When(t) {
+  if (!t) return ''; var d = new Date(t); if (isNaN(d.getTime())) return '';
+  function z(n) { return (n < 10 ? '0' : '') + n; }
+  return d.getFullYear() + '-' + z(d.getMonth() + 1) + '-' + z(d.getDate()) + ' ' + z(d.getHours()) + ':' + z(d.getMinutes());
+}
+/* pure: one card */
+function ceo52Card(it, canDecide, st) {
+  st = st || {};
+  var risky = it.risk && it.risk !== 'SAFE', id = String(it.id);
+  var h = '<div class="ceo52-card' + (it.status === 'NEEDS_FOUNDER' ? ' ceo52-ask' : '') + (it.status === 'FAILED' ? ' ceo52-bad' : '') + '" data-ceo52-id="' + ceo52Esc(id) + '">';
+  h += '<div class="ceo52-top"><h3>' + ceo52Esc(it.title) + '</h3>';
+  if (risky) h += '<span class="ceo52-chip ceo52-risk">' + ceo52Esc(CEO52_RISK[it.risk] || it.risk) + '</span>';
+  if (CEO52_STATUS[it.status]) h += '<span class="ceo52-chip">' + ceo52Esc(CEO52_STATUS[it.status]) + '</span>';
+  h += '</div><p>' + ceo52Esc(it.text) + '</p>';
+  if (it.status === 'NEEDS_FOUNDER' && it.question) h += '<p class="ceo52-q"><strong>Question:</strong> ' + ceo52Esc(it.question) + '</p>';
+  if (it.status === 'READY_FOR_LIVE' && it.launcher) h += '<p class="ceo52-q"><strong>To put it live:</strong> run DEPLOY_DRY first, then <code>' + ceo52Esc(it.launcher) + '</code></p>';
+  if (it.status === 'APPROVED' && it.buildable === false) h += '<p class="ceo52-meta">Decision recorded - nothing to build.</p>';
+  if (it.lines && it.lines.length) h += '<ul class="ceo52-lines">' + it.lines.map(function (l) { return '<li>' + ceo52Esc(l) + '</li>'; }).join('') + '</ul>';
+  var meta = [];
+  if (it.source) meta.push('From ' + it.source);
+  if (it.decided_by && it.status !== 'PROPOSED') meta.push('Decided by ' + it.decided_by + (it.decided_at ? ' on ' + ceo52When(it.decided_at) : ''));
+  if (it.updated_at && it.status !== 'PROPOSED') meta.push('Last change ' + ceo52When(it.updated_at));
+  if (meta.length) h += '<div class="ceo52-meta">' + ceo52Esc(meta.join(' - ')) + '</div>';
+  if (canDecide) {
+    if (risky || it.status === 'NEEDS_FOUNDER') {
+      h += '<label class="ceo52-ok"><input type="checkbox" data-ceo52-risk="' + ceo52Esc(id) + '"' + (st.risk ? ' checked' : '') + '> I understand' +
+           (risky ? ': this ' + ceo52Esc((CEO52_RISK[it.risk] || '').toLowerCase()) : ': I have read the question') + '</label>';
+    }
+    if (st.rejecting) h += '<div class="ceo52-why"><label for="ceo52-why-' + ceo52Esc(id) + '">Why not? (one line)</label><input type="text" maxlength="300" id="ceo52-why-' + ceo52Esc(id) + '" data-ceo52-why="' + ceo52Esc(id) + '" value="' + ceo52Esc(st.why || '') + '"></div>';
+    h += '<div class="ceo52-btns"><button type="button" class="btn btn-primary" data-ceo52-act="APPROVE" data-ceo52-item="' + ceo52Esc(id) + '">Approve</button>' +
+         '<button type="button" class="btn btn-grey" data-ceo52-act="REJECT" data-ceo52-item="' + ceo52Esc(id) + '">' + (st.rejecting ? 'Reject - send' : 'Reject') + '</button></div>';
+    if (st.msg) h += '<div class="result-msg ' + (st.ok ? 'ok' : 'err') + '">' + ceo52Esc(st.msg) + '</div>';
+  }
+  return h + '</div>';
+}
+/* pure: the whole brief (sections in the founder's order) */
+function ceo52Html(d, states) {
+  states = states || {};
+  if (!d) return '<p class="ceo52-empty">Press <strong>Show the brief</strong> and type your PIN.</p>';
+  var sec = function (title, rows, canDecide, empty) {
+    var h = '<section class="ceo52-sec"><h2>' + ceo52Esc(title) + ' <span class="ceo52-n">' + rows.length + '</span></h2>';
+    if (!rows.length) return h + '<p class="ceo52-empty">' + ceo52Esc(empty) + '</p></section>';
+    return h + rows.map(function (r) { return ceo52Card(r, canDecide && (r.status === 'PROPOSED' || r.status === 'NEEDS_FOUNDER'), states[String(r.id)]); }).join('') + '</section>';
+  };
+  var last = d.last_bot_run_at ? new Date(d.last_bot_run_at) : null, now = (states && states.__now) ? new Date(states.__now) : new Date();
+  var chip = d.builder_paused ? '<span class="ceo52-chip ceo52-risk">Builder Bot paused</span>'
+           : !last ? '<span class="ceo52-chip">Builder Bot not running yet (it has never run)</span>'
+           : (now - last > 36 * 3600 * 1000) ? '<span class="ceo52-chip ceo52-risk">Builder Bot on, but no run since ' + ceo52Esc(ceo52When(d.last_bot_run_at)) + '</span>'
+           : '<span class="ceo52-chip ceo52-on">Builder Bot on</span>';
+  var h = '<div class="ceo52-bot">' + chip +
+          ' <span class="ceo52-meta">Last run: ' + ceo52Esc(last ? ceo52When(d.last_bot_run_at) : 'never') + '</span>' +
+          ' <button type="button" class="btn btn-grey" data-ceo52-pause="' + (d.builder_paused ? '0' : '1') + '">' + (d.builder_paused ? 'Resume the Builder Bot' : 'Pause the Builder Bot') + '</button></div>';
+  h += sec('What happened', d.happened || [], false, 'Nothing new in the last ' + (d.days || 14) + ' days.');
+  h += sec('What is broken', d.broken || [], true, 'Nothing is broken.');
+  h += sec('What needs you', d.needs_you || [], true, 'Nothing needs you right now.');
+  if ((d.in_progress || []).length) h += sec('Approved, waiting for the Builder Bot', d.in_progress, false, '');
+  return h;
+}
+function ceo52Paint() { var el = document.getElementById('ceo52-body'); if (el) el.innerHTML = ceo52Html(CEO52.data, CEO52.st); }
+function ceo52Msg(t, ok) { var el = document.getElementById('ceo52-msg'); if (!el) return; el.className = 'result-msg' + (t ? (ok ? ' ok' : ' err') : ''); el.textContent = t || ''; }
+function ceo52Me() { return (typeof getAdminPanelEmployeeCode === 'function' ? (getAdminPanelEmployeeCode() || '') : '').trim().toUpperCase(); }
+function ceo52Find(id) {
+  var d = CEO52.data; if (!d) return null;
+  var all = [].concat(d.happened || [], d.broken || [], d.needs_you || [], d.in_progress || []);
+  for (var i = 0; i < all.length; i++) if (String(all[i].id) === String(id)) return all[i];
+  return null;
+}
+function ceo52Err(res, what) {
+  var j = res && res.data;
+  if (res && res.error) return (typeof a59ErrText === 'function') ? a59ErrText(res.error, what) : 'Not done. ' + (res.error.message || '');
+  if (j && j.ok === false) return (j.message || ('Not done (' + (j.error || 'unknown') + ').'));
+  return '';
+}
+function ceo52Load() {
+  if (CEO52.busy) return;
+  if (typeof a89IsSup === 'function' && a89IsSup()) { ceo52Msg('Only an Admin can open the CEO Brief.', false); return; }
+  var me = ceo52Me(); if (!me) { ceo52Msg('You are not signed in with an employee code. Sign in again.', false); return; }
+  CEO52.busy = true;
+  a59AskPin(me).then(function (pin) {
+    if (pin === null) { ceo52Msg('No PIN typed. Nothing was shown.', false); return null; }
+    ceo52Msg('Loading...', true);
+    return withTimeout(db.rpc('ceo_admin_brief', { p_admin_employee_code: me, p_admin_pin: pin, p_days: 14 }), 15000, 'CEO Brief');
+  }).then(function (res) {
+    CEO52.busy = false; if (!res) return;
+    var e = ceo52Err(res, 'CEO Brief'); if (e) { ceo52Msg(e, false); return; }
+    CEO52.data = res.data; CEO52.st = {}; ceo52Msg('Shown at ' + ceo52When(new Date()) + '. Press Show the brief again to refresh.', true); ceo52Paint();
+  }).catch(function (err) { CEO52.busy = false; ceo52Msg((typeof a59ErrText === 'function') ? a59ErrText(err, 'CEO Brief') : 'Could not load.', false); });
+}
+function ceo52Decide(id, act) {
+  var it = ceo52Find(id); if (!it || CEO52.busy) return;
+  CEO52.st = CEO52.st || {}; var st = CEO52.st[id] = CEO52.st[id] || {};
+  var risky = (it.risk && it.risk !== 'SAFE') || it.status === 'NEEDS_FOUNDER';
+  var note = null;
+  if (act === 'APPROVE' && risky && !st.risk) { st.msg = 'Tick "I understand" first.'; st.ok = false; ceo52Paint(); return; }
+  if (act === 'REJECT') {
+    if (!st.rejecting) { st.rejecting = true; st.msg = 'Type why not, then press Reject - send.'; st.ok = true; ceo52Paint(); var w = document.getElementById('ceo52-why-' + id); if (w) w.focus(); return; }
+    var wi = document.getElementById('ceo52-why-' + id); note = wi ? String(wi.value || '').trim() : String(st.why || '').trim();
+    if (note.length < 2) { st.msg = 'Please type a short reason.'; st.ok = false; ceo52Paint(); return; }
+  }
+  var me = ceo52Me(); CEO52.busy = true;
+  a59AskPin(me).then(function (pin) {
+    if (pin === null) { st.msg = 'No PIN typed. Nothing was saved.'; st.ok = false; ceo52Paint(); return null; }
+    return withTimeout(db.rpc('ceo_admin_decide', { p_admin_employee_code: me, p_admin_pin: pin, p_item_id: Number(id), p_decision: act,
+      p_note: note, p_risk_ok: act === 'APPROVE' && risky && !!st.risk, p_expected_updated_at: it.updated_at || null }), 10000, 'decision');
+  }).then(function (res) {
+    CEO52.busy = false; if (!res) return;
+    var e = ceo52Err(res, 'decision'); if (e) { st.msg = e; st.ok = false; ceo52Paint(); return; }
+    it.status = res.data.status; it.updated_at = res.data.updated_at; it.decided_by = me; it.decided_at = new Date().toISOString();
+    st.rejecting = false; st.msg = (act === 'APPROVE' ? (it.buildable === false ? 'Approved. Decision recorded.' : 'Approved. The Builder Bot builds and checks it tonight (laptop on); it never puts anything live by itself.') : 'Rejected. Saved with your reason.'); st.ok = true;
+    ceo52Paint();
+  }).catch(function (err) { CEO52.busy = false; st.msg = (typeof a59ErrText === 'function') ? a59ErrText(err, 'decision') : 'Not saved.'; st.ok = false; ceo52Paint(); });
+}
+function ceo52Pause(on) {
+  if (CEO52.busy) return; var me = ceo52Me(); CEO52.busy = true;
+  a59AskPin(me).then(function (pin) {
+    if (pin === null) { ceo52Msg('No PIN typed. Nothing was changed.', false); return null; }
+    return withTimeout(db.rpc('ceo_admin_set_pause', { p_admin_employee_code: me, p_admin_pin: pin, p_paused: !!on }), 10000, 'Builder Bot switch');
+  }).then(function (res) {
+    CEO52.busy = false; if (!res) return;
+    var e = ceo52Err(res, 'Builder Bot switch'); if (e) { ceo52Msg(e, false); return; }
+    if (CEO52.data) CEO52.data.builder_paused = !!on; ceo52Paint();
+    ceo52Msg(on ? 'Builder Bot paused. It stops before its next step and starts nothing new until you resume it. (It never puts anything live by itself.)' : 'Builder Bot resumed. It runs tonight if the laptop is on and you are signed in.', true);
+  }).catch(function (err) { CEO52.busy = false; ceo52Msg((typeof a59ErrText === 'function') ? a59ErrText(err, 'Builder Bot switch') : 'Not changed.', false); });
+}
+function ceo52Init() { ceo52Paint(); }
+function ceo52Leave() { CEO52.data = null; CEO52.st = {}; ceo52Msg('', true); ceo52Paint(); }   /* nothing of the brief stays on screen after leaving */
+if (typeof document !== 'undefined') {
+document.addEventListener('click', function (ev) {
+  var t = ev.target; if (!t || !t.closest) return;
+  var a = t.closest('[data-ceo52-act]'); if (a) { ceo52Decide(a.getAttribute('data-ceo52-item'), a.getAttribute('data-ceo52-act')); return; }
+  var p = t.closest('[data-ceo52-pause]'); if (p) { ceo52Pause(p.getAttribute('data-ceo52-pause') === '1'); return; }
+  if (t.id === 'ceo52-load') ceo52Load();
+});
+document.addEventListener('change', function (ev) {
+  var t = ev.target; if (!t || !t.getAttribute) return;
+  var id = t.getAttribute('data-ceo52-risk'); if (id) { CEO52.st = CEO52.st || {}; (CEO52.st[id] = CEO52.st[id] || {}).risk = !!t.checked; }
+});
+document.addEventListener('input', function (ev) {
+  var t = ev.target; if (!t || !t.getAttribute) return;
+  var id = t.getAttribute('data-ceo52-why'); if (id) { CEO52.st = CEO52.st || {}; (CEO52.st[id] = CEO52.st[id] || {}).why = String(t.value || ''); }
+});
+}
+if (typeof module !== 'undefined') module.exports = { ceo52Html: ceo52Html, ceo52Card: ceo52Card };
+</script>
+<script id="a90-js">
+/* A90 (Admin v2.90, v25 Lane 6): the "lean_v25" switch. OFF by default until the Lane-2 database decouple lands.
+   ON = every link to the deleted modules is gone from this panel (Customers/CRM, warranty, chats, and the old buying side: purchase orders,
+   goods received, bills, payments, GST register, HSN, recipes/BOM, lots, vendor scores, procurement, old raw-material settings / data quality /
+   change history / import undo, the "Today" and "Data checks" safety lists that count them). Kept: people, roles, PINs, devices, activity record,
+   settings, CEO Brief, Inventory, Raw materials (the lean one, in the phone app), Records & safety.
+   How to switch it on before the default flips: open the panel once with ?lean_v25=1 (remembered in this browser); ?lean_v25=0 switches it off.
+   Nothing here sends anything to the database. */
+var A90_LEAN_DEFAULT = false;
+var A90 = { lean: false, applied: false };
+var A90_GONE_PERMS = ['customers', 'customer_data_erase_export'];
+var A90_GONE_MODS = ['customers'];
+function a90ReadFlag(search, store, dflt) {
+  var on = !!dflt;
+  try {
+    var q = String(search || '');
+    if (/[?&]lean_v25=1(&|$)/.test(q)) store.setItem('af_admin_lean_v25', '1');
+    if (/[?&]lean_v25=0(&|$)/.test(q)) store.removeItem('af_admin_lean_v25');
+    if (store.getItem('af_admin_lean_v25') === '1') on = true;
+  } catch (e) {}
+  return on;
+}
+function a90Lean() { return !!A90.lean; }
+function a90Neutral() { return A90.lean ? ['audit', 'safety.checks.chain'] : ['today', 'safety.checks.today']; }
+function a90Reindex() {
+  Object.keys(A89_LEAVES).forEach(function (k) { delete A89_LEAVES[k]; });
+  A89_LIST.length = 0;
+  A89_IA.forEach(function (s) {
+    s.tabs.forEach(function (t) {
+      var add = function (o, sub) { var id = s.id + '.' + t.id + (sub ? '.' + o.id : ''); var lf = { id: id, sid: s.id, tid: t.id, uid: sub ? o.id : '', label: o.label, page: o.page, sec: o.sec || '', rmc: o.rmc || '', part: o.part || '', desc: o.desc || '', hidden: !!(t.hidden || o.hidden) }; A89_LEAVES[id] = lf; A89_LIST.push(lf); };
+      if (t.subs) t.subs.forEach(function (u) { add(u, true); }); else add(t, false);
+    });
+  });
+}
+/* the menu, the Add person switches, Modules and the role table without the deleted modules (pure: tested in vm) */
+function a90LeanModel() {
+  var b = a89Sec('buying');
+  if (b) { b.label = 'Raw materials'; b.tabs = [{ id: 'rm', label: 'Raw materials', page: 'a90rm', desc: 'Raw materials are kept in the phone app: stock in, stock out, fix a count, suppliers and reorder levels.' }]; }
+  var c = a89Tab('safety', 'checks');
+  if (c && c.subs) c.subs = c.subs.filter(function (u) { return u.id !== 'today' && u.id !== 'recon'; });
+  a90Reindex();
+  A89W_GROUPS.forEach(function (g) { g.keys = g.keys.filter(function (k) { return A90_GONE_PERMS.indexOf(k[0]) < 0; }); });
+  A90_GONE_PERMS.forEach(function (k) { if (A89W_HIDDEN.indexOf(k) < 0) A89W_HIDDEN.push(k); });
+  for (var i = A89_MODS.length - 1; i >= 0; i--) if (A90_GONE_MODS.indexOf(A89_MODS[i].k) >= 0) A89_MODS.splice(i, 1);
+  try { if (typeof SEC_ROLES !== 'undefined') { for (var j = SEC_ROLES.length - 1; j >= 0; j--) if (/^(A|B)\./.test(String(SEC_ROLES[j].title || ''))) SEC_ROLES.splice(j, 1); } } catch (e) {}
+}
+function a90ApplyDom() {
+  document.body.classList.add('a90-lean');
+  var n = document.querySelector('.a89-nav[data-a89="buying"]');
+  if (n) { n.title = 'Raw materials'; var l = n.querySelector('.nav-label'), s = n.querySelector('.nav-short'); if (l) l.textContent = 'Raw materials'; if (s) s.textContent = 'Materials'; }
+  try { if (typeof secRenderRoles === 'function') secRenderRoles(); } catch (e) {}
+}
+(function () {
+  try { A90.lean = a90ReadFlag(location.search, localStorage, A90_LEAN_DEFAULT); } catch (e) { A90.lean = A90_LEAN_DEFAULT; }
+  if (A90.lean) {
+    try { a90LeanModel(); a90ApplyDom(); A90.applied = true; } catch (e) { try { console.warn('a90', e); } catch (x) {} }
+    var oSw = window.switchPage;   /* an old link to the purchasing page lands on the Raw materials page */
+    if (typeof oSw === 'function') window.switchPage = function (name) { if (name === 'rmctl') name = 'a90rm'; return oSw.call(this, name); };
+  }
+  try { var act = document.querySelector('.page.active'); if (act) a89After(String(act.id || '').replace(/^page-/, '')); } catch (e) {}
 })();
 </script>
 </body>
