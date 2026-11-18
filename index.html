@@ -4005,7 +4005,7 @@ button:focus-visible,select:focus-visible,input:focus-visible,textarea:focus-vis
 </style>
 </head>
 <body>
-<div class="ver-corner" id="verCornerBadge">v233d</div>
+<div class="ver-corner" id="verCornerBadge">v233g</div>
 <!-- v112: the full-screen SKU page (opened by a12OpenSku) -->
 <div class="a12-skupage" id="a12-skupage"><div class="a12-sphead"><button type="button" onclick="a12CloseSku()">&larr; Back</button><div id="a12-sp-title" style="flex:1"></div><button type="button" onclick="shOpen('sku')" aria-label="Share this product page">&#128228; Share</button></div><div class="a12-spbody" id="a12-sp-body"></div></div>
 <!-- v63: Gap 2 — offline write-queue indicator. Hidden (display:none) unless
@@ -5224,7 +5224,7 @@ button:focus-visible,select:focus-visible,input:focus-visible,textarea:focus-vis
 
             <!-- Version -->
             <div class="ver-badge">
-                <div class="ver-name">&#128230; ArtzFolio Super App v233d</div>
+                <div class="ver-name">&#128230; ArtzFolio Super App v233g</div>
                 <div class="ver-sub">Tap the button below to see what is new in this version.</div>
                 <button class="settings-btn" style="min-height:46px" onclick="wnOpen()">What is new and what is done</button>
             </div>
@@ -13500,6 +13500,534 @@ html.ds1-on .ds1-practice .ds-btn { flex: 1 1 140px; }
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start); else start();
 })();
 /* RC42u-DS1-END */
+</script>
+<style id="wave2-css">
+/* RC42v-W2 UX Wave 2. Every rule is scoped to html.w2-on or to the w2 components. */
+/* icons */
+.w2-icw { display: inline-flex; align-items: center; justify-content: center; vertical-align: -0.2em; margin-right: .35em; line-height: 0; }
+.w2-icw:last-child { margin-right: 0; }
+.w2-ic { width: 1.25em; height: 1.25em; flex: 0 0 auto; }
+html.w2-on .nv-i .w2-icw, html.w2-on .hb-i .w2-icw { margin: 0; }
+html.w2-on .nv-i .w2-ic { width: 24px; height: 24px; }
+html.w2-on .hb-i .w2-ic { width: 22px; height: 22px; }
+html.w2-on .header .hb-i { color: #fff; }
+/* the header title brand comes from APP_CONFIG (attribute set by the layer) */
+@media (max-width: 420px) {
+  html.w2-on .header.header .header-title[data-short]::before { content: attr(data-short); }
+}
+/* one state component */
+html.w2-on .w2-state { display: flex; align-items: center; gap: 8px; color: #5B6470; }
+html.w2-on .w2-state .w2-icw { margin: 0; color: #8A95A5; }
+html.w2-on .w2-empty { padding: 12px 4px; font-size: var(--t-caption, .875rem); }
+html.w2-on .w2-error { color: #8C1D18; }
+html.w2-on .w2-error .w2-icw { color: #B3261E; }
+html.w2-on .w2-loading { position: relative; color: transparent !important; min-height: 1.4em; border-radius: 6px; overflow: hidden; background: linear-gradient(90deg, #EEF2F6 0%, #F7F9FB 40%, #EEF2F6 80%); background-size: 200% 100%; animation: w2-shimmer 1.2s linear infinite; }
+html.w2-on .w2-loading * { visibility: hidden; }
+@keyframes w2-shimmer { from { background-position: 100% 0; } to { background-position: -100% 0; } }
+@media (prefers-reduced-motion: reduce) { html.w2-on .w2-loading { animation: none; } }
+html.w2-on .w2-nodata { color: #A0A9B5 !important; }
+/* visible input labels */
+html.w2-on .w2-label { display: block; font-size: var(--t-caption, .875rem); font-weight: 600; color: #0A1628; margin: 8px 0 4px; }
+/* Stock history: Undo is inside the entry detail */
+html.w2-on #lh-list > li.r42o-lr .lh-void-btn { display: none !important; }
+html.w2-on #lh-list > li.r42o-lr { cursor: pointer; }
+#w2-bg { position: fixed; inset: 0; z-index: 9600; background: rgba(10, 22, 40, .5); display: flex; align-items: flex-end; justify-content: center; }
+#w2-bg[hidden] { display: none; }
+#w2-bg .w2-kv { display: flex; justify-content: space-between; gap: 12px; padding: 8px 0; border-bottom: 1px solid #E2E8F0; font-size: 1rem; }
+#w2-bg .w2-kv span { color: #5B6470; flex: 0 0 34%; }
+#w2-bg .w2-kv b { text-align: right; overflow-wrap: anywhere; }
+#w2-bg .w2-kv small { color: #5B6470; font-weight: 400; }
+/* Needs your help: one card at a time */
+html.w2-on #nyh-body.w2-stack .nyh-card { display: none; }
+html.w2-on #nyh-body.w2-stack .nyh-card.w2-cur { display: block; }
+html.w2-on .w2-nyhbar { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin: 0 0 10px; }
+html.w2-on .w2-nyhpos { font-weight: 600; color: #0A1628; }
+html.w2-on .w2-nyhbar .ds-btn:disabled { opacity: .4; }
+/* Chats laid out as a tab: full width between the header and the bar, no dim backdrop, the bar stays usable */
+html.w2-on.w2-chats #cc-bg { position: fixed !important; top: var(--w2-top, 56px) !important; bottom: var(--w2-bot, 0px) !important; left: 0; right: 0; background: #fff !important; align-items: stretch !important; justify-content: center; z-index: 250; }
+html.w2-on.w2-chats #cc-bg .nv-sheet { max-height: none !important; min-height: 0 !important; height: 100% !important; width: 100%; max-width: 520px; border-radius: 0 !important; box-shadow: none !important; overflow-y: auto; }
+html.w2-on.w2-chats #cc-bg .nv-sheet .nv-grab, html.w2-on.w2-chats #cc-bg .nv-sheet .nv-handle { display: none; }
+/* Dashboard: one Export menu */
+html.w2-on .w2-exp { position: relative; display: inline-block; }
+html.w2-on .w2-exp > summary { list-style: none; cursor: pointer; min-height: 44px; }
+html.w2-on .w2-exp > summary::-webkit-details-marker { display: none; }
+html.w2-on .w2-exp[open] > .w2-expm { position: absolute; right: 0; top: calc(100% + 4px); z-index: 30; display: flex; flex-direction: column; gap: 6px; padding: 8px; background: #fff; border: 1px solid #E2E8F0; border-radius: 12px; box-shadow: 0 8px 24px rgba(10, 22, 40, .16); min-width: 140px; }
+html.w2-on .w2-expm > button { width: 100%; min-height: 44px; }
+/* RC42v-E2: the bar stays above Chats laid out as a tab */
+html.w2-on.w2-chats #tab-nav { z-index: 260 !important; }
+/* RC42v-E5: the Needs-your-help '?' sits in the sheet header */
+html.w2-on #nyh-bg .nv-top { display: flex; align-items: center; gap: 8px; }
+html.w2-on #nyh-bg .nv-top > b { flex: 1 1 auto; min-width: 0; }
+html.w2-on #nyh-bg .nv-top > details.w2-inhead { float: none !important; margin: 0 !important; position: static !important; flex: 0 0 auto; }
+</style>
+<script id="wave2-js">
+/* RC42v-W2-BEGIN  UX Wave 2, wave2b = v233f (REVIEW_v233e E1-E6: states clear when the text changes, Chats keeps the bar, bell waits for Needs-help, more icons, labels, entry note) (UX_AUDIT_v233a: F11, F12, F17, F19, H1, N1, C1, D3 + SaaS config). Flag wave2_v1: ON by default; ?wave2=off = v233d.
+   Runtime layer on top of ds1 (v233d). No app function text changes; the 33 protected functions stay byte-identical (make_r42v_wave2.py proves it).
+   Parts: APP_CONFIG (company / product / currency / locale / time zone, defaults = today's values) + money / date helpers; one outline icon set
+   (inline SVG) replacing emoji in the bar, More, header buttons, titles and buttons; one state component (loading / empty / error / no data);
+   visible labels for placeholder-only inputs; Stock history: Undo inside the entry detail; Needs your help one card at a time;
+   Chats laid out as a tab (full screen between header and bar, Chats active); Dashboard: one Export menu for CSV / Excel. */
+(function () {
+    'use strict';
+    var W = { on: false, mo: null, t: 0, ord: 0 };
+    function flagOn() {
+        var s = ''; try { s = String(location.search || ''); } catch (e) { }
+        if (/[?&]wave2=off/.test(s)) { try { localStorage.setItem('wave2_v1', 'off'); } catch (e) { } return false; }
+        if (/[?&]wave2=on/.test(s)) { try { localStorage.removeItem('wave2_v1'); } catch (e) { } return true; }
+        try { return localStorage.getItem('wave2_v1') !== 'off'; } catch (e) { return true; }
+    }
+    function $(id) { return document.getElementById(id); }
+    function E(x) { return String(x == null ? '' : x).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
+
+    /* ---------- 1. one company config (UI) + helpers ---------- */
+    var DEF = { company: 'ArtzFolio', product: 'ArtzFolio Super App', short: 'ArtzFolio', currency: 'INR', symbol: '₹', locale: 'en-IN', timeZone: 'Asia/Kolkata', tzLabel: 'India time' };
+    var CFG = window.APP_CONFIG = Object.assign({}, DEF, (window.APP_CONFIG && typeof window.APP_CONFIG === 'object') ? window.APP_CONFIG : {});
+    function parts(d) {
+        var x = d instanceof Date ? d : new Date(d); if (isNaN(x)) return null;
+        try { var f = new Intl.DateTimeFormat('en-CA', { timeZone: CFG.timeZone, year: 'numeric', month: '2-digit', day: '2-digit' }).format(x); return f; } catch (e) { return x.toISOString().slice(0, 10); }
+    }
+    var MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    function dayKey(d) { return parts(d); }
+    function addDays(key, n) { var t = new Date(key + 'T12:00:00Z'); t.setUTCDate(t.getUTCDate() + n); return t.toISOString().slice(0, 10); }
+    function fmtDate(d, now) {   /* Today / Yesterday / 17 Nov / 17 Nov 2025 (company time zone) */
+        var k = (typeof d === 'string' && /^[0-9]{4}-[0-9]{2}-[0-9]{2}$/.test(d)) ? d : dayKey(d); if (!k) return String(d == null ? '' : d);
+        var today = dayKey(now || new Date());
+        if (k === today) return 'Today'; if (k === addDays(today, -1)) return 'Yesterday';
+        var y = k.slice(0, 4), m = MON[Number(k.slice(5, 7)) - 1], dd = Number(k.slice(8, 10));
+        return dd + ' ' + m + (y !== today.slice(0, 4) ? ' ' + y : '');
+    }
+    function fmtTime(d) { try { return new Intl.DateTimeFormat(CFG.locale, { timeZone: CFG.timeZone, hour: '2-digit', minute: '2-digit', hour12: false }).format(d instanceof Date ? d : new Date(d)); } catch (e) { return ''; } }
+    function fmtAgo(d, now) {
+        var ms = (now || Date.now()) - (d instanceof Date ? d.getTime() : new Date(d).getTime()); if (isNaN(ms)) return '';
+        var m = Math.round(ms / 60000); if (m < 1) return 'just now'; if (m < 60) return m + (m === 1 ? ' minute ago' : ' minutes ago');
+        var h = Math.round(m / 60); if (h < 24) return h + (h === 1 ? ' hour ago' : ' hours ago');
+        return fmtDate(d, now);
+    }
+    function money(n) { try { return new Intl.NumberFormat(CFG.locale, { style: 'currency', currency: CFG.currency, maximumFractionDigits: 0 }).format(Number(n) || 0); } catch (e) { return CFG.symbol + Math.round(Number(n) || 0); } }
+    function plural(n, w, ws) { return n + ' ' + (Number(n) === 1 ? w : (ws || w + 's')); }
+    window.APP = { config: CFG, fmtDate: fmtDate, fmtTime: fmtTime, fmtAgo: fmtAgo, money: money, plural: plural, dayKey: dayKey };
+    function brand() {   /* the visible brand comes from the config (defaults change nothing) */
+        var h = document.querySelector('.header .header-title');
+        if (h) { if (h.getAttribute('data-short') !== CFG.short) h.setAttribute('data-short', CFG.short); if (h.getAttribute('title') !== CFG.product) h.setAttribute('title', CFG.product); if (CFG.product !== DEF.product && h.textContent !== CFG.product) h.textContent = CFG.product; }
+        try { if (CFG.product !== DEF.product && document.title.indexOf(DEF.product) >= 0) document.title = document.title.split(DEF.product).join(CFG.product); } catch (e) { }
+    }
+    function brandText(n) {   /* visible text only; only when the company is not the default */
+        if (CFG.company === DEF.company || !n.nodeValue || n.nodeValue.indexOf(DEF.company) < 0) return;
+        var p = n.parentNode; if (!p || p.closest('script,style,textarea,input,[contenteditable],code')) return;
+        n.nodeValue = n.nodeValue.split(DEF.product).join(CFG.product).split(DEF.company).join(CFG.company);
+    }
+
+    /* ---------- 2. one icon set (inline SVG outline, 24 px, stroke 1.75) ---------- */
+    var P = {
+        today: '<rect x="8" y="2" width="8" height="4" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M9 12h6M9 16h6"/>',
+        stock: '<path d="M21 8l-9-5-9 5 9 5 9-5z"/><path d="M3 8v8l9 5 9-5V8"/><path d="M12 13v8"/>',
+        orders: '<path d="M6 2L4 6v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6l-2-4z"/><path d="M4 6h16"/><path d="M16 10a4 4 0 0 1-8 0"/>',
+        chart: '<path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/>',
+        chat: '<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>',
+        menu: '<path d="M4 6h16M4 12h16M4 18h16"/>',
+        search: '<circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/>',
+        plus: '<path d="M12 5v14M5 12h14"/>',
+        bell: '<path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.9 1.9 0 0 0 3.4 0"/>',
+        user: '<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>',
+        tag: '<path d="M20.6 13.4l-7.2 7.2a2 2 0 0 1-2.8 0L3 13V3h10l7.6 7.6a2 2 0 0 1 0 2.8z"/><circle cx="7.5" cy="7.5" r="1.5"/>',
+        qr: '<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3h-3zM20 14v7M14 20h3"/>',
+        people: '<circle cx="9" cy="8" r="4"/><path d="M2 21a7 7 0 0 1 14 0"/><path d="M16 4a4 4 0 0 1 0 8M22 21a7 7 0 0 0-4-6.3"/>',
+        truck: '<path d="M1 4h13v12H1z"/><path d="M14 9h4l3 3v4h-7"/><circle cx="5.5" cy="18.5" r="2"/><circle cx="17.5" cy="18.5" r="2"/>',
+        tool: '<path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.8-3.8a6 6 0 0 1-7.9 7.9l-6.9 6.9a2.1 2.1 0 0 1-3-3l6.9-6.9a6 6 0 0 1 7.9-7.9z"/>',
+        factory: '<path d="M2 20V9l6 4V9l6 4V4h8v16z"/><path d="M2 20h20"/>',
+        box: '<rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>',
+        clock: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+        gear: '<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9L7 7M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1"/>',
+        help: '<circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 0 1 5 0c0 2-2.5 2-2.5 4"/><path d="M12 17h.01"/>',
+        lifebuoy: '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><path d="M5.6 5.6l3.6 3.6M14.8 14.8l3.6 3.6M18.4 5.6l-3.6 3.6M9.2 14.8l-3.6 3.6"/>',
+        swap: '<path d="M7 4L3 8l4 4"/><path d="M3 8h13a5 5 0 0 1 5 5"/><path d="M17 20l4-4-4-4"/><path d="M21 16H8a5 5 0 0 1-5-5"/>',
+        book: '<path d="M4 4h6a3 3 0 0 1 3 3v14a2 2 0 0 0-2-2H4z"/><path d="M20 4h-6a3 3 0 0 0-3 3v14a2 2 0 0 1 2-2h7z"/>',
+        camera: '<path d="M4 7h3l2-3h6l2 3h3a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="4"/>',
+        share: '<path d="M12 3v12"/><path d="M8 7l4-4 4 4"/><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7"/>',
+        home: '<path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/>',
+        lock: '<rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/>',
+        cart: '<circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M2 3h3l3 12h11l2-8H6"/>',
+        inbox: '<path d="M3 13l3-9h12l3 9"/><path d="M3 13v6a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1v-6h-5l-2 3h-4l-2-3z"/>',
+        warn: '<path d="M12 3l10 18H2z"/><path d="M12 10v5M12 18h.01"/>',
+        phone: '<rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/>',
+        text: '<path d="M4 20l5-14 5 14M6 15h6"/><path d="M15 20l3-8 3 8M16 17h4"/>',
+        scale: '<path d="M12 3v18M7 21h10"/><path d="M5 7h14"/><path d="M5 7l-3 7a3 3 0 0 0 6 0z"/><path d="M19 7l-3 7a3 3 0 0 0 6 0z"/>',
+        minus: '<circle cx="12" cy="12" r="9"/><path d="M8 12h8"/>',
+        hash: '<path d="M5 9h14M5 15h14M10 4L8 20M16 4l-2 16"/>',
+        dot: '<circle cx="12" cy="12" r="3"/>'
+    };
+    var EMO = {}; [[0x1F4CB, 'today'], [0x1F4CA, 'stock'], [0x1F4E6, 'orders'], [0x1F4C8, 'chart'], [0x1F4AC, 'chat'], [0x2630, 'menu'], [0x1F50D, 'search'], [0x1F50E, 'search'],
+        [0x1F514, 'bell'], [0x1F464, 'user'], [0x1F3F7, 'tag'], [0x1F465, 'people'], [0x1F69A, 'truck'], [0x1F6E0, 'tool'], [0x1F3ED, 'factory'], [0x1F5C3, 'box'], [0x1F4C7, 'box'],
+        [0x1F4DC, 'clock'], [0x2699, 'gear'], [0x2753, 'help'], [0x1F64B, 'lifebuoy'], [0x1F504, 'swap'], [0x1F4D6, 'book'], [0x1F4F7, 'camera'], [0x1F4E4, 'share'], [0x1F3E0, 'home'],
+        [0x1F512, 'lock'], [0x1F6D2, 'cart'], [0x1F4E5, 'inbox'], [0x1F4F1, 'phone'], [0x1F520, 'text'], [0x2795, 'plus'], [0x1F9F1, 'box'], [0x1F4C5, 'clock'], [0x1F4DD, 'today'], [0x2696, 'scale'], [0x2796, 'minus'], [0x1F522, 'hash'], [0x1F4B0, 'cart'], [0x1F4B3, 'cart']].forEach(function (x) { EMO[x[0]] = x[1]; });
+    function svg(name, cls) { return '<svg class="w2-ic ' + (cls || '') + '" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">' + (P[name] || P.dot) + '</svg>'; }
+    function isEmoji(cp) { return (cp >= 0x1F300 && cp <= 0x1FAFF) || (cp >= 0x1F000 && cp <= 0x1F2FF) || (cp < 0x1F000 && !!EMO[cp]); }   /* symbols like the close X, ticks and arrows are text, not emoji: only mapped ones below U+1F000 count */
+    function leadEmoji(s) {   /* -> { cp, len } for an emoji at the start (after spaces), with its variation selector / joiners */
+        var i = 0; while (i < s.length && s.charAt(i) === ' ') i++;
+        var cp = s.codePointAt(i); if (cp == null || !isEmoji(cp)) return null;
+        var j = i + (cp > 0xFFFF ? 2 : 1);
+        while (j < s.length) { var c2 = s.codePointAt(j); if (c2 === 0xFE0F || c2 === 0x200D) { j++; continue; } if (s.charCodeAt(j - 1) === 0x200D && c2 != null && isEmoji(c2)) { j += c2 > 0xFFFF ? 2 : 1; continue; } break; }
+        while (j < s.length && s.charAt(j) === ' ') j++;
+        return { cp: cp, start: i, end: j };
+    }
+    var ICON_SCOPE = '*';   /* RC42v-E4: every visible label (bar, header, More, titles, buttons, chips, quick tiles, notices); chat bubbles, tables and inputs are excluded above */
+    function iconNode(n) {
+        var p = n.parentNode; if (!p || p.nodeType !== 1 || p.closest('.w2-ic, input, textarea, script, style, .cc-msg, .cc-bubble, table, .tab-btn, #tab-src, .tab-hidden, [hidden]')) return;   /* the hidden tab buttons are read by the app for the bar labels: never touched */
+        var host = p.closest(ICON_SCOPE); if (!host) return;
+        var v = n.nodeValue; if (!v) return;
+        var le = leadEmoji(v); if (!le) return;
+        var rest = v.slice(le.end), name = EMO[le.cp];
+        var onlyIcon = !rest.trim() && !String(host.textContent || '').replace(v, '').trim();
+        if (!name && !onlyIcon) { n.nodeValue = v.slice(0, le.start) + rest; return; }   /* an emoji with no icon is dropped from a label */
+        if (!name) return;   /* an emoji that is the whole label and has no icon stays as it is */
+        var span = document.createElement('span'); span.className = 'w2-icw'; span.innerHTML = svg(name || 'dot');
+        p.insertBefore(span, n); n.nodeValue = rest ? ' ' + rest.replace(/^ +/, '') : '';
+    }
+    function iconWalk(root) {
+        if (!root || root.nodeType !== 1) { if (root && root.nodeType === 3) iconNode(root); return; }
+        if (/^(SCRIPT|STYLE|TEXTAREA|INPUT|SELECT|OPTION)$/.test(root.tagName)) return;
+        var w = document.createTreeWalker(root, 4, null), n, list = [];
+        while ((n = w.nextNode())) { var cp = n.nodeValue ? n.nodeValue.replace(/^ +/, '').codePointAt(0) : null; if (cp != null && isEmoji(cp)) list.push(n); if (CFG.company !== DEF.company) brandText(n); }
+        list.forEach(iconNode);
+    }
+
+    /* F19: ISO dates in Chats, Leads and the Vendors table read as Today / Yesterday / 17 Nov (company time zone) */
+    var DATE_SCOPE = '#cc-bg, #cc3-bg, #vr-res, .s3-vendors';
+    function dates(root) {
+        var scope = root && root.querySelectorAll ? root : document;
+        var hosts = [].slice.call(scope.querySelectorAll(DATE_SCOPE)); if (root && root.closest && root.closest(DATE_SCOPE)) hosts.push(root);
+        hosts.forEach(function (h) {
+            var w = document.createTreeWalker(h, 4, null), n, list = [];
+            while ((n = w.nextNode())) if (/[0-9]{4}-[0-9]{2}-[0-9]{2}/.test(n.nodeValue || '')) list.push(n);
+            list.forEach(function (n) { var p = n.parentNode; if (!p || p.closest('input, textarea, code, .rm-code')) return; n.nodeValue = n.nodeValue.replace(/([0-9]{4}-[0-9]{2}-[0-9]{2})(?![0-9:T])/g, function (m) { return fmtDate(m); }); });
+        });
+    }
+
+    /* ---------- 3. one state component: loading / empty / error / no data ---------- */
+    var EMPTY = /^(None[.]?|No data for this chart yet[.]?|Nothing matches these filters[.]?|Nothing noted yet[.]?|Nothing this week[.]?|Nothing made this week yet[.]?|No results[.]?|Nothing to show[.]?|No entries[.]?|Waiting for a pick list[.]?)$/;
+    var LOADING = /^(Loading|Checking|Reading|Updating)([^a-z].*)?(…|[.][.][.])$/;
+    function stateOf(el) {
+        var t = String(el.textContent || '').replace(/[ ]+/g, ' ').trim();
+        if (!t || t.length > 90) return '';
+        if (EMPTY.test(t)) return 'empty';
+        if (LOADING.test(t)) return 'loading';
+        if (el.matches('.move-result.err, .rm-err, .xm-err, .b4-errc') && /could not|not reachable|failed|error|try again/i.test(t)) return 'error';
+        return '';
+    }
+    function clearState(el) {
+        el.classList.remove('w2-state', 'w2-loading', 'w2-empty', 'w2-error'); el.removeAttribute('data-w2'); el.removeAttribute('aria-busy');
+        [].forEach.call(el.querySelectorAll('.w2-icw[data-w2st]'), function (x) { x.parentNode.removeChild(x); });
+    }
+    function setState(el, k) {
+        if (el.getAttribute('data-w2') === k) return;
+        clearState(el);
+        el.classList.add('w2-state', 'w2-' + k); el.setAttribute('data-w2', k);
+        if (k !== 'loading') { var sp = document.createElement('span'); sp.className = 'w2-icw'; sp.setAttribute('data-w2st', '1'); sp.innerHTML = svg(k === 'error' ? 'warn' : 'inbox'); el.insertBefore(sp, el.firstChild); }
+        else el.setAttribute('aria-busy', 'true');
+    }
+    /* RC42v-E1: every box with a state is checked again; when its text is no longer the state's phrase (for example 'Checking...' became
+       'OFF - this account signs in with the PIN alone', or a list of zeros arrived) the state is removed, so real text and zeros are never hidden */
+    function recheck(scope) {
+        var list = [].slice.call((scope && scope.querySelectorAll ? scope : document).querySelectorAll('.w2-state'));
+        if (scope && scope.classList && scope.classList.contains('w2-state')) list.push(scope);
+        list.forEach(function (el) { var k = (el.children.length - el.querySelectorAll(':scope > .w2-icw[data-w2st]').length) > 2 ? '' : stateOf(el); if (!k) clearState(el); else if (k !== el.getAttribute('data-w2')) setState(el, k); });
+        [].forEach.call((scope && scope.querySelectorAll ? scope : document).querySelectorAll('.w2-nodata'), function (b) { if (String(b.textContent).trim() !== '-') { b.classList.remove('w2-nodata'); b.removeAttribute('data-w2nd'); b.removeAttribute('aria-label'); if (b.getAttribute('title') === 'No data yet') b.removeAttribute('title'); } });
+    }
+    function states(root) {
+        var scope = root && root.querySelectorAll ? root : document;
+        var SEL = '.rm-note, .rm-dim, .lh-empty, .settings-info, .cc-meta, .d2-empty, .move-result.err, .rm-err, .xm-err, .nyh-sub, li, p, div.rm-card > div';
+        var els = [].slice.call(scope.querySelectorAll(SEL)); if (root && root.matches && root.matches(SEL)) els.unshift(root);   /* RC42v-E1: a box added on its own is checked too */
+        els.forEach(function (el) {
+            if (el.classList.contains('w2-state')) return;
+            if (el.children.length > 2) return;
+            var k = stateOf(el); if (!k) return;
+            setState(el, k);
+        });
+        recheck(scope);
+        /* number tiles that only show '-' : no data yet (not zero) */
+        [].forEach.call(scope.querySelectorAll('.xm-tile b, .xm-tile .xm-n, .rm-tile b, .rm-kpi b, .xm-kpi b, [class*="tile"] > b:first-child, [class*="tile"] > div:first-child'), function (b) {
+            if (b.children.length || b.getAttribute('data-w2nd')) return;
+            if (String(b.textContent).trim() === '-') { b.setAttribute('data-w2nd', '1'); b.classList.add('w2-nodata'); b.setAttribute('title', 'No data yet'); b.setAttribute('aria-label', 'No data yet'); }
+        });
+    }
+
+    /* ---------- 4. F11: a visible label on placeholder-only inputs ---------- */
+    function labelOf(inp) {
+        var ph = String(inp.getAttribute('placeholder') || '').trim(); if (!ph) return '';
+        ph = ph.replace(/[ ]*[(]?e[.]g[.].*$/i, '').replace(/[ ]*[-–—:][ ]*$/, '').trim();
+        if ((ph.split('(').length) > (ph.split(')').length)) ph = ph.replace(/[ ]*[,;]?$/, '') + ')';
+        if (!ph || ph.length > 48) return '';
+        if (ph === ph.toUpperCase() && /[A-Z]{3}/.test(ph)) ph = ph.charAt(0) + ph.slice(1).toLowerCase();
+        return ph;
+    }
+    function labels(root) {
+        var scope = root && root.querySelectorAll ? root : document;
+        [].forEach.call(scope.querySelectorAll('#move-tab input[placeholder], #rm-body input[placeholder], #crm-body input[placeholder], #prd-body input[placeholder], #rm-body textarea[placeholder], #crm-body textarea[placeholder], #prd-body textarea[placeholder]'), function (inp) {
+            if (inp.getAttribute('data-w2l') || inp.type === 'hidden' || inp.type === 'checkbox' || inp.type === 'radio') return;
+            inp.setAttribute('data-w2l', '1');
+            if ((inp.labels && inp.labels.length) || inp.getAttribute('aria-labelledby') || inp.closest('label')) return;
+            var prev = inp.previousElementSibling;
+            if (prev && (prev.tagName === 'LABEL' || /label|xm-lab|field-label|rm-lab/i.test(prev.className))) return;
+            var par = inp.parentNode; if (par && par.previousElementSibling && /field-label|xm-lab|rm-lab/.test(par.previousElementSibling.className || '')) return;
+            var txt = labelOf(inp); if (!txt) return;
+            if (/^search/i.test(txt) || inp.type === 'search' || /search/i.test(inp.className || '')) { if (!inp.getAttribute('aria-label')) inp.setAttribute('aria-label', txt); return; }   /* RC42v-E5: a search box's placeholder is its label */
+            if (!inp.getAttribute('aria-label')) inp.setAttribute('aria-label', txt);
+            var disp = ''; try { disp = getComputedStyle(par).display; } catch (e) { }
+            if (/flex|grid/.test(disp) && par.children.length > 1) return;   /* inside a row of controls: the name is read out, the row is not rebuilt */
+            if (!inp.id) inp.id = 'w2-in-' + (++W.ord);
+            var lb = document.createElement('label'); lb.className = 'w2-label'; lb.setAttribute('for', inp.id); lb.textContent = txt;
+            par.insertBefore(lb, inp);
+        });
+    }
+
+    /* ---------- 5. H1: Stock history: Undo lives in the entry detail ---------- */
+    function lhTap(ev) {
+        if (!W.on) return;
+        var t = ev.target; if (!t || !t.closest) return;
+        var li = t.closest('#lh-list > li.r42o-lr'); if (!li) return;
+        if (t.closest('a, input, select')) return;
+        ev.stopPropagation(); ev.preventDefault();
+        var txn = li.getAttribute('data-txn'), sku = li.getAttribute('data-sku') || '';
+        var c1 = li.querySelector('.r42o-c1'), c2 = li.querySelector('.r42o-c2'), c3 = li.querySelector('.r42o-c3'), vb = li.querySelector('.lh-void-btn');
+        var nm = c1 ? (c1.querySelector('.d2-nm') || c1).textContent : '', code = c1 && c1.querySelector('.d2-sk') ? c1.querySelector('.d2-sk').textContent : '';
+        var what = c2 ? (c2.querySelector('b') || c2).textContent : '', q = c2 && c2.querySelector('.lh-q') ? c2.querySelector('.lh-q').textContent : '';
+        var when = c3 ? [].map.call(c3.childNodes, function (k) { return String(k.textContent || '').trim(); }).filter(Boolean).join(' · ') : '';
+        var notes = [].map.call(li.querySelectorAll('.r42o-note, .r42o-void, .lh-void-note, .lh-badge.void'), function (x) { return { t: String(x.textContent || '').replace(/[ ]+/g, ' ').trim(), v: /void/i.test(x.className) }; }).filter(function (x) { return x.t; });   /* the time and the person were on two lines */
+        var bg = $('w2-bg'); if (!bg) { bg = document.createElement('div'); bg.id = 'w2-bg'; bg.hidden = true; document.body.appendChild(bg); bg.addEventListener('click', function (e) { if (e.target === bg || (e.target.closest && e.target.closest('[data-w2=x]'))) { closeDetail(); return; } var b = e.target.closest && e.target.closest('[data-w2]'); if (!b) return; var a = b.getAttribute('data-w2'); closeDetail(); if (a === 'undo') { try { openVoidEntry(Number(b.getAttribute('data-txn'))); } catch (x) { } } else if (a === 'prod') { try { openSkuDetail(b.getAttribute('data-sku')); } catch (x) { } } }); }
+        W.prevFocus = document.activeElement;
+        bg.innerHTML = '<div class="ds-sheet w2-sheet" role="dialog" aria-modal="true" aria-labelledby="w2-h"><div class="ds-grab" aria-hidden="true"></div><div class="ds-sheet-head"><h2 id="w2-h" class="ds-sheet-title">Entry #' + E(txn) + '</h2><button type="button" class="ds-icon-btn" data-w2="x" aria-label="Close">&#10005;</button></div>' +
+            '<div class="ds-sheet-body"><div class="w2-kv"><span>Product</span><b>' + E(nm) + (code ? '<br><small>' + E(code) + '</small>' : '') + '</b></div><div class="w2-kv"><span>What</span><b>' + E(what) + ' ' + E(q) + '</b></div>' + (when ? '<div class="w2-kv"><span>When, who</span><b>' + E(when) + '</b></div>' : '') + notes.map(function (x) { return '<div class="w2-kv"><span>' + (x.v ? 'Undone' : 'Note') + '</span><b>' + E(x.t) + '</b></div>'; }).join('') + '</div>' +
+            '<div class="ds-sheet-foot">' + (sku ? '<button type="button" class="ds-btn ds-btn--secondary" data-w2="prod" data-sku="' + E(sku) + '">Open the product</button>' : '') + (vb ? '<button type="button" class="ds-btn ds-btn--destructive" data-w2="undo" data-txn="' + E(txn) + '">Undo this entry</button>' : '') + '</div></div>';
+        bg.hidden = false;
+        setTimeout(function () { var f = bg.querySelector('[data-w2=prod], [data-w2=x]'); try { if (f) f.focus({ preventScroll: true }); } catch (e) { } }, 30);
+    }
+    function closeDetail() { var bg = $('w2-bg'); if (bg) { bg.hidden = true; bg.innerHTML = ''; } var p = W.prevFocus; W.prevFocus = null; try { if (p && p.isConnected && p.focus) p.focus({ preventScroll: true }); } catch (e) { } }
+
+    /* ---------- 6. N1: Needs your help, one card at a time ---------- */
+    function nyhStack() {
+        var body = $('nyh-body'); if (!body) return;
+        var cards = [].slice.call(body.querySelectorAll('.nyh-card'));
+        var bar = $('w2-nyhbar');
+        if (cards.length < 2) { body.classList.remove('w2-stack'); if (bar) bar.parentNode.removeChild(bar); return; }
+        body.classList.add('w2-stack');
+        var cur = body.querySelector('.nyh-card.w2-cur');
+        if (!cur || cur.parentNode !== body && !body.contains(cur)) { cards.forEach(function (c) { c.classList.remove('w2-cur'); }); cur = cards[Math.min(W.nyhI || 0, cards.length - 1)]; cur.classList.add('w2-cur'); }
+        var i = cards.indexOf(cur); W.nyhI = i;
+        if (!bar) {
+            bar = document.createElement('div'); bar.id = 'w2-nyhbar'; bar.className = 'w2-nyhbar';
+            bar.addEventListener('click', function (e) { var b = e.target.closest && e.target.closest('[data-w2n]'); if (!b) return; nyhMove(b.getAttribute('data-w2n') === 'next' ? 1 : -1); });
+            body.insertBefore(bar, body.firstChild);
+        }
+        var txt = 'Card ' + (i + 1) + ' of ' + cards.length;
+        var html = '<button type="button" class="ds-btn ds-btn--text" data-w2n="prev"' + (i === 0 ? ' disabled' : '') + '>&#8249; Back</button><span class="w2-nyhpos" aria-live="polite">' + txt + '</span><button type="button" class="ds-btn ds-btn--secondary" data-w2n="next"' + (i >= cards.length - 1 ? ' disabled' : '') + '>Skip &#8250;</button>';
+        if (bar.getAttribute('data-k') !== txt) { bar.innerHTML = html; bar.setAttribute('data-k', txt); }
+    }
+    function nyhMove(d) {
+        var body = $('nyh-body'); if (!body) return;
+        var cards = [].slice.call(body.querySelectorAll('.nyh-card')), cur = body.querySelector('.nyh-card.w2-cur'), i = cards.indexOf(cur);
+        var j = Math.max(0, Math.min(cards.length - 1, i + d)); if (cur) cur.classList.remove('w2-cur'); cards[j].classList.add('w2-cur'); W.nyhI = j; nyhStack();
+        try { var f = cards[j].querySelector('input'); if (f) f.focus({ preventScroll: true }); } catch (e) { }
+    }
+
+    function nyhHelpIntoHeader() {   /* RC42v-E5 */
+        var sh = document.querySelector('#nyh-bg .nv-sheet'); if (!sh) return;
+        var top = sh.querySelector('.nv-top'), hx = sh.querySelector(':scope > details.r42o-hx'); if (!top || !hx) return;
+        var x = top.querySelector('.nv-x'); top.insertBefore(hx, x || null); hx.classList.add('w2-inhead');
+    }
+
+    /* ---------- 7. C1: Chats laid out as a tab ---------- */
+    function navH() {   /* RC42v-E2: the bar's real height, remembered from the last time it was shown */
+        var nv = $('tab-nav'); if (!nv) return W.navH || 0;
+        var cs = null; try { cs = getComputedStyle(nv); } catch (e) { }
+        if (cs && cs.display !== 'none' && cs.visibility !== 'hidden') { var h = Math.round(nv.getBoundingClientRect().height); if (h > 0) W.navH = h; }
+        return W.navH || 64;
+    }
+    function chatsLayout() {
+        var cc = $('cc-bg'), open = !!cc && !cc.hidden, h = document.documentElement;
+        if (h.classList.contains('w2-chats') !== open) {
+            h.classList.toggle('w2-chats', open);
+            try { nvSoon(); } catch (e) { }
+        }
+        if (open) {
+            var hd = document.querySelector('.header'), nv = $('tab-nav');
+            var top = hd ? Math.round(hd.getBoundingClientRect().bottom) : 0, bot = navH();
+            h.style.setProperty('--w2-top', top + 'px'); h.style.setProperty('--w2-bot', bot + 'px');
+        }
+    }
+    var N = {};
+    function navOn() {
+        if (typeof window.nvGroups === 'function' && !window.nvGroups.w2) {
+            N.gr = window.nvGroups;
+            var w = function () { var g = N.gr.apply(this, arguments); try { if (W.on && document.documentElement.classList.contains('w2-chats')) g.forEach(function (x) { x.active = x.id === 'chats'; }); } catch (e) { } return g; };
+            w.w2 = true; window.nvGroups = w;
+        }
+        if (typeof window.nvMoreGroups === 'function' && !window.nvMoreGroups.w2) {
+            N.mg = window.nvMoreGroups;
+            var w2 = function () { var g = N.mg.apply(this, arguments); try { var barOn = false; try { barOn = window.nvGroups().some(function (x) { return x.active; }); } catch (e) { } if (W.on && (barOn || document.documentElement.classList.contains('w2-chats'))) g.forEach(function (x) { x.active = false; }); } catch (e) { } return g; };   /* F08: one active tab at a time (Dashboard is a bar tab, so More is not lit too) */
+            w2.w2 = true; window.nvMoreGroups = w2;
+        }
+    }
+    function navOff() { if (N.gr) window.nvGroups = N.gr; if (N.mg) window.nvMoreGroups = N.mg; N = {}; }
+
+    /* ---------- 8. D3: Dashboard: one Export menu ---------- */
+    function dashExport() {
+        var root = $('dash2'); if (!root) return;
+        var bs = [].filter.call(root.querySelectorAll('button'), function (b) { var t = String(b.textContent || '').trim(); return (t === 'CSV' || t === 'Excel') && !b.closest('.w2-exp'); });
+        if (bs.length < 2 || bs[0].parentNode !== bs[1].parentNode) return;
+        var par = bs[0].parentNode, d = document.createElement('details'); d.className = 'w2-exp';
+        d.innerHTML = '<summary class="ds-btn ds-btn--secondary">Export</summary><div class="w2-expm"></div>';
+        par.insertBefore(d, bs[0]); var m = d.querySelector('.w2-expm'); bs.forEach(function (b) { m.appendChild(b); });
+    }
+
+    /* ---------- E3: the bell number waits for the Needs-your-help count ---------- */
+    function nyState() {
+        if (W.ny === 'done') return 'done';
+        var can = false; try { can = typeof nyhCan === 'function' && nyhCan(); } catch (e) { }
+        if (!can) { W.ny = 'done'; return 'done'; }
+        try { if (NYH.n != null) { if (W.ny !== 'done') { W.ny = 'done'; setTimeout(function () { try { b4BellPaint(); } catch (e) { } }, 0); } return 'done'; } } catch (e) { }
+        /* the bell shows '…' until the Needs-your-help count is known (read quietly at start with the remembered PIN, or when the list opens),
+           so its number never changes under the person when that count arrives */
+        if (!W.ny && typeof nyhBadge === 'function') { W.ny = 'asking'; try { if (!NYH.bLoading) nyhBadge(true); } catch (e) { } }
+        return 'asking';
+    }
+    function bellWait() {
+        var c = document.querySelector('#rm-bell-main .rm-bell-n'); if (!c) return;
+        var signed = false; try { signed = !!state.session; } catch (e) { }
+        if (!signed) W.ny = '';
+        if (signed && nyState() !== 'done') { if (c.textContent !== '…') c.textContent = '…'; if (c.style.display === 'none') c.style.display = ''; var b = $('rm-bell-main'); if (b) b.setAttribute('aria-label', 'Notifications, counting'); }
+    }
+
+    /* ---------- run ---------- */
+    function pass(root) {
+        if (!W.on) return;
+        try { navH(); } catch (e) { }
+        try { brand(); } catch (e) { } try { iconWalk(root || document.body); } catch (e) { }
+        try { states(root); } catch (e) { } try { labels(root); } catch (e) { } try { dates(root); } catch (e) { }
+        try { nyhStack(); } catch (e) { } try { chatsLayout(); } catch (e) { } try { dashExport(); } catch (e) { }
+        try { bellWait(); } catch (e) { } try { nyhHelpIntoHeader(); } catch (e) { }
+    }
+    function on() {
+        W.on = true; document.documentElement.classList.add('w2-on');
+        navOn(); pass(document.body);
+        try { var bn = document.querySelector('#rm-bell-main .rm-bell-n'); if (bn && W.mo === null && typeof MutationObserver === 'function') { W.bmo = new MutationObserver(function () { if (W.ny !== 'done') bellWait(); }); W.bmo.observe(bn, { childList: true, characterData: true, subtree: true }); } } catch (e) { }
+        document.addEventListener('click', lhTap, true);
+        document.addEventListener('keydown', function (ev) { var bg = $('w2-bg'); if (bg && !bg.hidden && ev.key === 'Escape') closeDetail(); }, true);
+        if (typeof MutationObserver === 'function' && !W.mo) {
+            var pend = [];
+            W.mo = new MutationObserver(function (ms) {
+                ms.forEach(function (m) {
+                    var tg = m.target && (m.target.nodeType === 3 ? m.target.parentNode : m.target);
+                    var st = tg && tg.closest ? tg.closest('.w2-state, .w2-nodata') : null; if (st) { try { recheck(st.parentNode || st); } catch (e) { } }
+                    if (m.type === 'attributes') { if (m.target.id === 'cc-bg' || m.target.id === 'tab-nav') pend.push(null); else if (m.attributeName === 'hidden' && !m.target.hidden) pend.push(m.target); return; }   /* a sheet that opens (hidden removed) gets its icons too */
+                    if (m.type === 'characterData') { if (tg) pend.push(tg); return; }
+                    for (var i = 0; i < m.addedNodes.length; i++) pend.push(m.addedNodes[i]);
+                });
+                if (!W.t) W.t = setTimeout(function () { W.t = 0; var a = pend; pend = []; if (a.length > 300 || a.indexOf(null) >= 0) pass(document.body); else { a.forEach(function (n) { if (n && n.isConnected) { try { iconWalk(n); } catch (e) { } try { states(n.nodeType === 1 ? n : (n.parentNode || null)); } catch (e) { } try { labels(n.nodeType === 1 ? n : null); } catch (e) { } try { dates(n.nodeType === 1 ? n : null); } catch (e) { } } }); try { brand(); nyhStack(); chatsLayout(); dashExport(); bellWait(); nyhHelpIntoHeader(); } catch (e) { } } }, 80);
+            });
+            W.mo.observe(document.body, { childList: true, subtree: true, characterData: true, attributes: true, attributeFilter: ['hidden', 'style'] });
+        }
+    }
+    function off() {
+        W.on = false; try { localStorage.setItem('wave2_v1', 'off'); } catch (e) { }
+        document.documentElement.classList.remove('w2-on'); document.documentElement.classList.remove('w2-chats');
+        document.removeEventListener('click', lhTap, true); if (W.mo) { W.mo.disconnect(); W.mo = null; } navOff(); closeDetail();
+    }
+    window.r42v = { on: on, off: off, isOn: function () { return W.on; }, version: 'wave2b (v233f)', ICON_SCOPE: ICON_SCOPE, recheck: recheck, navH: navH, nyState: nyState, svg: svg, leadEmoji: leadEmoji, EMO: EMO, stateOf: stateOf, labelOf: labelOf, fmtDate: fmtDate, fmtAgo: fmtAgo, money: money, W: W };
+    window.WAVE2_ON = flagOn();
+    function start() { if (window.WAVE2_ON) { try { on(); } catch (e) { try { console.warn('wave2', e); } catch (x) { } } } }
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start); else start();
+})();
+/* RC42v-W2-END */
+</script>
+<script id="vgate-js">
+// RC45-VGATE-BEGIN - app version gate (SEC45 v1, 2026-11-18). Asks the server for the minimum app build
+// (public.oms_app_min_build_v1, readable with the app key) when the app opens, every 30 minutes and when it comes back
+// to the front. If this build is older than the minimum and the gate is switched on, a full-screen "Please update" card
+// is shown with an Update now button (asks the service worker for the new version, then reloads).
+// Never blocks anything when the server does not answer, the function is missing, or ?vgate=off is in the address.
+(function () {
+  var VG = { busy: false, shown: false, last: 0 };
+  function off() { try { return /[?&]vgate=off/.test(location.search); } catch (e) { return false; } }
+  function parse(t) {
+    var m = /^v([0-9]+)([a-z]?)/.exec(String(t || '').trim());
+    return m ? { n: parseInt(m[1], 10), l: m[2] || '' } : null;
+  }
+  function mine() {
+    var el = document.getElementById('verCornerBadge');
+    return parse(el ? el.textContent : '');
+  }
+  function older(a, b) {
+    if (a.n !== b.n) return a.n < b.n;
+    return a.l < b.l;
+  }
+  function update() {
+    var go = function () { try { location.reload(); } catch (e) { } };
+    try {
+      if (navigator.serviceWorker && navigator.serviceWorker.getRegistrations) {
+        navigator.serviceWorker.getRegistrations().then(function (regs) {
+          return Promise.all(regs.map(function (r) { return r.update().catch(function () { }); }));
+        }).then(go, go);
+        return;
+      }
+    } catch (e) { }
+    go();
+  }
+  function show(msg, min, cur) {
+    if (VG.shown) return;
+    VG.shown = true;
+    var d = document.createElement('div');
+    d.id = 'vgate-card';
+    d.setAttribute('role', 'alertdialog');
+    d.setAttribute('aria-modal', 'true');
+    d.style.cssText = 'position:fixed;inset:0;z-index:2147483000;background:rgba(10,22,40,0.92);display:flex;align-items:center;justify-content:center;padding:16px';
+    var box = document.createElement('div');
+    box.style.cssText = 'background:#fff;color:#1a1a1a;max-width:420px;width:100%;border-radius:14px;padding:22px;font:16px/1.45 Arial,sans-serif;text-align:center';
+    var h = document.createElement('div');
+    h.style.cssText = 'font-size:20px;font-weight:bold;margin-bottom:10px';
+    h.textContent = 'Please update the app';
+    var p = document.createElement('div');
+    p.style.cssText = 'margin-bottom:8px';
+    p.textContent = msg || 'This version is too old. Tap Update now.';
+    var s = document.createElement('div');
+    s.style.cssText = 'font-size:13px;color:#6b7280;margin-bottom:16px';
+    s.textContent = 'This phone: ' + cur + '. Needed: ' + min + ' or newer.';
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.textContent = 'Update now';
+    b.style.cssText = 'min-height:48px;width:100%;border:0;border-radius:10px;background:#0a1628;color:#fff;font-size:17px;font-weight:bold';
+    b.onclick = function () { b.disabled = true; b.textContent = 'Updating...'; update(); };
+    box.appendChild(h); box.appendChild(p); box.appendChild(s); box.appendChild(b);
+    d.appendChild(box);
+    document.body.appendChild(d);
+  }
+  function check() {
+    if (off() || VG.busy || VG.shown) return;
+    if (Date.now() - VG.last < 60000) return;
+    var client = null;
+    try { client = (typeof db !== 'undefined' && db && db.rpc) ? db : null; } catch (e) { client = null; }
+    if (!client) return;
+    VG.busy = true; VG.last = Date.now();
+    var done = function () { VG.busy = false; };
+    try {
+      Promise.resolve(client.rpc('oms_app_min_build_v1', {})).then(function (r) {
+        done();
+        var x = r && r.data;
+        if (!x || x.ok !== true || x.enforce !== true) return;
+        var need = parse(x.min_build), cur = mine();
+        if (!need || !cur) return;
+        if (older(cur, need)) {
+          var el = document.getElementById('verCornerBadge');
+          show(String(x.message || ''), String(x.min_build), el ? el.textContent.trim() : '?');
+        }
+      }, done);
+    } catch (e) { done(); }
+  }
+  setTimeout(check, 5000);
+  setInterval(check, 30 * 60 * 1000);
+  document.addEventListener('visibilitychange', function () { if (document.visibilityState === 'visible') setTimeout(check, 1500); });
+  window.vgateCheckNow = function () { VG.last = 0; check(); };
+})();
+// RC45-VGATE-END
 </script>
 </body>
 </html>
