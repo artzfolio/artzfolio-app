@@ -3126,6 +3126,146 @@ label:has(>input[type=checkbox]),label:has(>input[type=radio]){display:flex;alig
   .info-grid{grid-template-columns:repeat(auto-fit,minmax(min(100%,calc(200px*max(var(--fs,1),1))),1fr))}
 }
 </style>
+<style id="a89-css">
+/* A89 (Admin v2.89): Folio DS v1 tokens + the 6-section menu, section tabs, Add person steps, Devices, Rare tools, Modules. */
+:root{--c-brand:#1B4F8A;--c-brand-press:#153E6E;--c-ink:#0A1628;--c-ink-2:#374151;--c-muted:#5B6470;--c-line:#E2E8F0;--c-surface:#FFFFFF;--c-canvas:#F4F6F9;
+--c-success:#1B7A3A;--c-success-bg:#E8F5EC;--c-warning:#8A5A00;--c-warning-bg:#FFF4DB;--c-danger:#B3261E;--c-danger-bg:#FDECEA;--c-info:#1B4F8A;--c-info-bg:#EAF0FB;
+--sp-1:4px;--sp-2:8px;--sp-3:12px;--sp-4:16px;--sp-5:24px;--sp-6:32px;--sp-7:48px;--r-sm:8px;--r-md:12px;--r-lg:20px;--r-full:999px;
+--e-1:0 1px 2px rgba(10,22,40,.06);--e-2:0 -8px 24px rgba(10,22,40,.16)}
+body{background:var(--c-canvas);color:var(--c-ink)}
+.sidebar{background:var(--c-brand)}
+.nav-list>li.nav-item:not(.a89-nav){display:none!important}
+.a89-nav .nav-icon svg{width:20px;height:20px;display:block;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.a89-nav{opacity:.86}
+.a89-nav.active{background:rgba(255,255,255,.16);border-left-color:#fff;opacity:1}
+.a89-nav:focus-visible{outline:2px solid #fff;outline-offset:-2px}
+@media (max-width:900px){.a89-nav.active{border-bottom-color:#fff}.a89-nav .nav-icon svg{margin:0 auto}}
+.main>.page{max-width:1200px}
+.e2-purpose,.a53-tabs,#sec-sub,#rmc-sub,#page-employees .r41-tabs{display:none!important}
+.page.a89-on>.page-header .page-title,.page.a89-on>.page-header .page-sub{display:none}
+.page.a89-on>.page-header{margin-bottom:var(--sp-3);justify-content:flex-end}
+.page.a89-on>.page-header:not(:has(button)){display:none}
+.card{border-radius:var(--r-md);box-shadow:var(--e-1);border:1px solid var(--c-line)}
+.btn-gold{background:var(--c-surface);color:var(--c-brand);border:1px solid var(--c-brand)}
+.btn-primary:hover{background:var(--c-brand-press)}
+.page-title{color:var(--c-ink)}
+/* section header: crumb, tabs, sub-tabs, one purpose line */
+.a89-head{margin:0 0 var(--sp-4)}
+.a89-crumb{font-size:var(--t-title);font-weight:700;color:var(--c-ink);margin:0 0 var(--sp-2);line-height:1.25}
+.a89-tabs{display:flex;flex-wrap:wrap;gap:0 var(--sp-1);border-bottom:1px solid var(--c-line);margin:0 0 var(--sp-3)}
+.a89-tab{background:none;border:0;border-bottom:3px solid transparent;margin-bottom:-1px;min-height:44px;padding:var(--sp-2) var(--sp-3);font:inherit;font-size:var(--t-section);font-weight:600;color:var(--c-muted);cursor:pointer}
+.a89-tab[aria-selected="true"]{color:var(--c-brand);border-bottom-color:var(--c-brand)}
+.a89-tab:hover{color:var(--c-ink)}
+.a89-subs{display:flex;flex-wrap:wrap;gap:var(--sp-2);margin:0 0 var(--sp-3)}
+.a89-sub{min-height:44px;padding:var(--sp-2) var(--sp-4);border-radius:var(--r-full);border:1px solid var(--c-line);background:var(--c-surface);color:var(--c-ink-2);font:inherit;font-size:var(--t-body);font-weight:600;cursor:pointer}
+.a89-sub[aria-selected="true"]{background:var(--c-info-bg);border-color:var(--c-brand);color:var(--c-brand)}
+.a89-desc{margin:0;color:var(--c-muted);font-size:var(--t-section);line-height:1.45;max-width:72ch}
+.a89-hdr-btns{display:flex;gap:var(--sp-2);flex-wrap:wrap}
+/* settings split into two tabs */
+body[data-a89part="profile"] #page-settings .a89-part-security{display:none!important}
+body[data-a89part="security"] #page-settings .a89-part-profile{display:none!important}
+body[data-a89leaf="team.roles"] #page-secdata .rmc-pin{display:none}
+/* cards on the new pages */
+.a89-card{background:var(--c-surface);border:1px solid var(--c-line);border-radius:var(--r-md);box-shadow:var(--e-1);padding:var(--sp-4);margin:0 0 var(--sp-3)}
+.a89-card h3{font-size:var(--t-section);font-weight:700;color:var(--c-ink);margin:0 0 var(--sp-1)}
+.a89-card p{color:var(--c-ink-2);font-size:var(--t-body);line-height:1.5;margin:0 0 var(--sp-2)}
+.a89-card.a89-quiet{background:var(--c-canvas);box-shadow:none}
+.a89-type{display:flex;flex-wrap:wrap;gap:var(--sp-2);align-items:flex-end}
+.a89-type label{flex:1 1 100%;font-size:var(--t-body);font-weight:600;color:var(--c-ink-2)}
+.a89-type input{flex:1 1 220px;max-width:320px;min-height:44px;border:1px solid #cbd5e1;border-radius:var(--r-sm);padding:0 var(--sp-3);font:inherit}
+.a89-rare-body{margin-top:var(--sp-3)}
+.a89-note{color:var(--c-muted);font-size:var(--t-body);line-height:1.5;margin:var(--sp-3) 0}
+.a89-mods{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:var(--sp-3)}
+.a89-chip{display:inline-flex;align-items:center;min-height:28px;padding:0 var(--sp-3);border-radius:var(--r-full);font-size:var(--t-meta);font-weight:600;background:var(--c-info-bg);color:var(--c-info)}
+.a89-chip.on{background:var(--c-success-bg);color:var(--c-success)}
+.a89-chip.off{background:var(--c-canvas);color:var(--c-muted)}
+/* Add person: 5 steps in one sheet */
+.a89w-bg{display:none;position:fixed;inset:0;z-index:600;background:rgba(10,22,40,.55);align-items:center;justify-content:center;padding:var(--sp-4)}
+.a89w-bg.on{display:flex}
+.a89w{background:var(--c-surface);border-radius:var(--r-lg);box-shadow:var(--e-2);width:min(680px,100%);max-height:92vh;display:flex;flex-direction:column;overflow:hidden}
+.a89w-top{padding:var(--sp-4) var(--sp-5) var(--sp-3);border-bottom:1px solid var(--c-line)}
+.a89w-title{display:flex;justify-content:space-between;align-items:center;gap:var(--sp-2)}
+.a89w-title h3{font-size:var(--t-title);font-weight:700;color:var(--c-ink);margin:0}
+.a89w-x{min-width:44px;min-height:44px;border:0;background:none;font-size:var(--t-title);color:var(--c-muted);cursor:pointer;border-radius:var(--r-sm)}
+.a89w-steps{display:flex;gap:var(--sp-1);margin-top:var(--sp-3);list-style:none;padding:0}
+.a89w-steps li{flex:1 1 0;min-width:0}
+.a89w-steps li b{display:block;height:4px;border-radius:2px;background:var(--c-line);margin-bottom:var(--sp-1)}
+.a89w-steps li span{display:block;font-size:var(--t-meta);color:var(--c-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.a89w-steps li.done b,.a89w-steps li.now b{background:var(--c-brand)}
+.a89w-steps li.now span{color:var(--c-brand);font-weight:700}
+.a89w-body{padding:var(--sp-4) var(--sp-5);overflow-y:auto;flex:1 1 auto}
+.a89w-q{font-size:var(--t-section);font-weight:700;color:var(--c-ink);margin:0 0 var(--sp-1)}
+.a89w-help{font-size:var(--t-body);color:var(--c-muted);margin:0 0 var(--sp-3);line-height:1.5}
+.a89w-f{margin:0 0 var(--sp-3)}
+.a89w-f label{display:block;font-size:var(--t-body);font-weight:600;color:var(--c-ink-2);margin:0 0 var(--sp-1)}
+.a89w-f input[type=text]{width:100%;min-height:48px;border:1px solid #cbd5e1;border-radius:var(--r-sm);padding:0 var(--sp-3);font:inherit;font-size:var(--t-section);box-sizing:border-box}
+.a89w-f input:focus{outline:2px solid var(--c-brand);outline-offset:0;border-color:var(--c-brand)}
+.a89w-f small{display:block;color:var(--c-muted);font-size:var(--t-meta);margin-top:var(--sp-1)}
+.a89w-roles{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:var(--sp-2)}
+.a89w-role{text-align:left;min-height:72px;padding:var(--sp-3);border:1px solid var(--c-line);border-radius:var(--r-md);background:var(--c-surface);cursor:pointer;font:inherit}
+.a89w-role b{display:block;font-size:var(--t-section);color:var(--c-ink)}
+.a89w-role span{display:block;font-size:var(--t-body);color:var(--c-muted);line-height:1.4;margin-top:2px}
+.a89w-role[aria-checked="true"]{border:2px solid var(--c-brand);background:var(--c-info-bg)}
+.a89w-g{margin:0 0 var(--sp-4)}
+.a89w-g h4{font-size:var(--t-body);font-weight:700;color:var(--c-ink-2);margin:0 0 var(--sp-2)}
+.a89w-g.risky{border:1px solid #E9D49A;background:var(--c-warning-bg);border-radius:var(--r-md);padding:var(--sp-3)}
+.a89w-g.risky h4{color:var(--c-warning)}
+.a89w-sws{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:var(--sp-1) var(--sp-3)}
+.a89w-sw{display:flex;align-items:center;gap:var(--sp-2);min-height:44px;cursor:pointer;font-size:var(--t-body);color:var(--c-ink)}
+.a89w-sw input{appearance:none;-webkit-appearance:none;flex:0 0 auto;width:40px;height:24px;border-radius:12px;background:#CBD5E1;position:relative;cursor:pointer;margin:0;transition:background .12s}
+.a89w-sw input::after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.2);transition:left .12s}
+.a89w-sw input:checked{background:var(--c-brand)}
+.a89w-sw input:checked::after{left:19px}
+.a89w-sw input:focus-visible{outline:2px solid var(--c-brand);outline-offset:2px}
+.a89w-radios{display:flex;flex-direction:column;gap:var(--sp-2)}
+.a89w-radio{display:flex;gap:var(--sp-2);align-items:flex-start;padding:var(--sp-3);border:1px solid var(--c-line);border-radius:var(--r-md);cursor:pointer;font-size:var(--t-body)}
+.a89w-radio input{margin-top:3px;width:18px;height:18px;flex:0 0 auto}
+.a89w-radio b{display:block;color:var(--c-ink)}
+.a89w-radio span{color:var(--c-muted)}
+.a89w-scope{display:flex;gap:var(--sp-3);flex-wrap:wrap;margin:var(--sp-1) 0 0 48px;font-size:var(--t-body)}
+.a89w-scope label{display:flex;gap:var(--sp-1);align-items:center;min-height:44px}
+.a89w-custom{font-size:var(--t-body);color:var(--c-warning);background:var(--c-warning-bg);border-radius:var(--r-sm);padding:var(--sp-2) var(--sp-3);margin:0 0 var(--sp-3)}
+.a89w-sum{border:1px solid var(--c-line);border-radius:var(--r-md);overflow:hidden}
+.a89w-sum div{display:flex;gap:var(--sp-3);padding:var(--sp-3);border-bottom:1px solid var(--c-line);font-size:var(--t-body)}
+.a89w-sum div:last-child{border-bottom:0}
+.a89w-sum dt,.a89w-sum .k{flex:0 0 150px;color:var(--c-muted)}
+.a89w-sum .v{flex:1 1 auto;color:var(--c-ink);font-weight:600}
+.a89w-err{color:var(--c-danger);background:var(--c-danger-bg);border-radius:var(--r-sm);padding:var(--sp-2) var(--sp-3);font-size:var(--t-body);margin:var(--sp-3) 0 0}
+.a89w-ok{text-align:center;padding:var(--sp-5) 0}
+.a89w-ok .big{font-size:var(--t-title);font-weight:700;color:var(--c-success);margin-bottom:var(--sp-2)}
+.a89w-foot{display:flex;justify-content:space-between;gap:var(--sp-2);padding:var(--sp-3) var(--sp-5);border-top:1px solid var(--c-line);background:var(--c-surface)}
+.a89w-foot .btn{min-height:48px;padding:0 var(--sp-5);border-radius:var(--r-md)}
+.a89w-foot .btn-sec{background:var(--c-surface);color:var(--c-brand);border:1px solid var(--c-brand)}
+@media (max-width:600px){.a89w-bg{padding:0;align-items:flex-end}.a89w{border-radius:var(--r-lg) var(--r-lg) 0 0;max-height:96vh}.a89w-body,.a89w-top,.a89w-foot{padding-left:var(--sp-4);padding-right:var(--sp-4)}.a89w-steps li span{display:none}.a89w-sum dt,.a89w-sum .k{flex-basis:110px}}
+.a89w [hidden],#page-a89rare [hidden],#a89-addemp-host[hidden]{display:none!important}
+</style>
+<style id="a89b-css">
+/* A89b (Admin v2.89b): Home "Today at a glance" + Supervisor note. Folio DS v1 tokens from a89-css. */
+#page-dashboard.a89b-compact>:not(.a89-head):not(#a89b-home){display:none!important}
+#page-dashboard{max-width:none}
+body[data-a89leaf="home.overview"] .main{max-width:none}
+#a89b-home{margin:0 0 var(--sp-5)}
+.a89b-meta{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:var(--sp-2);margin:0 0 var(--sp-3)}
+.a89b-meta h2{font-size:var(--t-section);font-weight:700;color:var(--c-ink);margin:0}
+.a89b-meta span{font-size:var(--t-body);color:var(--c-muted)}
+.a89b-tiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--sp-3)}
+@media (min-width:1500px){.a89b-tiles{grid-template-columns:repeat(6,minmax(0,1fr))}}
+@media (max-width:900px){.a89b-tiles{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:520px){.a89b-tiles{grid-template-columns:1fr}}
+.a89b-t{display:flex;flex-direction:column;align-items:flex-start;gap:var(--sp-1);min-height:148px;text-align:left;padding:var(--sp-4);background:var(--c-surface);border:1px solid var(--c-line);border-radius:var(--r-md);box-shadow:var(--e-1);cursor:pointer;font:inherit;color:var(--c-ink)}
+.a89b-t:hover{border-color:var(--c-brand)}
+.a89b-t:focus-visible{outline:2px solid var(--c-brand);outline-offset:2px}
+.a89b-l{font-size:var(--t-body);font-weight:600;color:var(--c-ink-2)}
+.a89b-v{font-size:calc(var(--t-title) * 1.6);font-weight:700;line-height:1.15;color:var(--c-ink);font-variant-numeric:tabular-nums}
+.a89b-c{font-size:var(--t-meta);color:var(--c-muted);line-height:1.4;flex:1 1 auto}
+.a89b-s{display:inline-flex;align-items:center;min-height:24px;padding:0 var(--sp-2);border-radius:var(--r-full);font-size:var(--t-meta);font-weight:600;background:var(--c-canvas);color:var(--c-muted)}
+.a89b-s.ok{background:var(--c-success-bg);color:var(--c-success)}
+.a89b-s.warn{background:var(--c-warning-bg);color:var(--c-warning)}
+.a89b-s.bad{background:var(--c-danger-bg);color:var(--c-danger)}
+.a89b-more{margin-top:var(--sp-4);display:flex;gap:var(--sp-2);flex-wrap:wrap}
+.a89b-more .btn{background:var(--c-surface);color:var(--c-brand);border:1px solid var(--c-brand);border-radius:var(--r-md);min-height:44px}
+.a89b-note{font-size:var(--t-body);color:var(--c-muted);align-self:center}
+</style>
 </head>
 <body>
 
@@ -3263,11 +3403,21 @@ label:has(>input[type=checkbox]),label:has(>input[type=radio]){display:flex;alig
       <div class="sidebar-brand-title">ArtzFolio Super App <span class="af-admin-tag">Admin</span></div>
     </div>
     <ul class="nav-list">
+      <li class="nav-item a89-nav" data-a89="home" onclick="a89Go('home')" role="link" tabindex="0" title="Home"><span class="nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></svg></span><span class="nav-label">Home</span><span class="nav-short">Home</span></li>
+      <li class="nav-item a89-nav" data-a89="team" onclick="a89Go('team')" role="link" tabindex="0" title="Team"><span class="nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.8-3.5 3.4-5.5 6.5-5.5s5.7 2 6.5 5.5"/><circle cx="17" cy="9" r="2.5"/><path d="M16.5 14.6c2.4.2 4.2 2 4.8 4.9"/></svg></span><span class="nav-label">Team</span><span class="nav-short">Team</span></li>
+      <li class="nav-item a89-nav" data-a89="inventory" onclick="a89Go('inventory')" role="link" tabindex="0" title="Inventory"><span class="nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7.5L12 3l9 4.5v9L12 21l-9-4.5z"/><path d="M3 7.5l9 4.5 9-4.5M12 12v9"/></svg></span><span class="nav-label">Inventory</span><span class="nav-short">Stock</span></li>
+      <li class="nav-item a89-nav" data-a89="buying" onclick="a89Go('buying')" role="link" tabindex="0" title="Buying"><span class="nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 8h6M9 12h6M9 16h3"/></svg></span><span class="nav-label">Buying</span><span class="nav-short">Buying</span></li>
+      <li class="nav-item a89-nav" data-a89="safety" onclick="a89Go('safety')" role="link" tabindex="0" title="Records &amp; safety"><span class="nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 3v6c0 4.5-3.4 8-8 9-4.6-1-8-4.5-8-9V6z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg></span><span class="nav-label">Records &amp; safety</span><span class="nav-short">Safety</span></li>
+      <li class="nav-item a89-nav" data-a89="company" onclick="a89Go('company')" role="link" tabindex="0" title="Company settings"><span class="nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 21V5a1 1 0 0 1 1-1h9a1 1 0 0 1 1 1v16M15 9h4a1 1 0 0 1 1 1v11M3 21h18M8 8h3M8 12h3M8 16h3"/></svg></span><span class="nav-label">Company settings</span><span class="nav-short">Company</span></li>
+      <li class="nav-item" data-page="a89signed" style="display:none"></li>
+      <li class="nav-item" data-page="a89adminpcs" style="display:none"></li>
+      <li class="nav-item" data-page="a89rare" style="display:none"></li>
+      <li class="nav-item" data-page="a89modules" style="display:none"></li>
       <li class="nav-item active" data-page="dashboard" onclick="switchPage('dashboard')"><span class="nav-icon">📊</span><span class="nav-label">Overview</span></li>
       <li class="nav-item" data-page="audit" onclick="switchPage('audit')"><span class="nav-icon">📜</span><span class="nav-label">Permanent activity record</span></li>
       <!-- v2.17 (Master Prompt v21, Part 4.2) -->
       <li class="nav-item" data-page="sessions" onclick="switchPage('sessions')"><span class="nav-icon">🔄</span><span class="nav-label">Batch scans</span></li>
-      <li class="nav-item" data-page="employees" title="People and phones (this was called User Management)" onclick="switchPage('employees')"><span class="nav-icon">👥</span><span class="nav-label">People and phones</span><!-- RC41-W13-1 --></li>
+      <li class="nav-item" data-page="employees" title="People and phones" onclick="switchPage('employees')"><span class="nav-icon">👥</span><span class="nav-label">People and phones</span><!-- RC41-W13-1 --></li>
       <li class="nav-item" data-page="devices" onclick="switchPage('devices')"><span class="nav-icon">📱</span><span class="nav-label">Phones</span></li>
       <li class="nav-item" data-page="pcs" onclick="switchPage('pcs')"><span class="nav-icon">🖥</span><span class="nav-label">Computers (desktop app)</span></li>
       <li class="nav-item" data-page="sku" onclick="switchPage('sku')"><span class="nav-icon">📦</span><span class="nav-label">Product stock search</span></li>
@@ -3282,7 +3432,7 @@ label:has(>input[type=checkbox]),label:has(>input[type=radio]){display:flex;alig
     <div class="sidebar-footer">
       <div class="af-fs-side"><div class="af-fs-t">Text size</div><div id="af-fs-ctl-side"></div></div>
       <button class="logout-btn" onclick="adminLogout()">Sign out</button>   <!-- ADM-v258 A-01 -->
-      <div class="ver-footer">ArtzFolio Super App - Admin Panel v2.88</div><!-- RC41-v282-V RC41-v283-V RC41-v284-V RC41-v285-V RC41-v286-V -->
+      <div class="ver-footer">ArtzFolio Super App - Admin Panel v2.89b</div><!-- RC41-v282-V RC41-v283-V RC41-v284-V RC41-v285-V RC41-v286-V -->
     </div>
   </div>
 
@@ -3295,13 +3445,14 @@ label:has(>input[type=checkbox]),label:has(>input[type=radio]){display:flex;alig
     <div class="db-offline-banner" id="readonly-admin-banner" style="background:#eaf2fb;border-color:#0A1628;color:#0A1628;">👁 Read-only access — you can view everything here, but cannot make changes. Ask a full Admin for write access.</div>
 
     <!-- ══════════════ DASHBOARD ══════════════ -->
-    <div class="page active" id="page-dashboard">
+    <div class="page active a89b-compact" id="page-dashboard">
       <div class="page-header">
         <div>
           <div class="page-title">Overview</div>
           <div class="page-sub">A quick look at your stock, your staff and your shelves</div>
         </div>
       </div>
+      <div id="a89b-home" class="e2-keep" aria-live="polite"></div><!-- A89b: Today at a glance -->
       <div class="a58-needs-wrap e2-keep" id="a58-needs-wrap"><!-- ADM-v258 A-07 -->
         <div class="a58-needs-h">Needs you</div>
         <div class="a58-needs" id="a58-needs"><div class="a58-nt-load">Checking what needs you ...</div></div>
@@ -3772,7 +3923,7 @@ label:has(>input[type=checkbox]),label:has(>input[type=radio]){display:flex;alig
         Anything it already scanned stays exactly as it is; blocking stops further work, it never undoes any.<br>
         <span style="color:#9A6700;"><strong>It is not the main control for someone leaving.</strong></span>
         Each phone makes its own code the first time the app runs. If you clear the app's data on that phone, it gets a new
-        code and a fresh start. <strong>When a person leaves, switch their staff account off under People and access</strong> —
+        code and a fresh start. <strong>When a person leaves, switch their staff account off under Team > People</strong> —
         this stops them signing in on any phone. Blocking the phone is a good extra step, not a replacement.
       </div>
 
@@ -3795,12 +3946,12 @@ label:has(>input[type=checkbox]),label:has(>input[type=radio]){display:flex;alig
     <div class="page" id="page-employees">
       <div class="page-header">
         <div>
-          <div class="page-title">People and phones <span style="font-weight:400;font-size:var(--t-section);color:#546e7a;">(this was called User Management)</span></div><!-- RC41-W13-1 -->
+          <div class="page-title">People</div><!-- RC41-W13-1 -->
           <div class="page-sub">Everyone who can use the phone app or this panel, with their access, PIN, phone code and lock status.</div>
         </div>
-        <button class="btn btn-primary" onclick="loadEmployees()">↻ Refresh</button>
+        <span class="a89-hdr-btns e2-keep"><button class="btn btn-grey" onclick="loadEmployees()">↻ Refresh</button><button type="button" class="btn btn-primary write-only-control a89-add-btn" onclick="a89wOpen()">+ Add person</button></span>
       </div>
-      <details class="e2-more a54-menu"><summary>More tools: add a person and others</summary><div class="e2-fold-body">
+      <div id="a89-addemp-host" class="e2-keep" hidden><!-- A89: the old Add a person form; the 5-step sheet fills it and presses its save -->
       <div class="card" id="add-emp-card" style="margin-top:8px;">
         <h3>➕ Add a person</h3>
         <div class="form-row">
@@ -3817,30 +3968,7 @@ label:has(>input[type=checkbox]),label:has(>input[type=radio]){display:flex;alig
         <div class="result-msg" id="add-emp-result"></div>
       </div>
 
-      <!-- v2.31: moved here from Settings. Everything about who can use the
-           system now lives on this one page; Settings keeps only the Admin
-           Password and the read-only company and system information. -->
-      <div class="card write-only-control" id="sup-pw-card" style="margin-top:8px;">
-        <h3>🛡 Supervisor Password</h3>
-        <div class="hint-text">
-          Needed only if you make someone a <strong>Supervisor</strong> above. They sign in with their own
-          employee code and PIN, then unlock this panel with <strong>this</strong> password &mdash; never yours.
-          That is what stops them reaching accounts, access levels and the Admin Password: they do not hold the
-          password those need, so the refusal does not depend on this website behaving itself.
-          <br><br>
-          Leave both boxes empty and press <strong>Remove it</strong> to remove Supervisor access for everyone
-          at once. No account or history is changed.
-        </div>
-        <div class="form-row">
-          <div class="form-field"><label>New Supervisor Password (8 or more letters or numbers)</label><input type="text" class="pw-mask" autocapitalize="off" spellcheck="false" id="sup-pw-new" autocomplete="off"></div>
-          <div class="form-field"><label>Confirm</label><input type="text" class="pw-mask" autocapitalize="off" spellcheck="false" id="sup-pw-confirm" autocomplete="off"></div>
-        </div>
-        <button class="btn btn-primary" onclick="submitSupervisorPassword()">✓ Save the password</button>
-        <button class="btn btn-grey" onclick="clearSupervisorPassword()">Remove it</button>
-        <div class="result-msg" id="sup-pw-status" style="margin-top:8px;"></div>
-        <div class="result-msg" id="sup-pw-result"></div>
       </div>
-      </div></details>
       <!-- RC41-W1-8: two tabs, People and Phones -->
       <div class="r41-tabs e2-keep" role="tablist" aria-label="People and signed-in phones" onkeydown="r41TabKey(event)"><!-- RC41-v283-6 --><!-- RC41-v282-5 e2-keep; RC41-v282-9 aria; RC41-v282-10 name -->
         <button type="button" class="r41-tab on" id="r41-tab-people" role="tab" aria-selected="true" aria-controls="r41-pane-people" tabindex="0" onclick="r41PeopleTab('people')">People</button>
@@ -3863,9 +3991,6 @@ label:has(>input[type=checkbox]),label:has(>input[type=radio]){display:flex;alig
           </select>
         </div>
       </div>
-      <div class="e2-keep r41-keep" id="r41-deltest-bar" style="display:none;margin:6px 0;"><!-- RC41-v283-3 W14: full Admin only -->
-        <button type="button" class="btn btn-grey r41-danger" onclick="r41DeleteTestOpen()" title="Remove every TST_ test account and its test data. You see what will happen first.">Delete all test accounts (TST_)</button>
-      </div>
       <div class="bulk-bar" id="emp-bulk-bar">
         <span id="emp-bulk-count">0 selected</span>
         <button class="btn btn-sm btn-green" onclick="bulkToggleEmployees(true)">Reactivate Selected</button>
@@ -3880,25 +4005,6 @@ label:has(>input[type=checkbox]),label:has(>input[type=radio]){display:flex;alig
       </div>
 
       </div><!-- /r41-pane-people -->
-      <div id="r41-pane-phones" role="tabpanel" aria-labelledby="r41-tab-phones" style="display:none;"><!-- RC41-W1-8 RC41-v282-9 -->
-        <div class="hint-text" style="margin:8px 0;">Phones where someone typed their PIN and is kept signed in. <strong>Sign this phone out</strong> ends it on that one phone; the person types the PIN again there next time. <strong>Sign out everywhere</strong> does that on all of that person's phones and computers.</div><!-- RC41-v284-9 -->
-        <div class="e2-keep r41-keep"><button class="btn btn-primary" onclick="r41LoadPhones()">&#8635; Refresh phones</button></div><!-- RC41-v282-5 -->
-        <div class="result-msg" id="r41-phones-msg"></div>
-        <div class="table-wrap">
-          <table>
-            <thead><tr><th>Person</th><th>Phone</th><th>Last used</th><th>Signed in until</th><th>Actions</th></tr></thead>
-            <tbody id="r41-phones-body"><tr class="empty-row"><td colspan="5">Open this tab to see the list.</td></tr></tbody>
-          </table>
-        </div>
-        <h4 style="margin:18px 0 6px;">Computers (Admin panel)</h4><!-- RC41-v283-2 W12 -->
-        <div class="hint-text" style="margin:0 0 8px;">Computers where an Admin or Supervisor is kept signed in for 30 days. <strong>Sign this computer out</strong> ends it; they type their code and PIN there again. The Admin Password is asked every time anyway.</div>
-        <div class="table-wrap">
-          <table>
-            <thead><tr><th>Person</th><th>Computer</th><th>Last used</th><th>Signed in until</th><th>Actions</th></tr></thead>
-            <tbody id="r41-pcs-body"><tr class="empty-row"><td colspan="5">Open this tab to see the list.</td></tr></tbody>
-          </table>
-        </div>
-      </div>
     </div>
 
     <div class="modal-bg" id="r41-del-bg" onkeydown="r41DelKey(event)"><!-- RC41-v283-3 W14 Delete permanently; RC41-v284-6 keyboard -->
@@ -3999,34 +4105,6 @@ label:has(>input[type=checkbox]),label:has(>input[type=radio]){display:flex;alig
           </select>
         </div>
       </div>
-      <div class="card write-only-control" id="zero-stock-card" style="margin-bottom:14px;border:1px solid #B3261E;">
-        <h3 style="color:#B3261E;">⚠ Reset ALL Stock to Zero</h3>
-        <div class="hint-text">
-          Use this only when scanning has gone wrong badly enough that starting over is safer than fixing it SKU by SKU —
-          for example, a batch of scans went against the wrong SKUs or into the wrong bins, and it is faster to zero
-          everything and rescan than to trace each one by hand. This sets <strong>all stock to zero, everywhere</strong>,
-          in one step.
-          <br><br>
-          <strong>Nothing is deleted.</strong> Every affected SKU gets one new correction entry that brings it down to zero —
-          the full history before it stays exactly as it is, visible in Transactions and the Activity record, and can be read
-          back at any time. This does not touch employee accounts, bins, SKU names or prices, or scan session records —
-          only quantities.
-          <br><br>
-          Always press <strong>Preview</strong> first. It shows what would change and changes nothing by itself.
-          Nothing is touched until you also type the confirmation phrase and press the second button.
-        </div>
-        <button class="btn btn-primary" id="zero-stock-preview-btn" onclick="previewZeroAllInventory()">Preview what this would do</button>
-        <div id="zero-stock-preview" style="margin-top:12px;"></div>
-      </div>
-      <div class="card write-only-control" style="margin-top:20px;">
-        <h3>⬆ Bulk CSV Import — Update Existing SKUs</h3>
-        <div class="hint-text">
-          Upload a CSV with a <code>sku_code</code> column plus any of <code>reorder_threshold</code>, <code>cost_price</code>, <code>mrp</code>, <code>active</code> (true/false).
-          Only these four fields can be changed here — new SKUs are <strong>not</strong> created, and product name / ASIN / bin / set size are <strong>not</strong> touched, even if they are in your file. Extra columns are ignored.
-        </div>
-        <input type="file" id="csv-file-input" accept=".csv" onchange="handleCsvFileSelect(event)">
-        <div id="csv-preview-area" style="margin-top:14px;"></div>
-      </div>
       </div></details>
       <div class="filter-bar">
         <div class="filter-field" style="min-width:min(240px,100%)"><label>Search (SKU, ASIN, title or size)</label><input type="text" id="sku-search" placeholder="Type to search..." onkeydown="if(event.key==='Enter')loadSkuStock(0)"></div>
@@ -4035,7 +4113,7 @@ label:has(>input[type=checkbox]),label:has(>input[type=radio]){display:flex;alig
         </div>
         <div id="sku-sm" style="flex-basis:100%"></div>
       </div>
-      <div class="summary-caption">"Export CSV (loaded page)" covers only the currently-loaded page (up to 100 rows). "Export Full CSV" walks every page of the current filtered result (capped at 20,000 rows) — this can take a few seconds.</div>
+      <div class="summary-caption">The two download buttons give you this page (up to 100 rows) or every matching row (up to 20,000 rows, a few seconds).</div>
       <!-- v2.11: Phase 4, Feature 7 — Bulk-edit reorder thresholds / pricing.
            Select rows with the checkboxes, pick a field + operation + amount,
            Preview computes the real old->new for every selected row via a
@@ -4243,7 +4321,6 @@ label:has(>input[type=checkbox]),label:has(>input[type=radio]){display:flex;alig
         </div>
         <div class="rmc-hint" style="flex:1 1 240px;margin:0;">Kept only in this browser tab and cleared when you leave this page. Everything you do here is recorded against your employee code.</div>
       </div>
-      <details class="a65-dev e2-keep"><summary>Note on cost prices (text only)</summary><div class="rmc-card" id="sec-cost-close"><strong>Cost prices are closed to the public key</strong><div class="rmc-hint">Cost prices are closed to the public key (done on 2026-11-05). The database now refuses to show cost price columns to anyone who has not signed in through a checked function. Cost figures reach this panel only through the Admin Password or your own PIN. This note is text only; this page does not run a check.</div></div></details>
       <div class="rmc-sub e2-keep" id="sec-sub"><!-- ADM-v258 A-04: the four everyday safety tools are always visible buttons -->
         <button class="preset-btn active" data-sec="today" onclick="secShow('today')">Today</button>
         <button class="preset-btn" data-sec="export" onclick="secShow('export')">Export everything</button>
@@ -4255,7 +4332,6 @@ label:has(>input[type=checkbox]),label:has(>input[type=radio]){display:flex;alig
             <button class="preset-btn" data-sec="recon" onclick="secShow('recon')">Data checks</button>
             <button class="preset-btn" data-sec="retention" onclick="secShow('retention')">Keeping data</button>
             <button class="preset-btn" data-sec="errors" onclick="secShow('errors')">App error log</button>
-            <button class="preset-btn" data-sec="rates" onclick="secShow('rates')">Rate limits</button>
             <button class="preset-btn" data-sec="roles" onclick="secShow('roles')">Who can do what</button>
           </div>
         </details>
@@ -4359,34 +4435,12 @@ label:has(>input[type=checkbox]),label:has(>input[type=radio]){display:flex;alig
         <div class="result-msg" id="sec-msg-errors"></div>
       </div>
 
-      <div id="sec-sec-rates" class="rmc-card" style="display:none;">
-        <strong>Rate limits</strong>
-        <div class="rmc-hint">To stop mistakes and abuse, some actions are limited to a number of uses per time window for each person. These are the built-in limits. The panel cannot show or change a custom limit, because the settings function only accepts the four purchasing settings. A developer can set one in the database (setting names rate_SEARCH, rate_IMPORT, rate_EXPORT and rate_BANK_REVEAL, written as limit:seconds, or 0 to switch off).</div>
-        <div class="table-wrap"><table><thead><tr><th>Action</th><th>Built-in limit</th></tr></thead><tbody>
-          <tr><td>Searching items</td><td>240 per minute</td></tr>
-          <tr><td>Bulk imports</td><td>60 per hour</td></tr>
-          <tr><td>GST register export</td><td>10 per hour</td></tr>
-          <tr><td>Showing vendor bank details</td><td>20 per hour</td></tr>
-        </tbody></table></div>
-      </div>
-
       <div id="sec-sec-roles" class="rmc-card" style="display:none;">
         <strong>Who can do what</strong>
         <div class="rmc-hint">Yes means allowed, No means refused. "Manager" is not a separate account type: it means Admin or Supervisor. Items marked (v) were not fully settled when this table was written. This table is a copy kept inside the panel. Ask your developer to update it if the rules change.</div>
         <div id="sec-body-roles"></div>
       </div>
 
-      <details class="a65-dev e2-keep"><summary>What changed in earlier versions (for the developer)</summary>
-      <div class="rmc-card">
-        <strong>What changed in v2.49</strong>
-        <div class="rmc-hint">Since v2.45: (0) The questions are the same for every format: a table that holds personal data asks the same confirmation question for PDF, Excel and Share as for CSV, and a table with more than 20,000 rows (PDF and Share) or 100,000 rows (Excel) tells you in plain words to use the CSV button instead. (1) Every list or report that you could already save as a CSV file now also has three more buttons next to the CSV button: PDF, Excel and Share. They are on Activity record, SKU and Stock, Reports and Transactions, Safety and backups (one set for each table) and the row-error files on Purchasing. The PDF and Excel files hold exactly the same rows and columns as the CSV, with the title, the filters you used and the date and time in India time. Cost figures are in them only where the CSV already shows them (after your PIN); no password, PIN or secret is ever in them. Share opens your phone's share sheet (WhatsApp, Gmail, Telegram and so on) with the PDF. If your browser cannot share a file, the PDF is saved to your Downloads instead and the page tells you so. The CSV buttons work exactly as before. (2) The PIN boxes on the Safety and backups page and the Purchasing page are now ordinary text boxes that hide what you type, so the browser no longer offers to save them as passwords. Nothing else was changed.</div>
-      </div>
-
-      <div class="rmc-card">
-        <strong>What changed in v2.45</strong>
-        <div class="rmc-hint">New page: Safety and backups. Audit trail check, data checks, export everything, backup status, keeping data, sign out everywhere, app error log, rate limits, who can do what, and a Today list. SKU and Stock (the list, its exports) and the Dashboard stock value now read cost figures through checked cost functions: when you are signed in without the admin password, the page asks for your own PIN in a box that hides what you type (kept while you keep using it, 30 idle minutes at most, and never more than 4 hours), and leaves the cost figures out if you cancel. The other pages were not changed.</div>
-      </div>
-      </details>
     </div>
 
     <!-- ══════════════ SETTINGS ══════════════ -->
@@ -4425,12 +4479,12 @@ label:has(>input[type=checkbox]),label:has(>input[type=radio]){display:flex;alig
       <div class="page-header">
         <div>
           <div class="page-title">Settings</div>
-          <div class="page-sub">Your Admin Password and company details. For people, go to People and access.</div>
+          <div class="page-sub">Your Admin Password and company details. For people, go to Team > People.</div>
         </div>
         <button class="btn btn-primary" onclick="loadSettingsPage()">↻ Refresh</button>
       </div>
 
-      <details class="e2-more a54-menu"><summary>More tools: change the Admin Password</summary><div class="e2-fold-body"><div class="card write-only-control">
+      <div class="card write-only-control a89-part-security" id="a89-adminpw-card">
         <h3>🔑 Change Admin Password</h3>
         <div class="hint-text">Changing the Admin Password takes effect straight away for everyone using this panel: anyone still using the old password is signed out the next time they open a page. Keep the new password somewhere safe (for example a password manager). It cannot be looked up if lost; it can only be changed again using the current one.</div>
         <div class="form-row">
@@ -4440,9 +4494,33 @@ label:has(>input[type=checkbox]),label:has(>input[type=radio]){display:flex;alig
         </div>
         <button class="btn btn-primary" id="rotate-secret-btn" onclick="submitRotateSecret()">✓ Change Password</button>
         <div class="result-msg" id="rotate-secret-result"></div>
-      </div></div></details>
+      </div>
 
-      <div class="card" id="fp-email-card" style="display:none;"><!-- RC41-v283-1 (v2.80 merge) -->
+      <!-- v2.31: moved here from Settings. Everything about who can use the
+           system now lives on this one page; Settings keeps only the Admin
+           Password and the read-only company and system information. -->
+      <div class="card write-only-control a89-part-security" id="sup-pw-card">
+        <h3>🛡 Supervisor Password</h3>
+        <div class="hint-text">
+          Needed only if someone is a <strong>Supervisor</strong> (set in Team &gt; People: Add person, or Edit on their row). They sign in with their own
+          employee code and PIN, then unlock this panel with <strong>this</strong> password &mdash; never yours.
+          That is what stops them reaching accounts, access levels and the Admin Password: they do not hold the
+          password those need, so the refusal does not depend on this website behaving itself.
+          <br><br>
+          Leave both boxes empty and press <strong>Remove it</strong> to remove Supervisor access for everyone
+          at once. No account or history is changed.
+        </div>
+        <div class="form-row">
+          <div class="form-field"><label>New Supervisor Password (8 or more letters or numbers)</label><input type="text" class="pw-mask" autocapitalize="off" spellcheck="false" id="sup-pw-new" autocomplete="off"></div>
+          <div class="form-field"><label>Confirm</label><input type="text" class="pw-mask" autocapitalize="off" spellcheck="false" id="sup-pw-confirm" autocomplete="off"></div>
+        </div>
+        <button class="btn btn-primary" onclick="submitSupervisorPassword()">✓ Save the password</button>
+        <button class="btn btn-grey" onclick="clearSupervisorPassword()">Remove it</button>
+        <div class="result-msg" id="sup-pw-status" style="margin-top:8px;"></div>
+        <div class="result-msg" id="sup-pw-result"></div>
+      </div>
+
+      <div class="card a89-part-security" id="fp-email-card" style="display:none;"><!-- RC41-v283-1 (v2.80 merge) -->
         <h3>Recovery email for a forgotten Admin Password</h3>
         <div class="hint-text">If the Admin Password is ever forgotten, a code is sent to this address. Use an address only the owner can open, and turn on 2-step sign-in for that mailbox.</div>
         <div class="form-row">
@@ -4453,14 +4531,14 @@ label:has(>input[type=checkbox]),label:has(>input[type=radio]){display:flex;alig
         <div class="result-msg" id="fp-set-result"></div>
       </div>
 
-      <div class="card">
+      <div class="card a89-part-profile">
         <h3>🏢 Company Info</h3>
         <div class="info-grid" id="settings-company-info">
           <div class="info-item"><div class="info-item-label">Loading...</div></div>
         </div>
       </div>
 
-      <div class="card">
+      <div class="card a89-part-profile">
         <h3>🖥 System Info</h3>
         <div class="info-grid" id="settings-system-info">
           <div class="info-item"><div class="info-item-label">Loading...</div></div>
@@ -4468,6 +4546,76 @@ label:has(>input[type=checkbox]),label:has(>input[type=radio]){display:flex;alig
       </div>
     </div>
 
+    <!-- A89: Team > Devices > Phones signed in (the list moved here from People) -->
+    <div class="page" id="page-a89signed">
+      <div class="page-header"><div><div class="page-title">Phones signed in</div></div></div>
+      <div id="r41-pane-phones" class="e2-keep"><!-- RC41-W1-8 RC41-v282-9 -->
+        <div class="hint-text" style="margin:8px 0;">Phones where someone typed their PIN and is kept signed in. <strong>Sign this phone out</strong> ends it on that one phone; the person types the PIN again there next time. <strong>Sign out everywhere</strong> does that on all of that person's phones and computers.</div><!-- RC41-v284-9 -->
+        <div class="e2-keep r41-keep"><button class="btn btn-primary" onclick="r41LoadPhones()">&#8635; Refresh phones</button></div><!-- RC41-v282-5 -->
+        <div class="result-msg" id="r41-phones-msg"></div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Person</th><th>Phone</th><th>Last used</th><th>Signed in until</th><th>Actions</th></tr></thead>
+            <tbody id="r41-phones-body"><tr class="empty-row"><td colspan="5">Open this tab to see the list.</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <!-- A89: Team > Devices > Admin panel computers (moved here from People) -->
+    <div class="page" id="page-a89adminpcs">
+      <div class="page-header"><div><div class="page-title">Admin panel computers</div></div><button class="btn btn-grey" onclick="r41LoadPhones()">&#8635; Refresh</button></div>
+      <div id="a89-adminpcs-pane" class="e2-keep">
+        <div class="hint-text" style="margin:0 0 8px;">Computers where an Admin or Supervisor is kept signed in for 30 days. <strong>Sign this computer out</strong> ends it; they type their code and PIN there again. The Admin Password is asked every time anyway.</div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Person</th><th>Computer</th><th>Last used</th><th>Signed in until</th><th>Actions</th></tr></thead>
+            <tbody id="r41-pcs-body"><tr class="empty-row"><td colspan="5">Open this tab to see the list.</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <!-- A89: Records & safety > Rare tools -->
+    <div class="page" id="page-a89rare">
+      <div class="page-header"><div><div class="page-title">Rare tools</div></div></div>
+      <div class="e2-keep">
+      <div class="a89-card">
+        <h3>Bulk update existing products from a spreadsheet (CSV)</h3>
+        <p>Changes the reorder level, cost price, MRP or on/off of many products at once. It never adds products. You see a preview before anything is saved.</p>
+        <div class="a89-type"><label for="a89-rare-bulk-in">Type BULK UPDATE to show this tool</label><input type="text" id="a89-rare-bulk-in" autocomplete="off" spellcheck="false" data-a89-phrase="1" data-a89-rare="bulk" placeholder="BULK UPDATE"><button type="button" class="btn btn-grey" data-a89-rare-go="bulk" disabled>Show the tool</button></div>
+        <div class="a89-rare-body" id="a89-rare-body-bulk" hidden>
+      <div class="card write-only-control" style="margin-top:20px;">
+        <h3>⬆ Bulk CSV Import — Update Existing SKUs</h3>
+        <div class="hint-text">
+          Upload a CSV with a <code>sku_code</code> column plus any of <code>reorder_threshold</code>, <code>cost_price</code>, <code>mrp</code>, <code>active</code> (true/false).
+          Only these four fields can be changed here — new SKUs are <strong>not</strong> created, and product name / ASIN / bin / set size are <strong>not</strong> touched, even if they are in your file. Extra columns are ignored.
+        </div>
+        <input type="file" id="csv-file-input" accept=".csv" onchange="handleCsvFileSelect(event)">
+        <div id="csv-preview-area" style="margin-top:14px;"></div>
+      </div>
+        </div>
+      </div>
+      <div class="a89-card">
+        <h3>Undo a raw-material import</h3>
+        <p>Puts every row of a recent import back as it was. It works for 24 hours after the import. It opens in Buying, where you type your PIN.</p>
+        <div class="a89-type"><label for="a89-rare-undo-in">Type UNDO IMPORT to open it</label><input type="text" id="a89-rare-undo-in" autocomplete="off" spellcheck="false" data-a89-phrase="1" data-a89-rare="undo" placeholder="UNDO IMPORT"><button type="button" class="btn btn-grey" data-a89-rare-go="undo" disabled>Open it</button></div>
+      </div>
+      <div class="a89-card">
+        <h3>Import templates</h3>
+        <p>Bulk upload template (Excel): <a id="a89-tpl-link" href="#" download style="color:#1B4F8A;font-weight:600;">&#11015; Download (.xlsx)</a></p>
+        <p>Raw materials (items, vendors, opening stock, purchase bills, barcodes): open the phone app, go to Raw materials, then Import / Export. Customers and Production: open that section in the phone app and use its Import button. Each one downloads a ready-to-fill sheet with instructions.</p>
+      </div>
+      <div class="a89-card a89-quiet">
+        <h3>Taken out of this panel</h3>
+        <p>Reset all stock to zero, and Delete all test accounts, are no longer here. They were one-time tools. If one is ever needed, your developer runs it once, with a backup first.</p>
+      </div>
+      </div>
+    </div>
+    <!-- A89: Company settings > Modules (read only) -->
+    <div class="page" id="page-a89modules">
+      <div class="page-header"><div><div class="page-title">Modules</div></div><button class="btn btn-grey" onclick="a89ModulesPaint()">&#8635; Count again</button></div>
+      <div id="a89-modules" class="a89-mods e2-keep"></div>
+      <p class="a89-note e2-keep">A person gets a module when it is switched on in their access (Team &gt; People &gt; Edit). A switch that turns a module on or off for the whole company needs a database change and is not in this version.</p>
+    </div>
   </div>
 </div>
 
@@ -5069,7 +5217,7 @@ function submitEmployeeTotpCode() {
     codeEl.value = '';
     errEl.textContent = '';
     if (row.backup_codes_left !== null && row.backup_codes_left !== undefined && row.backup_codes_left <= 2 && String(row.message || '').indexOf('Backup code used') >= 0) {
-      setTimeout(function () { alert('Only ' + row.backup_codes_left + ' backup codes left.\n\nAsk an Admin to issue you a fresh set from People and access.'); }, 400);
+      setTimeout(function () { alert('Only ' + row.backup_codes_left + ' backup codes left.\n\nAsk an Admin to issue you a fresh set from Team > People.'); }, 400);
     }
     try { if (w12Pend) w12AfterPin(row, w12Pend.code, w12Pend.pin); } catch (w12e) {}   /* RC41-v283-2 W12 */
     w12Pend = null;
@@ -8615,7 +8763,7 @@ function renderDashStaffChart(rows) {
 // v2.35: three founder-reported problems fixed here and in auditRowHtml()/
 // showDetailsModal() below. (1) The Employee column was showing the generic
 // word stored on the row at scan time (often just "Staff") instead of the
-// person's real name from People and access - fixed by preferring the live
+// person's real name from Team > People - fixed by preferring the live
 // directory name, falling back to the stored value only if the employee no
 // longer exists there. (2) The Details column and its "view" popup showed
 // raw JSON - describeAuditDetails() below turns it into a plain sentence for
@@ -8679,7 +8827,7 @@ function buildAuditFilterParams() {
 // v2.3: pulled out of loadAuditLog so loadAuditLogHighRisk() can render the
 // same row markup for its merged result set without duplicating it.
 function auditRowHtml(r, idx) {
-  // v2.35: a staff member's CURRENT name (from People and access) is shown
+  // v2.35: a staff member's CURRENT name (from Team > People) is shown
   // first - it is always accurate for anyone still active. The name stored
   // on the row at the time is kept only as a fallback for someone since
   // archived. Before this fix the stored value always won, and since that
@@ -9550,7 +9698,7 @@ function scanSessionRowHtml(s, idx) {
     '<td>' + openCell + '</td>' +
     // v2.35: same "code with no name" gap as the Activity record and Transactions
     // tabs, fixed the same way - the operator's code plus their current
-    // name from People and access underneath it.
+    // name from Team > People underneath it.
     '<td>' + esc(s.employee_code) + (employeeDirectory[s.employee_code] ? '<br><span class="mono" style="color:#888">' + esc(employeeDirectory[s.employee_code].display_name) + '</span>' : '') + '</td>' +
     '<td>' + deviceCellHtml(s, idx) + '</td>' +
     '<td>' + sessionStatusLabel(s) + '</td>' +
@@ -10805,7 +10953,7 @@ var SYSCHECK = [
     } },
 
   { name: 'Staff accounts can be listed',
-    why:  'This is the People and access page. It broke once before, silently, because it asked for a column it is not allowed to read.',
+    why:  'This is the Team > People page. It broke once before, silently, because it asked for a column it is not allowed to read.',
     run:  function () {
       return a72Count().then(function (r) {
           if (r.error) throw r.error;
@@ -10834,9 +10982,9 @@ var SYSCHECK = [
                 return { ok: true, detail: sups.length + ' Supervisor account(s), and a Supervisor Password is set. They can sign in.' };
               }
               if (isSet && sups.length === 0) {
-                return { ok: false, warnOnly: true, detail: 'A Supervisor Password is set, but nobody is marked as a Supervisor, so it opens nothing. Either promote someone in People and access → Edit Access, or press Remove it on the Supervisor Password card on that same page.' };
+                return { ok: false, warnOnly: true, detail: 'A Supervisor Password is set, but nobody is marked as a Supervisor, so it opens nothing. Either promote someone in Team > People → Edit Access, or press Remove it on the Supervisor Password card on that same page.' };
               }
-              return { ok: false, warnOnly: true, detail: sups.length + ' account(s) are marked Supervisor, but no Supervisor Password is set — so they cannot actually get in. Set one in People and access, on the Supervisor Password card.' };
+              return { ok: false, warnOnly: true, detail: sups.length + ' account(s) are marked Supervisor, but no Supervisor Password is set — so they cannot actually get in. Set one in Team > People, on the Supervisor Password card.' };
             }).catch(function () {
               return { ok: false, warnOnly: true, detail: 'Could not check the Supervisor Password just now — the connection timed out. Try again.' };
             });
@@ -10865,7 +11013,7 @@ var SYSCHECK = [
           return { ok: false, warnOnly: true,
                    detail: 'Only ' + who + ' can run this panel' +
                            (readOnly.length ? ' (' + readOnly.length + ' can look but not act)' : '') +
-                           '. If that person is travelling, ill or simply asleep, nobody can unlock a locked-out staff member, reverse a wrong batch, or block a lost phone until they are back. People and access is where you fix this in two minutes: set the Supervisor Password at the bottom of that page, then press Edit Access on the person and choose Supervisor.' };
+                           '. If that person is travelling, ill or simply asleep, nobody can unlock a locked-out staff member, reverse a wrong batch, or block a lost phone until they are back. Team > People is where you fix this in two minutes: set the Supervisor Password at the bottom of that page, then press Edit Access on the person and choose Supervisor.' };
         });
     } },
 
@@ -10982,7 +11130,7 @@ var SYSCHECK = [
           if (r.error) throw r.error;
           var n = r.count || 0;
           return { ok: n === 0,
-                   detail: n === 0 ? 'Nobody is locked out.' : n + ' account(s) are locked out right now. Open People and access to see who and to unlock them.',
+                   detail: n === 0 ? 'Nobody is locked out.' : n + ' account(s) are locked out right now. Open Team > People to see who and to unlock them.',
                    warnOnly: true };
         });
     } },
@@ -11501,7 +11649,7 @@ function buildPermissionUIHtml(prefix) {
 
   var infoRows = PERMISSION_SECTIONS.map(function (s) {
     return '<tr><td>' + s.label.replace(/&(?![a-z#0-9]+;)/g, '&amp;') + '</td><td>' + s.help + '</td></tr>';
-  }).join('') + '<tr><td>Admin Panel</td><td>This website, separate from the phone App above — Overview, Activity record, People and access, SKU &amp; Stock, Bins, Reports, Settings. A <strong>Full Admin</strong> can change anything. A <strong>Supervisor</strong> can run the day but cannot touch accounts, access levels or either password.</td></tr>';
+  }).join('') + '<tr><td>Admin Panel</td><td>This website, separate from the phone App above — Overview, Activity record, Team > People, SKU &amp; Stock, Bins, Reports, Settings. A <strong>Full Admin</strong> can change anything. A <strong>Supervisor</strong> can run the day but cannot touch accounts, access levels or either password.</td></tr>';
 
   return '<div class="form-field" style="max-width:340px;margin-bottom:4px;">' +
       '<label>App Section Access — Preset</label>' +
@@ -11524,7 +11672,7 @@ function buildPermissionUIHtml(prefix) {
       '<div class="hint-text" style="margin:4px 0 0 21px;">Kept separate from the App-section boxes above — this is the Admin Panel, which is protected by its own password, not the phone App.</div>' +
       '<div id="' + prefix + '-admin-level-row" style="display:none;margin:8px 0 0 21px;">' +
         '<label style="margin-right:14px;display:block;margin-bottom:4px;"><input type="radio" name="' + prefix + '-admin-level" value="ADMIN" onchange="r41LevelChanged(\'' + prefix + '\')"> <strong>Full Admin</strong> &mdash; can change anything, including accounts and both passwords</label>' +
-        '<label style="display:block;"><input type="radio" name="' + prefix + '-admin-level" value="SUPERVISOR" checked onchange="r41LevelChanged(\'' + prefix + '\')">' + /* RC41-v282-3 */ ' <strong>Supervisor</strong> &mdash; runs the panel on your behalf: batches, phones, stock, bins, and rescuing staff. Cannot add or switch off accounts, cannot change anyone\'s access level, and cannot touch either password. Signs in with the separate <em>Supervisor Password</em> set on the People and access page.</label>' +
+        '<label style="display:block;"><input type="radio" name="' + prefix + '-admin-level" value="SUPERVISOR" checked onchange="r41LevelChanged(\'' + prefix + '\')">' + /* RC41-v282-3 */ ' <strong>Supervisor</strong> &mdash; runs the panel on your behalf: batches, phones, stock, bins, and rescuing staff. Cannot add or switch off accounts, cannot change anyone\'s access level, and cannot touch either password. Signs in with the separate <em>Supervisor Password</em> set under Company settings &gt; Passwords and sign-in.</label>' +
         // v2.31: the old "Read-Only Admin" level is retired. It was a half-built
         // account type whose job the Supervisor role now does properly, and it
         // carried a route into the audit log that needed no password at all.
@@ -12955,7 +13103,7 @@ function loadCompanyInfo() {
   el.innerHTML = '<div class="info-item"><div class="info-item-label">Loading...</div></div>';
   withTimeout(db.from('oms_companies').select('company_id, company_name').limit(1), 10000, 'Company info').then(function (res) {
     if (res.error || !res.data || !res.data.length) {
-      el.innerHTML = '<div class="info-item"><div class="info-item-label">Error</div><div class="info-item-val">' + esc(res.error ? friendlyError(res.error, 1) : 'No company record found.') + '</div></div>';
+      el.innerHTML = '<div class="info-item"><div class="info-item-label">' + (res.error ? 'Could not read the company details' : 'Not set up yet') + '</div><div class="info-item-val">' + esc(res.error ? friendlyError(res.error, 1) : 'No company name is saved yet. Your developer adds it once.') + '</div></div>';   /* A89 W1 */
       return;
     }
     var c = res.data[0];
@@ -12984,8 +13132,7 @@ function loadSystemInfo() {
       '<div class="info-item"><div class="info-item-label">Active staff</div><div class="info-item-val">' + (empRes.error ? '—' : fmtNum(empRes.count)) + '</div></div>' +
       '<div class="info-item"><div class="info-item-label">Total Transactions Logged</div><div class="info-item-val">' + (txnRes.error ? '—' : fmtNum(txnRes.count)) + '</div></div>' +
       '<div class="info-item"><div class="info-item-label">Database Connection</div><div class="info-item-val ' + (connected ? 'conn-ok' : 'conn-bad') + '">' + (connected ? 'Connected' : 'Unreachable') + '</div></div>' +
-      '<div class="info-item"><div class="info-item-label">Bulk Upload Template</div><div class="info-item-val"><a href="' + ((location.protocol === 'https:' || location.protocol === 'http:') ? location.origin : 'https://app.artzfolio.com') + '/ArtzFolio_OMS_Bulk_Upload_Template_v1.1_2026-09.xlsx" download style="color:#1B3F6B;font-weight:600;">&#11015; Download (.xlsx)</a></div></div>' +
-      '<div class="info-item"><div class="info-item-label">Other import templates</div><div class="info-item-val" style="font-size:var(--t-body);font-weight:400;">Raw materials (items, vendors, opening stock, purchase bills, barcodes): open the phone App, go to Raw materials, then Import / Export. Customers and Production: open that section in the App and use its Import button. Each one downloads a ready-to-fill sheet with instructions.</div></div>';
+      '';   /* A89 R7: the two template lines moved to Records & safety > Rare tools */
   }).catch(function (err) {
     el.innerHTML = '<div class="info-item"><div class="info-item-label">Error</div><div class="info-item-val">' + esc(friendlyError(err, 1)) + '</div></div>';
   });
@@ -13563,7 +13710,7 @@ if (document.readyState === 'loading') document.addEventListener('DOMContentLoad
    Nothing is removed: every page, every switchPage('...') call and every permission rule works as before. */
 (function () {
   var GROUPS = [
-    { id: 'employees', label: 'People and phones', icon: '\uD83D\uDC65', pages: [['employees', 'People and access'], ['devices', 'Phones']] },
+    { id: 'employees', label: 'People and phones', icon: '\uD83D\uDC65', pages: [['employees', 'Team > People'], ['devices', 'Phones']] },
     { id: 'sku', label: 'Stock and bins', icon: '\uD83D\uDCE6', pages: [['sku', 'Product stock search'], ['bins', 'Bins (shelf locations)'], ['reports', 'Stock movement reports']] },
     { id: 'audit', label: 'Activity record', icon: '\uD83D\uDCDC', pages: [['audit', 'Permanent activity record'], ['sessions', 'Batch scans']] },
     { id: 'secdata', label: 'Safety and checks', icon: '\uD83D\uDD10', pages: [['secdata', 'Safety and backups'], ['syscheck', 'Is everything working?']] }
@@ -14367,7 +14514,7 @@ function r41FinishSupervisor(prefix) {
 function r41SupPwLine(prefix) {
   var el = document.getElementById(prefix + '-r41-pw');
   if (!el) return;
-  var how = 'To set it: close this box, open "More tools: add a person and others" at the top of this page, and use Supervisor Password.';
+  var how = 'To set it: close this box, open Company settings > Passwords and sign-in, and use Supervisor Password.';   /* A89 W3 */
   var sec = '';
   try { sec = getAdminSecret(); } catch (e0) {}
   if (typeof db === 'undefined' || !db || !sec) { el.textContent = 'Supervisor Password: could not be checked from here. A Supervisor needs it to sign in. ' + how; return; }
@@ -14783,6 +14930,581 @@ try { r41BindMenus(); } catch (e0) {}
     }, function (err) { $('fp-set-secret').value = ''; say('fp-set-result', missing(err) ? OFF_MSG : 'No signal. Try again.', false); return false; });
   };
   try { if (!HIDE) { var w = $('fp-wrap'); if (w) w.style.display = ''; var c = $('fp-email-card'); if (c) c.style.display = ''; } } catch (e1) {}
+})();
+</script>
+<div class="a89w-bg" id="a89w-bg"></div><!-- A89: Add person sheet -->
+<script id="a89-js">
+/* A89 (Admin v2.89, RC42 admin redesign). A layer on top of v2.88: nothing below sends anything new to the database.
+   1 Menu: 6 sections (Home, Team, Inventory, Buying, Records & safety, Company settings), each with tabs; every old page is a tab.
+   2 Team > Devices: Phones signed in, All phones, Admin panel computers, Windows PCs (desktop app).
+   3 Add person in 5 steps. It fills the old Add a person form (kept hidden) and presses its own save: submitAddEmployee(),
+     so the same oms_admin_add_employee call, the same checks and the same audit row as before.
+   4 Rare tools: Bulk update from CSV and Undo an import stay hidden until their name is typed.
+   5 Modules: which phone-app sections the team uses (read only; counted from the people list). */
+var A89 = { leaf: null, pending: null, last: {}, rmcImports: false, w: null, poll: 0 };
+var A89_SVG = {
+  home: '<path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/>',
+  team: '<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.8-3.5 3.4-5.5 6.5-5.5s5.7 2 6.5 5.5"/><circle cx="17" cy="9" r="2.5"/><path d="M16.5 14.6c2.4.2 4.2 2 4.8 4.9"/>',
+  inventory: '<path d="M3 7.5L12 3l9 4.5v9L12 21l-9-4.5z"/><path d="M3 7.5l9 4.5 9-4.5M12 12v9"/>',
+  buying: '<path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 8h6M9 12h6M9 16h3"/>',
+  safety: '<path d="M12 3l8 3v6c0 4.5-3.4 8-8 9-4.6-1-8-4.5-8-9V6z"/><path d="M8.5 12l2.5 2.5 4.5-5"/>',
+  company: '<path d="M4 21V5a1 1 0 0 1 1-1h9a1 1 0 0 1 1 1v16M15 9h4a1 1 0 0 1 1 1v11M3 21h18M8 8h3M8 12h3M8 16h3"/>'
+};
+/* the map: section > tab > (sub). Every leaf names the old page it opens (and the old section inside it). */
+var A89_IA = [
+  { id: 'home', label: 'Home', tabs: [
+    { id: 'overview', label: 'Overview', page: 'dashboard', desc: 'Six numbers for today. Press one to open it.' } ] },
+  { id: 'team', label: 'Team', tabs: [
+    { id: 'people', label: 'People', page: 'employees', desc: 'Everyone who can sign in to the phone app or this panel. Open a person to change access, PIN or phone code.' },
+    { id: 'devices', label: 'Devices', subs: [
+      { id: 'signed', label: 'Phones signed in', page: 'a89signed', desc: 'Phones where someone is signed in right now. Sign one phone out, or sign a person out of all their phones.' },
+      { id: 'phones', label: 'All phones', page: 'devices', desc: 'Every phone that has ever used the app. Give a phone a name you recognise, or block a lost phone.' },
+      { id: 'adminpcs', label: 'Admin panel computers', page: 'a89adminpcs', desc: 'Office computers kept signed in to this Admin panel for 30 days. Sign one out if it is shared or lost.' },
+      { id: 'pcs', label: 'Windows PCs (desktop app)', page: 'pcs', desc: 'Windows PCs running the ArtzFolio desktop app. Block a lost PC (it stops within 10 minutes), or unblock it again. Type your PIN, then press Show computers.' } ] },
+    { id: 'roles', label: 'Who can do what', page: 'secdata', sec: 'roles', desc: 'What each kind of account is allowed to do. Read only.' } ] },
+  { id: 'inventory', label: 'Inventory', tabs: [
+    { id: 'stock', label: 'Products and stock', page: 'sku', desc: 'Search any product: stock on hand, bins, reorder level and prices. Correct a count from its row.' },
+    { id: 'bins', label: 'Bins', page: 'bins', desc: 'Every shelf bin and what it holds. Merge two bins, or fix a typo in a bin code.' },
+    { id: 'moves', label: 'Stock movements', page: 'reports', desc: 'Every time stock came in, went out or moved.' },
+    { id: 'batches', label: 'Batch scans to check', page: 'sessions', desc: 'Scan batches closed on the phones. Look inside, accept or reverse a batch.' } ] },
+  { id: 'buying', label: 'Buying', tabs: [
+    { id: 'settings', label: 'Settings', page: 'rmctl', rmc: 'settings', desc: 'GST state code, price-jump alert, when a price counts as old, and how many items to count each week. Type your PIN first.' },
+    { id: 'dq', label: 'Data quality', page: 'rmctl', rmc: 'dq', desc: 'Duplicates and missing details in items and vendors. Fix them in the phone app. Type your PIN first.' },
+    { id: 'changes', label: 'Change history', page: 'rmctl', rmc: 'changes', desc: 'Recent edits to items and vendors. Undo an edit if nobody changed it since. Type your PIN first.' },
+    { id: 'score', label: 'Vendor scores', page: 'rmctl', rmc: 'score', desc: 'How often each vendor delivered on time. Type your PIN first.' },
+    { id: 'imports', label: 'Undo an import', page: 'rmctl', rmc: 'imports', hidden: true, desc: 'Undo a raw-material import made in the last 24 hours. Opened from Records & safety > Rare tools. Type your PIN first.' } ] },
+  { id: 'safety', label: 'Records & safety', tabs: [
+    { id: 'activity', label: 'Activity record', page: 'audit', desc: 'The permanent record of every action, newest first. Nothing in it can be changed.' },
+    { id: 'checks', label: 'Checks', subs: [
+      { id: 'health', label: 'Is everything working?', page: 'syscheck', desc: 'One button tests the live system and says in plain words what works and what does not.' },
+      { id: 'today', label: 'Today', page: 'secdata', sec: 'today', desc: 'Counts of what needs attention today. Read only. Type your PIN first.' },
+      { id: 'recon', label: 'Data checks', page: 'secdata', sec: 'recon', desc: 'Compares totals that must agree, for example stock against its entries. Reports only. Type your PIN first.' },
+      { id: 'chain', label: 'Record not altered', page: 'secdata', sec: 'audit', desc: 'Checks that no saved record was changed afterwards. Type your PIN first.' },
+      { id: 'errors', label: 'App error log', page: 'secdata', sec: 'errors', desc: 'Problems the phone app noticed by itself. Show this to whoever supports the system. Type your PIN first.' } ] },
+    { id: 'backup', label: 'Backups and export', subs: [
+      { id: 'backup', label: 'Backup', page: 'secdata', sec: 'backup', desc: 'What the database says about backups, and how to check the daily backup yourself. Type your PIN first.' },
+      { id: 'export', label: 'Export everything', page: 'secdata', sec: 'export', desc: 'Download your own copy of your data, one file per table. Type your PIN first.' },
+      { id: 'retention', label: 'How long data is kept', page: 'secdata', sec: 'retention', desc: 'What is stored and how old it is. Deletes nothing. Type your PIN first.' } ] },
+    { id: 'signout', label: 'Sign out everywhere', page: 'secdata', sec: 'signout', desc: 'Sign a person out of every phone and computer at once, for example when a phone is lost.' },
+    { id: 'rare', label: 'Rare tools', page: 'a89rare', desc: 'Tools needed once in a long while. Each one stays hidden until you type its name, so it cannot be pressed by mistake.' } ] },
+  { id: 'company', label: 'Company settings', adminOnly: true, tabs: [
+    { id: 'profile', label: 'Company profile', page: 'settings', part: 'profile', desc: 'Company name and system numbers.' },
+    { id: 'security', label: 'Passwords and sign-in', page: 'settings', part: 'security', desc: 'The Admin Password, the Supervisor Password and the recovery email for a forgotten Admin Password.' },
+    { id: 'modules', label: 'Modules', page: 'a89modules', desc: 'Which parts of the phone app your team uses, and for how many people.' } ] }
+];
+var A89_LEAVES = {}, A89_LIST = [];
+(function () {
+  A89_IA.forEach(function (s) {
+    s.tabs.forEach(function (t) {
+      var add = function (o, sub) { var id = s.id + '.' + t.id + (sub ? '.' + o.id : ''); var lf = { id: id, sid: s.id, tid: t.id, uid: sub ? o.id : '', label: o.label, page: o.page, sec: o.sec || '', rmc: o.rmc || '', part: o.part || '', desc: o.desc || '', hidden: !!(t.hidden || o.hidden) }; A89_LEAVES[id] = lf; A89_LIST.push(lf); };
+      if (t.subs) t.subs.forEach(function (u) { add(u, true); }); else add(t, false);
+    });
+  });
+})();
+function a89Sec(sid) { for (var i = 0; i < A89_IA.length; i++) if (A89_IA[i].id === sid) return A89_IA[i]; return null; }
+function a89Tab(sid, tid) { var s = a89Sec(sid); if (!s) return null; for (var i = 0; i < s.tabs.length; i++) if (s.tabs[i].id === tid) return s.tabs[i]; return null; }
+function a89IsSup() { try { return typeof isSupervisor === 'function' && isSupervisor(); } catch (e) { return false; } }
+/* a section id, a tab id or a leaf id -> the leaf to open */
+function a89Resolve(id) {
+  if (A89_LEAVES[id]) return A89_LEAVES[id];
+  var p = String(id || '').split('.'), s = a89Sec(p[0]); if (!s) return null;
+  var t = p[1] ? a89Tab(p[0], p[1]) : null;
+  if (!t) { var k = A89.last[s.id]; if (k && A89_LEAVES[k] && !A89_LEAVES[k].hidden) return A89_LEAVES[k]; t = s.tabs[0]; }
+  if (t.subs) { var ks = A89.last[s.id + '.' + t.id]; if (ks && A89_LEAVES[ks]) return A89_LEAVES[ks]; return A89_LEAVES[s.id + '.' + t.id + '.' + t.subs[0].id]; }
+  return A89_LEAVES[s.id + '.' + t.id];
+}
+/* an old page opened by old code (a link, a Needs you tile) -> the leaf it belongs to */
+function a89LeafForPage(name) {
+  if (A89.leaf && A89.leaf.page === name) {
+    if (name === 'secdata') { try { if (A89.leaf.sec === secCurrent) return A89.leaf; } catch (e) { return A89.leaf; } }
+    else if (name === 'rmctl') { try { if (A89.leaf.rmc === rmcCurrent) return A89.leaf; } catch (e) { return A89.leaf; } }
+    else return A89.leaf;
+  }
+  var best = null;
+  for (var i = 0; i < A89_LIST.length; i++) {
+    var lf = A89_LIST[i]; if (lf.page !== name) continue;
+    if (name === 'secdata') { try { if (lf.sec === secCurrent) return lf; } catch (e) {} }
+    else if (name === 'rmctl') { try { if (lf.rmc === rmcCurrent) return lf; } catch (e) {} }
+    if (!best && !lf.hidden) best = lf;
+  }
+  return best;
+}
+function a89Go(id) {
+  var lf = a89Resolve(id); if (!lf) return;
+  if (lf.sid === 'company' && a89IsSup()) return;
+  if (lf.id === 'buying.imports' && !A89.rmcImports) return;   /* A89b A3: only through Rare tools */
+  A89.pending = lf;
+  switchPage(lf.page);
+}
+function a89After(name) {
+  var fromTab = !!(A89.pending && A89.pending.page === name);
+  var lf = fromTab ? A89.pending : a89LeafForPage(name);
+  A89.pending = null;
+  if (name === 'secdata' && !fromTab) { try { secShow('today'); } catch (e) {} lf = A89_LEAVES['safety.checks.today']; }   /* A89b A4 */
+  if (name === 'rmctl' && !A89.rmcImports) { try { if (rmcCurrent === 'imports') { rmcShow('settings'); lf = A89_LEAVES['buying.settings']; } } catch (e) {} }
+  var prev = A89.leaf;
+  if (prev && prev.page === 'a89rare' && name !== 'a89rare') a89RareReset();
+  if (prev && prev.id === 'buying.imports' && !(lf && lf.id === 'buying.imports')) A89.rmcImports = false;
+  A89.leaf = lf;
+  if (lf) {
+    if (fromTab && lf.sec) { try { secShow(lf.sec); } catch (e) {} }
+    if (fromTab && lf.rmc) { try { rmcShow(lf.rmc); } catch (e) {} }
+    A89.last[lf.sid] = lf.id; if (lf.uid) A89.last[lf.sid + '.' + lf.tid] = lf.id;
+    if (lf.part === 'security') { try { loadSupervisorPasswordStatus(); } catch (e) {} }
+  }
+  if (name === 'a89signed' || name === 'a89adminpcs') { try { r41LoadPhones(); } catch (e) {} }
+  if (name === 'a89modules') a89ModulesPaint();
+  if (name === 'a89rare') a89RareInit();
+  try { document.body.setAttribute('data-a89leaf', lf ? lf.id : ''); document.body.setAttribute('data-a89part', lf && lf.part ? lf.part : ''); } catch (e) {}
+  a89Paint();
+}
+function a89Btn(cls, label, go, on, extra) {
+  return '<button type="button" class="' + cls + '" role="tab" aria-selected="' + (on ? 'true' : 'false') + '" data-a89-go="' + esc(go) + '"' + (extra || '') + '>' + esc(label) + '</button>';
+}
+function a89HeadHtml(lf) {
+  var s = a89Sec(lf.sid); if (!s) return '';
+  var h = '<div class="a89-crumb">' + esc(s.label) + '</div>';
+  var tabs = s.tabs.filter(function (t) { if (!t.hidden) return true; return lf.tid === t.id || (t.id === 'imports' && A89.rmcImports); });
+  if (tabs.length > 1) h += '<div class="a89-tabs" role="tablist" aria-label="' + esc(s.label) + '">' + tabs.map(function (t) { return a89Btn('a89-tab', t.label, s.id + '.' + t.id, t.id === lf.tid); }).join('') + '</div>';
+  var t = a89Tab(lf.sid, lf.tid);
+  if (t && t.subs) h += '<div class="a89-subs" role="tablist" aria-label="' + esc(t.label) + '">' + t.subs.map(function (u) { return a89Btn('a89-sub', u.label, s.id + '.' + t.id + '.' + u.id, u.id === lf.uid); }).join('') + '</div>';
+  if (lf.desc) h += '<p class="a89-desc">' + esc(lf.desc) + '</p>';
+  return h;
+}
+function a89Paint() {
+  var lf = A89.leaf, sup = a89IsSup();
+  document.querySelectorAll('.a89-nav').forEach(function (n) {
+    var k = n.getAttribute('data-a89'), on = !!lf && lf.sid === k;
+    n.classList.toggle('active', on);
+    if (on) n.setAttribute('aria-current', 'page'); else n.removeAttribute('aria-current');
+    n.style.display = (k === 'company' && sup) ? 'none' : '';
+  });
+  document.querySelectorAll('.a53-tabs, .a89-head').forEach(function (b) { if (b.parentNode) b.parentNode.removeChild(b); });
+  document.querySelectorAll('.page.a89-on').forEach(function (p) { p.classList.remove('a89-on'); });
+  var pg = document.querySelector('.page.active'); if (!pg || !lf) return;
+  var d = document.createElement('div'); d.className = 'a89-head e2-keep'; d.innerHTML = a89HeadHtml(lf);
+  pg.insertBefore(d, pg.firstChild); pg.classList.add('a89-on');
+}
+/* ---------- Rare tools ---------- */
+var A89_RARE = { bulk: 'BULK UPDATE', undo: 'UNDO IMPORT' };
+function a89RareOk(k, typed) { return !!A89_RARE[k] && String(typed || '').trim().toUpperCase().replace(/\s+/g, ' ') === A89_RARE[k]; }
+function a89RareInit() {
+  var a = document.getElementById('a89-tpl-link');
+  if (a) a.href = ((location.protocol === 'https:' || location.protocol === 'http:') ? location.origin : 'https://app.artzfolio.com') + '/ArtzFolio_OMS_Bulk_Upload_Template_v1.1_2026-09.xlsx';
+}
+function a89RareReset() {
+  Object.keys(A89_RARE).forEach(function (k) {
+    var i = document.getElementById('a89-rare-' + k + '-in'); if (i) i.value = '';
+    var b = document.querySelector('[data-a89-rare-go="' + k + '"]'); if (b) b.disabled = true;
+    var body = document.getElementById('a89-rare-body-' + k); if (body) body.hidden = true;
+  });
+}
+function a89RareGo(k) {
+  var i = document.getElementById('a89-rare-' + k + '-in');
+  if (!a89RareOk(k, i ? i.value : '')) return false;
+  if (k === 'bulk') { var body = document.getElementById('a89-rare-body-bulk'); if (body) body.hidden = false; return true; }
+  if (k === 'undo') { A89.rmcImports = true; a89Go('buying.imports'); return true; }
+  return false;
+}
+/* ---------- Modules (read only) ---------- */
+var A89_MODS = [
+  { k: 'raw_materials', t: 'Raw materials', d: 'Stock in and out of raw materials, vendors and purchase bills.' },
+  { k: 'customers', t: 'Customers', d: 'Look up and add customers, import a customer list.' },
+  { k: 'production', t: 'Production', d: 'The production plan, and marking jobs done.' },
+  { k: 'dash', t: 'Dashboard', d: 'The owner dashboard in the phone app.' },
+  { k: 'analytics', t: 'Sales and forecast reports', d: 'Sales, stock, forecast and production views in the phone app.' },
+  { k: 'label_review', t: 'Needs your help (labels)', d: 'Label products the app could not add by itself.' }
+];
+function a89ModCount(list, key) {
+  var n = 0;
+  (list || []).forEach(function (e) {
+    var p = (e && e.permissions) || {}, r = String(e && e.role || '').toUpperCase();
+    if (p[key] === true || (p[key] === undefined && (r === 'ADMIN' || r === 'OWNER' || r === 'SUPERVISOR'))) n++;
+  });
+  return n;
+}
+function a89ModPeople() {
+  var all = []; try { all = employeesCache || []; } catch (e) {}
+  return all.filter(function (e) { var del = false; try { del = r41IsDeleted(e); } catch (x) {} return e && e.active !== false && !e.archived_at && !del; });
+}
+function a89ModulesPaint() {
+  var el = document.getElementById('a89-modules'); if (!el) return;
+  var ppl = a89ModPeople(), known = ppl.length > 0;
+  var h = A89_MODS.map(function (m) {
+    var n = known ? a89ModCount(ppl, m.k) : null;
+    var chip = n === null ? '<span class="a89-chip off">Open Team &gt; People to count</span>' : (n > 0 ? '<span class="a89-chip on">In use: ' + n + ' of ' + ppl.length + ' people</span>' : '<span class="a89-chip off">Nobody has it</span>');
+    return '<div class="a89-card"><h3>' + esc(m.t) + '</h3><p>' + esc(m.d) + '</p>' + chip + '</div>';
+  });
+  var pcs = null; try { pcs = (PCS && PCS.rows) ? PCS.rows.length : null; } catch (e) {}
+  h.push('<div class="a89-card"><h3>Desktop app (Windows PCs)</h3><p>The ArtzFolio desktop app on office Windows PCs.</p>' + (pcs === null ? '<span class="a89-chip off">Open Team &gt; Devices &gt; Windows PCs to count</span>' : (pcs > 0 ? '<span class="a89-chip on">On ' + pcs + ' computer' + (pcs === 1 ? '' : 's') + '</span>' : '<span class="a89-chip off">No computer uses it</span>')) + '</div>');
+  el.innerHTML = h.join('');
+}
+/* ---------- Add person: the 5-step state machine (pure; tested in vm) ---------- */
+var A89W_STEPS = ['Who', 'Role', 'What they can do', 'Phone sign-in', 'Check and save'];
+var A89W_ROLES = [
+  { k: 'WAREHOUSE_STAFF', t: 'Picker / packer', d: 'Picks orders, adds and moves stock, looks up stock.' },
+  { k: 'BILLING_OPERATOR', t: 'Billing', d: 'Picks orders and looks up stock. Cannot move stock.' },
+  { k: 'INVENTORY_LEAD', t: 'Store lead', d: 'Everything a picker does, and sees the whole team\'s stock history.' },
+  { k: 'PRODUCTION_LEAD', t: 'Production', d: 'Looks up stock and sees the whole team\'s stock history.' },
+  { k: 'SUPERVISOR', t: 'Supervisor', d: 'Runs the day for you in the phone app and in this panel. Cannot add people, change access or change passwords.', panel: 'SUPERVISOR' },
+  { k: 'ADMIN', t: 'Admin', d: 'Can do everything, including people and passwords. Only an Admin can make another Admin.', panel: 'ADMIN', fullOnly: true }
+];
+var A89W_GROUPS = [
+  { t: 'Daily work', keys: [['pick', 'Pick orders'], ['move', 'Add and move stock'], ['stock', 'Look up stock'], ['log', 'See stock history'], ['sessions', 'Scan in batches'], ['reserved_stock', 'See held stock'], ['label_review', 'Needs your help (label products)'], ['approve_tasks', 'Approve requests']] },
+  { t: 'Sections of the phone app', keys: [['dash', 'Dashboard'], ['analytics', 'Sales and forecast reports'], ['customers', 'Customers'], ['raw_materials', 'Raw materials'], ['production', 'Production'], ['settings', 'Phone app settings']] },
+  { t: 'Risky actions - they change stock or data for good; most ask for the PIN again', risky: true, keys: [['stock_correction', 'Correct stock'], ['void_entry', 'Undo an entry'], ['release_held_stock', 'Release held stock'], ['bulk_reverse', 'Reverse a whole batch'], ['make_undo', 'Take back a made piece'], ['delete_records', 'Delete records'], ['customer_data_erase_export', 'Erase or export customer data']] }
+];
+var A89W_HIDDEN = ['guide', 'zero_inventory'];   /* guide: always as the role says (on); zero_inventory: does nothing today - both keep the role's value */
+var A89W_PHONE = [
+  { k: 'off', t: 'PIN only', d: 'They sign in with their code and PIN.' },
+  { k: 'theirs', t: 'PIN + a code from their own phone', d: 'They set it up themselves the first time they sign in.' },
+  { k: 'mine', t: 'PIN + a code from my phone', d: 'You scan a code now; they call you for the 6 digits each time.' }
+];
+function a89wRoleOf(k) { for (var i = 0; i < A89W_ROLES.length; i++) if (A89W_ROLES[i].k === k) return A89W_ROLES[i]; return null; }
+function a89wPreset(role) { var p = ROLE_PERMISSION_PRESETS[role] || {}, o = {}; PERMISSION_SECTIONS.forEach(function (s) { o[s.key] = !!p[s.key]; }); return o; }
+function a89wNew(callerFull, codes) {
+  var st = { step: 1, name: '', code: '', codeEdited: false, role: 'WAREHOUSE_STAFF', perms: {}, logScope: 'own', pin: '', pin2: '', phone: 'off', callerFull: !!callerFull, codes: (codes || []).map(function (c) { return String(c || '').toUpperCase(); }), err: '', saving: false, done: false, savedCode: '' };
+  a89wSetRole(st, 'WAREHOUSE_STAFF');
+  return st;
+}
+function a89wSetRole(st, role) {
+  var r = a89wRoleOf(role); if (!r || (r.fullOnly && !st.callerFull)) return false;
+  st.role = role; st.perms = a89wPreset(role); st.logScope = (ROLE_PERMISSION_PRESETS[role] || {}).logScope || 'own';
+  return true;
+}
+function a89wSuggest(name, codes) {
+  var used = {}; (codes || []).forEach(function (c) { used[String(c || '').toUpperCase()] = 1; });
+  var first = String(name || '').trim().split(/\s+/)[0] || '';
+  var base = first.toUpperCase().replace(/[^A-Z]/g, '').slice(0, 6);
+  if (base.length < 2) base = 'EMP';
+  for (var n = 1; n < 1000; n++) { var c = base + (n < 10 ? '0' + n : String(n)); if (!used[c]) return c; }
+  return base + Date.now() % 1000;
+}
+function a89wSetName(st, name) { st.name = String(name || ''); if (!st.codeEdited) st.code = st.name.trim() ? a89wSuggest(st.name, st.codes) : ''; }
+function a89wSetCode(st, code) { st.code = String(code || '').toUpperCase().replace(/\s+/g, ''); st.codeEdited = st.code.length > 0; }
+function a89wCheck(st, step) {
+  if (step >= 1) {
+    var nm = st.name.trim();
+    if (nm.length < 2) return 'Type the person\'s name (at least 2 letters).';
+    if (nm.length > 60) return 'The name is too long (60 letters at most).';
+    if (!/^[A-Z0-9_-]{2,20}$/.test(st.code)) return 'The code must be 2 to 20 capital letters or numbers (for example RAVI01).';
+    if (st.codes.indexOf(st.code) >= 0) return 'The code ' + st.code + ' is already used by someone. Choose another.';
+  }
+  if (step >= 2) { var r = a89wRoleOf(st.role); if (!r) return 'Choose a role.'; if (r.fullOnly && !st.callerFull) return 'Only an Admin can make another Admin.'; }
+  if (step >= 4) {
+    if (!/^\d{4}$/.test(st.pin)) return 'The starting PIN must be exactly 4 numbers.';
+    if (st.pin !== st.pin2) return 'The two PIN boxes do not match. Type the same 4 numbers in both.';
+    if (!A89W_PHONE.some(function (p) { return p.k === st.phone; })) return 'Choose how they sign in.';
+  }
+  return '';
+}
+function a89wNext(st) { var e = a89wCheck(st, st.step); st.err = e; if (!e && st.step < 5) st.step++; return !e; }
+function a89wBack(st) { st.err = ''; if (st.step > 1) st.step--; }
+function a89wSame(st) {
+  var p = ROLE_PERMISSION_PRESETS[st.role] || {};
+  return PERMISSION_SECTIONS.every(function (s) { return !!st.perms[s.key] === !!p[s.key]; }) && (st.logScope || 'own') === (p.logScope || 'own');
+}
+function a89wPresetName(st) { return a89wSame(st) ? st.role : 'CUSTOM'; }
+function a89wPanel(st) { var r = a89wRoleOf(st.role); return (r && r.panel) || ''; }
+/* the role the old form will send (computeEffectiveRole): panel level when the role opens this panel, else the preset or CUSTOM */
+function a89wRoleSent(st) { var pn = a89wPanel(st); if (pn) return pn; return a89wPresetName(st); }
+function a89wLabel(key) { for (var g = 0; g < A89W_GROUPS.length; g++) for (var i = 0; i < A89W_GROUPS[g].keys.length; i++) if (A89W_GROUPS[g].keys[i][0] === key) return A89W_GROUPS[g].keys[i][1]; return key; }
+function a89wDiff(st) {
+  var p = ROLE_PERMISSION_PRESETS[st.role] || {}, out = [];
+  PERMISSION_SECTIONS.forEach(function (s) { if (A89W_HIDDEN.indexOf(s.key) < 0 && !!st.perms[s.key] !== !!p[s.key]) out.push({ key: s.key, label: a89wLabel(s.key), on: !!st.perms[s.key] }); });
+  if ((st.logScope || 'own') !== (p.logScope || 'own') && st.perms.log) out.push({ key: 'logScope', label: st.logScope === 'all' ? 'Sees the whole team\'s history' : 'Sees only their own history', on: true });
+  return out;
+}
+/* writes the state into the old (hidden) Add a person form; the old submitAddEmployee() then reads it exactly as before */
+function a89wToForm(st, doc) {
+  var g = function (id) { return doc.getElementById(id); };
+  g('add-emp-code').value = st.code; g('add-emp-name').value = st.name.trim(); g('add-emp-pin').value = st.pin;
+  PERMISSION_SECTIONS.forEach(function (s) { var el = g('add-emp-perm-' + s.key); if (el) el.checked = !!st.perms[s.key]; });
+  var sc = doc.querySelector('input[name="add-emp-log-scope"][value="' + (st.logScope === 'all' ? 'all' : 'own') + '"]'); if (sc) sc.checked = true;
+  g('add-emp-preset').value = a89wPresetName(st);
+  var pn = a89wPanel(st), box = g('add-emp-admin-access');
+  if (box) box.checked = !!pn;
+  var lv = doc.querySelector('input[name="add-emp-admin-level"][value="' + (pn || 'SUPERVISOR') + '"]'); if (lv) lv.checked = true;
+  try { toggleAdminAccessSub('add-emp'); } catch (e) {}
+  try { updateLogScopeVisibility('add-emp'); } catch (e) {}
+  return { code: st.code, role: a89wRoleSent(st), preset: a89wPresetName(st) };
+}
+/* ---------- Add person: the sheet ---------- */
+function a89wCodes() { var c = []; try { (employeesCache || []).forEach(function (e) { if (e && e.employee_code) c.push(e.employee_code); }); } catch (e) {} return c; }
+function a89wOpen() {
+  var bg = document.getElementById('a89w-bg'); if (!bg) return;
+  if (a89IsSup()) return;   /* only an Admin adds people (the database refuses a Supervisor anyway) */
+  try { if (typeof isReadOnlyAdmin === 'function' && isReadOnlyAdmin()) return; } catch (e) {}
+  var full = false; try { full = r41IsFullAdminCaller(); } catch (e) {}
+  A89.w = a89wNew(full, a89wCodes());
+  bg.classList.add('on'); a89wRender();
+}
+function a89wClose() {
+  var bg = document.getElementById('a89w-bg'); if (bg) bg.classList.remove('on');
+  clearInterval(A89.poll);
+  if (A89.w) { A89.w.pin = ''; A89.w.pin2 = ''; }
+  A89.w = null;
+  try { var p = document.getElementById('add-emp-pin'); if (p) p.value = ''; } catch (e) {}
+}
+function a89wStepsHtml(st) {
+  return '<ol class="a89w-steps" aria-label="Steps">' + A89W_STEPS.map(function (t, i) { var n = i + 1; return '<li class="' + (n < st.step || st.done ? 'done' : (n === st.step ? 'now' : '')) + '"' + (n === st.step ? ' aria-current="step"' : '') + '><b></b><span>' + n + '. ' + esc(t) + '</span></li>'; }).join('') + '</ol>';
+}
+function a89wBodyHtml(st) {
+  var h = '';
+  if (st.done) {
+    return '<div class="a89w-ok"><div class="big">&#10003; ' + esc(st.name.trim()) + ' is added</div><p class="a89w-help">They can sign in now on the phone app with the code <b>' + esc(st.savedCode) + '</b> and the starting PIN you set. The app asks them to choose their own PIN.</p>' +
+      (st.phone !== 'off' ? '<p class="a89w-help">You chose a phone code. Press <b>Turn on the phone code</b> to finish that now; it asks for your own PIN.</p>' : '') + '</div>';
+  }
+  if (st.step === 1) {
+    h += '<p class="a89w-q">Who is this person?</p><p class="a89w-help">Their name, and the short code they type to sign in. The code is made from the name; you can change it.</p>' +
+      '<div class="a89w-f"><label for="a89w-name">Name</label><input type="text" id="a89w-name" data-a89w="name" autocomplete="off" maxlength="60" placeholder="for example Ravi Kumar" value="' + esc(st.name) + '"></div>' +
+      '<div class="a89w-f"><label for="a89w-code">Sign-in code</label><input type="text" id="a89w-code" data-a89w="code" autocomplete="off" autocapitalize="characters" spellcheck="false" maxlength="20" placeholder="for example RAVI01" value="' + esc(st.code) + '"><small>Capital letters and numbers. It cannot be the same as anyone else\'s.</small></div>';
+  } else if (st.step === 2) {
+    h += '<p class="a89w-q">What is their job?</p><p class="a89w-help">Pick the closest one. It switches on the usual things for that job; you can change any of them in the next step.</p><div class="a89w-roles" role="radiogroup" aria-label="Role">' +
+      A89W_ROLES.filter(function (r) { return !r.fullOnly || st.callerFull; }).map(function (r) { return '<button type="button" class="a89w-role" role="radio" aria-checked="' + (st.role === r.k ? 'true' : 'false') + '" data-a89w-role="' + esc(r.k) + '"><b>' + esc(r.t) + '</b><span>' + esc(r.d) + '</span></button>'; }).join('') + '</div>';
+  } else if (st.step === 3) {
+    var rr = a89wRoleOf(st.role);
+    h += '<p class="a89w-q">What can they do in the phone app?</p><p class="a89w-help">Switched on now: what a ' + esc(rr ? rr.t : '') + ' usually has. Change any switch for this one person.</p>' +
+      '<div class="a89w-custom" id="a89w-custom"' + (a89wSame(st) ? ' hidden' : '') + '>Changed from the usual ' + esc(rr ? rr.t : '') + ' set - it is saved as a custom set for this person.</div>';
+    A89W_GROUPS.forEach(function (g) {
+      h += '<div class="a89w-g' + (g.risky ? ' risky' : '') + '"><h4>' + esc(g.t) + '</h4><div class="a89w-sws">';
+      g.keys.forEach(function (k) {
+        h += '<label class="a89w-sw"><input type="checkbox" data-a89w-perm="' + esc(k[0]) + '"' + (st.perms[k[0]] ? ' checked' : '') + '><span>' + esc(k[1]) + '</span></label>';
+        if (k[0] === 'log') h += '<div class="a89w-scope" id="a89w-scope"' + (st.perms.log ? '' : ' hidden') + '><label><input type="radio" name="a89w-scope" value="own" data-a89w-scope="own"' + (st.logScope !== 'all' ? ' checked' : '') + '> Only their own</label><label><input type="radio" name="a89w-scope" value="all" data-a89w-scope="all"' + (st.logScope === 'all' ? ' checked' : '') + '> The whole team\'s</label></div>';
+      });
+      h += '</div></div>';
+    });
+    if (a89wPanel(st)) h += '<p class="a89w-help">A ' + esc(rr.t) + ' can also open this Admin panel' + (rr.k === 'SUPERVISOR' ? ', with the Supervisor Password (Company settings &gt; Passwords and sign-in).' : '.') + '</p>';
+  } else if (st.step === 4) {
+    h += '<p class="a89w-q">How do they sign in on the phone?</p><p class="a89w-help">Give them a starting PIN. The app asks them to choose their own PIN the first time.</p>' +
+      '<div class="a89w-f"><label for="a89w-pin">Starting PIN (4 numbers)</label><input type="text" class="pw-mask" id="a89w-pin" data-a89w="pin" inputmode="numeric" maxlength="4" autocomplete="off" autocapitalize="off" spellcheck="false" data-1p-ignore data-lpignore="true" data-bwignore="true" data-form-type="other" placeholder="4 numbers"></div>' +
+      '<div class="a89w-f"><label for="a89w-pin2">Type the PIN again</label><input type="text" class="pw-mask" id="a89w-pin2" data-a89w="pin2" inputmode="numeric" maxlength="4" autocomplete="off" autocapitalize="off" spellcheck="false" data-1p-ignore data-lpignore="true" data-bwignore="true" data-form-type="other" placeholder="4 numbers"></div>' +
+      '<p class="a89w-q" style="margin-top:16px">Extra check at sign-in</p><div class="a89w-radios" role="radiogroup">' +
+      A89W_PHONE.map(function (p) { return '<label class="a89w-radio"><input type="radio" name="a89w-phone" value="' + esc(p.k) + '" data-a89w-phone="' + esc(p.k) + '"' + (st.phone === p.k ? ' checked' : '') + '><span><b>' + esc(p.t) + '</b><span>' + esc(p.d) + '</span></span></label>'; }).join('') + '</div>';
+  } else {
+    var r5 = a89wRoleOf(st.role), diff = a89wDiff(st), ph = A89W_PHONE.filter(function (p) { return p.k === st.phone; })[0];
+    h += '<p class="a89w-q">Check, then press Add person</p><div class="a89w-sum">' +
+      '<div><span class="k">Name</span><span class="v">' + esc(st.name.trim()) + '</span></div>' +
+      '<div><span class="k">Sign-in code</span><span class="v">' + esc(st.code) + '</span></div>' +
+      '<div><span class="k">Role</span><span class="v">' + esc(r5 ? r5.t : st.role) + (diff.length ? ' (changed)' : '') + '</span></div>' +
+      '<div><span class="k">Changes to the role</span><span class="v">' + (diff.length ? diff.map(function (d) { return esc((d.on ? 'On: ' : 'Off: ') + d.label); }).join('<br>') : 'None') + '</span></div>' +
+      '<div><span class="k">Admin panel</span><span class="v">' + (a89wPanel(st) === 'ADMIN' ? 'Yes, as Admin' : (a89wPanel(st) === 'SUPERVISOR' ? 'Yes, as Supervisor' : 'No')) + '</span></div>' +
+      '<div><span class="k">Sign-in</span><span class="v">Starting PIN set (hidden)' + (ph ? '<br>' + esc(ph.t) : '') + '</span></div></div>';
+  }
+  if (st.err) h += '<div class="a89w-err" role="alert">' + esc(st.err) + '</div>';
+  return h;
+}
+function a89wFootHtml(st) {
+  if (st.done) return '<button type="button" class="btn btn-sec" data-a89w-act="again">Add another person</button>' + (st.phone !== 'off' ? '<button type="button" class="btn btn-primary" data-a89w-act="phone">Turn on the phone code</button>' : '<button type="button" class="btn btn-primary" data-a89w-act="close">Done</button>');
+  var back = st.step > 1 ? '<button type="button" class="btn btn-sec" data-a89w-act="back">Back</button>' : '<button type="button" class="btn btn-sec" data-a89w-act="close">Cancel</button>';
+  var next = st.step < 5 ? '<button type="button" class="btn btn-primary" data-a89w-act="next">Next</button>' : '<button type="button" class="btn btn-primary" data-a89w-act="save"' + (st.saving ? ' disabled' : '') + '>' + (st.saving ? 'Saving...' : 'Add person') + '</button>';
+  return back + next;
+}
+function a89wRender() {
+  var st = A89.w, bg = document.getElementById('a89w-bg'); if (!st || !bg) return;
+  bg.innerHTML = '<div class="a89w" role="dialog" aria-modal="true" aria-labelledby="a89w-h"><div class="a89w-top"><div class="a89w-title"><h3 id="a89w-h">Add person</h3><button type="button" class="a89w-x" data-a89w-act="close" aria-label="Close">&times;</button></div>' + a89wStepsHtml(st) + '</div>' +
+    '<div class="a89w-body">' + a89wBodyHtml(st) + '</div><div class="a89w-foot">' + a89wFootHtml(st) + '</div></div>';
+  var f = bg.querySelector('.a89w-body input[type=text], .a89w-role[aria-checked="true"], .a89w-body input');
+  if (f) { try { f.focus(); } catch (e) {} }
+}
+function a89wSave() {
+  var st = A89.w; if (!st || st.saving) return;
+  st.err = a89wCheck(st, 5); if (st.err) { a89wRender(); return; }
+  if (typeof submitAddEmployee !== 'function' || !document.getElementById('add-emp-code')) { st.err = 'The save could not start. Reload the page and try again.'; a89wRender(); return; }
+  a89wToForm(st, document);
+  var res = document.getElementById('add-emp-result'); if (res) { res.className = 'result-msg'; res.textContent = ''; }
+  st.saving = true; a89wRender();
+  try { submitAddEmployee(); } catch (e) { st.saving = false; st.err = 'The save could not start. ' + (e && e.message ? e.message : ''); a89wRender(); return; }
+  var t0 = Date.now(); clearInterval(A89.poll);
+  A89.poll = setInterval(function () {
+    if (A89.w !== st) { clearInterval(A89.poll); return; }
+    var c = res ? String(res.className || '') : '', txt = res ? String(res.textContent || '') : '';
+    if (/\bok\b/.test(c)) { clearInterval(A89.poll); st.saving = false; st.done = true; st.savedCode = st.code; st.pin = ''; st.pin2 = ''; a89wRender(); return; }
+    if (/\berr\b/.test(c)) { clearInterval(A89.poll); st.saving = false; st.err = txt.replace(/^Error:\s*/, '') || 'Not saved.'; a89wRender(); return; }
+    if (Date.now() - t0 > 20000) { clearInterval(A89.poll); st.saving = false; st.err = 'No answer yet. Look at Team > People before you try again: the person may have been added.'; a89wRender(); }
+  }, 200);
+}
+function a89wAct(a) {
+  var st = A89.w; if (!st) return;
+  if (a === 'close') { a89wClose(); return; }
+  if (a === 'back') { a89wBack(st); a89wRender(); return; }
+  if (a === 'next') { a89wNext(st); a89wRender(); return; }
+  if (a === 'save') { a89wSave(); return; }
+  if (a === 'again') { var full = st.callerFull; A89.w = a89wNew(full, a89wCodes().concat([st.savedCode])); a89wRender(); return; }
+  if (a === 'phone') {
+    var code = st.savedCode, how = st.phone; a89wClose();
+    try { openPhoneCodeChoice(code); if (how === 'theirs') phoneCodeOnTheirPhone(); else phoneCodeOnMyPhone(); } catch (e) {}
+  }
+}
+/* ---------- wiring ---------- */
+try { SUPERVISOR_BLOCKED_FNS.a89wOpen = 1; } catch (e) {}
+(function () {
+  var orig = window.switchPage;
+  if (typeof orig === 'function') window.switchPage = function (name) { var r = orig.apply(this, arguments); try { a89After(name); } catch (e) { try { console.warn('a89', e); } catch (x) {} } return r; };
+  /* the old People | Signed-in phones tabs are now Team > People and Team > Devices > Phones signed in */
+  window.r41PeopleTab = function (which) { a89Go(which === 'phones' ? 'team.devices.signed' : 'team.people'); };
+  var oShow = window.secShow;
+  if (typeof oShow === 'function') window.secShow = function (k) { var r = oShow.apply(this, arguments); try { if (A89.leaf && A89.leaf.page === 'secdata' && A89.leaf.sec !== k && !A89.pending) { var lf = a89LeafForPage('secdata'); if (lf && lf !== A89.leaf) { A89.leaf = lf; document.body.setAttribute('data-a89leaf', lf.id); a89Paint(); } } } catch (e) {} return r; };
+  document.addEventListener('click', function (e) {
+    var t = e.target; if (!t || !t.closest) return;
+    var go = t.closest('[data-a89-go]'); if (go) { a89Go(go.getAttribute('data-a89-go')); return; }
+    var rg = t.closest('[data-a89-rare-go]'); if (rg) { a89RareGo(rg.getAttribute('data-a89-rare-go')); return; }
+    var wa = t.closest('[data-a89w-act]'); if (wa) { a89wAct(wa.getAttribute('data-a89w-act')); return; }
+    var wr = t.closest('[data-a89w-role]'); if (wr && A89.w) { a89wSetRole(A89.w, wr.getAttribute('data-a89w-role')); A89.w.err = ''; a89wRender(); return; }
+    if (t.id === 'a89w-bg') a89wClose();
+  });
+  document.addEventListener('input', function (e) {
+    var t = e.target; if (!t || !t.getAttribute) return;
+    var ph = t.getAttribute('data-a89-phrase');
+    if (ph) { var b = document.querySelector('[data-a89-rare-go="' + t.getAttribute('data-a89-rare') + '"]'); if (b) b.disabled = !a89RareOk(t.getAttribute('data-a89-rare'), t.value); return; }
+    var st = A89.w; if (!st) return;
+    var k = t.getAttribute('data-a89w');
+    if (k === 'name') { a89wSetName(st, t.value); var ci = document.getElementById('a89w-code'); if (ci && !st.codeEdited) ci.value = st.code; }
+    else if (k === 'code') { var pos = t.selectionStart; a89wSetCode(st, t.value); if (t.value !== st.code) { t.value = st.code; try { t.setSelectionRange(pos, pos); } catch (x) {} } }
+    else if (k === 'pin' || k === 'pin2') { var v = String(t.value || '').replace(/[^0-9]/g, '').slice(0, 4); if (t.value !== v) t.value = v; st[k] = v; }
+  });
+  document.addEventListener('change', function (e) {
+    var t = e.target, st = A89.w; if (!t || !t.getAttribute || !st) return;
+    var pk = t.getAttribute('data-a89w-perm');
+    if (pk) { st.perms[pk] = !!t.checked; if (pk === 'log') { var sc = document.getElementById('a89w-scope'); if (sc) sc.hidden = !t.checked; } var cu = document.getElementById('a89w-custom'); if (cu) cu.hidden = a89wSame(st); return; }
+    var sk = t.getAttribute('data-a89w-scope'); if (sk) { st.logScope = sk; var cu2 = document.getElementById('a89w-custom'); if (cu2) cu2.hidden = a89wSame(st); return; }
+    var pp = t.getAttribute('data-a89w-phone'); if (pp) { st.phone = pp; }
+  });
+  document.addEventListener('keydown', function (e) {
+    var t = e.target;
+    if ((e.key === 'Enter' || e.key === ' ') && t && t.classList && t.classList.contains('a89-nav')) { e.preventDefault(); t.click(); return; }
+    if (!A89.w) return;
+    if (e.key === 'Escape' && !A89.w.saving) { a89wClose(); return; }
+    if (e.key === 'Enter' && t && t.tagName === 'INPUT' && t.type === 'text' && !A89.w.done) { e.preventDefault(); a89wAct(A89.w.step < 5 ? 'next' : 'save'); }
+  });
+  try { var act = document.querySelector('.page.active'); if (act) a89After(String(act.id || '').replace(/^page-/, '')); } catch (e) {}
+})();
+</script>
+<script id="a89b-js">
+/* A89b (Admin v2.89b) - review fixes on top of A89. Nothing new is sent to the database: Home reads the numbers the Overview already loads
+   (renderDashTiles, the Needs you counts) and the phone list call that Team > Devices already makes.
+   A1 "+ Add person" is hidden for anyone who cannot add people, with one line saying why.
+   A3 Undo an import opens only after its name is typed in Rare tools (also when called directly).
+   A4 an old link to Safety and backups lands on Records & safety > Checks > Today (a page that only reads).
+   A5 the staff-list PIN box is closed when you move to another page while it is open.
+   A6 Home = "Today at a glance": 6 tiles; the old charts and tables are one press away. */
+var A89B = { dash: null, phones: null, phonesAt: 0, open: false };
+/* ---------- A1 ---------- */
+function a89bCanAdd() {
+  try { if (typeof isSupervisor === 'function' && isSupervisor()) return false; } catch (e) {}
+  try { if (typeof isReadOnlyAdmin === 'function' && isReadOnlyAdmin()) return false; } catch (e) {}
+  return true;
+}
+function a89bAddBtn() {
+  var b = document.querySelector('.a89-add-btn'); if (!b) return;
+  var ok = a89bCanAdd(), n = document.getElementById('a89b-add-note');
+  b.style.display = ok ? '' : 'none';
+  if (!ok && !n && b.parentNode) { n = document.createElement('span'); n.id = 'a89b-add-note'; n.className = 'a89b-note'; n.textContent = 'Only an Admin can add people.'; b.parentNode.appendChild(n); }
+  if (n) n.style.display = ok ? 'none' : '';
+}
+/* ---------- A6 Home ---------- */
+function a89bNum(v) { try { return fmtNum(v); } catch (e) { return String(v); } }
+function a89bPhonesSignedIn(rows, now) {
+  now = now || Date.now();
+  return (rows || []).filter(function (p) {
+    if (!p || String(p.label || '') === 'admin_pc' || p.revoked) return false;
+    return !p.signed_in_until || new Date(p.signed_in_until).getTime() > now;
+  }).length;
+}
+function a89bBackupState(v, now) {
+  if (!v) return { val: 'Not confirmed', cap: 'Nobody has noted a checked backup in this browser yet.', st: 'warn', chip: 'Check it' };
+  var d = new Date(v + 'T00:00:00'), days = Math.floor(((now || Date.now()) - d.getTime()) / 86400000);
+  if (isNaN(days)) return { val: 'Not confirmed', cap: 'The saved date could not be read.', st: 'warn', chip: 'Check it' };
+  var when = days <= 0 ? 'Today' : (days === 1 ? 'Yesterday' : days + ' days ago');
+  return { val: when, cap: 'Last time a daily backup was checked and noted (' + v + ').', st: days > 7 ? 'warn' : 'ok', chip: days > 7 ? 'Check again' : 'Fine' };
+}
+/* the 6 tiles from what is loaded; every value can be unknown ('...') until its answer comes */
+function a89bTiles(d, need, phones, backupDate, now) {
+  need = need || {}; var T = [];
+  var known = function (v) { return typeof v === 'number'; };
+  T.push({ k: 'people', go: 'team.people', l: 'People active', v: d ? a89bNum(d.activeEmp) : '...',
+    c: known(need.lock) ? (need.lock ? need.lock + ' cannot sign in right now (locked)' : 'Nobody is locked out') : 'Staff accounts that can sign in',
+    st: known(need.lock) && need.lock > 0 ? 'bad' : 'ok', chip: known(need.lock) && need.lock > 0 ? 'Unlock' : 'Fine' });
+  T.push({ k: 'phones', go: 'team.devices.signed', l: 'Phones signed in', v: phones === null || phones === undefined ? '...' : a89bNum(phones),
+    c: 'Phones kept signed in to the phone app now', st: '', chip: 'See them' });
+  var out = d ? d.out : null, neg = known(need.neg) ? need.neg : (d ? d.neg : null), low = d ? d.low : null;
+  var alerts = (known(out) && known(neg)) ? out + neg : null;
+  T.push({ k: 'stock', go: 'stock-out', l: 'Stock alerts', v: alerts === null ? '...' : a89bNum(alerts),
+    c: d ? a89bNum(out) + ' out of stock, ' + a89bNum(neg || 0) + ' below zero, ' + a89bNum(low) + ' low' : 'Out of stock and below-zero products',
+    st: alerts ? 'bad' : 'ok', chip: alerts ? 'Look at them' : 'Fine' });
+  var wait = (known(need.batch) ? need.batch : null);
+  T.push({ k: 'wait', go: 'batches', l: 'Waiting for you', v: wait === null ? (need.batch === '?' ? '?' : '...') : a89bNum(wait),
+    c: 'Scan batches closed on the phones, waiting for your check', st: wait ? 'warn' : 'ok', chip: wait ? 'Check them' : 'Nothing waiting' });
+  var b = a89bBackupState(backupDate, now);
+  T.push({ k: 'backup', go: 'safety.backup.backup', l: 'Last backup check', v: b.val, c: b.cap, st: b.st, chip: b.chip });
+  T.push({ k: 'changes', go: 'inventory.moves', l: 'Stock entries today', v: d ? a89bNum(d.today) : '...',
+    c: d ? a89bNum(d.unitsIn) + ' units in, ' + a89bNum(d.unitsOut) + ' units out' : 'Every stock in, out and move today', st: '', chip: 'See them' });
+  return T;
+}
+function a89bHomeHtml(T, when) {
+  return '<div class="a89b-meta"><h2>Today at a glance</h2><span>' + esc(when) + '</span></div><div class="a89b-tiles">' +
+    T.map(function (t) { return '<button type="button" class="a89b-t" data-a89b-go="' + esc(t.go) + '" aria-label="' + esc(t.l + ': ' + t.v) + '"><span class="a89b-l">' + esc(t.l) + '</span><span class="a89b-v">' + esc(t.v) + '</span><span class="a89b-c">' + esc(t.c) + '</span><span class="a89b-s ' + esc(t.st) + '">' + esc(t.chip) + '</span></button>'; }).join('') +
+    '</div><div class="a89b-more"><button type="button" class="btn" data-a89b-act="more" aria-expanded="' + (A89B.open ? 'true' : 'false') + '">' + (A89B.open ? 'Hide charts and details' : 'Show charts and details') + '</button></div>';
+}
+function a89bHome() {
+  var el = document.getElementById('a89b-home'); if (!el) return;
+  var need = {}; try { need = A58.need || {}; } catch (e) {}
+  var bd = ''; try { bd = localStorage.getItem('af_admin_backup_confirmed') || ''; } catch (e) {}
+  var now = new Date(), when = '';
+  try { when = now.toLocaleDateString('en-IN', { weekday: 'long', day: 'numeric', month: 'long' }) + (A89B.dash ? ' - updated ' + now.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' }) : ''); } catch (e) {}
+  el.innerHTML = a89bHomeHtml(a89bTiles(A89B.dash, need, A89B.phones, bd, now.getTime()), when);
+  var pg = document.getElementById('page-dashboard'); if (pg) pg.classList.toggle('a89b-compact', !A89B.open);
+}
+function a89bLoadPhones() {
+  if (Date.now() - A89B.phonesAt < 60000) return;
+  try { if (!getAdminSecret() || typeof db === 'undefined' || !db) return; } catch (e) { return; }
+  A89B.phonesAt = Date.now();
+  try { Promise.resolve(r41LoadPhones()).then(function () { try { A89B.phones = a89bPhonesSignedIn(R41_PH.rows); } catch (e) {} a89bHome(); }); } catch (e) {}
+}
+function a89bHomeGo(g) {
+  if (g === 'stock-out' || g === 'batches') { try { a58Go(g); return; } catch (e) {} }
+  a89Go(g);
+}
+/* ---------- wiring ---------- */
+(function () {
+  var oTiles = window.renderDashTiles;
+  if (typeof oTiles === 'function') window.renderDashTiles = function (filtered, todayRows, cyclePending, negCount, activeEmp) {
+    var r = oTiles.apply(this, arguments);
+    try {
+      var out = 0, low = 0, uin = 0, uout = 0;
+      (filtered || []).forEach(function (x) { if (x.stock_status === 'OUT_OF_STOCK') out++; else if (x.stock_status === 'LOW_STOCK') low++; });
+      (todayRows || []).forEach(function (x) { var q = Number(x.qty_delta) || 0; if (q > 0) uin += q; else uout -= q; });
+      A89B.dash = { activeEmp: Number(activeEmp) || 0, out: out, low: low, neg: Number(negCount) || 0, today: (todayRows || []).length, unitsIn: uin, unitsOut: uout };
+      a89bHome();
+    } catch (e) {}
+    return r;
+  };
+  var oNeeds = window.a58NeedsPaint;
+  if (typeof oNeeds === 'function') window.a58NeedsPaint = function () { var r = oNeeds.apply(this, arguments); try { a89bHome(); } catch (e) {} return r; };
+  var oPaint = window.a89Paint;
+  if (typeof oPaint === 'function') window.a89Paint = function () { var r = oPaint.apply(this, arguments); try { a89bAddBtn(); } catch (e) {} return r; };
+  ['showAppShell', 'applySupervisorModeToUI'].forEach(function (f) {   /* after sign-in and after the Supervisor sweep */
+    var o = window[f];
+    if (typeof o === 'function') window[f] = function () { var r = o.apply(this, arguments); try { a89bAddBtn(); a89bHome(); a89bLoadPhones(); } catch (e) {} return r; };
+  });
+  var oRmc = window.rmcShow;   /* A3: Undo an import only after its name was typed in Rare tools */
+  if (typeof oRmc === 'function') window.rmcShow = function (k) { if (k === 'imports' && !A89.rmcImports) k = 'settings'; return oRmc.call(this, k); };
+  var oSw = window.switchPage;   /* A5 */
+  if (typeof oSw === 'function') window.switchPage = function (name) {
+    var bg = document.getElementById('costa-pin-bg'), was = !!(bg && bg.classList.contains('active')), from = '';
+    try { from = currentPage; } catch (e) {}
+    var r = oSw.apply(this, arguments);
+    try { if (was && name !== from && bg.classList.contains('active') && typeof costaPinCancel === 'function') costaPinCancel(); } catch (e) {}
+    try { if (name === 'dashboard') { a89bHome(); a89bLoadPhones(); } } catch (e) {}
+    return r;
+  };
+  document.addEventListener('click', function (e) {
+    var t = e.target; if (!t || !t.closest) return;
+    var g = t.closest('[data-a89b-go]'); if (g) { a89bHomeGo(g.getAttribute('data-a89b-go')); return; }
+    var m = t.closest('[data-a89b-act="more"]');
+    if (m) { A89B.open = !A89B.open; a89bHome(); if (A89B.open) { try { loadDashboard(); } catch (x) {} } }
+  });
+  try { a89bAddBtn(); a89bHome(); if (document.querySelector('#page-dashboard.active')) a89bLoadPhones(); } catch (e) {}
 })();
 </script>
 </body>
