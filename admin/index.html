@@ -3443,6 +3443,7 @@ body.a90-lean .perm-row:has(#add-emp-perm-customers),body.a90-lean .perm-row:has
       <li class="nav-item a89-nav" data-a89="integrations" onclick="a89Go('integrations')" role="link" tabindex="0" title="Shops and couriers"><span class="nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h11v9H3z"/><path d="M14 10h4l3 3v3h-7z"/><circle cx="7" cy="17" r="1.6"/><circle cx="17" cy="17" r="1.6"/></svg></span><span class="nav-label">Shops and couriers</span><span class="nav-short">Shops</span></li><!-- A92 -->
       <li class="nav-item" data-page="a92shop" style="display:none"></li>
       <li class="nav-item" data-page="a92ship" style="display:none"></li>
+      <li class="nav-item" data-page="a93amz" style="display:none"></li><!-- A93 -->
       <li class="nav-item a89-nav" data-a89="ceo" onclick="a89Go('ceo')" role="link" tabindex="0" title="CEO Brief"><span class="nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H8l-4 4z"/><path d="M8 9h8M8 12h5"/></svg></span><span class="nav-label">CEO Brief</span><span class="nav-short">Brief</span></li><!-- CEO52 -->
       <li class="nav-item" data-page="a89ceo" style="display:none"></li>
       <li class="nav-item" data-page="a90rm" style="display:none"></li>
@@ -3468,7 +3469,7 @@ body.a90-lean .perm-row:has(#add-emp-perm-customers),body.a90-lean .perm-row:has
     <div class="sidebar-footer">
       <div class="af-fs-side"><div class="af-fs-t">Text size</div><div id="af-fs-ctl-side"></div></div>
       <button class="logout-btn" onclick="adminLogout()">Sign out</button>   <!-- ADM-v258 A-01 -->
-      <div class="ver-footer">ArtzFolio Super App - Admin Panel v2.92a</div><!-- RC41-v282-V RC41-v283-V RC41-v284-V RC41-v285-V RC41-v286-V -->
+      <div class="ver-footer">ArtzFolio Super App - Admin Panel v2.92c</div><!-- RC41-v282-V RC41-v283-V RC41-v284-V RC41-v285-V RC41-v286-V -->
     </div>
   </div>
 
@@ -4553,6 +4554,13 @@ body.a90-lean .perm-row:has(#add-emp-perm-customers),body.a90-lean .perm-row:has
       <div id="a92-ship-msg" class="result-msg e2-keep"></div>
       <div id="a92-ship-body" class="e2-keep"></div>
       <p class="a89-note e2-keep">A courier can be booked only for an order whose every line is scanned. Every switch starts OFF; switching one on is the founder's decision. Your PIN is asked for each step and is not kept.</p>
+    </div>
+    <!-- A93 (v25 Lane 5.3): Amazon orders (Admin only) -->
+    <div class="page" id="page-a93amz">
+      <div class="page-header"><div><div class="page-title">Amazon orders</div></div><button type="button" class="btn btn-primary" id="a93-load">Show</button></div>
+      <div id="a93-msg" class="result-msg e2-keep"></div>
+      <div id="a93-body" class="e2-keep"></div>
+      <p class="a89-note e2-keep">The Amazon feed checks Amazon every 15 minutes. In report-only mode it lists what it would add and writes nothing to the orders. Switching to real import is the founder's decision. Your PIN is asked for each step and is not kept.</p>
     </div>
     <!-- CEO52 (v25 Lane 8): CEO Brief (Admin only) -->
     <div class="page" id="page-a89ceo">
@@ -14533,7 +14541,8 @@ var A89_IA = [
     { id: 'rare', label: 'Rare tools', page: 'a89rare', desc: 'Tools needed once in a long while. Each one stays hidden until you type its name, so it cannot be pressed by mistake.' } ] },
   { id: 'integrations', label: 'Shops and couriers', adminOnly: true, tabs: [   /* A92 */
     { id: 'shopify', label: 'Shopify', page: 'a92shop', desc: 'Your Shopify store: connection, switches and Shopify items not linked to an app SKU yet. Type your PIN when asked.' },
-    { id: 'couriers', label: 'Couriers (Shiprocket)', page: 'a92ship', desc: 'Courier labels by Shiprocket: connection, store e-mail, switches and recent shipments. Each booking spends Shiprocket wallet money.' } ] },
+    { id: 'couriers', label: 'Couriers (Shiprocket)', page: 'a92ship', desc: 'Courier labels by Shiprocket: connection, store e-mail, switches and recent shipments. Each booking spends Shiprocket wallet money.' },
+    { id: 'amazon', label: 'Amazon orders', page: 'a93amz', desc: 'The Amazon order feed: each connected account, report-only or real import, last run, last problem and the last 48 hours. Add a Vendor Central account here.' } ] },   /* A93 */
   { id: 'ceo', label: 'CEO Brief', adminOnly: true, tabs: [   /* CEO52 */
     { id: 'brief', label: 'CEO Brief', page: 'a89ceo', desc: 'What happened, what is broken and what needs you. Approve or Reject each item. Type your PIN when asked.' } ] },
   { id: 'company', label: 'Company settings', adminOnly: true, tabs: [
@@ -14604,6 +14613,7 @@ function a89After(name) {
   if (name === 'a89rare') a89RareInit();
   if (name === 'a89ceo') ceo52Init(); else if (prev && prev.page === 'a89ceo') ceo52Leave();   /* CEO52 */
   if (name === 'a92shop') a92ShopInit(); else if (name === 'a92ship') a92ShipInit();   /* A92 */
+  if (name === 'a93amz') a93Init();   /* A93 */
   try { document.body.setAttribute('data-a89leaf', lf ? lf.id : ''); document.body.setAttribute('data-a89part', lf && lf.part ? lf.part : ''); } catch (e) {}
   a89Paint();
 }
@@ -15269,13 +15279,13 @@ function a90ApplyDom() {
 })();
 </script>
 <script id="a92-js">
-/* A92 v1.1 (v2.92a: courier statuses and counts in plain words) - A92 (v25 Lane 5.2 + 5.4 Admin): "Shops and couriers" - Shopify page and Couriers (Shiprocket) page. Admin only.
+/* A92 v1.2 (v2.92b: Shopify auto-reserve card, SHOP52b) - A92 v1.1 (v2.92a: courier statuses and counts in plain words) - A92 (v25 Lane 5.2 + 5.4 Admin): "Shops and couriers" - Shopify page and Couriers (Shiprocket) page. Admin only.
    Talks to the database ONLY through the existing PIN-checked app functions:
      shopify_status, shopify_connect, shopify_settings, shopify_map_sku, shopify_staff_done,
-     shiprocket_status, shiprocket_connect, shiprocket_settings.
+     shiprocket_status, shiprocket_connect, shiprocket_settings, and (v1.2, SHOP52b) shopify_autoreserve_status, shopify_autoreserve_switch.
    The PIN is typed for each action (a59AskPin), used for that action only, and not kept. Secrets: only their NAMES are typed here;
    the founder pastes the values in Supabase himself. Every switch-ON asks "this turns on a customer-facing feature - founder only" first. */
-var A92 = { ws: 'ARTZFOLIO', shop: null, ship: null, busy: false, shopMsg: null, shipMsg: null };   /* the company of this Admin Panel (one company until Lane 4) */
+var A92 = { ws: 'ARTZFOLIO', shop: null, ship: null, ar: null, busy: false, shopMsg: null, shipMsg: null };   /* the company of this Admin Panel (one company until Lane 4) */
 var A92_FOUNDER = 'This turns on a customer-facing feature - founder only.';
 var A92_SW = {
   shop: [['enabled', 'Connection on', 'Lets the app talk to your Shopify store.'],
@@ -15310,6 +15320,7 @@ function a92NameOk(kind, v) {
 }
 function a92ConfirmText(kind, key) {
   var row = (A92_SW[kind] || []).filter(function (r) { return r[0] === key; })[0];
+  if (kind === 'shop' && key === 'auto_reserve') row = ['auto_reserve', 'Auto-reserve stock', 'New Shopify orders get pick slips by themselves when every line is in free stock (founder decision D25-7). The robot SHOPIFY-BOT does it and cannot sign in.'];
   var t = A92_FOUNDER + ' Only the founder decides this.' + '\n\n' + (row ? row[1] + ': ' + row[2] : key);
   if (kind === 'ship') t += '\n\nEvery courier booking (AWB) takes money from your Shiprocket wallet.';
   return t + '\n\nPress OK only if the founder said yes.';
@@ -15341,6 +15352,24 @@ function a92ShopConnectForm(again) {
     a92NameField('a92-shop-tok', 'Access token NAME (older admin app only)', 'SHOPIFY_ARTZFOLIO_ADMIN_TOKEN') +
     '<button type="button" class="btn btn-primary" data-a92-act="connect" data-a92-kind="shop">Save the connection</button></div>';
 }
+/* pure (v1.2): the auto-reserve card */
+function a92ArHtml(ar) {
+  if (!ar) return '';
+  var h = '<div class="a92-card"><h3>Auto-reserve stock</h3>';
+  if (!ar.installed) return h + '<p class="a92-meta">Auto-reserve is not installed yet (' + a92Esc(ar.why || 'not installed') + '). Shopify orders wait as CHECK for staff.</p></div>';
+  var on = !!ar.auto_reserve, c = ar.counts || {};
+  h += '<div class="a92-sw"><div><strong>Auto-reserve stock</strong> <span class="a92-chip' + (on ? ' a92-on' : '') + '">' + (on ? 'ON' : 'OFF') + '</span>' +
+       '<div class="a92-meta">When ON, a new Shopify order gets its pick slips by itself if EVERY line is in free stock. Otherwise it waits as CHECK for staff. Done by the robot SHOPIFY-BOT (it cannot sign in).</div></div>' +
+       '<button type="button" class="btn ' + (on ? 'btn-grey' : 'btn-primary') + '" data-a92-act="switch" data-a92-kind="shop" data-a92-key="auto_reserve" data-a92-on="' + (on ? '0' : '1') + '">' + (on ? 'Switch off' : 'Switch on') + '</button></div>';
+  if (!ar.robot_ready) h += '<p class="a92-warn">The robot SHOPIFY-BOT is switched off, so nothing will be reserved. Ask the lead.</p>';
+  var words = { RESERVED: 'Reserved', SHORT: 'Left for staff (stock short)', SKIPPED: 'Left alone (a person decided)', ERROR: 'Did not work' };
+  h += '<div class="a92-meta">Last 7 days: ' + a92Esc(Object.keys(c).map(function (k) { return (words[k] || k) + ' ' + c[k]; }).join(', ') || 'nothing yet') + '</div>';
+  var r = ar.recent || [];
+  if (r.length) h += '<details><summary>Last results (' + r.length + ')</summary>' + r.map(function (x) {
+    return '<div class="a92-meta">' + a92Esc(a92When(x.at)) + ' - ' + a92Esc(x.invoice_no || '') + ' - ' + a92Esc(words[x.result] || x.result) + (x.message ? ': ' + a92Esc(x.message) : '') + '</div>';
+  }).join('') + '</details>';
+  return h + '</div>';
+}
 function a92ShopHtml(d) {
   if (!d) return '<p class="a92-empty">Press <strong>Show</strong> and type your PIN.</p>';
   if (!d.connected) return '<p class="a92-meta">No Shopify store is connected. Everything is OFF.</p>' + a92ShopConnectForm(false);
@@ -15371,7 +15400,7 @@ function a92ShopHtml(d) {
   if (ev.length) h += '<details class="a92-card"><summary>Last events (' + ev.length + ')</summary>' + ev.map(function (e) {
     return '<div class="a92-meta">' + a92Esc(a92When(e.at)) + ' - ' + a92Esc(e.via) + ' - ' + a92Esc(e.result) + (e.message ? ': ' + a92Esc(e.message) : '') + '</div>';
   }).join('') + '</details>';
-  return h + '<details class="a92-card"><summary>Change the connection</summary>' + a92ShopConnectForm(true) + '</details>';
+  return h + a92ArHtml(A92.ar) + '<details class="a92-card"><summary>Change the connection</summary>' + a92ShopConnectForm(true) + '</details>';
 }
 /* pure: Couriers page */
 function a92ShipConnectForm(again) {
@@ -15429,12 +15458,22 @@ function a92Run(kind, label, first) {
     var step = first ? first(base) : Promise.resolve({ data: { ok: true } });
     return step.then(function (r1) {
       var e1 = a92Err(r1, label); if (e1) { A92.busy = false; a92Msg(kind, e1, false); return null; }
+      var arBase = { p_ws: base.p_ws, p_code: base.p_code, p_pin: base.p_pin };
       return a92Call(A92_FN[kind].status, base, 'Status').then(function (r2) {
         A92.busy = false; pin = null; base.p_pin = null;
-        var e2 = a92Err(r2, 'Status'); if (e2) { a92Msg(kind, e2, false); return null; }
-        A92[kind] = r2.data; a92Paint(kind);
-        a92Msg(kind, (first && r1 && r1.data && r1.data.message ? r1.data.message + ' ' : '') + 'Shown at ' + a92When(new Date()) + '.', true);
-        return r2.data;
+        var e2 = a92Err(r2, 'Status'); if (e2) { arBase.p_pin = null; a92Msg(kind, e2, false); return null; }
+        var done = function () {
+          A92[kind] = r2.data; a92Paint(kind);
+          a92Msg(kind, (first && r1 && r1.data && r1.data.message ? r1.data.message + ' ' : '') + 'Shown at ' + a92When(new Date()) + '.', true);
+          return r2.data;
+        };
+        if (kind !== 'shop' || !r2.data || !r2.data.connected) { A92.ar = null; return done(); }
+        /* v1.2: the auto-reserve state with the same typed PIN (SHOP52b); not installed = the card says so */
+        return a92Call('shopify_autoreserve_status', arBase, 'Auto-reserve').then(function (r3) {
+          arBase.p_pin = null;
+          A92.ar = (r3 && !r3.error && r3.data && r3.data.ok) ? r3.data : { installed: false, why: (r3 && r3.error && /PGRST202|Could not find the function/i.test(String(r3.error.code || '') + ' ' + String(r3.error.message || ''))) ? 'not installed' : 'could not read' };
+          return done();
+        }, function () { arBase.p_pin = null; A92.ar = { installed: false, why: 'could not read' }; return done(); });
       });
     });
   }).catch(function (err) { A92.busy = false; a92Msg(kind, (typeof a59ErrText === 'function') ? a59ErrText(err, label) : label + ': could not finish.', false); return null; });
@@ -15460,6 +15499,9 @@ function a92Connect(kind) {
 }
 function a92Switch(kind, key, on) {
   if (on && !window.confirm(a92ConfirmText(kind, key))) { a92Msg(kind, 'Not switched on. Nothing was changed.', false); return Promise.resolve(null); }
+  if (kind === 'shop' && key === 'auto_reserve') {   /* v1.2: SHOP52b switch (Owner / Admin, typed PIN) */
+    return a92Run(kind, on ? 'Switch on' : 'Switch off', function (b) { return a92Call('shopify_autoreserve_switch', { p_ws: b.p_ws, p_code: b.p_code, p_pin: b.p_pin, p_on: !!on }, 'Auto-reserve'); });
+  }
   var patch = {}; patch[key] = !!on;
   return a92Run(kind, on ? 'Switch on' : 'Switch off', function (b) { return a92Call(A92_FN[kind].settings, { p_ws: b.p_ws, p_code: b.p_code, p_pin: b.p_pin, p_patch: patch }, 'Switch'); });
 }
@@ -15491,6 +15533,115 @@ function a92Wire(kind) {
 }
 function a92ShopInit() { a92Wire('shop'); a92Paint('shop'); }
 function a92ShipInit() { a92Wire('ship'); a92Paint('ship'); }
+</script>
+<script id="a93-js">
+/* A93 v1 (Admin v2.92c, v25 Lane 5.3 / Lane 6): "Amazon orders" page under Shops and couriers. Admin only.
+   Read-only card per Amazon connection (report-only or real import, switches, last run, last problem, the last 48 hours by result) and one
+   action: add a Vendor Central account by slot number (saved OFF and report-only). Talks to the database ONLY through two PIN-checked
+   functions: amazon_admin_status (read, AMZ57) and amazon_connect_vendor (AMZ56 v1.3). The PIN is typed for each step and not kept.
+   Secrets: only their NAMES are shown; nothing here can switch the feed on or allow real import (founder files only). */
+var A93 = { ws: 'ARTZFOLIO', d: null, busy: false };
+var A93_RESULT_WORDS = { SHADOW_READY: 'Would come in', IMPORTED: 'Came in', ALREADY_IN_APP: 'Already in the app', HELD_UNKNOWN_SKU: 'Waiting: SKU not linked yet',
+  SKIPPED_FBA: 'Amazon ships it (FBA) - not packed here', SKIPPED_PENDING: 'Not ready to ship yet', CANCELLED_BEFORE_IMPORT: 'Cancelled before it came in',
+  CONFLICT: 'Clash with an existing invoice - check by hand', SKIPPED_NO_LINES: 'Nothing to pack', NOT_SAVED: 'Could not be saved', OFF: 'Switched off',
+  LIVE_NOT_ALLOWED: 'Real import not allowed yet', STAFF_TOLD: 'Changed on Amazon - staff told', ALREADY_IMPORTED: 'Already came in' };
+var A93_ORDER = ['SHADOW_READY', 'IMPORTED', 'ALREADY_IN_APP', 'HELD_UNKNOWN_SKU', 'SKIPPED_PENDING', 'CANCELLED_BEFORE_IMPORT', 'SKIPPED_FBA', 'CONFLICT', 'SKIPPED_NO_LINES'];
+var A93_CHANNELS = ['ETRADE', 'COCOBLU'];
+function a93Esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+function a93When(t) {
+  if (!t) return 'never'; var d = new Date(t); if (isNaN(d.getTime())) return 'never';
+  function z(n) { return (n < 10 ? '0' : '') + n; }
+  return d.getFullYear() + '-' + z(d.getMonth() + 1) + '-' + z(d.getDate()) + ' ' + z(d.getHours()) + ':' + z(d.getMinutes());
+}
+function a93Word(k) { if (!k) return ''; return A93_RESULT_WORDS[k] || (String(k).charAt(0) + String(k).slice(1).toLowerCase().replace(/_/g, ' ')); }
+function a93Me() { return (typeof getAdminPanelEmployeeCode === 'function' ? (getAdminPanelEmployeeCode() || '') : '').trim().toUpperCase(); }
+function a93Chip(on, yes, no) { return '<span class="a92-chip' + (on ? ' a92-on' : '') + '">' + a93Esc(on ? yes : no) + '</span>'; }
+/* pure: the counts of the last 48 hours, in a fixed order, plain words */
+function a93Counts(c) {
+  c = c || {}; var keys = A93_ORDER.filter(function (k) { return c[k]; }).concat(Object.keys(c).filter(function (k) { return A93_ORDER.indexOf(k) < 0 && c[k]; }));
+  if (!keys.length) return '<p class="a92-empty">Nothing in the last 48 hours.</p>';
+  return '<table class="a92-t"><tbody>' + keys.map(function (k) { return '<tr><td>' + a93Esc(a93Word(k)) + '</td><td><b>' + a93Esc(c[k]) + '</b></td></tr>'; }).join('') + '</tbody></table>';
+}
+/* pure: one connection card (read only) */
+function a93ConnHtml(x) {
+  var vendor = x.kind === 'VENDOR_DF', live = x.mode === 'LIVE';
+  var h = '<div class="a92-card"><h3>' + a93Esc(vendor ? 'Vendor Central (Direct Fulfillment)' : 'Seller account (Seller Flex and own orders)') + ' - ' + a93Esc(x.account_key) + '</h3>' +
+    '<div class="a92-kv"><span>Mode</span><b>' + a93Chip(live, 'Real import', 'Report only') + (live ? '' : ' <span class="a92-meta">nothing is written to the orders</span>') + '</b>' +
+    '<span>Connection</span><b>' + a93Chip(!!x.enabled, 'ON', 'OFF') + '</b><span>Orders in</span><b>' + a93Chip(!!x.orders_in, 'ON', 'OFF') + '</b>' +
+    '<span>Channel</span><b>' + a93Esc(x.channel_code || '') + '</b><span>Secret NAME</span><b>' + a93Esc(x.secret_name || '') + '</b>' +
+    '<span>Last run</span><b>' + a93Esc(a93When(x.last_poll_at)) + '</b>' +
+    (x.last_event ? '<span>Last result</span><b>' + a93Esc(a93When(x.last_event.at)) + ' - ' + a93Esc(a93Word(x.last_event.result)) + '</b>' : '') + '</div>' +
+    (x.last_error ? '<p class="a92-warn">Last problem: ' + a93Esc(x.last_error) + '</p>' : '') +
+    '<div class="a92-meta" style="margin-top:8px">Last 48 hours</div>' + a93Counts(x.counts_48h) + '</div>';
+  return h;
+}
+function a93VendorForm() {
+  var slots = [1, 2, 3, 4, 5, 6].map(function (n) { return '<option value="' + n + '">' + n + ' (secret SPAPI_REFRESH_TOKEN_VENDOR_' + n + ')</option>'; }).join('');
+  return '<details class="a92-card"><summary>Add a Vendor Central account</summary>' +
+    '<p class="a92-note">Saved <strong>OFF</strong> and <strong>report only</strong>. Vendor orders also need the Amazon role <strong>Direct-to-Consumer Shipping</strong> (founder step). Only the slot number is chosen here: the secret value stays in Supabase.</p>' +
+    '<label class="a92-f" for="a93-slot">Vendor account slot<select id="a93-slot">' + slots + '</select></label>' +
+    '<label class="a92-f" for="a93-acc">Connection name<input type="text" id="a93-acc" placeholder="VENDOR3" autocomplete="off" spellcheck="false"></label>' +
+    '<label class="a92-f" for="a93-ch">Channel (as on the stamp)<select id="a93-ch">' + A93_CHANNELS.map(function (c) { return '<option value="' + c + '">' + c + '</option>'; }).join('') + '</select></label>' +
+    '<button type="button" class="btn btn-primary" data-a93-act="vendor">Save vendor account</button></details>';
+}
+/* pure: the whole page body */
+function a93Html(d) {
+  if (!d) return '<p class="a92-empty">Press <strong>Show</strong> and type your PIN.</p>';
+  var c = d.connections || [];
+  var h = '<div class="a92-card"><div class="a92-kv"><span>Real import (LIVE)</span><b>' + a93Chip(!!d.live_allowed, 'Allowed by the founder', 'Not allowed - report only') + '</b>' +
+    '<span>Amazon SKUs not linked yet</span><b>' + a93Esc(d.unknown_open || 0) + '</b><span>Shown at</span><b>' + a93Esc(a93When(d.generated_at)) + '</b></div></div>';
+  if (!c.length) h += '<p class="a92-meta">No Amazon account is connected.</p>';
+  h += c.map(a93ConnHtml).join('');
+  return h + a93VendorForm();
+}
+function a93Paint() { var b = document.getElementById('a93-body'); if (b) b.innerHTML = a93Html(A93.d); }
+function a93Msg(t, ok) { var m = document.getElementById('a93-msg'); if (m) { m.className = 'result-msg e2-keep ' + (ok ? 'ok' : 'err'); m.textContent = t || ''; } }
+function a93Err(res, what) {
+  if (!res) return what + ': no answer.';
+  if (res.error) return (typeof a59ErrText === 'function') ? a59ErrText(res.error, what) : what + ': ' + (res.error.message || 'failed');
+  var d = res.data; if (d && d.ok === false) return d.message || (what + ': refused (' + (d.error || '?') + ').');
+  return '';
+}
+function a93Call(fn, args, label) { return (typeof withTimeout === 'function') ? withTimeout(db.rpc(fn, args), 15000, label) : db.rpc(fn, args); }
+/* one action = one typed PIN; after a change the status is read again with the same PIN, then the PIN is dropped */
+function a93Run(label, first) {
+  if (A93.busy) return Promise.resolve(null);
+  if (typeof a89IsSup === 'function' && a89IsSup()) { a93Msg('Only an Admin can open this page.', false); return Promise.resolve(null); }
+  var me = a93Me(); if (!me) { a93Msg('You are not signed in with an employee code. Sign in again.', false); return Promise.resolve(null); }
+  A93.busy = true;
+  return a59AskPin(me).then(function (pin) {
+    if (pin === null || pin === undefined || pin === '') { A93.busy = false; a93Msg('No PIN typed. Nothing was changed.', false); return null; }
+    a93Msg('Working...', true);
+    var base = { p_ws: A93.ws, p_code: me, p_pin: pin };
+    var step = first ? first(base) : Promise.resolve({ data: { ok: true } });
+    return step.then(function (r1) {
+      var e1 = a93Err(r1, label); if (e1) { A93.busy = false; base.p_pin = null; a93Msg(e1, false); return null; }
+      return a93Call('amazon_admin_status', base, 'Amazon orders').then(function (r2) {
+        A93.busy = false; pin = null; base.p_pin = null;
+        var e2 = a93Err(r2, 'Amazon orders'); if (e2) { a93Msg(e2, false); return null; }
+        A93.d = r2.data; a93Paint();
+        a93Msg((first && r1 && r1.data && r1.data.message ? r1.data.message + ' ' : '') + 'Shown at ' + a93When(new Date()) + '.', true);
+        return r2.data;
+      });
+    });
+  }).catch(function (err) { A93.busy = false; a93Msg((typeof a59ErrText === 'function') ? a59ErrText(err, label) : label + ': could not finish.', false); return null; });
+}
+function a93Load() { return a93Run('Amazon orders', null); }
+function a93Val(id) { var e = document.getElementById(id); return e ? String(e.value || '').trim() : ''; }
+function a93Vendor() {
+  var slot = parseInt(a93Val('a93-slot'), 10), acc = a93Val('a93-acc').toUpperCase(), ch = a93Val('a93-ch').toUpperCase();
+  if (!(slot >= 1 && slot <= 6)) { a93Msg('Choose a vendor account slot from 1 to 6.', false); return Promise.resolve(null); }
+  if (!acc) acc = 'VENDOR' + slot;
+  if (!/^[A-Z0-9][A-Z0-9_]{0,29}$/.test(acc)) { a93Msg('Connection name: capitals, digits and _ only, for example VENDOR3.', false); return Promise.resolve(null); }
+  if (A93_CHANNELS.indexOf(ch) < 0) { a93Msg('Choose the channel (ETRADE or COCOBLU).', false); return Promise.resolve(null); }
+  return a93Run('Save vendor account', function (b) { return a93Call('amazon_connect_vendor', { p_ws: b.p_ws, p_code: b.p_code, p_pin: b.p_pin, p_account_key: acc, p_slot: slot, p_channel_code: ch }, 'Save vendor account'); });
+}
+function a93Click(e) { var t = e && e.target && e.target.closest ? e.target.closest('[data-a93-act]') : null; if (!t) return; if (t.getAttribute('data-a93-act') === 'vendor') a93Vendor(); }
+function a93Init() {
+  var b = document.getElementById('a93-body'); if (b && !b.getAttribute('data-a93-wired')) { b.setAttribute('data-a93-wired', '1'); b.addEventListener('click', a93Click); }
+  var l = document.getElementById('a93-load'); if (l && !l.getAttribute('data-a93-wired')) { l.setAttribute('data-a93-wired', '1'); l.addEventListener('click', function () { a93Load(); }); }
+  a93Paint();
+}
 </script>
 </body>
 </html>
