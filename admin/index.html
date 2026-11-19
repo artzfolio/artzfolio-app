@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self' https://yrxvuikpudqnpicsthlg.supabase.co wss://yrxvuikpudqnpicsthlg.supabase.co https://script.google.com https://script.googleusercontent.com https://cdn.jsdelivr.net; media-src 'self' blob: data:; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.2/dist/umd/supabase.js https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self' https://yrxvuikpudqnpicsthlg.supabase.co wss://yrxvuikpudqnpicsthlg.supabase.co https://script.google.com https://script.googleusercontent.com; media-src 'self' blob: data:; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
 <meta name="referrer" content="no-referrer">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script>
@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', function () {
 <!-- Supabase JS client — same live inventory database as the phone app.
      Loaded async; the page still renders (with an offline banner) if this
      fails to load or the network is down. -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.2"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.2/dist/umd/supabase.js" integrity="sha384-Rj26LVGvoeRVR6+mwQmFfcR3QOBEwT+ZmuCWpuiqeTzJpCs0ER4ITAWGb4Hiy3Ok" crossorigin="anonymous"></script>
   <!-- v2.21: QR generator, inlined rather than loaded from a CDN so two-factor
        setup works even with no outside internet. qrcode-generator 2.0.4, MIT,
        (c) 2009 Kazuhiko Arase. Verified in build: the QR it draws decodes back
@@ -2587,7 +2587,7 @@ function confirmSessionTransfer(sessionId, idx) {
 <!-- v2.12: Chart.js for the Dashboard rebuild. Loaded async; a failed load
      never breaks the rest of the page — the Dashboard just shows its KPI
      tiles/tables without charts (see renderDashCharts()'s typeof Chart guard). -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js" onerror="window.Chart=null;"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js" integrity="sha384-NrKB+u6Ts6AtkIhwPixiKTzgSKNblyhlk0Sohlgar9UHUBzai/sgnNNWWd291xqt" crossorigin="anonymous" onerror="window.Chart=null;"></script>
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:#f0f2f5;color:#222;font-size:var(--t-section)}
@@ -3469,7 +3469,7 @@ body.a90-lean .perm-row:has(#add-emp-perm-customers),body.a90-lean .perm-row:has
     <div class="sidebar-footer">
       <div class="af-fs-side"><div class="af-fs-t">Text size</div><div id="af-fs-ctl-side"></div></div>
       <button class="logout-btn" onclick="adminLogout()">Sign out</button>   <!-- ADM-v258 A-01 -->
-      <div class="ver-footer">ArtzFolio Super App - Admin Panel v2.92c</div><!-- RC41-v282-V RC41-v283-V RC41-v284-V RC41-v285-V RC41-v286-V -->
+      <div class="ver-footer">ArtzFolio Super App - Admin Panel v2.92d</div><!-- RC41-v282-V RC41-v283-V RC41-v284-V RC41-v285-V RC41-v286-V -->
     </div>
   </div>
 
