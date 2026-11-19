@@ -131,7 +131,8 @@
 // v104 (2026-11-18, v42b): cache name bumped for App v233d (v42b = numbers fix (RC42t) + Folio design system ds1/ds1b (RC42u) on v233a; Admin v2.89b). Nothing else changed.
 // v105 (2026-11-18, v42c): cache name bumped for App v233g (v42c = v233f (Wave 2 + REVIEW_v233e fixes) + SEC45 app version gate; Admin v2.89b unchanged). Nothing else changed.
 // v106 (2026-11-19, v42d): cache name bumped for App v233j (v42d = v233h simple screens + fulfil UI (FUL46/47) + raw materials UI (RM50 v1.1); Admin v2.89b unchanged). Nothing else changed.
-const CACHE_NAME = 'artzfolio-oms-shell-v106';
+// v107 (2026-11-19, v42e): cache name bumped for App v233n (v42e e_rc2 = v233n (lean + help pages) + Admin v2.92a (Shops and couriers)). Nothing else changed.
+const CACHE_NAME = 'artzfolio-oms-shell-v107';
 const OPTIONAL_FILES = ['./zxing_reader_3.1.4.js', './zxing_reader_3.1.4.wasm'];
 const SHELL_FILES = ['./index.html', './manifest.json', './icon.svg'];
 
