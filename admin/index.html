@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.2/dist/umd/supabase.js https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self' https://yrxvuikpudqnpicsthlg.supabase.co wss://yrxvuikpudqnpicsthlg.supabase.co https://script.google.com https://script.googleusercontent.com; media-src 'self' blob: data:; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
 <meta name="referrer" content="no-referrer">
+<style id="fb-guard-css">html.fb-framed body{display:none!important}</style>
+<script id="fb-guard-js">/* SEC-202611-02 frame-buster: runs before anything else. Framed by another page = hide everything and break out. */(function(){var f=false;try{f=window.top!==window.self;}catch(e){f=true;}if(!f)return;try{document.documentElement.className+=' fb-framed';}catch(e){}try{window.top.location.replace(window.self.location.href);}catch(e){}})();</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script>
 /* B9-BEGIN text size 60-200 (same steps as the App). --fs multiplies every font size. Saved on this computer per person (localStorage, try/catch). */
@@ -3469,7 +3471,7 @@ body.a90-lean .perm-row:has(#add-emp-perm-customers),body.a90-lean .perm-row:has
     <div class="sidebar-footer">
       <div class="af-fs-side"><div class="af-fs-t">Text size</div><div id="af-fs-ctl-side"></div></div>
       <button class="logout-btn" onclick="adminLogout()">Sign out</button>   <!-- ADM-v258 A-01 -->
-      <div class="ver-footer">ArtzFolio Super App - Admin Panel v2.92d</div><!-- RC41-v282-V RC41-v283-V RC41-v284-V RC41-v285-V RC41-v286-V -->
+      <div class="ver-footer">ArtzFolio Super App - Admin Panel v2.92f</div><!-- RC41-v282-V RC41-v283-V RC41-v284-V RC41-v285-V RC41-v286-V -->
     </div>
   </div>
 
@@ -15535,7 +15537,8 @@ function a92ShopInit() { a92Wire('shop'); a92Paint('shop'); }
 function a92ShipInit() { a92Wire('ship'); a92Paint('ship'); }
 </script>
 <script id="a93-js">
-/* A93 v1 (Admin v2.92c, v25 Lane 5.3 / Lane 6): "Amazon orders" page under Shops and couriers. Admin only.
+/* A93 v1.1 (AMZ56 v1.4): + the list "Shipped but never entered - check stock" (orders Amazon shows as shipped that never reached the app; never imported).
+   A93 v1 (Admin v2.92c, v25 Lane 5.3 / Lane 6): "Amazon orders" page under Shops and couriers. Admin only.
    Read-only card per Amazon connection (report-only or real import, switches, last run, last problem, the last 48 hours by result) and one
    action: add a Vendor Central account by slot number (saved OFF and report-only). Talks to the database ONLY through two PIN-checked
    functions: amazon_admin_status (read, AMZ57) and amazon_connect_vendor (AMZ56 v1.3). The PIN is typed for each step and not kept.
@@ -15544,8 +15547,9 @@ var A93 = { ws: 'ARTZFOLIO', d: null, busy: false };
 var A93_RESULT_WORDS = { SHADOW_READY: 'Would come in', IMPORTED: 'Came in', ALREADY_IN_APP: 'Already in the app', HELD_UNKNOWN_SKU: 'Waiting: SKU not linked yet',
   SKIPPED_FBA: 'Amazon ships it (FBA) - not packed here', SKIPPED_PENDING: 'Not ready to ship yet', CANCELLED_BEFORE_IMPORT: 'Cancelled before it came in',
   CONFLICT: 'Clash with an existing invoice - check by hand', SKIPPED_NO_LINES: 'Nothing to pack', NOT_SAVED: 'Could not be saved', OFF: 'Switched off',
-  LIVE_NOT_ALLOWED: 'Real import not allowed yet', STAFF_TOLD: 'Changed on Amazon - staff told', ALREADY_IMPORTED: 'Already came in' };
-var A93_ORDER = ['SHADOW_READY', 'IMPORTED', 'ALREADY_IN_APP', 'HELD_UNKNOWN_SKU', 'SKIPPED_PENDING', 'CANCELLED_BEFORE_IMPORT', 'SKIPPED_FBA', 'CONFLICT', 'SKIPPED_NO_LINES'];
+  LIVE_NOT_ALLOWED: 'Real import not allowed yet', STAFF_TOLD: 'Changed on Amazon - staff told', ALREADY_IMPORTED: 'Already came in',
+  SHIPPED_BEFORE_IMPORT: 'Shipped before it reached the app - check stock' };
+var A93_ORDER = ['SHADOW_READY', 'IMPORTED', 'ALREADY_IN_APP', 'SHIPPED_BEFORE_IMPORT', 'HELD_UNKNOWN_SKU', 'SKIPPED_PENDING', 'CANCELLED_BEFORE_IMPORT', 'SKIPPED_FBA', 'CONFLICT', 'SKIPPED_NO_LINES'];
 var A93_CHANNELS = ['ETRADE', 'COCOBLU'];
 function a93Esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
 function a93When(t) {
@@ -15575,6 +15579,18 @@ function a93ConnHtml(x) {
     '<div class="a92-meta" style="margin-top:8px">Last 48 hours</div>' + a93Counts(x.counts_48h) + '</div>';
   return h;
 }
+/* pure (v1.1): shipped on Amazon but never entered in the app - the founder checks stock for these */
+function a93ShippedHtml(list) {
+  list = list || [];
+  if (!list.length) return '';
+  return '<div class="a92-card"><h3>Shipped but never entered - check stock <span class="a92-n">' + list.length + '</span></h3>' +
+    '<p class="a92-warn">Amazon shows these orders as shipped, but they never came into the app (no pick, no stock taken off). They are NOT imported. Check the stock of these items.</p>' +
+    '<table class="a92-t"><thead><tr><th>Amazon order</th><th>Bought</th><th>Ship by</th><th>Items</th></tr></thead><tbody>' +
+    list.map(function (x) {
+      var items = (x.items || []).map(function (i) { return a93Esc(i.sku || i.asin || '?') + ' x ' + a93Esc(i.qty); }).join('<br>');
+      return '<tr><td>' + a93Esc(x.amazon_order_id) + '</td><td>' + a93Esc(a93When(x.purchase)) + '</td><td>' + a93Esc(x.ship_by ? a93When(x.ship_by) : 'not given') + '</td><td>' + items + '</td></tr>';
+    }).join('') + '</tbody></table></div>';
+}
 function a93VendorForm() {
   var slots = [1, 2, 3, 4, 5, 6].map(function (n) { return '<option value="' + n + '">' + n + ' (secret SPAPI_REFRESH_TOKEN_VENDOR_' + n + ')</option>'; }).join('');
   return '<details class="a92-card"><summary>Add a Vendor Central account</summary>' +
@@ -15591,7 +15607,7 @@ function a93Html(d) {
   var h = '<div class="a92-card"><div class="a92-kv"><span>Real import (LIVE)</span><b>' + a93Chip(!!d.live_allowed, 'Allowed by the founder', 'Not allowed - report only') + '</b>' +
     '<span>Amazon SKUs not linked yet</span><b>' + a93Esc(d.unknown_open || 0) + '</b><span>Shown at</span><b>' + a93Esc(a93When(d.generated_at)) + '</b></div></div>';
   if (!c.length) h += '<p class="a92-meta">No Amazon account is connected.</p>';
-  h += c.map(a93ConnHtml).join('');
+  h += a93ShippedHtml(d.shipped_not_entered) + c.map(a93ConnHtml).join('');
   return h + a93VendorForm();
 }
 function a93Paint() { var b = document.getElementById('a93-body'); if (b) b.innerHTML = a93Html(A93.d); }
