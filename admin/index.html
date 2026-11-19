@@ -3284,6 +3284,19 @@ body.a90-lean .a90-old{display:none!important}
 body.a90-lean .perm-row:has(#edit-emp-perm-customers),body.a90-lean .perm-row:has(#edit-emp-perm-customer_data_erase_export),
 body.a90-lean .perm-row:has(#add-emp-perm-customers),body.a90-lean .perm-row:has(#add-emp-perm-customer_data_erase_export){display:none!important}
 </style>
+<style id="a92-css">/* A92 (v25 Lane 5.2 / 5.4): Shops and couriers - Shopify + Couriers (Shiprocket) pages */
+.a92-card{border:1px solid #d9dee5;border-radius:10px;padding:12px 14px;margin:0 0 12px;background:#fff;max-width:980px}.a92-card h3{margin:0 0 8px;font-size:16px}
+.a92-card summary{cursor:pointer;font-weight:600;min-height:32px}.a92-kv{display:grid;grid-template-columns:minmax(160px,240px) 1fr;gap:4px 12px;font-size:14px}.a92-kv span{color:#4a5568}
+.a92-sws{display:flex;flex-direction:column;gap:8px}.a92-sw{display:flex;justify-content:space-between;align-items:center;gap:12px;border-top:1px solid #edf2f7;padding-top:8px}
+.a92-sw .btn{min-height:44px;min-width:120px}.a92-chip{display:inline-block;padding:2px 8px;border-radius:10px;background:#edf2f7;font-size:12px}.a92-on{background:#c6f6d5;color:#22543d;font-weight:600}
+.a92-meta{color:#4a5568;font-size:12px;margin-top:2px}.a92-note{background:#ebf8ff;border-radius:6px;padding:8px 10px;font-size:13px}.a92-warn{color:#822727;font-size:13px}
+.a92-money{border:1px solid #b7791f;background:#fffaf0;border-radius:10px;padding:10px 14px;max-width:980px;margin:0 0 12px}.a92-empty{color:#4a5568}
+.a92-f{display:block;margin:8px 0;font-size:14px}.a92-f input,.a92-f select{display:block;width:100%;max-width:520px;min-height:40px;margin-top:4px;box-sizing:border-box}
+.a92-card>.btn{min-height:44px;margin-top:6px}.a92-t{border-collapse:collapse;width:100%;font-size:13px}.a92-t th,.a92-t td{border-bottom:1px solid #e2e8f0;padding:6px;text-align:left;vertical-align:top}
+.a92-t .btn{min-height:40px}.a92-sku{min-height:36px;width:140px}.a92-n{display:inline-block;min-width:22px;padding:0 6px;border-radius:11px;background:#e2e8f0;font-size:13px;text-align:center}
+.a92-row{display:flex;justify-content:space-between;align-items:center;gap:12px;border-top:1px solid #edf2f7;padding:8px 0}
+@media (prefers-color-scheme: dark){.a92-card{background:#1a202c;border-color:#4a5568}.a92-money{background:#2d2410}.a92-note{background:#1a365d}.a92-chip{background:#2d3748;color:#e2e8f0}.a92-meta,.a92-empty,.a92-kv span{color:#cbd5e0}}
+</style>
 </head>
 <body>
 
@@ -3427,6 +3440,9 @@ body.a90-lean .perm-row:has(#add-emp-perm-customers),body.a90-lean .perm-row:has
       <li class="nav-item a89-nav" data-a89="buying" onclick="a89Go('buying')" role="link" tabindex="0" title="Buying"><span class="nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 8h6M9 12h6M9 16h3"/></svg></span><span class="nav-label">Buying</span><span class="nav-short">Buying</span></li>
       <li class="nav-item a89-nav" data-a89="safety" onclick="a89Go('safety')" role="link" tabindex="0" title="Records &amp; safety"><span class="nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 3v6c0 4.5-3.4 8-8 9-4.6-1-8-4.5-8-9V6z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg></span><span class="nav-label">Records &amp; safety</span><span class="nav-short">Safety</span></li>
       <li class="nav-item a89-nav" data-a89="company" onclick="a89Go('company')" role="link" tabindex="0" title="Company settings"><span class="nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 21V5a1 1 0 0 1 1-1h9a1 1 0 0 1 1 1v16M15 9h4a1 1 0 0 1 1 1v11M3 21h18M8 8h3M8 12h3M8 16h3"/></svg></span><span class="nav-label">Company settings</span><span class="nav-short">Company</span></li>
+      <li class="nav-item a89-nav" data-a89="integrations" onclick="a89Go('integrations')" role="link" tabindex="0" title="Shops and couriers"><span class="nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h11v9H3z"/><path d="M14 10h4l3 3v3h-7z"/><circle cx="7" cy="17" r="1.6"/><circle cx="17" cy="17" r="1.6"/></svg></span><span class="nav-label">Shops and couriers</span><span class="nav-short">Shops</span></li><!-- A92 -->
+      <li class="nav-item" data-page="a92shop" style="display:none"></li>
+      <li class="nav-item" data-page="a92ship" style="display:none"></li>
       <li class="nav-item a89-nav" data-a89="ceo" onclick="a89Go('ceo')" role="link" tabindex="0" title="CEO Brief"><span class="nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H8l-4 4z"/><path d="M8 9h8M8 12h5"/></svg></span><span class="nav-label">CEO Brief</span><span class="nav-short">Brief</span></li><!-- CEO52 -->
       <li class="nav-item" data-page="a89ceo" style="display:none"></li>
       <li class="nav-item" data-page="a90rm" style="display:none"></li>
@@ -3443,7 +3459,6 @@ body.a90-lean .perm-row:has(#add-emp-perm-customers),body.a90-lean .perm-row:has
       <li class="nav-item" data-page="pcs" onclick="switchPage('pcs')"><span class="nav-icon">🖥</span><span class="nav-label">Computers (desktop app)</span></li>
       <li class="nav-item" data-page="sku" onclick="switchPage('sku')"><span class="nav-icon">📦</span><span class="nav-label">Product stock search</span></li>
       <li class="nav-item" data-page="bins" onclick="switchPage('bins')"><span class="nav-icon">🗂</span><span class="nav-label">Bins (shelf locations)</span></li>
-      <li class="nav-item" data-page="rmctl" onclick="switchPage('rmctl')"><span class="nav-icon">🧾</span><span class="nav-label">Purchasing controls (raw materials)</span></li>
       <!-- v2.45 -->
       <li class="nav-item" data-page="secdata" onclick="switchPage('secdata')"><span class="nav-icon">🔐</span><span class="nav-label">Safety and backups</span></li>
       <li class="nav-item" data-page="reports" onclick="switchPage('reports')"><span class="nav-icon">📈</span><span class="nav-label">Stock movement reports</span></li>
@@ -3453,7 +3468,7 @@ body.a90-lean .perm-row:has(#add-emp-perm-customers),body.a90-lean .perm-row:has
     <div class="sidebar-footer">
       <div class="af-fs-side"><div class="af-fs-t">Text size</div><div id="af-fs-ctl-side"></div></div>
       <button class="logout-btn" onclick="adminLogout()">Sign out</button>   <!-- ADM-v258 A-01 -->
-      <div class="ver-footer">ArtzFolio Super App - Admin Panel v2.90</div><!-- RC41-v282-V RC41-v283-V RC41-v284-V RC41-v285-V RC41-v286-V -->
+      <div class="ver-footer">ArtzFolio Super App - Admin Panel v2.92a</div><!-- RC41-v282-V RC41-v283-V RC41-v284-V RC41-v285-V RC41-v286-V -->
     </div>
   </div>
 
@@ -3842,91 +3857,6 @@ body.a90-lean .perm-row:has(#add-emp-perm-customers),body.a90-lean .perm-row:has
       <div id="pcs-msg" class="result-msg" role="status"></div>
       <div id="pcs-list" style="overflow-x:auto"></div>
     </div>
-    <div class="page" id="page-rmctl">
-      <div class="page-header">
-        <div>
-          <div class="page-title">Purchasing</div>
-          <div class="page-sub">Checks and settings for buying raw materials. Settings, data checks, undo an import, past changes and vendor scores.</div>
-        </div>
-      </div>
-      <div class="rmc-pin">
-        <div class="filter-field">
-          <label for="rmc-pin">Your PIN</label>
-          <input type="text" class="pw-mask" inputmode="numeric" autocapitalize="off" spellcheck="false" autocomplete="off" id="rmc-pin" data-1p-ignore data-lpignore="true" data-bwignore="true" data-form-type="other" maxlength="8" placeholder="Type your PIN">
-        </div>
-        <div class="rmc-hint" style="flex:1 1 240px;margin:0;">Kept only in this browser tab and cleared when you leave this page. Changes are recorded against your employee code.</div>
-      </div>
-      <div class="rmc-sub e2-keep" id="rmc-sub">
-        <button class="preset-btn active" data-rmc="settings" onclick="rmcShow('settings')">Settings</button>
-        <button class="preset-btn" data-rmc="dq" onclick="rmcShow('dq')">Data quality</button>
-        <button class="preset-btn" data-rmc="imports" onclick="rmcShow('imports')">Imports and undo</button>
-        <button class="preset-btn" data-rmc="changes" onclick="rmcShow('changes')">Change history</button>
-        <button class="preset-btn" data-rmc="score" onclick="rmcShow('score')">Vendor scorecard</button>
-      </div>
-
-      <div id="rmc-sec-settings" class="rmc-card">
-        <div style="display:flex;gap:10px;justify-content:space-between;flex-wrap:wrap;align-items:center;">
-          <strong>Company settings for buying</strong>
-          <button class="btn btn-primary" onclick="rmcLoadSettings()">↻ Load settings</button>
-        </div>
-        <div class="rmc-hint">Set the company state code once so purchase bills can be split into CGST and SGST (same state) or IGST (other state). Until it is set, bills show only the total GST.</div>
-        <div id="rmc-settings-body"></div>
-        <div class="result-msg" id="rmc-settings-msg"></div>
-      </div>
-
-      <div id="rmc-sec-dq" class="rmc-card" style="display:none;">
-        <div style="display:flex;gap:10px;justify-content:space-between;flex-wrap:wrap;align-items:center;">
-          <strong>Data quality</strong>
-          <button class="btn btn-primary" onclick="rmcLoadDq()">↻ Run the check</button>
-        </div>
-        <div class="rmc-hint">Looks for duplicates and missing details in the item and vendor lists. Nothing here changes any data; fix each one in the phone app.</div>
-        <div id="rmc-dq-body"></div>
-        <div class="result-msg" id="rmc-dq-msg"></div>
-      </div>
-
-      <div id="rmc-sec-imports" class="rmc-card" style="display:none;">
-        <div style="display:flex;gap:10px;justify-content:space-between;flex-wrap:wrap;align-items:center;">
-          <strong>Recent imports</strong>
-          <button class="btn btn-primary" onclick="rmcLoadImports()">↻ Load imports</button>
-        </div>
-        <div class="rmc-hint">An import can be undone for 24 hours. Undo puts every row back as it was. A row edited after the import is left alone and listed.</div>
-        <div id="rmc-imports-body"></div>
-        <div style="margin-top:14px;"><strong>Row-error files</strong>
-          <div class="rmc-hint">When an import had rows with problems, the list of problem rows is kept here to download and fix.</div></div>
-        <div id="rmc-errfiles-body"></div>
-        <div class="result-msg" id="rmc-imports-msg"></div>
-      </div>
-
-      <div id="rmc-sec-changes" class="rmc-card" style="display:none;">
-        <div class="rmc-set" style="border:none;">
-          <div class="filter-field"><label for="rmc-ch-table">Show</label>
-            <select id="rmc-ch-table">
-              <option value="">All records</option><option value="rm_item">Items</option><option value="rm_vendor">Vendors</option>
-              <option value="rm_vendor_contact">Vendor contacts</option><option value="rm_item_vendor">Item and vendor links</option>
-              <option value="rm_item_uom">Unit conversions</option><option value="rm_vendor_quote">Vendor quotes</option>
-              <option value="rm_bom_line">Recipe lines</option><option value="rm_vendor_bank">Vendor bank details</option>
-            </select></div>
-          <div class="filter-field"><label for="rmc-ch-reason">Reason (needed to undo)</label>
-            <input type="text" id="rmc-ch-reason" maxlength="200" placeholder="At least 5 letters"></div>
-          <button class="btn btn-primary" onclick="rmcLoadChanges()">↻ Load changes</button>
-        </div>
-        <div class="rmc-hint">Newest first. Only an edit can be undone, and only if nobody changed the same field later. To undo an add, archive the record instead. Bank account numbers are never shown in full and cannot be undone here.</div>
-        <div id="rmc-changes-body"></div>
-        <div class="result-msg" id="rmc-changes-msg"></div>
-      </div>
-
-      <div id="rmc-sec-score" class="rmc-card" style="display:none;">
-        <div class="rmc-set" style="border:none;">
-          <div class="filter-field"><label for="rmc-sc-months">Look back</label>
-            <select id="rmc-sc-months"><option value="3">3 months</option><option value="6">6 months</option><option value="12" selected>12 months</option><option value="24">24 months</option></select></div>
-          <button class="btn btn-primary" onclick="rmcLoadScore()">↻ Load scorecard</button>
-        </div>
-        <div class="rmc-hint">On time means the order came by the promised date. A score shows after 3 delivered orders.</div>
-        <div id="rmc-score-body"></div>
-        <div class="result-msg" id="rmc-score-msg"></div>
-      </div>
-    </div>
-
     <div class="page" id="page-devices">
       <div class="page-header">
         <div>
@@ -4343,14 +4273,12 @@ body.a90-lean .perm-row:has(#add-emp-perm-customers),body.a90-lean .perm-row:has
         <div class="rmc-hint" style="flex:1 1 240px;margin:0;">Kept only in this browser tab and cleared when you leave this page. Everything you do here is recorded against your employee code.</div>
       </div>
       <div class="rmc-sub e2-keep" id="sec-sub"><!-- ADM-v258 A-04: the four everyday safety tools are always visible buttons -->
-        <button class="preset-btn active" data-sec="today" onclick="secShow('today')">Today</button>
         <button class="preset-btn" data-sec="export" onclick="secShow('export')">Export everything</button>
         <button class="preset-btn" data-sec="backup" onclick="secShow('backup')">Backup</button>
         <button class="preset-btn" data-sec="signout" onclick="secShow('signout')">Sign out everywhere</button>
         <details class="a58-more2" id="sec-more-det"><summary>More checks and information</summary>
           <div class="rmc-sub" style="margin:8px 0 0">
-            <button class="preset-btn" data-sec="audit" onclick="secShow('audit')">Audit trail</button>
-            <button class="preset-btn" data-sec="recon" onclick="secShow('recon')">Data checks</button>
+            <button class="preset-btn active" data-sec="audit" onclick="secShow('audit')">Audit trail</button>
             <button class="preset-btn" data-sec="retention" onclick="secShow('retention')">Keeping data</button>
             <button class="preset-btn" data-sec="errors" onclick="secShow('errors')">App error log</button>
             <button class="preset-btn" data-sec="roles" onclick="secShow('roles')">Who can do what</button>
@@ -4358,17 +4286,7 @@ body.a90-lean .perm-row:has(#add-emp-perm-customers),body.a90-lean .perm-row:has
         </details>
       </div>
 
-      <div id="sec-sec-today" class="rmc-card">
-        <div style="display:flex;gap:10px;justify-content:space-between;flex-wrap:wrap;align-items:center;">
-          <strong>Today: what needs attention</strong>
-          <button class="btn btn-primary sec-act" onclick="secLoadToday()">↻ Load today</button>
-        </div>
-        <div class="rmc-hint">Counts only, read-only. Nothing here changes any data.</div>
-        <div id="sec-body-today"></div>
-        <div class="result-msg" id="sec-msg-today"></div>
-      </div>
-
-      <div id="sec-sec-audit" class="rmc-card" style="display:none;">
+      <div id="sec-sec-audit" class="rmc-card">
         <div style="display:flex;gap:10px;justify-content:space-between;flex-wrap:wrap;align-items:center;">
           <strong>Audit trail check</strong>
           <button class="btn btn-primary sec-act" onclick="secLoadAudit()">Check the audit trail</button>
@@ -4376,16 +4294,6 @@ body.a90-lean .perm-row:has(#add-emp-perm-customers),body.a90-lean .perm-row:has
         <div class="rmc-hint">Every action is saved in a chain. Each record is locked to the one before it. This checks the whole chain. It shows the first record that does not fit.</div>
         <div id="sec-body-audit"></div>
         <div class="result-msg" id="sec-msg-audit"></div>
-      </div>
-
-      <div id="sec-sec-recon" class="rmc-card" style="display:none;">
-        <div style="display:flex;gap:10px;justify-content:space-between;flex-wrap:wrap;align-items:center;">
-          <strong>Data checks</strong>
-          <button class="btn btn-primary sec-act" onclick="secLoadRecon()">Run the data checks</button>
-        </div>
-        <div class="rmc-hint">Compares totals that should always agree, for example the stock number against the sum of its entries. Nothing is corrected here; it only reports. Each run is recorded.</div>
-        <div id="sec-body-recon"></div>
-        <div class="result-msg" id="sec-msg-recon"></div>
       </div>
 
       <div id="sec-sec-export" class="rmc-card" style="display:none;">
@@ -4632,6 +4540,19 @@ body.a90-lean .perm-row:has(#add-emp-perm-customers),body.a90-lean .perm-row:has
         <p>Reset all stock to zero, and Delete all test accounts, are no longer here. They were one-time tools. If one is ever needed, your developer runs it once, with a backup first.</p>
       </div>
       </div>
+    </div>
+    <!-- A92 (v25 Lane 5.2 / 5.4): Shops and couriers (Admin only) -->
+    <div class="page" id="page-a92shop">
+      <div class="page-header"><div><div class="page-title">Shopify</div></div><button type="button" class="btn btn-primary" id="a92-shop-load">Show</button></div>
+      <div id="a92-shop-msg" class="result-msg e2-keep"></div>
+      <div id="a92-shop-body" class="e2-keep"></div>
+      <p class="a89-note e2-keep">Shopify orders come into the app as orders to pick, the same way as the upload sheet. Every switch starts OFF; switching one on is the founder's decision. Your PIN is asked for each step and is not kept.</p>
+    </div>
+    <div class="page" id="page-a92ship">
+      <div class="page-header"><div><div class="page-title">Couriers (Shiprocket)</div></div><button type="button" class="btn btn-primary" id="a92-ship-load">Show</button></div>
+      <div id="a92-ship-msg" class="result-msg e2-keep"></div>
+      <div id="a92-ship-body" class="e2-keep"></div>
+      <p class="a89-note e2-keep">A courier can be booked only for an order whose every line is scanned. Every switch starts OFF; switching one on is the founder's decision. Your PIN is asked for each step and is not kept.</p>
     </div>
     <!-- CEO52 (v25 Lane 8): CEO Brief (Admin only) -->
     <div class="page" id="page-a89ceo">
@@ -5846,7 +5767,6 @@ var ADMIN_PTR_REFRESH_FNS = {
   bins:      function () { loadBins(); },
   reports:   function () { loadTransactions(0); },
   settings:  function () { loadSettingsPage(); },
-  rmctl:     function () { rmcRefresh(); },
   secdata:   function () { secRefresh(); }
 };
 function initAdminPullToRefresh() {
@@ -5997,7 +5917,6 @@ function pcsConfirm() {
 function pcsInit() { if (!PCS.rows || (Date.now() - PCS.loadedAt) > 60000) { var pe = document.getElementById('pcs-pin'); if (pe && (pe.value || '').trim()) pcsLoad(); else { pcsSetMsg('Type your PIN, then tap Show computers.', null); pcsPaint(); } } else pcsPaint(); }
 /* DSK-R30-END */
 function switchPage(name) {
-  if (currentPage === "rmctl" && name !== "rmctl") { var _pe = document.getElementById("rmc-pin"); if (_pe) _pe.value = ""; }
   if (currentPage === "secdata" && name !== "secdata") { var _ps = document.getElementById("sec-pin"); if (_ps) _ps.value = ""; }   // v2.45
   if (currentPage === "pcs" && name !== "pcs") { var _pc = document.getElementById("pcs-pin"); if (_pc) _pc.value = ""; PCS.pending = null; }   // R30: Computers
   document.querySelectorAll('.page').forEach(function (p) { p.classList.remove('active'); });
@@ -7329,9 +7248,6 @@ function downloadCSV(filename, rows, mode, enriched) {
 
 
 // ══════════════ PURCHASING OVERSIGHT (v2.42, M20) ══════════════
-var RMC_SECTIONS = ['settings', 'dq', 'imports', 'changes', 'score'];
-var rmcCurrent = 'settings';
-var rmcSettingsLast = null;
 var RMC_ERR = {
   PIN_REJECTED: 'That PIN was not right. Nothing was changed.',
   LOCKED: 'This account is locked for a while after wrong PINs. Try again later.',
@@ -7364,16 +7280,6 @@ var RMC_ERR = {
   NO_ROWS: 'There were no rows to process.',
   BAD_KEY: 'That setting name is not recognised.'
 };
-var RMC_TABLE_LABEL = { rm_item: 'Item', rm_vendor: 'Vendor', rm_vendor_contact: 'Vendor contact', rm_item_vendor: 'Item and vendor link',
-  rm_item_uom: 'Unit conversion', rm_vendor_quote: 'Vendor quote', rm_bom_line: 'Recipe line', rm_vendor_bank: 'Vendor bank details' };
-var RMC_KIND_LABEL = { VENDOR_PRICES: 'Vendor price list', BOM: 'Product recipes', ITEMS: 'Items', VENDORS: 'Vendors', REORDER: 'Reorder levels',
-  RECEIPTS: 'Purchase bills', OPENING: 'Opening stock', UOM: 'Unit conversions' };
-var RMC_DQ_TITLE = { DUP_ITEM_NAME: 'Items with the same name', DUP_VENDOR_NAME: 'Vendors with the same name', ITEM_NO_HSN: 'Items missing an HSN code',
-  ITEM_NO_GST_RATE: 'Items missing a GST rate', ITEM_NO_VENDOR: 'Items with no vendor linked', ITEM_NO_REORDER: 'Items with no reorder level',
-  VENDOR_NO_GSTIN: 'Vendors missing a GSTIN', BILL_NO_GST: 'Purchase bills with no GST recorded', STALE_PRICE: 'Prices not updated for a long time',
-  ITEM_NO_BARCODE: 'Items with no barcode' };
-var RMC_FIX_TEXT = { OPEN_ITEM: 'Fix it in the phone app: Raw materials, then Items.', OPEN_VENDOR: 'Fix it in the phone app: Raw materials, then Vendors.',
-  OPEN_RECEIPT: 'Open the bill in the phone app: Raw materials, then Purchase register.', MERGE: 'Keep one record and archive the other in the phone app.' };
 
 function rmcPlainName(code) {
   var t = String(code || '').replace(/_/g, ' ').trim();
@@ -7386,345 +7292,24 @@ function rmcSetMsg(id, text, ok) {
   el.className = 'result-msg' + (text ? (ok === null ? '' : (ok ? ' ok' : ' err')) : '');   // v2.44: null = neutral
   el.textContent = text || '';
 }
-function rmcCall(fn, extra, label, opts) {   /* ADM-v264 L-4: opts.read = true only on pure reads; anything else keeps the 'may have been saved' wording */
-  opts = opts || {};
-  var code = getAdminPanelEmployeeCode();
-  var pinEl = document.getElementById('rmc-pin');
-  var pin = pinEl ? (pinEl.value || '').trim() : '';
-  if (pin) pinFieldTouchNow('rmc-pin');
-  if (isReadOnlyAdmin()) return Promise.resolve({ ok: false, message: 'The Purchasing page is for Admin and Supervisor accounts. A read-only account cannot open it.' });
-  if (!code) return Promise.resolve({ ok: false, message: 'You are not signed in with an employee code.' });
-  if (!pin) return Promise.resolve({ ok: false, message: 'Type your PIN at the top of this page first.' });
-  var args = { p_employee_code: code, p_pin: pin };
-  Object.keys(extra || {}).forEach(function (k) { args[k] = extra[k]; });
-  return withTimeout(db.rpc(fn, args), 20000, label || fn).then(function (res) {
-    if (res.error) {
-      var raw = String(res.error.message || '') + ' ' + String(res.error.code || '');
-      if (/could not find the function|schema cache|PGRST202/i.test(raw)) {
-        return { ok: false, message: 'This part needs the latest database update (M20), which is not installed yet. Nothing was changed.' };
-      }
-      return { ok: false, message: friendlyError(res.error, !!opts.read) };   /* ADM-v264 L-4 */
-    }
-    var d = res.data;
-    if (Array.isArray(d)) d = d[0];
-    if (!d || typeof d !== 'object') return { ok: false, message: 'The database sent back something unexpected. Nothing was changed.' };
-    if (d.ok === false) {
-      // v2.43: the database's own wording is never shown; it is kept for the System Check page only.
-      if (d.message) { LAST_TECHNICAL_ERROR = String(d.error || '') + ': ' + String(d.message); }
-      if (d.error === 'PIN_REJECTED') { var pe = document.getElementById('rmc-pin'); if (pe) pe.value = ''; }
-      return { ok: false, code: d.error, message: RMC_ERR[d.error] || 'That did not work. Nothing was changed. Try again, and if it keeps happening the technical detail is on the System Check page.' };
-    }
-    return d;
-  }).catch(function (e) { return { ok: false, message: friendlyError(e, !!opts.read) }; });   /* ADM-v264 L-4 */
-}
-function rmcShow(sec) {
-  if (RMC_SECTIONS.indexOf(sec) < 0) sec = 'settings';
-  rmcCurrent = sec;
-  RMC_SECTIONS.forEach(function (k) {
-    var el = document.getElementById('rmc-sec-' + k);
-    if (el) el.style.display = (k === sec) ? '' : 'none';
-  });
-  document.querySelectorAll('#rmc-sub .preset-btn').forEach(function (b) {
-    b.classList.toggle('active', b.getAttribute('data-rmc') === sec);
-  });
-}
-function rmcRefresh() {
-  var map = { settings: rmcLoadSettings, dq: rmcLoadDq, imports: rmcLoadImports, changes: rmcLoadChanges, score: rmcLoadScore };
-  var msgIds = { settings: 'rmc-settings-msg', dq: 'rmc-dq-msg', imports: 'rmc-imports-msg', changes: 'rmc-changes-msg', score: 'rmc-score-msg' };
-  if (isReadOnlyAdmin()) { rmcSetMsg(msgIds[rmcCurrent], 'The Purchasing page is for Admin and Supervisor accounts. A read-only account cannot open it.', false); return; }
-  var pinEl = document.getElementById('rmc-pin');
-  if (!pinEl || !(pinEl.value || '').trim()) { rmcSetMsg(msgIds[rmcCurrent], 'Type your PIN at the top, then tap the load button.', null); return; }
-  if (map[rmcCurrent]) map[rmcCurrent]();
-}
 
 // ---- settings ----
-var RMC_SETTING_DEFS = [
-  { key: 'company_state_code', label: 'Company GST state code', hint: 'Two digits, for example 27 for Maharashtra or 07 for Delhi. Decides CGST and SGST or IGST.', kind: 'state' },
-  { key: 'price_jump_pct', label: 'Price-jump alert (percent)', hint: 'A bill rate more than this many percent above the average of the last 3 rates raises an alert. Whole number, usual value 10.', kind: 'pct' },
-  { key: 'stale_price_days', label: 'Price counts as old after (days)', hint: 'A price not updated for this many days appears in the data-quality check.', kind: 'days' },
-  { key: 'count_per_week', label: 'Items to count each week', hint: 'How many items the weekly stock-count list picks.', kind: 'count' }
-];
-function rmcLoadSettings() {
-  rmcSetMsg('rmc-settings-msg', 'Loading…', true);
-  rmcCall('rm_settings', {}, 'Purchasing settings', { read: true }).then(function (d) {
-    var body = document.getElementById('rmc-settings-body');
-    if (!d.ok) { rmcSetMsg('rmc-settings-msg', d.message, false); return; }
-    rmcSettingsLast = d.settings || {};
-    var ro = isReadOnlyAdmin();
-    body.innerHTML = RMC_SETTING_DEFS.map(function (def) {
-      var cur = rmcSettingsLast[def.key];
-      var shown = (cur === null || cur === undefined) ? '' : String(cur);
-      return '<div class="rmc-set"><div class="filter-field"><label for="rmc-set-' + def.key + '">' + esc(def.label) + '</label>' +
-        '<input type="text" id="rmc-set-' + def.key + '" value="' + esc(shown) + '" maxlength="12"' + (ro ? ' disabled' : '') + '>' +
-        '<div class="rmc-hint">' + esc(def.hint) + '</div>' +
-        '<div class="rmc-hint">Now: <strong>' + esc(shown === '' ? 'not set' : (def.kind === 'pct' ? fmtPct(Number(shown), 1) : shown)) + '</strong></div></div>' +
-        '<button class="btn btn-primary" onclick="rmcSaveSetting(\'' + def.key + '\')"' + (ro ? ' disabled' : '') + '>Save</button></div>';
-    }).join('');
-    rmcSetMsg('rmc-settings-msg', ro ? 'You can view these but not change them.' : '', true);
-  });
-}
-function rmcSaveSetting(key) {
-  if (isReadOnlyAdmin()) { rmcSetMsg('rmc-settings-msg', 'Read-only access: ask a full Admin to change this.', false); return; }
-  var def = RMC_SETTING_DEFS.filter(function (x) { return x.key === key; })[0];
-  var el = document.getElementById('rmc-set-' + key);
-  var v = el ? (el.value || '').trim() : '';
-  if (def.kind === 'state') {
-    if (v !== '' && !/^\d{2}$/.test(v)) { rmcSetMsg('rmc-settings-msg', 'The state code is two digits, for example 27, or leave it empty to clear it.', false); return; }
-  } else if (def.kind === 'pct') {
-    if (!/^\d{1,3}$/.test(v) || Number(v) < 1 || Number(v) > 100) { rmcSetMsg('rmc-settings-msg', 'Enter a whole percent between 1 and 100.', false); return; }
-  } else {
-    if (!/^\d{1,4}$/.test(v) || Number(v) < 1) { rmcSetMsg('rmc-settings-msg', 'Enter a whole number, 1 or more.', false); return; }
-  }
-  var oldV = (rmcSettingsLast && rmcSettingsLast[key] !== null && rmcSettingsLast[key] !== undefined) ? String(rmcSettingsLast[key]) : '';
-  if (v === oldV) { rmcSetMsg('rmc-settings-msg', 'That is already the saved value.', true); return; }
-  if (!window.confirm('Change "' + def.label + '" from ' + (oldV === '' ? 'not set' : oldV) + ' to ' + (v === '' ? 'not set' : v) + '?\n\nThis affects everyone using purchasing from now on.')) { return; }
-  rmcSetMsg('rmc-settings-msg', 'Saving…', true);
-  rmcCall('rm_setting_set', { p_key: key, p_value: v }, 'Save setting').then(function (d) {
-    if (!d.ok) { rmcSetMsg('rmc-settings-msg', d.message, false); return; }
-    rmcSetMsg('rmc-settings-msg', 'Saved: ' + def.label + '.', true);
-    rmcLoadSettings();
-    setTimeout(function () { rmcSetMsg('rmc-settings-msg', 'Saved: ' + def.label + '.', true); }, 600);
-  });
-}
 
 // ---- data quality ----
-var rmcDqOpen = null;
-function rmcLoadDq() {
-  rmcSetMsg('rmc-dq-msg', 'Checking…', true);
-  rmcCall('rm_data_quality', { p_sample: 10 }, 'Data quality', { read: true }).then(function (d) {
-    var body = document.getElementById('rmc-dq-body');
-    if (!d.ok) { rmcSetMsg('rmc-dq-msg', d.message, false); return; }
-    var checks = d.checks || [];
-    var total = Number(d.total_issues);
-    var h = '<div class="rmc-kpi"><div><b>' + fmtNum(isFinite(total) ? total : 0) + '</b><span>Things to fix</span></div>' +
-      '<div><b>' + fmtNum(checks.filter(function (c) { return Number(c.count) > 0; }).length) + '</b><span>Checks with findings</span></div></div>';
-    h += '<div class="table-wrap"><table><thead><tr><th>Check</th><th>How serious</th><th>Found</th><th>What to do</th><th></th></tr></thead><tbody>';
-    if (!checks.length) h += '<tr class="empty-row"><td colspan="5">No results came back. Tap the button again in a minute. If it stays empty, tell the owner.</td></tr>';
-    checks.forEach(function (c, i) {
-      var sev = String(c.severity || '').toUpperCase();
-      var badge = sev === 'HIGH' ? 'badge-red' : (sev === 'MEDIUM' ? 'badge-amber' : 'badge-grey');
-      var sevText = sev === 'HIGH' ? 'High' : (sev === 'MEDIUM' ? 'Medium' : (sev === 'LOW' ? 'Low' : '—'));
-      var n = Number(c.count) || 0;
-      h += '<tr><td><strong>' + esc(RMC_DQ_TITLE[c.code] || showVal(c.title)) + '</strong>';
-      var sample = (c.sample || []).slice(0, 3);
-      if (sample.length) h += '<div class="rmc-hint">' + sample.map(function (x) { return esc(showVal(x.label)) + (x.detail ? ' (' + esc(showVal(x.detail)) + ')' : ''); }).join('; ') + '</div>';
-      h += '</td><td><span class="badge ' + badge + '">' + esc(sevText) + '</span></td><td>' + fmtNum(n) + '</td>' +
-        '<td>' + (n === 0 ? 'All good.' : esc(RMC_FIX_TEXT[c.fix_action] || 'Fix it in the phone app.')) + '</td>' +
-        '<td>' + (n > 0 ? '<button class="btn btn-grey btn-sm" onclick="rmcDqList(\'' + attrId(c.code) + '\')">Show all</button>' : '') + '</td></tr>';
-    });
-    h += '</tbody></table></div><div id="rmc-dq-list"></div>';
-    h += '<div class="rmc-hint">Checked ' + esc(fmtDateTime(d.as_of)) + '.</div>';
-    body.innerHTML = h;
-    rmcSetMsg('rmc-dq-msg', '', true);
-  });
-}
-function rmcDqList(code) {
-  var box = document.getElementById('rmc-dq-list');
-  if (box) box.innerHTML = '<div class="rmc-hint">Loading the full list…</div>';
-  rmcCall('rm_data_quality_list', { p_code: code, p_limit: 100, p_offset: 0 }, 'Data quality list', { read: true }).then(function (d) {
-    if (!box) return;
-    if (!d.ok) { box.innerHTML = '<div class="result-msg err">' + esc(d.message) + '</div>'; return; }
-    var rows = d.rows || [];
-    var h = '<div style="margin-top:12px;"><strong>' + esc(RMC_DQ_TITLE[code] || rmcPlainName(code)) + '</strong> · ' + fmtNum(d.count) + ' found' +
-      (Number(d.count) > rows.length ? ' (first ' + fmtNum(rows.length) + ' shown)' : '') + '</div>' +
-      '<div class="table-wrap"><table><thead><tr><th>Record</th><th>Detail</th></tr></thead><tbody>';
-    h += rows.length ? rows.map(function (r) { return '<tr><td>' + esc(showVal(r.label)) + '</td><td>' + esc(showVal(r.detail)) + '</td></tr>'; }).join('')
-      : '<tr class="empty-row"><td colspan="2">Nothing found. Change the words or dates and try again.</td></tr>';
-    box.innerHTML = h + '</tbody></table></div>';
-  });
-}
 
 // ---- imports and undo ----
-function rmcLoadImports() {
-  rmcSetMsg('rmc-imports-msg', 'Loading…', true);
-  rmcCall('rm_import_batches', { p_limit: 20 }, 'Imports', { read: true }).then(function (d) {
-    var body = document.getElementById('rmc-imports-body');
-    if (!d.ok) { rmcSetMsg('rmc-imports-msg', d.message, false); return; }
-    var rows = d.batches || [];
-    var h = '<div class="table-wrap"><table><thead><tr><th>When</th><th>What</th><th>By</th><th>Rows</th><th>Added</th><th>Changed</th><th>State</th><th>Undo until</th><th></th></tr></thead><tbody>';
-    if (!rows.length) h += '<tr class="empty-row"><td colspan="9">No imports yet. When someone imports a file it will be listed here, ready to undo.</td></tr>';
-    rows.forEach(function (b) {
-      var st = String(b.status || '').toUpperCase();
-      var stText = st === 'APPLIED' ? 'Saved' : (st === 'UNDONE' ? 'Undone' : (st === 'DRY_RUN' ? 'Trial only' : rmcPlainName(st)));
-      var badge = st === 'APPLIED' ? 'badge-green' : (st === 'UNDONE' ? 'badge-grey' : 'badge-blue');
-      h += '<tr><td>' + esc(fmtDateTime(b.created_at)) + '</td><td>' + esc(RMC_KIND_LABEL[b.kind] || rmcPlainName(b.kind)) + '</td>' +
-        '<td>' + esc(showVal(b.created_by)) + '</td><td>' + fmtNum(b.row_count) + '</td><td>' + fmtNum(b.created_rows) + '</td><td>' + fmtNum(b.updated_rows) + '</td>' +
-        '<td><span class="badge ' + badge + '">' + esc(stText) + '</span></td>' +
-        '<td>' + (b.can_undo ? esc(fmtDateTime(b.expires_at)) : '—') + '</td>' +
-        '<td>' + (b.can_undo ? '<button class="btn btn-red btn-sm" onclick="rmcUndoImport(' + Number(b.batch_id) + ')">Undo</button>' : '') + '</td></tr>';
-    });
-    body.innerHTML = h + '</tbody></table></div>';
-    rmcSetMsg('rmc-imports-msg', '', true);
-    rmcLoadErrFiles();
-  });
-}
-function rmcUndoImport(batchId) {
-  if (isReadOnlyAdmin()) { rmcSetMsg('rmc-imports-msg', 'Read-only access: ask a full Admin to do this.', false); return; }
-  if (!window.confirm('Undo this whole import? Every row it added or changed goes back as it was.')) return;
-  rmcSetMsg('rmc-imports-msg', 'Undoing…', true);
-  rmcCall('rm_import_undo_any', { p_batch_id: batchId }, 'Undo import').then(function (d) {
-    if (!d.ok) { rmcSetMsg('rmc-imports-msg', d.message, false); return; }
-    var restored = Number(d.restored_rows) || 0, deleted = Number(d.deleted_rows) || 0;
-    var skipped = (d.skipped && d.skipped.length) ? ' ' + fmtNum(d.skipped.length) + ' row(s) were edited after the import and were left alone.' : '';
-    rmcSetMsg('rmc-imports-msg', d.already_undone ? 'This import was already undone.' :
-      'Undone. ' + fmtNum(restored) + ' row(s) put back, ' + fmtNum(deleted) + ' row(s) removed.' + skipped, true);
-    rmcLoadImports();
-    setTimeout(function () { rmcSetMsg('rmc-imports-msg', d.already_undone ? 'This import was already undone.' : 'Undone. ' + fmtNum(restored) + ' row(s) put back, ' + fmtNum(deleted) + ' row(s) removed.' + skipped, true); }, 700);
-  });
-}
-function rmcLoadErrFiles() {
-  rmcCall('rm_import_error_files', { p_limit: 10 }, 'Row-error files', { read: true }).then(function (d) {
-    var body = document.getElementById('rmc-errfiles-body');
-    if (!body) return;
-    if (!d.ok) { body.innerHTML = '<div class="rmc-hint">' + esc(d.message) + '</div>'; return; }
-    var rows = d.files || [];
-    var h = '<div class="table-wrap"><table><thead><tr><th>When</th><th>What</th><th>By</th><th>Rows checked</th><th>Rows with problems</th><th></th></tr></thead><tbody>';
-    if (!rows.length) h += '<tr class="empty-row"><td colspan="6">No problem files. Nothing to fix.</td></tr>';
-    rows.forEach(function (f) {
-      h += '<tr><td>' + esc(fmtDateTime(f.created_at)) + '</td><td>' + esc(RMC_KIND_LABEL[f.kind] || rmcPlainName(f.kind)) + '</td><td>' + esc(showVal(f.created_by)) + '</td>' +
-        '<td>' + fmtNum(f.total_rows) + '</td><td>' + fmtNum(f.error_rows) + '</td>' +
-        '<td><button class="btn btn-grey btn-sm" onclick="rmcDownloadErrFile(' + Number(f.file_id) + ')">Download</button> ' +
-        '<span class="ax-btns" role="group" aria-label="Other formats for this file"><button class="btn btn-grey btn-sm" onclick="rmcDownloadErrFile(' + Number(f.file_id) + ',\'pdf\')">PDF</button><button class="btn btn-grey btn-sm" onclick="rmcDownloadErrFile(' + Number(f.file_id) + ',\'xlsx\')">Excel</button><button class="btn btn-primary btn-sm" onclick="rmcDownloadErrFile(' + Number(f.file_id) + ',\'share\')">Share</button></span></td></tr>';
-    });
-    body.innerHTML = h + '</tbody></table></div>';
-  });
-}
 // v2.43: a cell that starts with = + - or @ would run as a formula in Excel; a leading apostrophe stops that.
-function rmcSafeCsv(text) {
-  // v2.44: guard formula starters (= + - @ tab CR) but leave plain numbers and phone numbers alone.
-  var out = '', i = 0, n = text.length;
-  while (true) {
-    var field = '', quoted = false, c;
-    if (text.charAt(i) === '"') {
-      quoted = true; i++;
-      while (i < n) {
-        c = text.charAt(i);
-        if (c === '"') { if (text.charAt(i + 1) === '"') { field += '"'; i += 2; continue; } i++; break; }
-        field += c; i++;
-      }
-    }
-    while (i < n) {
-      c = text.charAt(i);
-      if (c === ',' || c === '\n' || c === '\r') break;
-      field += c; i++;
-    }
-    if (/^[=+\-@\t\r]/.test(field) && !/^[+-]?[0-9][0-9 .,()\-]*$/.test(field)) { field = "'" + field; }
-    if (quoted || /[",\n\r]/.test(field)) { out += '"' + field.replace(/"/g, '""') + '"'; } else { out += field; }
-    if (i >= n) break;
-    c = text.charAt(i); out += c; i++;
-    if (c === '\r' && text.charAt(i) === '\n') { out += '\n'; i++; }
-  }
-  return out;
-}
-function rmcDownloadErrFile(fileId, mode) {
-  rmcCall('rm_import_error_file', { p_file_id: fileId }, 'Row-error file', { read: true }).then(function (d) {
-    if (!d.ok) { rmcSetMsg('rmc-imports-msg', d.message, false); return; }
-    if (mode) {   // v2.47: the same rows as the CSV (same guard, rmcSafeCsv) as PDF / Excel / Share
-      var tb = parseCSV(rmcSafeCsv(String(d.csv || ''))), hd = tb.shift() || []; tb.forEach(function (r) { while (hd.length < r.length) hd.push(''); });   // a row longer than the header keeps all its cells
-      axRun(mode, { title: 'Import problem rows (file ' + Number(fileId) + ')', filters: ['Row-error file number: ' + Number(fileId)], T: tb.length ? { head: hd, body: tb } : null, say: function (k, m) { rmcSetMsg('rmc-imports-msg', m, k === 'ok'); } });
-      return;
-    }
-    var blob = new Blob(['\ufeff' + rmcSafeCsv(String(d.csv || ''))], { type: 'text/csv;charset=utf-8;' });
-    var url = URL.createObjectURL(blob);
-    var a = document.createElement('a');
-    a.href = url; a.download = 'import_problem_rows_' + Number(fileId) + '.csv';
-    document.body.appendChild(a); a.click(); document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-    rmcSetMsg('rmc-imports-msg', 'Downloaded the file of problem rows.', true);
-  });
-}
 
 // ---- change history ----
-function rmcFieldsText(f, table) {
-  var keys = Object.keys(f || {});
-  if (!keys.length) return '—';
-  return keys.slice(0, 6).map(function (k) {
-    var c = f[k] || {};
-    var nm = rmcPlainName(k);
-    if (table === 'rm_vendor_bank' || /account|bank/i.test(k)) return esc(nm) + ': changed (hidden for safety)';
-    return esc(nm) + ': ' + esc(showVal(c.old)) + ' → ' + esc(showVal(c['new']));
-  }).join('<br>') + (keys.length > 6 ? '<br>and ' + fmtNum(keys.length - 6) + ' more' : '');
-}
-var rmcChangeIndex = {};
-function rmcLoadChanges() {
-  rmcSetMsg('rmc-changes-msg', 'Loading…', true);
-  var t = document.getElementById('rmc-ch-table').value;
-  var extra = { p_limit: 50 };
-  if (t) extra.p_table = t;
-  rmcCall('rm_change_recent', extra, 'Change history', { read: true }).then(function (d) {
-    var body = document.getElementById('rmc-changes-body');
-    if (!d.ok) { rmcSetMsg('rmc-changes-msg', d.message, false); return; }
-    var rows = d.changes || [];
-    rmcChangeIndex = {};
-    rows.forEach(function (c) { rmcChangeIndex[c.change_id] = c; });
-    var h = '<div class="table-wrap"><table><thead><tr><th>When</th><th>Who</th><th>Record</th><th>What happened</th><th>What changed</th><th></th></tr></thead><tbody>';
-    if (!rows.length) h += '<tr class="empty-row"><td colspan="6">No changes recorded yet. Changes will be listed here as people make them.</td></tr>';
-    rows.forEach(function (c) {
-      var act = String(c.action || '').toUpperCase();
-      var actText = act === 'INSERT' ? 'Added' : (act === 'UPDATE' ? 'Edited' : (act === 'DELETE' ? 'Removed' : '—'));
-      var undone = c.undone_at ? '<div class="rmc-hint">Undone ' + esc(fmtDateTime(c.undone_at)) + ' by ' + esc(showVal(c.undone_by)) + '</div>' : '';
-      h += '<tr><td>' + esc(fmtDateTime(c.changed_at)) + '</td><td>' + esc(showVal(c.changed_by)) + '</td>' +
-        '<td>' + esc(RMC_TABLE_LABEL[c.table_name] || rmcPlainName(c.table_name)) + ' no. ' + esc(String(c.row_id)) + '</td>' +
-        '<td>' + esc(actText) + '</td><td>' + rmcFieldsText(c.fields, c.table_name) + undone + '</td>' +
-        '<td>' + (c.can_undo && !c.undone_at ? '<button class="btn btn-red btn-sm" onclick="rmcUndoChange(' + Number(c.change_id) + ')">Undo</button>' : '') + '</td></tr>';
-    });
-    body.innerHTML = h + '</tbody></table></div>';
-    rmcSetMsg('rmc-changes-msg', '', true);
-  });
-}
-function rmcUndoChange(id) {
-  if (isReadOnlyAdmin()) { rmcSetMsg('rmc-changes-msg', 'Read-only access: ask a full Admin to do this.', false); return; }
-  var reason = (document.getElementById('rmc-ch-reason').value || '').trim();
-  if (reason.length < 5) { rmcSetMsg('rmc-changes-msg', 'Type a reason of at least 5 letters in the Reason box first.', false); return; }
-  var ch = rmcChangeIndex[id];
-  var what = ch ? ((RMC_TABLE_LABEL[ch.table_name] || rmcPlainName(ch.table_name)) + ' no. ' + String(ch.row_id) + ': ' +
-    Object.keys(ch.fields || {}).slice(0, 4).map(function (k) { return rmcPlainName(k); }).join(', ')) : 'this change';
-  if (!window.confirm('Undo this edit and put the old values back?\n\n' + what + '\nReason: ' + reason)) { return; }
-  rmcSetMsg('rmc-changes-msg', 'Undoing…', true);
-  rmcCall('rm_change_undo', { p_change_id: id, p_reason: reason }, 'Undo change').then(function (d) {
-    if (!d.ok) { rmcSetMsg('rmc-changes-msg', d.message, false); return; }
-    document.getElementById('rmc-ch-reason').value = '';
-    rmcLoadChanges();
-    setTimeout(function () { rmcSetMsg('rmc-changes-msg', 'Undone. The old values are back.', true); }, 700);
-  });
-}
 
 // ---- vendor scorecard ----
-function rmcLoadScore() {
-  rmcSetMsg('rmc-score-msg', 'Loading…', true);
-  var months = Number(document.getElementById('rmc-sc-months').value) || 12;
-  rmcCall('rm_vendor_scorecard', { p_months: months }, 'Vendor scorecard', { read: true }).then(function (d) {
-    var body = document.getElementById('rmc-score-body');
-    if (!d.ok) { rmcSetMsg('rmc-score-msg', d.message, false); return; }
-    var rows = d.vendors || [];
-    var h = '<div class="table-wrap"><table><thead><tr><th>Vendor</th><th>Orders</th><th>On time</th><th>Average wait</th><th>Rejected</th><th>Price vs last 3</th><th>Only-source items</th><th>Risk</th></tr></thead><tbody>';
-    if (!rows.length) h += '<tr class="empty-row"><td colspan="8">No vendor activity in this period. Pick a longer period and tap the button again.</td></tr>';
-    rows.forEach(function (v) {
-      var risk = String(v.risk || '').toUpperCase();
-      var rtext = risk === 'HIGH' ? 'High' : (risk === 'MEDIUM' ? 'Medium' : (risk === 'LOW' ? 'Low' : 'Not enough data'));
-      var rb = risk === 'HIGH' ? 'badge-red' : (risk === 'MEDIUM' ? 'badge-amber' : (risk === 'LOW' ? 'badge-green' : 'badge-grey'));
-      var drift = (v.price_drift_pct === null || v.price_drift_pct === undefined || isNaN(v.price_drift_pct)) ? '—' :
-        ((Number(v.price_drift_pct) > 0 ? '+' : '') + fmtPct(v.price_drift_pct, 1));
-      var lead = (v.avg_lead_days === null || v.avg_lead_days === undefined || isNaN(v.avg_lead_days)) ? '—' :
-        (Number(Number(v.avg_lead_days).toFixed(1)).toLocaleString('en-IN') + ' days');
-      var codes = (v.single_vendor_item_codes || []).slice(0, 10).map(showVal).join(', ');
-      h += '<tr><td><strong>' + esc(showVal(v.vendor_name)) + '</strong><div class="rmc-hint">' + esc(showVal(v.vendor_code)) + '</div></td>' +
-        '<td>' + fmtNum(v.pos) + '</td><td>' + (v.on_time_pct === null || v.on_time_pct === undefined ? 'Not enough data' : fmtPct(v.on_time_pct, 1)) + '</td>' +
-        '<td>' + esc(lead) + '</td><td>' + fmtPct(v.rejection_pct, 1) + '</td><td>' + esc(drift) + '</td>' +
-        '<td>' + fmtNum(v.single_vendor_items) + (codes ? '<div class="rmc-hint">' + esc(codes) + '</div>' : '') + '</td>' +
-        '<td><span class="badge ' + rb + '">' + esc(rtext) + '</span></td></tr>';
-    });
-    body.innerHTML = h + '</tbody></table></div>';
-    rmcSetMsg('rmc-score-msg', '', true);
-  });
-}
 
 
 // ══════════════ SECURITY AND DATA (v2.45, M21) ══════════════
 // Every section calls one existing database function (M21 parts A and F). The PIN is typed on the page.
 // Database wording is never shown: errors go through friendlyError() or the plain-word table below.
-var SEC_SECTIONS = ['today', 'audit', 'recon', 'export', 'backup', 'retention', 'signout', 'errors', 'rates', 'roles'];
-var secCurrent = 'today';
+var SEC_SECTIONS = ['audit', 'export', 'backup', 'retention', 'signout', 'errors', 'rates', 'roles'];   /* v2.91 (Lane 2): today, recon removed */
+var secCurrent = 'audit';
 var SEC_RO_MSG = 'The Safety and backups page is for Admin and Supervisor accounts. A read-only account cannot run checks or change anything.';
 var SEC_ERR = (function () {
   var o = {}; Object.keys(RMC_ERR).forEach(function (k) { o[k] = RMC_ERR[k]; });
@@ -7740,30 +7325,9 @@ var SEC_AUDIT_REASON = {
   PREV_HASH_MISMATCH: 'This record is no longer locked to the one before it.',
   ROW_CHANGED: 'This record was changed after it was written.'
 };
-var SEC_RECON_TITLE = {
-  RM_CACHE_VS_LEDGER: 'Stock number differs from the sum of its entries',
-  RM_VOID_NOT_BALANCED: 'A cancelled entry is not exactly cancelled by its balancing entry',
-  RM_NEGATIVE_STOCK: 'Items with negative stock',
-  PO_RECEIVED_OVER_ORDERED: 'Received more than was ordered',
-  PO_BILLED_OVER_RECEIVED: 'Billed for more than was received',
-  PO_BILLED_NOT_RECEIVED: 'Billed before anything was received',
-  PO_STATUS_VS_GRN: 'Order status does not match the goods received',
-  BILL_TOTAL_SECOND_METHOD: 'Bill total differs when worked out a second way',
-  FG_TRANSACTIONS_VS_BINS: 'Finished-goods entries differ from bin totals',
-  FG_HELD_OVER_ON_HAND: 'More finished goods held for orders than are in stock'
-};
-var SEC_TODAY_TITLE = {
-  stock_mismatches: 'Stock totals that disagree (last data check)',
-  open_warranty_claims: 'Open warranty claims',
-  overdue_follow_ups: 'Overdue customer follow-ups',
-  quotes_expiring: 'Quotes expiring in 7 days',
-  unpaid_bills_due: 'Unpaid purchase bills that are due',
-  expiring_batches: 'Stock batches expiring in 30 days',
-  procurement_due: 'Purchase requests due within 3 days'
-};
 var SEC_PLAIN_TABLE = {
   oms_audit_log: 'Audit trail', rm_ledger: 'Raw-material stock ledger', rm_item: 'Raw-material items', rm_vendor: 'Vendors',
-  crm_customer: 'Customers', crm_order: 'Customer orders', warranty_claim: 'Warranty claims', oms_sku_master: 'Finished-goods SKU master'
+  oms_sku_master: 'Finished-goods SKU master'
 };
 // the role table, copied from docs\ROLE_MATRIX_v1.md (sections A to D) by a script at build time
 var SEC_ROLES = [{"title":"A. Raw materials","rows":[["See stock, items, vendors, dashboard, inbox, search, morning brief","Y","Y","Y","Y","-","-"],["Add / edit item or vendor, aliases, UOM, vendor link, quotes","Y","Y","Y","Y","-","-"],["Receive stock, GRN, purchase voucher save/preview/drafts","Y","Y","Y","Y","-","-"],["Issue stock, adjust, record loss, return to vendor, count record/skip","Y","Y","Y","Y","-","-"],["Bulk imports (items, vendors, receive, opening balance, barcodes, vendor prices)","Y","Y","Y","Y","-","-"],["Merge items / merge vendors","Y","Y","Y","Y (v: destructive, code asks STORE only)","-","-"],["Create PO, PO match, share texts, procurement requests","Y","Y","Y","Y","-","-"],["PO status SENT","Y","Y","Y","Y","-","-"],["PO status other than SENT (approve, close, cancel)","Y","Y","Y","-","-","-"],["Void a ledger entry / void a receipt / void a purchase voucher","Y","Y","Y","-","-","-"],["Switch an item or vendor active/inactive","Y","Y","Y","-","-","-"],["Count adjust (post count variance), schedule counts","Y","Y","Y","-","-","-"],["Vendor bank details: set / reveal","Y","Y","Y","- (masked)","-","-"],["Vendor payment terms; GST ITC flag; lot tracking switch; BOM lines and bulk BOM; reorder bulk set","Y","Y","Y","-","-","-"],["Settings (company state code, thresholds)","Y","Y","Y","read only","-","-"],["Example data load / remove; speed probe","Y","Y","Y","-","-","-"],["Undo an import batch / change","own or any","own or any","own or any","own only","-","-"],["Recent change list for everyone","Y","Y","Y","-","-","-"],["GST ITC register / export, landed cost, price-jump list","Y","Y","Y","Y","-","-"],["NEW M21 part E: queue an alert/e-mail","Y","Y","Y","Y","-","-"],["NEW M21 part E: see outbound queue, set alert preferences, flip provider switch","Y","Y","Y","-","-","-"],["NEW M21 part E: create / view own / confirm / reject a bill-photo draft","Y","Y","Y","Y (own)","-","-"],["NEW M21 part E: view any bill-photo draft","Y","Y","Y","-","-","-"]]},{"title":"B. Customers","rows":[["List/search/view customers, dashboard, roll-ups, lookups","Y","Y","Y","-","Y","-"],["Create / update customer, contacts, addresses, tags, preferences","Y","Y","Y","-","Y","-"],["Interactions (add/update), consent set","Y","Y","Y","-","Y","-"],["Orders: add, assign customer, set status/returns","Y","Y","Y","-","Y","-"],["Bulk import customers / orders","Y","Y","Y","-","Y","-"],["Export customer rows (PII)","Y","Y","Y","-","Y (v)","-"],["Find duplicates","Y","Y","Y","-","Y","-"],["Set / clear restriction flag","Y","Y","Y","-","Y (v: code asks STORE; the founder rule Q-11 wants a PIN gate - see note 2)","-"],["Archive / reactivate customer","Y","Y","Y","-","-","-"],["Merge customers","Y","Y","Y","-","-","-"],["Erase one customer / bulk erase","Y","Y","Y","-","-","-"],["Rebuild customer stats","Y","Y","Y","-","-","-"]]},{"title":"C. Production (a staff account needs the \"production\" switch)","rows":[["View jobs, lists, summary, lookups","Y","Y","Y","by \"production\" switch","-","-"],["Create/update/cancel job, mark done (single/bulk), plan from forecast","Y","Y","Y","by \"production\" switch","-","-"],["Void a done entry","Y","Y","Y","-","-","-"]]},{"title":"D. Admin panel and phone floor (needs the shared Admin password as well)","rows":[["Login (PIN, optional TOTP, device code)","Y","Y","Y","Y","Y","Y"],["Pick / scan sessions (floor, by permission keys pick, sessions, move, stock)","Y","Y","Y","by switch","by switch","-"],["Void a scan session, void ledger entry, cancel pick lines","Y","Y","Y","by switch (v)","-","-"],["Stock adjust, bin management, SKU master edits, listings, GST bulk","Y SEC","Y SEC (v)","Y SEC (v)","-","-","-"],["Zero all inventory (typed confirm phrase)","Y SEC","(v)","(v)","-","-","-"],["Add employee, switch account on/off, rename, change role/permissions","Y SEC","-","-","-","-","-"],["Reset someone's PIN, unlock, TOTP reset","Y SEC","Y SEC (v: guard stops a Supervisor acting on Admin)","(v)","own TOTP only","own TOTP only","-"],["Rotate Admin secret, set Supervisor password","Y SEC","-","-","-","-","-"],["Read audit log","Y SEC","Y SEC","Y SEC","-","-","(v)"],["Block / unblock a device","Y","Y (v)","(v)","-","-","-"]]}];
@@ -7832,7 +7396,7 @@ function secShow(sec) {
   document.querySelectorAll('#sec-sub .preset-btn').forEach(function (b) { b.classList.toggle('active', b.getAttribute('data-sec') === sec); });
 }
 function secRefresh() {
-  var map = { today: secLoadToday, audit: secLoadAudit, recon: secLoadRecon, export: secLoadExport, backup: secLoadBackup, retention: secLoadRetention, errors: secLoadErrors };
+  var map = { audit: secLoadAudit, export: secLoadExport, backup: secLoadBackup, retention: secLoadRetention, errors: secLoadErrors };
   if (!map[secCurrent]) return;
   if (isReadOnlyAdmin()) { secSetMsg(secCurrent, SEC_RO_MSG, false); return; }
   var pinEl = document.getElementById('sec-pin');
@@ -7842,31 +7406,6 @@ function secRefresh() {
 function secKv(label, val) { return '<div><b>' + esc(val) + '</b><span>' + esc(label) + '</span></div>'; }
 
 // ---- 10. today ----
-function secLoadToday() {
-  secSetMsg('today', 'Loading…', true);
-  secCall('rm_today', {}, 'Today').then(function (d) {
-    if (!d.ok) { secSetMsg('today', d.message, false); return; }
-    var secs = d.sections || {};
-    var h = '<div class="rmc-kpi">' + secKv('Things needing attention', fmtNum(d.needs_attention_total)) + '</div><div class="rmc-kpi">';
-    Object.keys(SEC_TODAY_TITLE).forEach(function (k) {
-      var s = secs[k];
-      if (!s) return;
-      var val, sub = '';
-      if (s.error) { val = '—'; sub = 'Could not be worked out'; }
-      else if (s.count === null || s.count === undefined) { val = '—'; sub = k === 'stock_mismatches' ? 'No data check has been run yet' : ''; }
-      else { val = fmtNum(s.count); }
-      if (k === 'unpaid_bills_due' && !s.error) sub = fmtMoney(s.outstanding_total) + ' outstanding';
-      if (k === 'stock_mismatches' && !s.error && s.last_run_ist) sub = 'Last check ' + s.last_run_ist;
-      if (k === 'quotes_expiring' && !s.error && Number(s.past_date_still_open) > 0) sub = fmtNum(s.past_date_still_open) + ' already past their date';
-      if (k === 'expiring_batches' && !s.error && Number(s.already_expired) > 0) sub = fmtNum(s.already_expired) + ' already expired';
-      if (k === 'procurement_due' && !s.error && Number(s.already_late) > 0) sub = fmtNum(s.already_late) + ' already late';
-      h += '<div><b>' + esc(val) + '</b><span>' + esc(SEC_TODAY_TITLE[k]) + '</span>' + (sub ? '<div class="rmc-hint">' + esc(sub) + '</div>' : '') + '</div>';
-    });
-    h += '</div><div class="rmc-hint">As of ' + esc(showVal(d.as_of_ist)) + '. Counts come from the database; open the phone app to act on them.</div>';
-    secBody('today').innerHTML = h;
-    secSetMsg('today', '', true);
-  });
-}
 
 // ---- 1. audit trail ----
 var secAuditRunning = false;
@@ -7928,33 +7467,6 @@ function secCopyHead() {
 }
 
 // ---- 2. data checks ----
-function secLoadRecon() {
-  secSetMsg('recon', 'Running the checks…', true);
-  secCall('rm_reconcile', {}, 'Data checks', { timeout: 60000 }).then(function (d) {
-    if (!d.ok) { secSetMsg('recon', d.message, false); return; }
-    var checks = d.checks || [];
-    var h = '<div class="rmc-kpi">' + secKv('Totals that disagree', fmtNum(d.mismatches)) + secKv('Checks run', fmtNum(checks.length)) + '</div>';
-    h += '<div class="table-wrap"><table><thead><tr><th>Check</th><th>How serious</th><th>Found</th><th>Examples</th></tr></thead><tbody>';
-    if (!checks.length) h += '<tr class="empty-row"><td colspan="4">No results came back. Tap the button again in a minute. If it stays empty, tell the owner.</td></tr>';
-    checks.forEach(function (c) {
-      var sev = String(c.severity || '').toUpperCase();
-      var badge = sev === 'HIGH' ? 'badge-red' : (sev === 'MEDIUM' ? 'badge-amber' : 'badge-grey');
-      var st = sev === 'HIGH' ? 'High' : (sev === 'MEDIUM' ? 'Medium' : (sev === 'LOW' ? 'Low' : '—'));
-      var n = Number(c.count) || 0;
-      var ex = (c.rows || []).slice(0, 3).map(function (r) {
-        return Object.keys(r || {}).slice(0, 4).map(function (k) { return rmcPlainName(k) + ' ' + showVal(r[k]); }).join(', ');
-      });
-      h += '<tr><td><strong>' + esc(SEC_RECON_TITLE[c.code] || rmcPlainName(c.code)) + '</strong></td><td><span class="badge ' + badge + '">' + esc(st) + '</span></td>' +
-        '<td>' + fmtNum(n) + '</td><td>' + (n === 0 ? 'All good.' : (ex.length ? esc(ex.join('; ')) : '—')) + '</td></tr>';
-    });
-    h += '</tbody></table></div>';
-    var sk = d.skipped || [];
-    if (sk.length) h += '<div class="rmc-hint">Not checked here (the needed data is not set up yet): ' + esc(sk.map(function (x) { return SEC_RECON_TITLE[x] || rmcPlainName(x); }).join(', ')) + '.</div>';
-    h += '<div class="rmc-hint">Nothing was corrected. This run has been recorded.</div>';
-    secBody('recon').innerHTML = h;
-    secSetMsg('recon', '', true);
-  });
-}
 
 // ---- 3. export everything ----
 var secExportList = [];
@@ -13601,7 +13113,6 @@ var E2_PURPOSE = {
     dashboard: 'Next: tap Show results for the latest figures. Nothing showing yet? Wait a moment, then tap Show results.',   /* ADM-v267: Refresh lives in the closed More fold */
     audit: 'Next: tap Show results. To narrow the list, open More filters and export. Nothing listed? Widen the dates.',
     sessions: 'Next: open a batch to look inside it. Nothing listed means no batch scan was started yet.',
-    rmctl: 'Next: enter your PIN, then open a section. Nothing changes until you save.',
     devices: 'Next: give a phone a name, or block it. Nothing listed means no phone has signed in yet.',
     employees: 'Next: search for a person and open them to change their access. To add someone new, open More tools.',
     sku: 'Next: type a product code, Amazon product number or name. Nothing found? Check the spelling or open More filters and tools.',
@@ -13791,7 +13302,7 @@ if (document.readyState === 'loading') document.addEventListener('DOMContentLoad
 var A58 = { armed: false, need: { out: null, neg: null, batch: null, lock: null }, busy: false, t: 0 };
 (function () {
   /* A-01: a short word under each icon (shown at 900 px and below by the CSS) */
-  var M = { dashboard: 'Overview', audit: 'Activity', employees: 'People', sku: 'Stock', rmctl: 'Purchasing', secdata: 'Safety', settings: 'Settings' };
+  var M = { dashboard: 'Overview', audit: 'Activity', employees: 'People', sku: 'Stock', secdata: 'Safety', settings: 'Settings' };
   document.querySelectorAll('.nav-item').forEach(function (n) {
     var k = n.getAttribute('data-page');
     if (M[k] && !n.querySelector('.nav-short')) { var sp = document.createElement('span'); sp.className = 'nav-short'; sp.textContent = M[k]; n.appendChild(sp); }
@@ -14320,12 +13831,11 @@ function a66Strip(root) {
     var fb = document.getElementById('sec-more-det'), dv = root.querySelectorAll('details.a65-dev');
     if (fb) { for (i = 0; i < dv.length; i++) { if (dv[i].parentNode !== fb) fb.appendChild(dv[i]); } }
   }
-  if (k === 'rmctl') {
-    var el = document.getElementById('rmc-sub');
+  if (false) {   /* v2.91: the purchasing page is deleted */
+    var el = null;
     if (el) { if (!el.getAttribute('data-a66')) { el.setAttribute('data-a66', '1'); el.addEventListener('scroll', function () { a66PillFade(el); }); } a66PillFade(el); }
   }
 }
-window.addEventListener('resize', function () { var el = document.getElementById('rmc-sub'); if (el) a66PillFade(el); });
 
 /* ADM-v267 ===== v2.67 helpers ===== */
 function a67Strip(root) {
@@ -15008,17 +14518,11 @@ var A89_IA = [
     { id: 'moves', label: 'Stock movements', page: 'reports', desc: 'Every time stock came in, went out or moved.' },
     { id: 'batches', label: 'Batch scans to check', page: 'sessions', desc: 'Scan batches closed on the phones. Look inside, accept or reverse a batch.' } ] },
   { id: 'buying', label: 'Buying', tabs: [
-    { id: 'settings', label: 'Settings', page: 'rmctl', rmc: 'settings', desc: 'GST state code, price-jump alert, when a price counts as old, and how many items to count each week. Type your PIN first.' },
-    { id: 'dq', label: 'Data quality', page: 'rmctl', rmc: 'dq', desc: 'Duplicates and missing details in items and vendors. Fix them in the phone app. Type your PIN first.' },
-    { id: 'changes', label: 'Change history', page: 'rmctl', rmc: 'changes', desc: 'Recent edits to items and vendors. Undo an edit if nobody changed it since. Type your PIN first.' },
-    { id: 'score', label: 'Vendor scores', page: 'rmctl', rmc: 'score', desc: 'How often each vendor delivered on time. Type your PIN first.' },
-    { id: 'imports', label: 'Undo an import', page: 'rmctl', rmc: 'imports', hidden: true, desc: 'Undo a raw-material import made in the last 24 hours. Opened from Records & safety > Rare tools. Type your PIN first.' } ] },
+    { id: 'rm', label: 'Raw materials', page: 'a90rm', desc: 'Raw materials are kept in the phone app: stock in, stock out, fix a count, suppliers and reorder levels.' } ] },
   { id: 'safety', label: 'Records & safety', tabs: [
     { id: 'activity', label: 'Activity record', page: 'audit', desc: 'The permanent record of every action, newest first. Nothing in it can be changed.' },
     { id: 'checks', label: 'Checks', subs: [
       { id: 'health', label: 'Is everything working?', page: 'syscheck', desc: 'One button tests the live system and says in plain words what works and what does not.' },
-      { id: 'today', label: 'Today', page: 'secdata', sec: 'today', desc: 'Counts of what needs attention today. Read only. Type your PIN first.' },
-      { id: 'recon', label: 'Data checks', page: 'secdata', sec: 'recon', desc: 'Compares totals that must agree, for example stock against its entries. Reports only. Type your PIN first.' },
       { id: 'chain', label: 'Record not altered', page: 'secdata', sec: 'audit', desc: 'Checks that no saved record was changed afterwards. Type your PIN first.' },
       { id: 'errors', label: 'App error log', page: 'secdata', sec: 'errors', desc: 'Problems the phone app noticed by itself. Show this to whoever supports the system. Type your PIN first.' } ] },
     { id: 'backup', label: 'Backups and export', subs: [
@@ -15027,6 +14531,9 @@ var A89_IA = [
       { id: 'retention', label: 'How long data is kept', page: 'secdata', sec: 'retention', desc: 'What is stored and how old it is. Deletes nothing. Type your PIN first.' } ] },
     { id: 'signout', label: 'Sign out everywhere', page: 'secdata', sec: 'signout', desc: 'Sign a person out of every phone and computer at once, for example when a phone is lost.' },
     { id: 'rare', label: 'Rare tools', page: 'a89rare', desc: 'Tools needed once in a long while. Each one stays hidden until you type its name, so it cannot be pressed by mistake.' } ] },
+  { id: 'integrations', label: 'Shops and couriers', adminOnly: true, tabs: [   /* A92 */
+    { id: 'shopify', label: 'Shopify', page: 'a92shop', desc: 'Your Shopify store: connection, switches and Shopify items not linked to an app SKU yet. Type your PIN when asked.' },
+    { id: 'couriers', label: 'Couriers (Shiprocket)', page: 'a92ship', desc: 'Courier labels by Shiprocket: connection, store e-mail, switches and recent shipments. Each booking spends Shiprocket wallet money.' } ] },
   { id: 'ceo', label: 'CEO Brief', adminOnly: true, tabs: [   /* CEO52 */
     { id: 'brief', label: 'CEO Brief', page: 'a89ceo', desc: 'What happened, what is broken and what needs you. Approve or Reject each item. Type your PIN when asked.' } ] },
   { id: 'company', label: 'Company settings', adminOnly: true, tabs: [
@@ -15059,14 +14566,12 @@ function a89Resolve(id) {
 function a89LeafForPage(name) {
   if (A89.leaf && A89.leaf.page === name) {
     if (name === 'secdata') { try { if (A89.leaf.sec === secCurrent) return A89.leaf; } catch (e) { return A89.leaf; } }
-    else if (name === 'rmctl') { try { if (A89.leaf.rmc === rmcCurrent) return A89.leaf; } catch (e) { return A89.leaf; } }
     else return A89.leaf;
   }
   var best = null;
   for (var i = 0; i < A89_LIST.length; i++) {
     var lf = A89_LIST[i]; if (lf.page !== name) continue;
     if (name === 'secdata') { try { if (lf.sec === secCurrent) return lf; } catch (e) {} }
-    else if (name === 'rmctl') { try { if (lf.rmc === rmcCurrent) return lf; } catch (e) {} }
     if (!best && !lf.hidden) best = lf;
   }
   return best;
@@ -15075,6 +14580,7 @@ function a89Go(id) {
   var lf = a89Resolve(id); if (!lf) return;
   if (lf.sid === 'company' && a89IsSup()) return;
   if (lf.sid === 'ceo' && a89IsSup()) return;   /* CEO52: Admin only */
+  if (lf.sid === 'integrations' && a89IsSup()) return;   /* A92: Admin only */
   if (lf.id === 'buying.imports' && !A89.rmcImports) return;   /* A89b A3: only through Rare tools */
   A89.pending = lf;
   switchPage(lf.page);
@@ -15084,14 +14590,12 @@ function a89After(name) {
   var lf = fromTab ? A89.pending : a89LeafForPage(name);
   A89.pending = null;
   if (name === 'secdata' && !fromTab) { var a90n = (typeof a90Neutral === 'function') ? a90Neutral() : ['today', 'safety.checks.today']; try { secShow(a90n[0]); } catch (e) {} lf = A89_LEAVES[a90n[1]]; }   /* A89b A4 + A90: lean has no Today list */
-  if (name === 'rmctl' && !A89.rmcImports) { try { if (rmcCurrent === 'imports') { rmcShow('settings'); lf = A89_LEAVES['buying.settings']; } } catch (e) {} }
   var prev = A89.leaf;
   if (prev && prev.page === 'a89rare' && name !== 'a89rare') a89RareReset();
   if (prev && prev.id === 'buying.imports' && !(lf && lf.id === 'buying.imports')) A89.rmcImports = false;
   A89.leaf = lf;
   if (lf) {
     if (fromTab && lf.sec) { try { secShow(lf.sec); } catch (e) {} }
-    if (fromTab && lf.rmc) { try { rmcShow(lf.rmc); } catch (e) {} }
     A89.last[lf.sid] = lf.id; if (lf.uid) A89.last[lf.sid + '.' + lf.tid] = lf.id;
     if (lf.part === 'security') { try { loadSupervisorPasswordStatus(); } catch (e) {} }
   }
@@ -15099,6 +14603,7 @@ function a89After(name) {
   if (name === 'a89modules') a89ModulesPaint();
   if (name === 'a89rare') a89RareInit();
   if (name === 'a89ceo') ceo52Init(); else if (prev && prev.page === 'a89ceo') ceo52Leave();   /* CEO52 */
+  if (name === 'a92shop') a92ShopInit(); else if (name === 'a92ship') a92ShipInit();   /* A92 */
   try { document.body.setAttribute('data-a89leaf', lf ? lf.id : ''); document.body.setAttribute('data-a89part', lf && lf.part ? lf.part : ''); } catch (e) {}
   a89Paint();
 }
@@ -15121,7 +14626,7 @@ function a89Paint() {
     var k = n.getAttribute('data-a89'), on = !!lf && lf.sid === k;
     n.classList.toggle('active', on);
     if (on) n.setAttribute('aria-current', 'page'); else n.removeAttribute('aria-current');
-    n.style.display = ((k === 'company' || k === 'ceo') && sup) ? 'none' : '';   /* CEO52 */
+    n.style.display = ((k === 'company' || k === 'ceo' || k === 'integrations') && sup) ? 'none' : '';   /* CEO52, A92 */
   });
   document.querySelectorAll('.a53-tabs, .a89-head').forEach(function (b) { if (b.parentNode) b.parentNode.removeChild(b); });
   document.querySelectorAll('.page.a89-on').forEach(function (p) { p.classList.remove('a89-on'); });
@@ -15147,7 +14652,6 @@ function a89RareGo(k) {
   var i = document.getElementById('a89-rare-' + k + '-in');
   if (!a89RareOk(k, i ? i.value : '')) return false;
   if (k === 'bulk') { var body = document.getElementById('a89-rare-body-bulk'); if (body) body.hidden = false; return true; }
-  if (k === 'undo') { A89.rmcImports = true; a89Go('buying.imports'); return true; }
   return false;
 }
 /* ---------- Modules (read only) ---------- */
@@ -15531,8 +15035,6 @@ function a89bHomeGo(g) {
     var o = window[f];
     if (typeof o === 'function') window[f] = function () { var r = o.apply(this, arguments); try { a89bAddBtn(); a89bHome(); a89bLoadPhones(); } catch (e) {} return r; };
   });
-  var oRmc = window.rmcShow;   /* A3: Undo an import only after its name was typed in Rare tools */
-  if (typeof oRmc === 'function') window.rmcShow = function (k) { if (k === 'imports' && !A89.rmcImports) k = 'settings'; return oRmc.call(this, k); };
   var oSw = window.switchPage;   /* A5 */
   if (typeof oSw === 'function') window.switchPage = function (name) {
     var bg = document.getElementById('costa-pin-bg'), was = !!(bg && bg.classList.contains('active')), from = '';
@@ -15712,7 +15214,7 @@ if (typeof module !== 'undefined') module.exports = { ceo52Html: ceo52Html, ceo5
    settings, CEO Brief, Inventory, Raw materials (the lean one, in the phone app), Records & safety.
    How to switch it on before the default flips: open the panel once with ?lean_v25=1 (remembered in this browser); ?lean_v25=0 switches it off.
    Nothing here sends anything to the database. */
-var A90_LEAN_DEFAULT = false;
+var A90_LEAN_DEFAULT = true;   /* v2.91 (Lane 2): lean is permanent - the removed pages are deleted, not hidden */
 var A90 = { lean: false, applied: false };
 var A90_GONE_PERMS = ['customers', 'customer_data_erase_export'];
 var A90_GONE_MODS = ['customers'];
@@ -15757,7 +15259,7 @@ function a90ApplyDom() {
   try { if (typeof secRenderRoles === 'function') secRenderRoles(); } catch (e) {}
 }
 (function () {
-  try { A90.lean = a90ReadFlag(location.search, localStorage, A90_LEAN_DEFAULT); } catch (e) { A90.lean = A90_LEAN_DEFAULT; }
+  A90.lean = true;   /* v2.91: ?lean_v25=0 no longer switches it off */
   if (A90.lean) {
     try { a90LeanModel(); a90ApplyDom(); A90.applied = true; } catch (e) { try { console.warn('a90', e); } catch (x) {} }
     var oSw = window.switchPage;   /* an old link to the purchasing page lands on the Raw materials page */
@@ -15765,6 +15267,230 @@ function a90ApplyDom() {
   }
   try { var act = document.querySelector('.page.active'); if (act) a89After(String(act.id || '').replace(/^page-/, '')); } catch (e) {}
 })();
+</script>
+<script id="a92-js">
+/* A92 v1.1 (v2.92a: courier statuses and counts in plain words) - A92 (v25 Lane 5.2 + 5.4 Admin): "Shops and couriers" - Shopify page and Couriers (Shiprocket) page. Admin only.
+   Talks to the database ONLY through the existing PIN-checked app functions:
+     shopify_status, shopify_connect, shopify_settings, shopify_map_sku, shopify_staff_done,
+     shiprocket_status, shiprocket_connect, shiprocket_settings.
+   The PIN is typed for each action (a59AskPin), used for that action only, and not kept. Secrets: only their NAMES are typed here;
+   the founder pastes the values in Supabase himself. Every switch-ON asks "this turns on a customer-facing feature - founder only" first. */
+var A92 = { ws: 'ARTZFOLIO', shop: null, ship: null, busy: false, shopMsg: null, shipMsg: null };   /* the company of this Admin Panel (one company until Lane 4) */
+var A92_FOUNDER = 'This turns on a customer-facing feature - founder only.';
+var A92_SW = {
+  shop: [['enabled', 'Connection on', 'Lets the app talk to your Shopify store.'],
+         ['orders_in', 'Orders in', 'New Shopify orders come into the app as orders to pick.'],
+         ['stock_push', 'Stock to Shopify', 'The app sets the stock number your customers see on Shopify.'],
+         ['import_test_orders', 'Import Shopify test orders', 'Test orders also come in (for trying it out).']],
+  ship: [['enabled', 'Courier labels on', 'Staff can book a courier for a packed order. Each booking takes money from your Shiprocket wallet.'],
+         ['auto_create', 'Book automatically', 'Packed orders in the queue are booked by themselves every 15 minutes. This spends Shiprocket wallet money.'],
+         ['auto_pickup', 'Ask for pickup', 'Shiprocket is asked to send the courier after each label.'],
+         ['track_on', 'Tracking', 'The app checks where each parcel is, every 2 hours.']]
+};
+var A92_SHIP_WORDS = { QUEUED: 'Waiting to be booked', NEEDS_ADDRESS: 'Needs the delivery address', CREATED: 'Booked - waiting for the AWB', AWB_ASSIGNED: 'AWB ready - label next',
+  LABEL_READY: 'Label ready', PICKUP_REQUESTED: 'Pickup asked', FAILED: 'Did not work', CANCELLED: 'Cancelled' };
+var A92_TRACK_WORDS = { 'IN TRANSIT': 'On the way', DELIVERED: 'Delivered', 'OUT FOR DELIVERY': 'Out for delivery', 'PICKED UP': 'Picked up', 'RTO INITIATED': 'Coming back to you', 'RTO DELIVERED': 'Came back to you',
+  CANCELED: 'Cancelled', CANCELLED: 'Cancelled', LOST: 'Lost', 'PICKUP SCHEDULED': 'Pickup booked', 'UNDELIVERED': 'Not delivered yet' };
+function a92Word(map, v) { if (v == null || v === '') return ''; var k = String(v).toUpperCase(); return map[k] || (k.charAt(0) + k.slice(1).toLowerCase().replace(/_/g, ' ')); }
+var A92_NAME_RE = { shop: /^SHOPIFY_[A-Z0-9_]{1,60}$/, ship: /^SHIPROCKET_[A-Z0-9_]{1,60}$/ };
+function a92Esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+function a92When(t) {
+  if (!t) return 'never'; var d = new Date(t); if (isNaN(d.getTime())) return 'never';
+  function z(n) { return (n < 10 ? '0' : '') + n; }
+  return d.getFullYear() + '-' + z(d.getMonth() + 1) + '-' + z(d.getDate()) + ' ' + z(d.getHours()) + ':' + z(d.getMinutes());
+}
+function a92Me() { return (typeof getAdminPanelEmployeeCode === 'function' ? (getAdminPanelEmployeeCode() || '') : '').trim().toUpperCase(); }
+/* a NAME is SHOPIFY_... / SHIPROCKET_..., never the cron secret, never something that looks like a key */
+function a92NameOk(kind, v) {
+  v = String(v || '').trim();
+  if (!v) return false;
+  if (/^(shp|eyJ)|@/.test(v) || v.length > 70) return false;
+  if (v === 'SHOPIFY_CRON_SECRET' || v === 'SHIPROCKET_CRON_SECRET') return false;
+  return A92_NAME_RE[kind].test(v);
+}
+function a92ConfirmText(kind, key) {
+  var row = (A92_SW[kind] || []).filter(function (r) { return r[0] === key; })[0];
+  var t = A92_FOUNDER + ' Only the founder decides this.' + '\n\n' + (row ? row[1] + ': ' + row[2] : key);
+  if (kind === 'ship') t += '\n\nEvery courier booking (AWB) takes money from your Shiprocket wallet.';
+  return t + '\n\nPress OK only if the founder said yes.';
+}
+/* pure: switches */
+function a92Switches(kind, d) {
+  return '<div class="a92-sws">' + A92_SW[kind].map(function (r) {
+    var on = !!(d && d[r[0]]);
+    return '<div class="a92-sw"><div><strong>' + a92Esc(r[1]) + '</strong> <span class="a92-chip' + (on ? ' a92-on' : '') + '">' + (on ? 'ON' : 'OFF') + '</span>' +
+           '<div class="a92-meta">' + a92Esc(r[2]) + '</div></div>' +
+           '<button type="button" class="btn ' + (on ? 'btn-grey' : 'btn-primary') + '" data-a92-act="switch" data-a92-kind="' + kind + '" data-a92-key="' + r[0] + '" data-a92-on="' + (on ? '0' : '1') + '">' +
+           (on ? 'Switch off' : 'Switch on') + '</button></div>';
+  }).join('') + '</div>';
+}
+function a92NameField(id, label, hint) {
+  return '<label class="a92-f" for="' + id + '">' + a92Esc(label) + '<input type="text" id="' + id + '" autocomplete="off" spellcheck="false" placeholder="' + a92Esc(hint) + '"></label>';
+}
+function a92SecretNote() {
+  return '<p class="a92-note">Type only the <strong>NAME</strong> of each secret, never the value. The founder pastes the values himself in Supabase &gt; Edge Functions &gt; Secrets.</p>';
+}
+/* pure: Shopify page */
+function a92ShopConnectForm(again) {
+  return '<div class="a92-card"><h3>' + (again ? 'Change the connection' : 'Connect your Shopify store') + '</h3>' +
+    (again ? '<p class="a92-warn">Saving this switches everything OFF again.</p>' : '') + a92SecretNote() +
+    '<label class="a92-f" for="a92-shop-dom">Store address<input type="text" id="a92-shop-dom" placeholder="your-store.myshopify.com" autocomplete="off"></label>' +
+    '<label class="a92-f" for="a92-shop-mode">How the app signs in<select id="a92-shop-mode"><option value="CLIENT_CREDENTIALS">Dev Dashboard app (client ID + secret)</option><option value="STATIC_TOKEN">Older admin app (access token)</option></select></label>' +
+    a92NameField('a92-shop-cid', 'Client ID secret NAME', 'SHOPIFY_ARTZFOLIO_CLIENT_ID') +
+    a92NameField('a92-shop-csec', 'Client secret NAME', 'SHOPIFY_ARTZFOLIO_CLIENT_SECRET') +
+    a92NameField('a92-shop-tok', 'Access token NAME (older admin app only)', 'SHOPIFY_ARTZFOLIO_ADMIN_TOKEN') +
+    '<button type="button" class="btn btn-primary" data-a92-act="connect" data-a92-kind="shop">Save the connection</button></div>';
+}
+function a92ShopHtml(d) {
+  if (!d) return '<p class="a92-empty">Press <strong>Show</strong> and type your PIN.</p>';
+  if (!d.connected) return '<p class="a92-meta">No Shopify store is connected. Everything is OFF.</p>' + a92ShopConnectForm(false);
+  var h = '<div class="a92-card"><h3>Store</h3><div class="a92-kv"><span>Store</span><b>' + a92Esc(d.shop_domain) + '</b>' +
+    '<span>Sign-in</span><b>' + a92Esc(d.auth_mode === 'STATIC_TOKEN' ? 'Older admin app (access token)' : 'Dev Dashboard app (client ID + secret)') + '</b>' +
+    '<span>Last order check</span><b>' + a92Esc(a92When(d.last_poll_at)) + '</b><span>Last order message from Shopify</span><b>' + a92Esc(a92When(d.last_webhook_at)) + '</b>' +
+    '<span>Last stock sent</span><b>' + a92Esc(a92When(d.last_stock_push_at)) + '</b><span>Shopify location (for stock)</span><b>' + a92Esc(d.location_gid || 'not set') + '</b></div>' +
+    (d.last_error ? '<p class="a92-warn">Last problem: ' + a92Esc(d.last_error) + '</p>' : '') + '</div>';
+  h += '<div class="a92-card"><h3>Switches</h3>' + a92Switches('shop', d) +
+    '<label class="a92-f" for="a92-shop-loc">Shopify location (needed before Stock to Shopify)<input type="text" id="a92-shop-loc" placeholder="gid://shopify/Location/123456" value="' + a92Esc(d.location_gid || '') + '"></label>' +
+    '<button type="button" class="btn btn-grey" data-a92-act="location">Save the location</button></div>';
+  var u = d.unknown || [];
+  h += '<div class="a92-card"><h3>Unknown SKUs <span class="a92-n">' + u.length + '</span></h3>';
+  if (!u.length) h += '<p class="a92-empty">Every Shopify item is linked to an app SKU.</p>';
+  else h += '<p class="a92-meta">Orders with these items wait until you link each one to the app SKU. Then they come in by themselves.</p><table class="a92-t"><thead><tr><th>Shopify item</th><th>Orders waiting</th><th>App SKU</th><th></th></tr></thead><tbody>' +
+    u.map(function (r, i) {
+      return '<tr><td>' + a92Esc(r.title || '') + '<div class="a92-meta">' + a92Esc(r.shopify_sku || ('variant ' + (r.variant_id || '?'))) + '</div></td><td>' + a92Esc(r.orders_waiting || 0) + '</td>' +
+        '<td><input type="text" class="a92-sku" id="a92-sku-' + i + '" aria-label="App SKU for ' + a92Esc(r.sku_key) + '" placeholder="APP-SKU"></td>' +
+        '<td><button type="button" class="btn btn-primary" data-a92-act="link" data-a92-key="' + a92Esc(r.sku_key) + '" data-a92-i="' + i + '">Link</button></td></tr>';
+    }).join('') + '</tbody></table>';
+  h += '</div>';
+  var s = d.staff || [];
+  if (s.length) h += '<div class="a92-card"><h3>Changed in Shopify after import <span class="a92-n">' + s.length + '</span></h3>' + s.map(function (r) {
+    return '<div class="a92-row"><div><strong>' + a92Esc(r.order_name) + '</strong> ' + a92Esc(r.invoice_no || '') + '<div class="a92-meta">' + a92Esc(r.note) + '</div></div>' +
+      '<button type="button" class="btn btn-grey" data-a92-act="done" data-a92-key="' + a92Esc(r.shop_order_id) + '">Mark done</button></div>';
+  }).join('') + '</div>';
+  var ev = d.events || [];
+  if (ev.length) h += '<details class="a92-card"><summary>Last events (' + ev.length + ')</summary>' + ev.map(function (e) {
+    return '<div class="a92-meta">' + a92Esc(a92When(e.at)) + ' - ' + a92Esc(e.via) + ' - ' + a92Esc(e.result) + (e.message ? ': ' + a92Esc(e.message) : '') + '</div>';
+  }).join('') + '</details>';
+  return h + '<details class="a92-card"><summary>Change the connection</summary>' + a92ShopConnectForm(true) + '</details>';
+}
+/* pure: Couriers page */
+function a92ShipConnectForm(again) {
+  return '<div class="a92-card"><h3>' + (again ? 'Change the connection' : 'Connect Shiprocket') + '</h3>' +
+    (again ? '<p class="a92-warn">Saving this switches everything OFF again. Use it also to change the store e-mail.</p>' : '') + a92SecretNote() +
+    a92NameField('a92-ship-em', 'API user e-mail secret NAME', 'SHIPROCKET_API_EMAIL') +
+    a92NameField('a92-ship-pw', 'API user password secret NAME', 'SHIPROCKET_API_PASSWORD') +
+    '<label class="a92-f" for="a92-ship-pick">Pickup address nickname (exactly as in Shiprocket)<input type="text" id="a92-ship-pick" placeholder="Main Warehouse" autocomplete="off"></label>' +
+    '<label class="a92-f" for="a92-ship-store">Store e-mail (used when a customer gave none; a setting, not a secret)<input type="email" id="a92-ship-store" placeholder="dispatch@yourshop.in" autocomplete="off"></label>' +
+    '<button type="button" class="btn btn-primary" data-a92-act="connect" data-a92-kind="ship">Save the connection</button></div>';
+}
+function a92ShipHtml(d) {
+  var warn = '<p class="a92-money"><strong>Money:</strong> every courier booking (AWB) takes money from your Shiprocket wallet. A cancelled order must be cancelled in the Shiprocket panel by hand to get the money back.</p>';
+  if (!d) return warn + '<p class="a92-empty">Press <strong>Show</strong> and type your PIN.</p>';
+  if (!d.connected) return warn + '<p class="a92-meta">Shiprocket is not connected. Everything is OFF.</p>' + a92ShipConnectForm(false);
+  var c = d.counts || {};
+  var h = warn + '<div class="a92-card"><h3>Shiprocket</h3><div class="a92-kv"><span>Pickup address</span><b>' + a92Esc(d.pickup_location) + '</b>' +
+    '<span>Last booking run</span><b>' + a92Esc(a92When(d.last_run_at)) + '</b><span>Last tracking check</span><b>' + a92Esc(a92When(d.last_track_at)) + '</b>' +
+    '<span>Shipments</span><b>' + a92Esc(Object.keys(c).map(function (k) { return a92Word(A92_SHIP_WORDS, k) + ': ' + c[k]; }).join(', ') || 'none yet') + '</b></div>' +
+    (d.last_error ? '<p class="a92-warn">Last problem: ' + a92Esc(d.last_error) + '</p>' : '') + '</div>';
+  h += '<div class="a92-card"><h3>Switches</h3>' + a92Switches('ship', d) + '</div>';
+  var r = d.recent || [];
+  h += '<div class="a92-card"><h3>Recent shipments <span class="a92-n">' + r.length + '</span></h3>';
+  if (!r.length) h += '<p class="a92-empty">No shipment yet.</p>';
+  else h += '<p class="a92-meta">Read only. The label link opens the courier label (it shows the customer address).</p><table class="a92-t"><thead><tr><th>Invoice</th><th>Status</th><th>AWB</th><th>Courier</th><th>Tracking</th><th>Label</th></tr></thead><tbody>' +
+    r.map(function (x) {
+      var lab = x.label_url && /^https:[/][/]/.test(x.label_url) ? '<a href="' + a92Esc(x.label_url) + '" target="_blank" rel="noopener noreferrer">Open label</a>' : '';
+      return '<tr><td>' + a92Esc(x.invoice_no) + '</td><td>' + a92Esc(a92Word(A92_SHIP_WORDS, x.status)) + (x.error ? '<div class="a92-meta">' + a92Esc(x.error) + '</div>' : '') + '</td><td>' + a92Esc(x.awb || '') + '</td><td>' +
+        a92Esc(x.courier || '') + '</td><td>' + a92Esc(a92Word(A92_TRACK_WORDS, x.track_status)) + '</td><td>' + lab + '</td></tr>';
+    }).join('') + '</tbody></table>';
+  return h + '</div><details class="a92-card"><summary>Change the connection (and the store e-mail)</summary>' + a92ShipConnectForm(true) + '</details>';
+}
+function a92Paint(kind) {
+  var b = document.getElementById(kind === 'shop' ? 'a92-shop-body' : 'a92-ship-body'); if (b) b.innerHTML = kind === 'shop' ? a92ShopHtml(A92.shop) : a92ShipHtml(A92.ship);
+}
+function a92Msg(kind, t, ok) { var m = document.getElementById(kind === 'shop' ? 'a92-shop-msg' : 'a92-ship-msg'); if (m) { m.className = 'result-msg e2-keep ' + (ok ? 'ok' : 'err'); m.textContent = t || ''; } }
+function a92Err(res, what) {
+  if (!res) return what + ': no answer.';
+  if (res.error) return (typeof a59ErrText === 'function') ? a59ErrText(res.error, what) : what + ': ' + (res.error.message || 'failed');
+  var d = res.data; if (d && d.ok === false) return d.message || (what + ': refused (' + (d.error || '?') + ').');
+  return '';
+}
+function a92Call(fn, args, label) { return (typeof withTimeout === 'function') ? withTimeout(db.rpc(fn, args), 15000, label) : db.rpc(fn, args); }
+var A92_FN = { shop: { status: 'shopify_status', connect: 'shopify_connect', settings: 'shopify_settings' }, ship: { status: 'shiprocket_status', connect: 'shiprocket_connect', settings: 'shiprocket_settings' } };
+/* one action = one typed PIN; after a change the status is read again with the same PIN (then the PIN is dropped) */
+function a92Run(kind, label, first) {
+  if (A92.busy) return Promise.resolve(null);
+  if (typeof a89IsSup === 'function' && a89IsSup()) { a92Msg(kind, 'Only an Admin can open this page.', false); return Promise.resolve(null); }
+  var me = a92Me(); if (!me) { a92Msg(kind, 'You are not signed in with an employee code. Sign in again.', false); return Promise.resolve(null); }
+  A92.busy = true;
+  return a59AskPin(me).then(function (pin) {
+    if (pin === null || pin === undefined || pin === '') { A92.busy = false; a92Msg(kind, 'No PIN typed. Nothing was changed.', false); return null; }
+    a92Msg(kind, 'Working...', true);
+    var base = { p_ws: A92.ws, p_code: me, p_pin: pin };
+    var step = first ? first(base) : Promise.resolve({ data: { ok: true } });
+    return step.then(function (r1) {
+      var e1 = a92Err(r1, label); if (e1) { A92.busy = false; a92Msg(kind, e1, false); return null; }
+      return a92Call(A92_FN[kind].status, base, 'Status').then(function (r2) {
+        A92.busy = false; pin = null; base.p_pin = null;
+        var e2 = a92Err(r2, 'Status'); if (e2) { a92Msg(kind, e2, false); return null; }
+        A92[kind] = r2.data; a92Paint(kind);
+        a92Msg(kind, (first && r1 && r1.data && r1.data.message ? r1.data.message + ' ' : '') + 'Shown at ' + a92When(new Date()) + '.', true);
+        return r2.data;
+      });
+    });
+  }).catch(function (err) { A92.busy = false; a92Msg(kind, (typeof a59ErrText === 'function') ? a59ErrText(err, label) : label + ': could not finish.', false); return null; });
+}
+function a92Load(kind) { return a92Run(kind, 'Status', null); }
+function a92Val(id) { var e = document.getElementById(id); return e ? String(e.value || '').trim() : ''; }
+function a92Connect(kind) {
+  if (kind === 'shop') {
+    var dom = a92Val('a92-shop-dom').toLowerCase(), mode = a92Val('a92-shop-mode') || 'CLIENT_CREDENTIALS', cid = a92Val('a92-shop-cid'), cs = a92Val('a92-shop-csec'), tok = a92Val('a92-shop-tok');
+    if (!/^[a-z0-9][a-z0-9-]{0,60}[.]myshopify[.]com$/.test(dom)) { a92Msg(kind, 'Write the store address as your-store.myshopify.com.', false); return Promise.resolve(null); }
+    if (!a92NameOk('shop', cs) || (mode === 'CLIENT_CREDENTIALS' && !a92NameOk('shop', cid)) || (mode === 'STATIC_TOKEN' && !a92NameOk('shop', tok)) || (cid && !a92NameOk('shop', cid)) || (tok && !a92NameOk('shop', tok))) {
+      a92Msg(kind, 'Type only secret NAMES that start with SHOPIFY_ (capitals, digits, _), never the value itself.', false); return Promise.resolve(null);
+    }
+    return a92Run(kind, 'Connect', function (b) { return a92Call('shopify_connect', { p_ws: b.p_ws, p_code: b.p_code, p_pin: b.p_pin, p_shop_domain: dom, p_auth_mode: mode,
+      p_client_id_name: cid || null, p_client_secret_name: cs, p_access_token_name: tok || null }, 'Connect'); });
+  }
+  var em = a92Val('a92-ship-em'), pw = a92Val('a92-ship-pw'), pick = a92Val('a92-ship-pick'), store = a92Val('a92-ship-store');
+  if (!a92NameOk('ship', em) || !a92NameOk('ship', pw) || em === pw) { a92Msg(kind, 'Type two different secret NAMES that start with SHIPROCKET_, never the e-mail or password itself.', false); return Promise.resolve(null); }
+  if (!/^[A-Za-z0-9][A-Za-z0-9 _.-]{0,59}$/.test(pick)) { a92Msg(kind, 'Type the pickup nickname exactly as it is in Shiprocket.', false); return Promise.resolve(null); }
+  if (!/^[^@ <>]+@[^@ <>]+[.][^@ <>]+$/.test(store)) { a92Msg(kind, 'Type the store e-mail, for example dispatch@yourshop.in.', false); return Promise.resolve(null); }
+  return a92Run(kind, 'Connect', function (b) { return a92Call('shiprocket_connect', { p_ws: b.p_ws, p_code: b.p_code, p_pin: b.p_pin, p_email_name: em, p_password_name: pw,
+    p_pickup_location: pick, p_store_email: store }, 'Connect'); });
+}
+function a92Switch(kind, key, on) {
+  if (on && !window.confirm(a92ConfirmText(kind, key))) { a92Msg(kind, 'Not switched on. Nothing was changed.', false); return Promise.resolve(null); }
+  var patch = {}; patch[key] = !!on;
+  return a92Run(kind, on ? 'Switch on' : 'Switch off', function (b) { return a92Call(A92_FN[kind].settings, { p_ws: b.p_ws, p_code: b.p_code, p_pin: b.p_pin, p_patch: patch }, 'Switch'); });
+}
+function a92Location() {
+  var v = a92Val('a92-shop-loc');
+  if (!/^gid:[/][/]shopify[/]Location[/][0-9]{1,20}$/.test(v)) { a92Msg('shop', 'The Shopify location must look like gid://shopify/Location/123456.', false); return Promise.resolve(null); }
+  return a92Run('shop', 'Location', function (b) { return a92Call('shopify_settings', { p_ws: b.p_ws, p_code: b.p_code, p_pin: b.p_pin, p_patch: { location_gid: v } }, 'Location'); });
+}
+function a92Link(key, i) {
+  var sku = a92Val('a92-sku-' + i).toUpperCase();
+  if (!sku) { a92Msg('shop', 'Type the app SKU to link it to.', false); return Promise.resolve(null); }
+  return a92Run('shop', 'Link', function (b) { return a92Call('shopify_map_sku', { p_ws: b.p_ws, p_code: b.p_code, p_pin: b.p_pin, p_sku_key: key, p_sku_code: sku }, 'Link'); });
+}
+function a92Done(id) { return a92Run('shop', 'Mark done', function (b) { return a92Call('shopify_staff_done', { p_ws: b.p_ws, p_code: b.p_code, p_pin: b.p_pin, p_shop_order_id: String(id) }, 'Mark done'); }); }
+function a92Click(e) {
+  var t = e && e.target && e.target.closest ? e.target.closest('[data-a92-act]') : null; if (!t) return;
+  var act = t.getAttribute('data-a92-act'), kind = t.getAttribute('data-a92-kind'), key = t.getAttribute('data-a92-key');
+  if (act === 'switch') a92Switch(kind, key, t.getAttribute('data-a92-on') === '1');
+  else if (act === 'connect') a92Connect(kind);
+  else if (act === 'location') a92Location();
+  else if (act === 'link') a92Link(key, t.getAttribute('data-a92-i'));
+  else if (act === 'done') a92Done(key);
+}
+function a92Wire(kind) {
+  var b = document.getElementById(kind === 'shop' ? 'a92-shop-body' : 'a92-ship-body');
+  if (b && !b.getAttribute('data-a92-wired')) { b.setAttribute('data-a92-wired', '1'); b.addEventListener('click', a92Click); }
+  var l = document.getElementById(kind === 'shop' ? 'a92-shop-load' : 'a92-ship-load');
+  if (l && !l.getAttribute('data-a92-wired')) { l.setAttribute('data-a92-wired', '1'); l.addEventListener('click', function () { a92Load(kind); }); }
+}
+function a92ShopInit() { a92Wire('shop'); a92Paint('shop'); }
+function a92ShipInit() { a92Wire('ship'); a92Paint('ship'); }
 </script>
 </body>
 </html>
