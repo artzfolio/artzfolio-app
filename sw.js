@@ -134,7 +134,8 @@
 // v107 (2026-11-19, v42e): cache name bumped for App v233n (v42e e_rc2 = v233n (lean + help pages) + Admin v2.92a (Shops and couriers)). Nothing else changed.
 // v108 (2026-11-19, v42g): cache name bumped for App v233p (v42g = v233p (SEC scan #1: SRI + pinned CSP) + Admin v2.92d). Nothing else changed.
 // v109 (2026-11-19, v42h3): cache name bumped for App v233t (v42h3 = v233t (frame-buster + planned unfiltered Stock count + stale-only forecast line below the list) + Admin v2.92f). Nothing else changed.
-const CACHE_NAME = 'artzfolio-oms-shell-v109';
+// v110 (2026-11-21, v43a): cache name bumped for App v234b4 (v43a = v234b4 (Labels in 3 plain steps + made-to-order that finishes) + Admin v2.92f). Nothing else changed.
+const CACHE_NAME = 'artzfolio-oms-shell-v110';
 const OPTIONAL_FILES = ['./zxing_reader_3.1.4.js', './zxing_reader_3.1.4.wasm'];
 const SHELL_FILES = ['./index.html', './manifest.json', './icon.svg'];
 
