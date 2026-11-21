@@ -3299,6 +3299,21 @@ body.a90-lean .perm-row:has(#add-emp-perm-customers),body.a90-lean .perm-row:has
 .a92-row{display:flex;justify-content:space-between;align-items:center;gap:12px;border-top:1px solid #edf2f7;padding:8px 0}
 @media (prefers-color-scheme: dark){.a92-card{background:#1a202c;border-color:#4a5568}.a92-money{background:#2d2410}.a92-note{background:#1a365d}.a92-chip{background:#2d3748;color:#e2e8f0}.a92-meta,.a92-empty,.a92-kv span{color:#cbd5e0}}
 </style>
+<style id="a94-css">/* A94 v1.1 (v26 section D step 3, review v1): Label design */
+.a94-wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(280px,420px);gap:16px;align-items:start;max-width:1200px}
+.a94-pv{position:sticky;top:8px}.a94-pv h3,.a94-g h3{margin:0 0 6px;font-size:16px}
+.a94-f{margin:12px 0;padding:2px 0}.a94-f label{display:block;font-weight:600;font-size:15px}
+.a94-f select,.a94-f input{display:block;width:100%;max-width:560px;box-sizing:border-box;min-height:44px;font-size:15px;margin-top:4px}
+.a94-ch{border-left:3px solid #b7791f;padding-left:8px}.a94-help{color:#4a5568;font-size:13px;margin-top:3px}.a94-off{color:#8a5a00;font-size:13px;margin-top:2px}
+.a94-row{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}.a94-row .btn,.a94-pv .btn{min-height:44px}.a94-list{margin:4px 0 8px 18px;padding:0;font-size:14px}
+.a94-link{display:block;background:none;border:0;color:#1b4f8a;text-decoration:underline;min-height:44px;cursor:pointer;font-size:14px;padding:0 2px;text-align:left}
+.a94-img{max-width:100%;height:auto;border:1px solid #e2e8f0;background:#fff;display:block;margin:8px 0}
+.a94-pv input{display:block;width:100%;box-sizing:border-box;min-height:44px;font-size:15px;margin-top:4px}
+.a94-near{margin:8px 0 2px;padding:6px 8px;border-left:3px solid #1b4f8a;background:#f7fafc;border-radius:4px}.a94-img-s{max-width:min(100%,320px)}.a94-cap{font-size:12px;color:#4a5568;margin-top:6px}
+.a94-list li.a94-no{color:#822727}.a94-list li.a94-wait{color:#4a5568}
+@media (max-width:900px){.a94-wrap{grid-template-columns:minmax(0,1fr)}.a94-pv{position:static}#page-a94lbl{scroll-padding-bottom:110px}}
+@media (prefers-color-scheme: dark){.a94-near{background:#1a202c}.a94-list li.a94-no{color:#feb2b2}.a94-help,.a94-cap{color:#cbd5e0}.a94-off{color:#f6c56b}.a94-link{color:#90cdf4}}
+</style>
 </head>
 <body>
 
@@ -3442,6 +3457,8 @@ body.a90-lean .perm-row:has(#add-emp-perm-customers),body.a90-lean .perm-row:has
       <li class="nav-item a89-nav" data-a89="buying" onclick="a89Go('buying')" role="link" tabindex="0" title="Buying"><span class="nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 8h6M9 12h6M9 16h3"/></svg></span><span class="nav-label">Buying</span><span class="nav-short">Buying</span></li>
       <li class="nav-item a89-nav" data-a89="safety" onclick="a89Go('safety')" role="link" tabindex="0" title="Records &amp; safety"><span class="nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 3v6c0 4.5-3.4 8-8 9-4.6-1-8-4.5-8-9V6z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg></span><span class="nav-label">Records &amp; safety</span><span class="nav-short">Safety</span></li>
       <li class="nav-item a89-nav" data-a89="company" onclick="a89Go('company')" role="link" tabindex="0" title="Company settings"><span class="nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 21V5a1 1 0 0 1 1-1h9a1 1 0 0 1 1 1v16M15 9h4a1 1 0 0 1 1 1v11M3 21h18M8 8h3M8 12h3M8 16h3"/></svg></span><span class="nav-label">Company settings</span><span class="nav-short">Company</span></li>
+      <li class="nav-item a89-nav" data-a89="labels" onclick="a89Go('labels')" role="link" tabindex="0" title="Label design"><span class="nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12V4h8l10 10-8 8z"/><circle cx="7.5" cy="8.5" r="1.5"/></svg></span><span class="nav-label">Label design</span><span class="nav-short">Labels</span></li><!-- A94 -->
+      <li class="nav-item" data-page="a94lbl" style="display:none"></li><!-- A94 -->
       <li class="nav-item a89-nav" data-a89="integrations" onclick="a89Go('integrations')" role="link" tabindex="0" title="Shops and couriers"><span class="nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h11v9H3z"/><path d="M14 10h4l3 3v3h-7z"/><circle cx="7" cy="17" r="1.6"/><circle cx="17" cy="17" r="1.6"/></svg></span><span class="nav-label">Shops and couriers</span><span class="nav-short">Shops</span></li><!-- A92 -->
       <li class="nav-item" data-page="a92shop" style="display:none"></li>
       <li class="nav-item" data-page="a92ship" style="display:none"></li>
@@ -3471,7 +3488,7 @@ body.a90-lean .perm-row:has(#add-emp-perm-customers),body.a90-lean .perm-row:has
     <div class="sidebar-footer">
       <div class="af-fs-side"><div class="af-fs-t">Text size</div><div id="af-fs-ctl-side"></div></div>
       <button class="logout-btn" onclick="adminLogout()">Sign out</button>   <!-- ADM-v258 A-01 -->
-      <div class="ver-footer">ArtzFolio Super App - Admin Panel v2.92f</div><!-- RC41-v282-V RC41-v283-V RC41-v284-V RC41-v285-V RC41-v286-V -->
+      <div class="ver-footer">ArtzFolio Super App - Admin Panel v2.93c</div><!-- RC41-v282-V RC41-v283-V RC41-v284-V RC41-v285-V RC41-v286-V -->
     </div>
   </div>
 
@@ -4563,6 +4580,13 @@ body.a90-lean .perm-row:has(#add-emp-perm-customers),body.a90-lean .perm-row:has
       <div id="a93-msg" class="result-msg e2-keep"></div>
       <div id="a93-body" class="e2-keep"></div>
       <p class="a89-note e2-keep">The Amazon feed checks Amazon every 15 minutes. In report-only mode it lists what it would add and writes nothing to the orders. Switching to real import is the founder's decision. Your PIN is asked for each step and is not kept.</p>
+    </div>
+    <!-- A94 (v26 section D step 3): Label design -->
+    <div class="page" id="page-a94lbl">
+      <div class="page-header"><div><div class="page-title">Label design</div></div><button type="button" class="btn btn-primary" id="a94-load">Show the label design</button></div>
+      <div id="a94-msg" class="result-msg e2-keep" role="status"></div>
+      <div id="a94-body" class="e2-keep"></div>
+      <p class="a89-note e2-keep">Set once for the whole company. Every phone prints product labels this way from its next print. Your PIN is asked to save and is not kept.</p>
     </div>
     <!-- CEO52 (v25 Lane 8): CEO Brief (Admin only) -->
     <div class="page" id="page-a89ceo">
@@ -14541,6 +14565,8 @@ var A89_IA = [
       { id: 'retention', label: 'How long data is kept', page: 'secdata', sec: 'retention', desc: 'What is stored and how old it is. Deletes nothing. Type your PIN first.' } ] },
     { id: 'signout', label: 'Sign out everywhere', page: 'secdata', sec: 'signout', desc: 'Sign a person out of every phone and computer at once, for example when a phone is lost.' },
     { id: 'rare', label: 'Rare tools', page: 'a89rare', desc: 'Tools needed once in a long while. Each one stays hidden until you type its name, so it cannot be pressed by mistake.' } ] },
+  { id: 'labels', label: 'Label design', tabs: [   /* A94 */
+    { id: 'design', label: 'Label design', page: 'a94lbl', desc: 'How product labels look, set once for the whole company, with a live preview. An Admin can save; a Supervisor can look.' } ] },
   { id: 'integrations', label: 'Shops and couriers', adminOnly: true, tabs: [   /* A92 */
     { id: 'shopify', label: 'Shopify', page: 'a92shop', desc: 'Your Shopify store: connection, switches and Shopify items not linked to an app SKU yet. Type your PIN when asked.' },
     { id: 'couriers', label: 'Couriers (Shiprocket)', page: 'a92ship', desc: 'Courier labels by Shiprocket: connection, store e-mail, switches and recent shipments. Each booking spends Shiprocket wallet money.' },
@@ -14616,6 +14642,7 @@ function a89After(name) {
   if (name === 'a89ceo') ceo52Init(); else if (prev && prev.page === 'a89ceo') ceo52Leave();   /* CEO52 */
   if (name === 'a92shop') a92ShopInit(); else if (name === 'a92ship') a92ShipInit();   /* A92 */
   if (name === 'a93amz') a93Init();   /* A93 */
+  if (name === 'a94lbl') a94Init(); else if (prev && prev.page === 'a94lbl') a94Leave();   /* A94 */
   try { document.body.setAttribute('data-a89leaf', lf ? lf.id : ''); document.body.setAttribute('data-a89part', lf && lf.part ? lf.part : ''); } catch (e) {}
   a89Paint();
 }
@@ -15658,6 +15685,563 @@ function a93Init() {
   var l = document.getElementById('a93-load'); if (l && !l.getAttribute('data-a93-wired')) { l.setAttribute('data-a93-wired', '1'); l.addEventListener('click', function () { a93Load(); }); }
   a93Paint();
 }
+</script>
+<script id="a94-js">
+/* A94 v1.3 (Admin v2.93c, lead call L-11): the save gate is NO NEW BREAKAGE. On opening, the design phones print with today is previewed at every label size the
+   service offers and the page remembers which sizes work today. Save opens only when every size that works today still works with the new design; a size that already
+   fails today shows one plain warning line and does not block Save; a size the new design newly breaks keeps Save off and is named. Undo follows the same rule.
+   A94 v1.2 (Admin v2.93b, verifier VERIFY_V234D3_ADMIN_V293A_V43C_v1): Save opens only after the preview of EVERY fixed label size the label service offers to phones
+   (read from the live label.size choices; the small sizes with the short legal text, as the phone sends them); one run number per session for the allowance.
+   A94 v1.1 (Admin v2.93a, review REVIEW_ADMIN_V293_v1): "Label design" - how product labels look, set once for the whole company, in plain words, with a live preview.
+   v1.1: B1 Save only after the preview of EVERY everyday label size (75x50, 100x50) made both sample labels with exactly the design being saved; number choices only
+   from the values the real label engine made on live-shaped products, also in pairs (derive_safe_ranges_a94.mjs); a choice that makes labels "not made" is offered only
+   while it is already the saved choice; the server version check is kept. S1 picture choices only where pictures are prepared. S2 one run number per page session,
+   so previews do not use up the Admin's label runs for the hour. S3 the other engine settings moved here. S4 Admin only. S5 the preview sits under the changed control.
+   What it edits (no new storage): the label service's saved company design under the one built-in name every phone prints with (A94_NAME); the saved copy wins over the
+   built-in one for every phone print. It talks ONLY to the existing label door (functions/v1/label-studio-v2) with its existing actions: login, options, preset_get,
+   search, make (preview only, nothing recorded as printed) and preset_save (typed PIN again, Admin role, audit note: all checked by the door).
+   The PIN is typed, sent once, never kept. The label sign-in stays in memory only (8 hours). */
+var A94_DOOR = '/functions/v1/label-studio-v2', A94_NAME = 'production-standard', A94_UNDO_KEY = 'a94_label_design_undo_v1', A94_HIST_KEY = 'a94_label_design_hist_v1', A94_UNDO_MS = 86400000;
+var A94_SIZE_FIRST = '75x50';   /* the size of every print so far (lbl_print_log, 22 Nov): its labels are shown first */
+/* v1.2: the label sizes phones can pick = the fixed sizes the label service lists for the label size (its own label.size choices); "custom" has no fixed size */
+function a94Sizes() { var d = A94.fmap['label.size']; return (d && d.choices ? d.choices : []).filter(function (c) { return c.built !== false && /^[0-9]+x[0-9]+$/.test(String(c.value)); }).map(function (c) { return String(c.value); }); }
+function a94SizeWord(z) { var a = String(z).split('x'); return a[0] + ' x ' + a[1] + ' mm'; }
+function a94IsSmall(z) { var a = String(z).split('x'); return Number(a[0]) * Number(a[1]) <= 2400; }   /* up to 60 x 40 mm: the phone sends the short legal text for these (LB_SMALL) */
+function a94First() { var l = a94Sizes(); return l.indexOf(A94_SIZE_FIRST) >= 0 ? A94_SIZE_FIRST : l[0]; }
+var A94_PIC_READY = [{ style: 2, w: 360 }];   /* the pictures prepared on the label service: lbl_pic_cache 22 Nov = 49 pictures, all style 2 at 360 px */
+var A94_CODE_STD = { layout: 'v2', bottom_right: 'D', text: { show_sku: true, show_url: false }, batch: { position: 'with_asin' } };   /* the built-in design of the same name = the cloud default + these (label-service options.ts) */
+/* the number choices the real engine made on 4 live-shaped products at 75x50 and 100x50, picture present and absent (fixtures_a94/a94_safe_ranges_v1.json) */
+var A94_SAFE = { 'barcode.height_pct': [24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39],
+  'barcode.gap_mm': ['auto', 3, 3.5, 4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10, 10.5, 11, 11.5, 12, 12.5, 13, 13.5, 14, 14.5, 15, 15.5, 16, 16.5, 17, 17.5],
+  'barcode.max_bar_mm': [0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.2, 1.4, 1.6, 1.8, 2], 'label.edge_mm': [0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5], 'text.title_max_lines': [2, 3, 4, 5, 6] };
+var A94_BAD = { 'barcode.height_pct|barcode.gap_mm': '29|17.5 30|17 30|17.5 31|16.5 31|17 31|17.5 32|16 32|16.5 32|17 32|17.5 33|15.5 33|16 33|16.5 33|17 33|17.5 34|15 34|15.5 34|16 34|16.5 34|17 34|17.5 ' +
+    '35|14.5 35|15 35|15.5 35|16 35|16.5 35|17 35|17.5 36|14 36|14.5 36|15 36|15.5 36|16 36|16.5 36|17 36|17.5 37|13.5 37|14 37|14.5 37|15 37|15.5 37|16 37|16.5 37|17 37|17.5 ' +
+    '38|13 38|13.5 38|14 38|14.5 38|15 38|15.5 38|16 38|16.5 38|17 38|17.5 39|12.5 39|13 39|13.5 39|14 39|14.5 39|15 39|15.5 39|16 39|16.5 39|17 39|17.5',
+  'barcode.height_pct|label.edge_mm': '24|1.5 24|2 24|2.5 25|1.5 25|2 25|2.5 26|1.5 26|2 27|1.5 29|5 30|5 31|5 32|5 33|5 34|4.5 34|5 35|4.5 35|5 36|4 36|4.5 36|5 37|4 37|4.5 37|5 38|3.5 38|4 38|4.5 38|5 39|3.5 39|4 39|4.5 39|5',
+  'barcode.gap_mm|label.edge_mm': '14|5 14.5|5 15|4.5 15|5 15.5|4.5 15.5|5 16|4 16|4.5 16|5 16.5|4 16.5|4.5 16.5|5 17|3.5 17|4 17|4.5 17|5 17.5|3.5 17.5|4 17.5|4.5 17.5|5' };
+/* a choice that makes the engine leave a label out ("not made") is offered only while it is already the saved choice, so it can be changed away from, never chosen new */
+var A94_REFUSING = { 'barcode.if_sku_wont_fit': ['refuse'], 'picture.square_step_down': [false], 'text.mrp_one_line': [true], 'batch.mode': ['always'], 'text.small_label_legal': ['off'], 'text.legal_lines': [false] };
+var A94 = { tok: null, exp: 0, doc: null, fmap: {}, base: null, R: null, ver: 0, who: '', at: '', ed: {}, bad: {}, busy: false, ask: false, hist: false, last: '',
+  pvT: 0, pvSeq: 0, urls: [], pv: null, today: null, pvMsg: '', lines: null, code: '', loaded: false, loginP: null, note: '', rid: '', ridAt: 0 };
+function a94NoPic(R) { return (R.bottom_right === 'C' || R.bottom_right === 'E') ? 'Has no effect now: no product picture prints in the corner.' : ''; }
+function a94NoQr(R) { return (R.bottom_right === 'B' || R.bottom_right === 'E') ? 'Has no effect now: no QR code prints in the corner.' : ''; }
+function a94NotStd(R) { return R.layout !== 'v2' ? 'Has no effect now: only the Standard look uses it.' : ''; }
+function a94PicStyles() { var s = {}; A94_PIC_READY.forEach(function (x) { s[x.style] = 1; }); return s; }
+function a94PicNote(R) {
+  var ok = A94_PIC_READY.some(function (x) { return x.style === Number(R.picture.style) && x.w === Number(R.picture.width_px); });
+  return (a94NoPic(R) || ok) ? '' : 'No picture is prepared for this choice, so the labels print without the product picture. Choose the prepared one.';
+}
+var A94_YES = { 'true': 'Show it', 'false': 'Leave it out' };
+var A94_F = [
+  { p: 'layout', g: 'Look', t: 'pick', label: 'Look of the label', help: 'Standard: the name across the full width, a product code line, picture and QR code side by side. Classic: the older label.',
+    w: { v2: 'Standard', classic: 'Classic (the older label)' } },
+  { p: 'layout_variant', g: 'Look', t: 'pick', label: 'Arrangement', help: 'How the Standard look places the name, the picture and the QR code.',
+    w: { A: 'Name across the full width, picture left of the QR code (recommended)', B: 'QR code left of the picture', C: 'Compact: 3-line name, MRP under the Amazon number, bigger squares' }, off: a94NotStd },
+  { p: 'barcode.source', g: 'Barcode', t: 'pick', label: 'What the barcode holds', help: 'The bars the scanner reads. The other number is printed as text on the label.',
+    w: { ASIN: 'Amazon number (ASIN)', SKU: 'Your product code (SKU)' } },
+  { p: 'barcode.scanner', g: 'Barcode', t: 'pick', label: 'How thin the bars may be', help: 'Thinner bars fit a longer code but need a better scanner. Normal suits every scanner.',
+    w: { safe: 'Normal - every scanner reads it', imager: 'Thin - for camera scanners', smallest: 'Thinnest - not recommended' } },
+  { p: 'barcode.if_sku_wont_fit', g: 'Barcode', t: 'pick', label: 'If your product code is too long for the bars', help: 'Only matters when the barcode holds your product code.',
+    w: { asin_bars_plus_sku_qr: 'Use the Amazon number for the bars and put the product code in the QR code', thinnest_bars: 'Keep the product code with the thinnest bars (scan one test label first)', refuse: 'Do not make that label and list it' },
+    off: function (R) { return R.barcode.source === 'ASIN' ? 'Has no effect now: the barcode holds the Amazon number.' : ''; } },
+  { p: 'barcode.height_pct', g: 'Barcode', t: 'step', label: 'Bar height', unit: '% of the label height', help: 'Taller bars leave less room for the text, the picture and the QR code. Only heights that fit every label are offered.' },
+  { p: 'barcode.max_bar_mm', g: 'Barcode', t: 'step', label: 'Thickest bar', unit: 'mm', help: 'Short codes get thicker bars, which scan more easily, up to this width.' },
+  { p: 'barcode.gap_mm', g: 'Barcode', t: 'step', label: 'Empty space under the barcode', unit: 'mm', help: 'More space makes the picture and QR code smaller. Only sizes that fit every label are offered.' },
+  { p: 'bottom_right', g: 'Bottom-right corner', t: 'pick', label: 'What prints in the bottom-right corner', help: 'The corner under the barcode, beside the text.',
+    w: { A: 'Product picture (the QR code when there is no picture)', B: 'Product picture only (empty when there is no picture)', C: 'QR code only', D: 'Product picture and QR code side by side', E: 'Nothing (the text uses the full width)' } },
+  { p: 'picture.style', g: 'Bottom-right corner', t: 'pick', label: 'Which product picture', help: 'Other picture choices are hidden: pictures are prepared only for this one so far.',
+    w: { '1': 'Clean picture only', '2': 'Clean picture, else the one with the watermark', '3': 'Only the picture with the watermark' },
+    allow: function (v) { return !!a94PicStyles()[v]; }, off: function (R) { return a94NoPic(R) || a94PicNote(R); } },
+  { p: 'picture.width_px', g: 'Bottom-right corner', t: 'pick', label: 'Picture sharpness', help: 'Only the prepared size is offered.', w: {},
+    vals: function (R) { var w = A94_PIC_READY.filter(function (x) { return x.style === Number(R.picture.style); }); if (!w.length) w = A94_PIC_READY; return w.map(function (x) { return x.w; }).filter(function (v, i, a) { return a.indexOf(v) === i; }); }, word: function (v) { return v + ' pixels'; }, off: a94NoPic },
+  { p: 'picture.square_size', g: 'Bottom-right corner', t: 'pick', label: 'Picture and QR code size', help: 'How big the picture and the QR code are drawn.',
+    w: { equal: 'Same size squares', independent: 'Each its own size' }, off: a94NotStd },
+  { p: 'picture.square_step_down', g: 'Bottom-right corner', t: 'pick', label: 'When a label has too much text for the squares', help: 'Smaller squares on that label mean it still prints.',
+    w: { 'false': 'Keep one square size (that label is not made)', 'true': 'Use smaller squares on that label' }, off: a94NotStd },
+  { p: 'qr.carries', g: 'Bottom-right corner', t: 'pick', label: 'What the QR code holds', help: 'What a phone camera opens when it reads the QR code.',
+    w: { amazon_link: 'Amazon product page link', sku: 'Your product code (SKU)', asin: 'Amazon number (ASIN)', custom: 'Your own text or link' }, off: a94NoQr },
+  { p: 'qr.text', g: 'Bottom-right corner', t: 'text', label: 'Your own QR text or link', help: 'Write {ASIN} or {SKU} where each label puts its own number, for example https://www.amazon.in/dp/{ASIN}',
+    show: function (R) { return R.qr.carries === 'custom'; } },
+  { p: 'batch.mode', g: 'Batch number', t: 'pick', label: 'Batch number on the label', help: 'The batch number typed when the labels are printed.', w: { always: 'Always (a label where it does not fit is not made)', if_room: 'Only when there is room', never: 'Never' } },
+  { p: 'batch.position', g: 'Batch number', t: 'pick', label: 'Where the batch number goes', help: 'The Standard look always puts it at the end of the Amazon number line.',
+    w: { above_block: 'Above the picture and QR code', with_asin: 'At the end of the Amazon number line' }, allow: function (v, R) { return !(R.layout === 'v2' && v === 'above_block'); } },
+  { p: 'text.legal_lines', g: 'Text on the label', t: 'pick', label: 'MRP, net quantity, maker and customer care lines', help: 'The law asks for these on a product label. The label service refuses to print and record labels without them, so the company design always prints them.',
+    w: { 'true': 'Print them (a label where they do not fit is not made)', 'false': 'Leave them out (phones cannot print and record with this)' } },
+  { p: 'text.logo', g: 'Text on the label', t: 'pick', label: 'Brand logo', help: 'Without the logo the brand name is printed as text.', w: { 'true': 'Print the logo', 'false': 'No logo' } },
+  { p: 'text.show_sku', g: 'Text on the label', t: 'pick', label: 'Product code line', help: 'A line with your product code on every label.', w: A94_YES, off: a94NotStd },
+  { p: 'text.show_url', g: 'Text on the label', t: 'pick', label: 'Amazon link as text', help: 'When it is left out, the product name gets that line.', w: { 'true': 'Show it on its own line', 'false': 'Leave it out' }, off: a94NotStd },
+  { p: 'text.url_form', g: 'Text on the label', t: 'pick', label: 'How the link text looks', help: 'Only when the Amazon link is shown as text.', w: { short: 'Short form', full: 'Full form, starting with https' },
+    off: function (R) { return R.layout !== 'v2' ? a94NotStd(R) : (!R.text.show_url ? 'Has no effect now: the Amazon link is not shown as text.' : ''); } },
+  { p: 'text.title_max_lines', g: 'Text on the label', t: 'step', label: 'Most lines for the product name', unit: 'lines', help: 'A longer name keeps its start and end with ... in the middle.', off: a94NotStd },
+  { p: 'text.title_rule', g: 'Text on the label', t: 'pick', label: 'How a long name is shortened', help: 'Used when the name does not fit.', w: { start_end: 'Keep the start and the end, with ... in the middle', classic: 'Cut off the end' } },
+  { p: 'text.mrp_one_line', g: 'Text on the label', t: 'pick', label: 'MRP line', help: 'Two lines let a long MRP sentence wrap instead of the label being left out.', w: { 'true': 'Always one line (a label where it does not fit is not made)', 'false': 'May use two lines' }, off: a94NotStd },
+  { p: 'text.show_other_id', g: 'Text on the label', t: 'pick', label: 'The other number as text', help: 'The number that is not in the barcode.', w: A94_YES,
+    off: function (R) { return R.layout === 'v2' ? 'Has no effect now: the Standard look has its own product code line.' : ''; } },
+  { p: 'text.show_title', g: 'Text on the label', t: 'pick', label: 'Product name', help: 'A long name is shortened only when there is no room.', w: A94_YES,
+    off: function (R) { return R.text.legal_lines ? 'Has no effect now: the name always prints with the MRP and maker lines.' : ''; } },
+  { p: 'text.show_company', g: 'Text on the label', t: 'pick', label: 'Company name line', help: 'A line with the company name.', w: A94_YES,
+    off: function (R) { return (!R.text.legal_lines && !R.text.logo) ? '' : 'Has no effect now: it prints only when the MRP and maker lines and the logo are both off.'; } },
+  { p: 'text.small_label_legal', g: 'Text on the label', t: 'pick', label: 'Legal text on small labels (60 x 40 mm and smaller)', help: 'Phones switch to the short text by themselves when someone picks a small label.',
+    w: { off: 'Full text only (a small label where it does not fit is not made)', 'short': 'Short text: maker, MRP and net quantity' } },
+  { p: 'label.edge_mm', g: 'Edge and check list', t: 'step', label: 'Empty edge around the label', unit: 'mm', help: 'Everything stays inside this edge. Only edges that fit every label are offered.' },
+  { p: 'report', g: 'Edge and check list', t: 'pick', label: 'Check list with every file', help: 'A list per label (bar width, QR size, text size) for whoever checks the labels.', w: { none: 'No', per_label: 'Yes' } }
+];
+var A94_GROUPS = ['Look', 'Barcode', 'Bottom-right corner', 'Batch number', 'Text on the label', 'Edge and check list'];
+var A94_ERR = { PIN_REJECTED: 'Your PIN was not accepted.', LOCKED: 'This account is locked for a while. Try again later.', FORBIDDEN: 'Only an Admin can save the label design.',
+  NOT_ALLOWED: 'Your account may not use the label service.', CONFLICT: 'Somebody else saved the label design a moment ago. Press Show the label design again, then make your change.',
+  RATE_LIMITED: 'Many people are making labels right now. Wait a minute and try again.', OFFLINE: 'No internet, or the label service did not answer.',
+  SERVICE_UNAVAILABLE: 'The label service did not answer. Try again in a minute.', NOT_SET_UP: 'The label service is not set up for this yet. Tell the person who looks after the system.',
+  NO_STEP: 'The label service is not set up for this yet. Tell the person who looks after the system.', BAD_INPUT: 'The label service did not accept these choices.',
+  NOT_FOUND: 'The label service did not find the company design.', SERVICE_AUTH: 'The label service did not accept the connection. This is a set-up problem. Tell the person who looks after the system.',
+  KEY_NOT_ALLOWED: 'The label service did not accept the connection. This is a set-up problem. Tell the person who looks after the system.',
+  WRONG_KEY_THROTTLE: 'The label service did not accept the connection. This is a set-up problem. Tell the person who looks after the system.',
+  TOKEN_REJECTED: 'The label sign-in ended. Press the button again.', CANCELLED: 'No PIN typed.' };
+var A94_RATE = { RUN: 'Your account has made many label runs this hour. Try again after the hour.', CALL: 'Too many tries in one minute. Wait a minute and try again.' };
+function a94Esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+function a94Clone(o) { return o == null ? o : JSON.parse(JSON.stringify(o)); }
+function a94Get(o, p) { var a = p.split('.'), v = o, i; for (i = 0; i < a.length; i++) { if (v == null || typeof v !== 'object') return undefined; v = v[a[i]]; } return v; }
+function a94Set(o, p, v) { var a = p.split('.'), c = o, i; for (i = 0; i < a.length - 1; i++) { if (typeof c[a[i]] !== 'object' || c[a[i]] === null) c[a[i]] = {}; c = c[a[i]]; } c[a[a.length - 1]] = v; }
+function a94Del(o, p) { var a = p.split('.'), c = o, i; for (i = 0; i < a.length - 1; i++) { if (typeof c[a[i]] !== 'object' || c[a[i]] === null) return; c = c[a[i]]; } delete c[a[a.length - 1]]; if (a.length > 1 && !Object.keys(c).length) a94Del(o, a.slice(0, -1).join('.')); }
+function a94Merge(a, b) { Object.keys(b || {}).forEach(function (k) { if (b[k] && typeof b[k] === 'object' && !Array.isArray(b[k])) { if (!a[k] || typeof a[k] !== 'object') a[k] = {}; a94Merge(a[k], b[k]); } else a[k] = b[k]; }); return a; }
+function a94When(t) { if (!t) return ''; var d = new Date(t); if (isNaN(d.getTime())) return ''; function z(n) { return (n < 10 ? '0' : '') + n; } return d.getFullYear() + '-' + z(d.getMonth() + 1) + '-' + z(d.getDate()) + ' ' + z(d.getHours()) + ':' + z(d.getMinutes()); }
+function a94Me() { return (typeof getAdminPanelEmployeeCode === 'function' ? (getAdminPanelEmployeeCode() || '') : '').trim().toUpperCase(); }
+function a94Role() { try { var s = getAdminPanelSession(); return String((s && s.role) || '').toUpperCase(); } catch (e) { return ''; } }
+function a94CanSave() { return a94Role() === 'ADMIN'; }   /* the label door saves a company design for the Admin role only */
+function a94Store(k, v) { try { if (v === null) localStorage.removeItem(k); else localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
+function a94Read(k) { try { return JSON.parse(localStorage.getItem(k) || 'null'); } catch (e) { return null; } }
+/* the value in force: the unsaved choice, else the saved company design */
+function a94Eff() {
+  var R = a94Clone(A94.R) || {};
+  Object.keys(A94.ed).forEach(function (p) { a94Set(R, p, A94.ed[p]); });
+  ['barcode', 'qr', 'text', 'batch', 'picture', 'label'].forEach(function (k) { if (!R[k]) R[k] = {}; });
+  return R;
+}
+var A94_BADSET = null;
+function a94PairOk(p, v, R) {
+  if (!A94_BADSET) { A94_BADSET = {}; Object.keys(A94_BAD).forEach(function (k) { var s = {}; A94_BAD[k].split(' ').forEach(function (x) { s[x] = 1; }); A94_BADSET[k] = s; }); }
+  return Object.keys(A94_BADSET).every(function (k) {
+    var ab = k.split('|'); if (ab[0] !== p && ab[1] !== p) return true;
+    var a = ab[0] === p ? v : a94Get(R, ab[0]), b = ab[1] === p ? v : a94Get(R, ab[1]);
+    return !A94_BADSET[k][String(a) + '|' + String(b)];
+  });
+}
+/* the choices a field offers: only what the service lists (and has built) and this page has plain words for; numbers only from the engine-checked values that also fit
+   together with the other numbers in force; a choice that leaves labels out only while it is already saved */
+function a94Choices(F, R) {
+  var d = A94.fmap[F.p]; if (!d) return [];
+  var vals = [];
+  if (F.vals) vals = F.vals(R);
+  else if (F.t === 'step') vals = (A94_SAFE[F.p] || []).filter(function (v) { return a94PairOk(F.p, v, R); });
+  else if (d.type === 'enum') vals = (d.choices || []).filter(function (c) { return c.built !== false; }).map(function (c) { return c.value; });
+  else if (d.type === 'bool') vals = [true, false];
+  if (F.vals || F.t === 'step') vals = vals.filter(function (v) { return v === 'auto' ? (d.type === 'auto_or_number') : (typeof v === 'number' && (d.min == null || v >= Number(d.min)) && (d.max == null || v <= Number(d.max))); });
+  var ref = A94_REFUSING[F.p] || [];
+  return vals.filter(function (v) {
+    if (!(F.vals || F.t === 'step') && !(F.w && Object.prototype.hasOwnProperty.call(F.w, String(v)))) return false;
+    if (F.allow && !F.allow(v, R)) return false;
+    if (ref.some(function (x) { return x === v; }) && !a94Same(v, a94Get(A94.R, F.p))) return false;
+    return true;
+  });
+}
+function a94Same(a, b) { return JSON.stringify(a) === JSON.stringify(b); }
+function a94Word(F, v) {
+  if (F.word) return F.word(v);
+  if (F.t === 'step') return v === 'auto' ? 'Automatic' : String(v) + ' ' + (F.unit || '');
+  if (F.t === 'text') return String(v == null ? '' : v);
+  return (F.w && F.w[String(v)]) || '';
+}
+/* one control; the live preview sits right under the control changed last */
+function a94FieldHtml(F, i, R) {
+  var d = A94.fmap[F.p]; if (!d) return '';
+  if (F.show && !F.show(R)) return '';
+  var cur = a94Get(R, F.p), ch = Object.prototype.hasOwnProperty.call(A94.ed, F.p), id = 'a94-f' + i, ctl = '';
+  if (F.t === 'pick' || F.t === 'step') {
+    var cs = a94Choices(F, R); if (!cs.length && !F.vals) return '';
+    var has = cs.some(function (v) { return a94Same(v, cur); });
+    ctl = '<select id="' + id + '" data-a94-f="' + i + '">' + (has ? '' : '<option value="" selected>Choose</option>') + cs.map(function (v, j) { return '<option value="' + j + '"' + (a94Same(v, cur) ? ' selected' : '') + '>' + a94Esc(a94Word(F, v)) + '</option>'; }).join('') + '</select>';
+    if (!has && cur !== undefined && cs.length) ctl += '<div class="a94-off">The saved choice is not offered here: it does not work on every label. Choose one of these.</div>';
+  } else if (F.t === 'text') {
+    if (d.type !== 'text') return '';
+    ctl = '<input type="text" id="' + id + '" data-a94-f="' + i + '" maxlength="' + Number(d.max_chars || 213) + '" autocomplete="off" spellcheck="false" value="' + a94Esc(cur == null ? '' : cur) + '">';
+  }
+  var off = F.off ? F.off(R) : '';
+  return '<div class="a94-f' + (ch ? ' a94-ch' : '') + '"><label for="' + id + '">' + a94Esc(F.label) + (ch ? ' <span class="a92-chip">changed</span>' : '') + '</label>' + ctl +
+    '<div class="a94-help">' + a94Esc(F.help) + '</div>' + (off ? '<div class="a94-off">' + a94Esc(off) + '</div>' : '') + (A94.bad[F.p] ? '<div class="a92-warn">' + a94Esc(A94.bad[F.p]) + '</div>' : '') +
+    (A94.last === F.p ? '<div class="a94-near" id="a94-near">' + a94NearHtml() + '</div>' : '') + '</div>';
+}
+/* the changes in plain words */
+function a94Changes() {
+  var out = [];
+  A94_F.forEach(function (F) {
+    if (!Object.prototype.hasOwnProperty.call(A94.ed, F.p)) return;
+    var was = a94Get(A94.R, F.p), now = A94.ed[F.p];
+    out.push(F.label + ': ' + a94Word(F, now) + (was === undefined ? '' : ' (was ' + a94Word(F, was) + ')'));
+  });
+  return out;
+}
+function a94Undo() { var u = a94Read(A94_UNDO_KEY); return (u && u.ver === A94.ver && (Date.now() - Number(u.at || 0)) < A94_UNDO_MS) ? u : null; }
+/* v1.3 (L-11): NO NEW BREAKAGE. today = the preview of the saved design (what phones print with now) at every size, for the same sample products */
+function a94Sig() { return JSON.stringify(a94Json()) + '|' + JSON.stringify(A94.lines || []); }
+function a94BaseSig() { return JSON.stringify(A94.base) + '|' + JSON.stringify(A94.lines || []); }
+function a94BaseOk() { return !!(A94.today && A94.today.sig === a94BaseSig() && a94Sizes().every(function (z) { var t = A94.today.sizes[z]; return t && t.state && t.state !== 'wait'; })); }
+function a94Works(t) { return !!t && t.state === 'ok'; }
+/* compare a set of results with today: { ok, line, warns[] } */
+function a94Compare(res, list) {
+  var bad = [], warns = [], errs = [];
+  list.forEach(function (z) {
+    var t = A94.today.sizes[z], c = res[z] || {};
+    if (t.state === 'err') { errs.push(a94SizeWord(z) + ' - the design phones use today could not be checked (' + (t.why || 'no answer') + ')'); return; }
+    if (!a94Works(t)) { warns.push(a94SizeWord(z) + ': this design does not fit at this size - already the case today.'); return; }
+    if (c.state === 'err') errs.push(a94SizeWord(z) + ' - ' + (c.why || 'no preview came back'));
+    else if (c.state !== 'ok') bad.push(a94SizeWord(z) + ' - ' + (c.why || 'no preview came back') + ' (it works with the design phones use today)');
+  });
+  return { bad: bad, errs: errs, warns: warns };
+}
+function a94Gate() {
+  var pv = A94.pv, list = a94Sizes(), i;
+  if (!list.length || !a94BaseOk() || !pv || pv.sig !== a94Sig()) return { ok: false, line: 'Waiting for the preview of every label size before saving.', warns: [] };
+  for (i = 0; i < list.length; i++) { var s = pv.sizes[list[i]]; if (!s || s.state === 'wait' || !s.state) return { ok: false, line: 'Waiting for the preview of every label size before saving.', warns: [] }; }
+  var c = a94Compare(pv.sizes, list), keep = list.filter(function (z) { return a94Works(A94.today.sizes[z]); });
+  if (c.bad.length || c.errs.length) return { ok: false, line: 'Save stays off: ' + c.bad.concat(c.errs).join('; ') + '.', warns: c.warns };
+  return { ok: true, line: keep.length ? 'Every label size that works today still works with these choices (' + keep.map(a94SizeWord).join(', ') + ').' : 'No label size works with the design phones use today, so nothing can get worse.', warns: c.warns };
+}
+function a94GateHtml(g) { return '<p class="' + (g.ok ? 'a94-help' : 'a92-warn') + '" id="a94-gate">' + a94Esc(g.line) + '</p>' + '<div id="a94-warns">' + a94WarnsHtml(g) + '</div>'; }
+function a94WarnsHtml(g) { return (g.warns || []).map(function (w) { return '<div class="a94-off">' + a94Esc(w) + '</div>'; }).join(''); }
+function a94Html() {
+  if (!A94.loaded) return '<p class="a92-empty">Press <strong>Show the label design</strong> and type your PIN. Nothing changes until you press Save.</p>';
+  var R = a94Eff(), ro = !a94CanSave(), h = '<div class="a94-wrap"><div class="a94-set">';
+  h += '<div class="a92-card"><div class="a92-kv"><span>Saved design</span><b>' + (A94.ver ? 'change number ' + a94Esc(A94.ver) : 'the starting design (never changed)') + '</b>' +
+    (A94.who ? '<span>Saved by</span><b>' + a94Esc(A94.who) + '</b>' : '') + (A94.at ? '<span>Saved on</span><b>' + a94Esc(a94When(A94.at)) + '</b>' : '') + '</div>' +
+    (ro ? '<p class="a92-note">You can look and try choices in the preview. Only an Admin can save the label design.</p>' : '') + '</div>';
+  A94_GROUPS.forEach(function (g) {
+    var fs = ''; A94_F.forEach(function (F, i) { if (F.g === g) fs += a94FieldHtml(F, i, R); });
+    if (fs) h += '<div class="a92-card a94-g"><h3>' + a94Esc(g) + '</h3>' + fs + '</div>';
+  });
+  var chg = a94Changes(), u = a94Undo(), gate = a94Gate();
+  h += '<div class="a92-card a94-acts">';
+  if (A94.note) h += '<p class="a92-note">' + a94Esc(A94.note) + '</p>';
+  if (chg.length) h += '<div class="a94-help">Not saved yet:</div><ul class="a94-list">' + chg.map(function (c) { return '<li>' + a94Esc(c) + '</li>'; }).join('') + '</ul>';
+  else h += '<div class="a94-help">No changes yet. The preview shows the design the phones print with now.</div>';
+  h += a94GateHtml(gate);
+  if (!ro) {
+    if (A94.ask && chg.length && gate.ok) h += '<p class="a92-warn"><b>All phones print with this from now. Save?</b></p><div class="a94-row"><button type="button" class="btn btn-primary" data-a94-act="yes">Yes, save</button><button type="button" class="btn" data-a94-act="no">Not now</button></div>';
+    else h += '<div class="a94-row"><button type="button" class="btn btn-primary" data-a94-act="save"' + (chg.length && gate.ok && !A94.busy ? '' : ' disabled') + '>Save for the whole company</button>' + (chg.length ? '<button type="button" class="btn" data-a94-act="clear">Clear my changes</button>' : '') + '</div>';
+    if (u) h += '<button type="button" class="a94-link" data-a94-act="undo">Undo (put back the last design) - until ' + a94Esc(a94When(Number(u.at) + A94_UNDO_MS)) + '</button>';
+  } else if (chg.length) h += '<div class="a94-row"><button type="button" class="btn" data-a94-act="clear">Clear my changes</button></div>';
+  h += '<button type="button" class="a94-link" data-a94-act="hist">' + (A94.hist ? 'Hide the history' : 'History') + '</button>';
+  if (A94.hist) {
+    var hs = a94Read(A94_HIST_KEY) || [];
+    h += '<div class="a94-help">Saves made from this computer (newest first, up to 20). The last save from any computer is shown at the top.</div>' +
+      (hs.length ? '<ul class="a94-list">' + hs.map(function (x) { return '<li><b>' + a94Esc(a94When(x.at)) + '</b> ' + a94Esc(x.by) + ': ' + a94Esc(x.what) + '</li>'; }).join('') + '</ul>' : '<p class="a92-empty">No saves from this computer yet.</p>');
+  }
+  h += '</div><p class="a94-help">Shelf, bin and box stickers are set when you print them.</p></div>';
+  h += '<div class="a94-pv a92-card" id="a94-pvbox"><h3>Preview</h3><div class="a94-help">Preview only - nothing is recorded. One check per change, at every label size phones can pick.</div><div id="a94-pv">' + a94PvHtml() + '</div>' +
+    '<label class="a92-f" for="a94-code">Product for the preview (optional)<input type="text" id="a94-code" maxlength="60" autocomplete="off" spellcheck="false" placeholder="Product code or Amazon number" value="' + a94Esc(A94.code) + '"></label>' +
+    '<button type="button" class="btn" data-a94-act="code">Show this product</button></div></div>';
+  return h;
+}
+function a94SizeRows(pv, list) {
+  return list.map(function (z) {
+    var s = (pv && pv.sizes[z]) || { state: 'wait' };
+    var td = a94BaseOk() ? A94.today.sizes[z] : null, already = td && !a94Works(td) && td.state !== 'err';
+    var t = s.state === 'ok' ? 'both labels made' : (s.state === 'wait' ? 'checking...' : 'not made - ' + (s.why || 'no preview came back') + (already ? ' (already the case today)' : ''));
+    return '<li class="' + (s.state === 'ok' ? '' : (s.state === 'wait' ? 'a94-wait' : 'a94-no')) + '"><b>' + a94Esc(a94SizeWord(z)) + ':</b> ' + a94Esc(t) + (s.pic ? ' ' + a94Esc(s.pic) : '') + '</li>';
+  }).join('');
+}
+function a94PvHtml() {
+  if (!a94TokOk()) return '<button type="button" class="btn btn-primary" data-a94-act="real">Show the real label</button>';
+  var h = A94.pvMsg ? '<p class="a94-help">' + a94Esc(A94.pvMsg) + '</p>' : '', pv = A94.pv;
+  if (pv) {
+    h += '<div class="a94-help">Every label size phones can pick is checked against the design they use today (small sizes with the short legal text, as the phone prints them):</div><ul class="a94-list">' + a94SizeRows(pv, a94Sizes()) + '</ul>';
+    a94Sizes().forEach(function (z) { var s = pv.sizes[z]; if (s && s.imgs) s.imgs.forEach(function (x, k) { if (z !== a94First() && k > 0) return; h += '<div class="a94-cap">' + a94Esc(a94SizeWord(z)) + '</div><img class="a94-img' + (z === a94First() ? '' : ' a94-img-s') + '" alt="Preview of a ' + a94Esc(a94SizeWord(z)) + ' label" data-a94-img="' + a94Esc(z) + ':' + k + '">'; }); });
+  }
+  return h;
+}
+function a94NearHtml() {
+  if (!a94TokOk()) return '<button type="button" class="btn" data-a94-act="real">Show the real label</button>';
+  var g = a94Gate(), pv = A94.pv, f = a94First(), s = pv && pv.sig === a94Sig() ? pv.sizes[f] : null, h = '<div class="' + (g.ok ? 'a94-help' : 'a92-warn') + '">' + a94Esc(g.line) + '</div>' + a94WarnsHtml(g);
+  if (s && s.imgs && s.imgs[0]) h += '<img class="a94-img a94-img-s" alt="Preview of a ' + a94Esc(a94SizeWord(f)) + ' label" data-a94-img="' + a94Esc(f) + ':0">';
+  return h + '<a class="a94-link" href="#a94-pvbox">See the full preview</a>';
+}
+function a94Paint() { var b = document.getElementById('a94-body'); if (b) { b.innerHTML = a94Html(); a94Imgs(b); } }
+function a94PaintPv() {
+  var p = document.getElementById('a94-pv'); if (p) { p.innerHTML = a94PvHtml(); a94Imgs(p); }
+  var n = document.getElementById('a94-near'); if (n) { n.innerHTML = a94NearHtml(); a94Imgs(n); }
+  var g = document.getElementById('a94-gate'), gt = a94Gate(); if (g) { g.textContent = gt.line; g.className = gt.ok ? 'a94-help' : 'a92-warn'; }
+  var wv = document.getElementById('a94-warns'); if (wv) wv.innerHTML = a94WarnsHtml(gt);
+  var sv = document.querySelector ? document.querySelector('[data-a94-act=save]') : null; if (sv) sv.disabled = !(a94Changes().length && gt.ok && !A94.busy);
+}
+function a94Imgs(root) { try { Array.prototype.forEach.call(root.querySelectorAll('img[data-a94-img]'), function (im) { var k = String(im.getAttribute('data-a94-img')).split(':'), s = A94.pv && A94.pv.sizes[k[0]], x = s && s.imgs && s.imgs[Number(k[1])]; if (x && x.url) im.src = x.url; }); } catch (e) {} }   // blob addresses made here, set after drawing
+function a94Msg(t, ok) { var m = document.getElementById('a94-msg'); if (m) { m.className = 'result-msg e2-keep ' + (t ? (ok ? 'ok' : 'err') : ''); m.textContent = t || ''; } }
+function a94ErrText(r, saving) { var e = r && r.error ? String(r.error) : 'SERVICE_UNAVAILABLE', t = (e === 'RATE_LIMITED' && r && A94_RATE[r.which]) || A94_ERR[e] || A94_ERR.SERVICE_UNAVAILABLE; return t + (saving ? ' Nothing was saved.' : ''); }
+/* the one door: the label proxy (the phone's own path) */
+function a94TokOk() { return !!(A94.tok && A94.exp > Date.now() + 15000); }
+function a94Fetch(payload, tok) {
+  var ctl = (typeof AbortController !== 'undefined') ? new AbortController() : null, to = setTimeout(function () { try { if (ctl) ctl.abort(); } catch (e) {} }, 90000);
+  var hd = { 'content-type': 'application/json', 'apikey': DB_ANON_KEY }; if (tok) hd['x-studio-token'] = tok;
+  return fetch(DB_URL + A94_DOOR, { method: 'POST', headers: hd, body: JSON.stringify(payload), signal: ctl ? ctl.signal : undefined }).then(function (r) {
+    var ct = String((r.headers && r.headers.get && r.headers.get('content-type')) || '');
+    if (/application[/]zip/i.test(ct)) return r.arrayBuffer().then(function (b) { clearTimeout(to); return { ok: true, zip: b }; }, function () { clearTimeout(to); return { ok: false, error: 'OFFLINE' }; });
+    return r.json().then(function (j) { clearTimeout(to); return (j && typeof j === 'object') ? j : { ok: false, error: 'SERVICE_UNAVAILABLE' }; }, function () { clearTimeout(to); return { ok: false, error: 'SERVICE_UNAVAILABLE' }; });
+  }, function () { clearTimeout(to); return { ok: false, error: 'OFFLINE' }; });
+}
+function a94Login() {
+  if (a94TokOk()) return Promise.resolve(true);
+  if (A94.loginP) return A94.loginP;
+  var me = a94Me(); if (!me) { a94Msg('You are not signed in with an employee code. Sign in again.', false); return Promise.resolve(false); }
+  A94.loginP = a59AskPin(me).then(function (pin) {
+    if (pin === null || pin === undefined || pin === '') { a94Msg('No PIN typed. Nothing was changed.', false); return false; }
+    return a94Fetch({ action: 'login', code: me, pin: pin }, null).then(function (r) {
+      pin = null;
+      if (r && r.ok === true && r.token) { A94.tok = String(r.token); A94.exp = Date.now() + Math.min(28800, Number(r.expires_in_seconds) || 28800) * 1000; return true; }
+      a94Msg(a94ErrText(r, false), false); return false;
+    });
+  }).then(function (ok) { A94.loginP = null; return ok; }, function () { A94.loginP = null; return false; });
+  return A94.loginP;
+}
+/* action + body; a rejected sign-in signs in once more; silent = never open a PIN box */
+function a94Call(action, body, silent, again) {
+  var go = (silent && !a94TokOk()) ? Promise.resolve(false) : a94Login();
+  return go.then(function (ok) {
+    if (!ok) return { ok: false, error: 'CANCELLED' };
+    var p = { action: action }; Object.keys(body || {}).forEach(function (k) { p[k] = body[k]; });
+    return a94Fetch(p, A94.tok).then(function (r) {
+      if (r && r.ok === false && r.error === 'TOKEN_REJECTED' && !again) { A94.tok = null; A94.exp = 0; if (silent) return { ok: false, error: 'CANCELLED' }; return a94Call(action, body, silent, true); }
+      return r;
+    });
+  });
+}
+/* S2: ONE run number for this page session (renewed after 2.5 hours): the rate check counts a run number once in 3 hours, so previews do not use up the Admin's runs */
+function a94Rid() {
+  if (A94.rid && Date.now() - A94.ridAt < 9000000) return A94.rid;
+  var d = new Date(), z = function (n) { return (n < 10 ? '0' : '') + n; }, abc = 'abcdefghijklmnopqrstuvwxyz0123456789', r = '', i;
+  for (i = 0; i < 6; i++) r += abc.charAt(Math.floor(Math.random() * 36));
+  A94.rid = 'OMS-' + d.getUTCFullYear() + z(d.getUTCMonth() + 1) + z(d.getUTCDate()) + '-' + a94Me().replace(/[^A-Z0-9]/g, '').slice(0, 40) + '-' + r; A94.ridAt = Date.now();
+  return A94.rid;
+}
+function a94Load() {
+  if (A94.busy) return Promise.resolve(null);
+  A94.busy = true; a94Msg('Working...', true);
+  return a94Call('options', {}).then(function (r) {
+    if (r && r.error === 'CANCELLED') { A94.busy = false; return null; }
+    var d = r && r.ok === true && r.options && Array.isArray(r.options.fields) ? r.options : null;
+    if (!d) { A94.busy = false; a94Msg(a94ErrText(r, false), false); return null; }
+    A94.doc = d; A94.fmap = {}; d.fields.forEach(function (f) { A94.fmap[f.path] = f; });
+    return a94ReadSaved().then(function (ok) {
+      A94.busy = false; if (!ok) return null;
+      A94.loaded = true; A94.ed = {}; A94.bad = {}; A94.ask = false; A94.note = ''; A94.last = ''; A94.pv = null; A94.today = null; a94Paint();
+      a94Msg('Shown at ' + a94When(new Date()) + '.', true);
+      return a94Sample().then(function () { a94Soon(); return true; });
+    });
+  }).catch(function () { A94.busy = false; a94Msg(A94_ERR.SERVICE_UNAVAILABLE, false); return null; });
+}
+/* the saved company design (or the built-in one when it was never saved) */
+function a94ReadSaved() {
+  return a94Call('preset_get', { name: A94_NAME }).then(function (r) {
+    var pr = r && r.ok === true && r.data ? (r.data.preset || r.data) : null;
+    if (!pr || !pr.resolved) { a94Msg(a94ErrText(r && r.ok === true ? { error: 'NOT_FOUND' } : r, false), false); return false; }
+    var db = pr.preset_source === 'database' && pr.options && typeof pr.options === 'object';
+    A94.base = db ? a94Clone(pr.options) : { preset: A94_NAME };   /* never saved: start from the built-in design of the same name (the service allows it as the starting point) */
+    A94.R = a94Clone(pr.resolved); A94.ver = db ? Number(pr.version) || 0 : 0;
+    A94.who = db ? String(pr.updated_by_actor || '') : ''; A94.at = db ? String(pr.updated_at || '') : '';
+    return true;
+  });
+}
+function a94Sample() {
+  var code = String(A94.code || '').trim();
+  var body = code ? { filters: { codes: [code] }, page: { size: 2, count: false } } : { filters: { active: true, has_picture: true }, page: { size: 2, count: false } };
+  return a94Call('search', body, true).then(function (r) {
+    var rows = r && r.ok === true && r.data && Array.isArray(r.data.rows) ? r.data.rows : [];
+    A94.lines = rows.slice(0, 2).map(function (x) { return { key: String(x.sku || x.asin || ''), copies: 1, group: 'PRODUCTION' }; }).filter(function (x) { return x.key; });
+    if (code && !A94.lines.length) A94.pvMsg = 'No product found with that code.';
+  });
+}
+/* the design exactly as the phones will resolve it once saved: the saved json on its own (the service resolves a saved copy without a starting name);
+   a design that starts from the built-in of the same name is spelled out, so the preview never reads the saved copy instead */
+function a94Standalone(j) {
+  j = a94Clone(j) || {};
+  if (j.preset === A94_NAME) { delete j.preset; return a94Merge(a94Clone(A94_CODE_STD), j); }
+  return j;
+}
+function a94Soon() { clearTimeout(A94.pvT); A94.pvT = setTimeout(a94Preview, 700); }
+function a94Revoke() { A94.urls.forEach(function (u) { try { URL.revokeObjectURL(u); } catch (e) {} }); A94.urls = []; }
+var A94_DATA = 'this sample product has details missing (for example the net quantity). Choose another product for the preview';
+function a94Why(code, reason) {
+  if (code && code !== 'LABEL_REFUSED') return A94_DATA;
+  var t = String(reason || '');
+  if (/too small to scan/i.test(t)) return 'the QR code would be too small to scan at this size (a thinner scanner choice or no QR code in the corner helps)';
+  if (/gap|picture and QR|square/i.test(t)) return 'there is not enough room under the barcode for the picture and QR code';
+  if (/batch/i.test(t)) return 'the batch number does not fit';
+  if (/MRP/.test(t)) return 'the MRP line does not fit';
+  if (/SKU/.test(t)) return 'the product code line does not fit';
+  if (/title|word|text/i.test(t)) return 'the product name and the other text do not fit';
+  if (/scanner|bar|too long/i.test(t)) return 'the code is too long for the bars at this size';
+  return 'the label does not fit on this size';
+}
+/* one make (preview) at one size -> { state, why, pic, imgs }; a small size gets the short legal text, exactly as the phone sends it */
+function a94Make(json, size) {
+  var o = a94Standalone(json); a94Set(o, 'label.size', size); if (a94IsSmall(size)) a94Set(o, 'text.small_label_legal', 'short');
+  return a94Call('make', { lines: A94.lines, options: o, preview: true, batch: 'SAMPLE', run_id: a94Rid() }, true).then(function (r) {
+    if (!(r && r.ok === true && r.zip)) return { state: 'err', why: (r && r.error === 'BAD_INPUT') ? 'these choices do not work together' : a94ErrText(r, false).replace(/[.]$/, '').toLowerCase() };
+    return a94Unzip(r.zip).then(function (ents) {
+      var rj = null, imgs = [];
+      ents.forEach(function (e) { if (e.name === 'result.json') { try { rj = JSON.parse(new TextDecoder().decode(e.bytes)); } catch (x) {} } else if (/[.]png$/i.test(e.name)) imgs.push(e); });
+      imgs.sort(function (a, b) { return a.name < b.name ? -1 : 1; });
+      var probs = (rj && rj.problems) || [], warns = (rj && rj.warnings) || [];
+      var pic = warns.some(function (w) { return w.code === 'PIC_NOT_READY'; }) ? '(No picture is prepared for this choice: the label prints without the product picture.)' : '';
+      var urls = imgs.slice(0, A94.lines.length).map(function (im) { var u = URL.createObjectURL(new Blob([im.bytes], { type: 'image/png' })); A94.urls.push(u); return { url: u }; });
+      if (probs.length) return { state: 'bad', why: a94Why(probs[0].code, probs[0].reason), pic: pic, imgs: urls };
+      if (urls.length < A94.lines.length) return { state: 'bad', why: 'not every label came back', pic: pic, imgs: urls };
+      return { state: 'ok', pic: pic, imgs: urls };
+    }, function () { return { state: 'err', why: 'the preview came back but could not be opened' }; });
+  });
+}
+function a94Preview() {
+  if (!A94.loaded) return Promise.resolve(null);
+  if (!a94TokOk()) { a94PaintPv(); return Promise.resolve(null); }
+  if (!A94.lines || !A94.lines.length) { A94.pv = null; A94.pvMsg = A94.pvMsg || 'No product to show yet. Type a product code below.'; a94PaintPv(); return Promise.resolve(null); }
+  var my = ++A94.pvSeq, json = a94Json(), sig = a94Sig(), list = a94Sizes(), same = !Object.keys(A94.ed).length; a94Revoke(); A94.pvMsg = 'Batch shows as SAMPLE.';
+  A94.pv = { sig: sig, sizes: {} }; list.forEach(function (z) { A94.pv.sizes[z] = { state: 'wait' }; }); a94PaintPv();
+  var chain = Promise.resolve();
+  if (!a94BaseOk()) {   /* today first: the saved design at every size (when nothing is changed this IS the preview) */
+    var bsig = a94BaseSig(), base = a94Clone(A94.base); A94.today = { sig: bsig, ver: A94.ver, sizes: {} }; list.forEach(function (z) { A94.today.sizes[z] = { state: 'wait' }; });
+    list.forEach(function (z) { chain = chain.then(function () { if (my !== A94.pvSeq) return null; return a94Make(base, z).then(function (res) { if (my !== A94.pvSeq) return; A94.today.sizes[z] = { state: res.state, why: res.why }; if (same) A94.pv.sizes[z] = res; a94PaintPv(); }); }); });
+    if (same) return chain.then(function () { return my === A94.pvSeq ? a94Gate() : null; });
+  }
+  list.forEach(function (z) { chain = chain.then(function () { if (my !== A94.pvSeq) return null; return a94Make(json, z).then(function (res) { if (my !== A94.pvSeq) return; A94.pv.sizes[z] = res; a94PaintPv(); }); }); });
+  return chain.then(function () { return my === A94.pvSeq ? a94Gate() : null; });
+}
+/* a small ZIP reader (stored, or deflate where the browser can) */
+function a94Unzip(ab) {
+  return Promise.resolve().then(function () {
+    var u8 = new Uint8Array(ab), dv = new DataView(ab), eocd = -1, i, ents = [];
+    for (i = u8.length - 22; i >= Math.max(0, u8.length - 65558); i--) { if (dv.getUint32(i, true) === 0x06054b50) { eocd = i; break; } }
+    if (eocd < 0) throw new Error('not a zip');
+    var n = dv.getUint16(eocd + 10, true), p = dv.getUint32(eocd + 16, true);
+    if (n > 100) throw new Error('too many files');
+    for (i = 0; i < n; i++) {
+      if (p + 46 > u8.length || dv.getUint32(p, true) !== 0x02014b50) throw new Error('bad zip');
+      var method = dv.getUint16(p + 10, true), csz = dv.getUint32(p + 20, true), nl = dv.getUint16(p + 28, true), el = dv.getUint16(p + 30, true), cl = dv.getUint16(p + 32, true), lho = dv.getUint32(p + 42, true);
+      var name = new TextDecoder().decode(u8.subarray(p + 46, p + 46 + nl)); p += 46 + nl + el + cl;
+      if (lho + 30 > u8.length || dv.getUint32(lho, true) !== 0x04034b50) throw new Error('bad zip');
+      var ds = lho + 30 + dv.getUint16(lho + 26, true) + dv.getUint16(lho + 28, true);
+      if (ds + csz > u8.length || csz > 30000000) throw new Error('bad zip');
+      ents.push({ name: name, method: method, data: u8.subarray(ds, ds + csz) });
+    }
+    return Promise.all(ents.map(function (e) {
+      if (e.method === 0) return { name: e.name, bytes: new Uint8Array(e.data) };
+      if (e.method === 8 && typeof DecompressionStream !== 'undefined') return new Response(new Blob([e.data]).stream().pipeThrough(new DecompressionStream('deflate-raw'))).arrayBuffer().then(function (b) { return { name: e.name, bytes: new Uint8Array(b) }; });
+      throw new Error('cannot open');
+    }));
+  });
+}
+/* a change on the screen -> the unsaved choice (a value equal to the saved one is no change) */
+function a94Pick(el) {
+  var i = Number(el.getAttribute('data-a94-f')), F = A94_F[i]; if (!F) return;
+  var d = A94.fmap[F.p]; if (!d) return;
+  var R = a94Eff(), raw = String(el.value == null ? '' : el.value).trim(), v, ok = true; delete A94.bad[F.p]; A94.note = ''; A94.ask = false;
+  if (F.t === 'pick' || F.t === 'step') { var cs = a94Choices(F, R), j = raw === '' ? -1 : Number(raw); if (!(j >= 0 && j < cs.length)) return; v = cs[j]; }
+  else if (F.t === 'text') {
+    var bare = raw.split('{ASIN}').join('').split('{SKU}').join('');
+    if (!raw || raw.length > Number(d.max_chars || 213) || /[^ -~]/.test(raw)) { ok = false; A94.bad[F.p] = 'Use plain letters, numbers and signs, up to ' + Number(d.max_chars || 213) + ' characters.'; }
+    else if (bare.length === raw.length) { ok = false; A94.bad[F.p] = 'Put {ASIN} or {SKU} in it, so each label gets its own text.'; }
+    else if (bare.indexOf('{') >= 0 || bare.indexOf('}') >= 0) { ok = false; A94.bad[F.p] = 'Only {ASIN} and {SKU} may be in curly brackets.'; }
+    else v = raw;
+  }
+  A94.last = F.p;
+  if (ok) {
+    if (a94Same(v, a94Get(A94.R, F.p))) delete A94.ed[F.p]; else A94.ed[F.p] = v;
+    var R2 = a94Eff();
+    if (F.p === 'layout' && R2.layout === 'v2' && R2.batch.position === 'above_block') { A94.ed['batch.position'] = 'with_asin'; if (a94Same('with_asin', a94Get(A94.R, 'batch.position'))) delete A94.ed['batch.position']; A94.note = 'The Standard look puts the batch number at the end of the Amazon number line.'; }
+    if (F.p === 'qr.carries' && R2.qr.carries !== 'custom') { delete A94.ed['qr.text']; delete A94.bad['qr.text']; }
+    if (F.p === 'qr.carries' && R2.qr.carries === 'custom' && !R2.qr.text) A94.bad['qr.text'] = 'Type your own QR text or link before you save.';
+    if (F.p === 'picture.style') { var ws = A94_F.filter(function (x) { return x.p === 'picture.width_px'; })[0].vals(R2); if (ws.length && ws.indexOf(Number(R2.picture.width_px)) < 0) { A94.ed['picture.width_px'] = ws[0]; if (a94Same(ws[0], a94Get(A94.R, 'picture.width_px'))) delete A94.ed['picture.width_px']; } }
+  }
+  a94Paint(); if (ok) a94Soon();
+}
+/* the company design to save: the saved one with only the changed settings replaced; nothing else is touched */
+function a94Json() {
+  var j = a94Clone(A94.base) || {}, R = a94Eff();
+  Object.keys(A94.ed).forEach(function (p) { a94Set(j, p, A94.ed[p]); });
+  if (R.qr.carries !== 'custom') a94Del(j, 'qr.text');
+  return j;
+}
+function a94SaveAsk() {
+  if (!a94CanSave()) { a94Msg('Only an Admin can save the label design.', false); return false; }
+  if (!a94Changes().length) return false;
+  var R = a94Eff(); if (R.qr.carries === 'custom' && !R.qr.text) { A94.bad['qr.text'] = 'Type your own QR text or link before you save.'; a94Paint(); return false; }
+  if (Object.keys(A94.bad).length) { a94Msg('Fix the marked choice first.', false); return false; }
+  var g = a94Gate(); if (!g.ok) { a94Msg(g.line, false); return false; }
+  A94.ask = true; a94Paint(); return true;
+}
+/* save: the PIN is typed again (the door checks it), one audit note on the server, then the design is read back */
+function a94Put(json, why, histWhat, isUndo) {
+  if (A94.busy || !a94CanSave()) return Promise.resolve(null);
+  var me = a94Me(); if (!me) { a94Msg('You are not signed in with an employee code. Sign in again.', false); return Promise.resolve(null); }
+  A94.busy = true;
+  return a94Login().then(function (ok) {
+    if (!ok) { A94.busy = false; return null; }
+    return a59AskPin(me).then(function (pin) {
+      if (pin === null || pin === undefined || pin === '') { A94.busy = false; a94Msg('No PIN typed. Nothing was saved.', false); return null; }
+      a94Msg('Saving...', true);
+      var old = { json: a94Clone(A94.base), ver: A94.ver }, txt = String(why).slice(0, 200);
+      return a94Call('preset_save', { name: A94_NAME, scope: 'shared', options: json, note: txt, reason: txt.length >= 3 ? txt : 'Label design', expect_version: A94.ver, code: me, pin: pin }).then(function (r) {
+        pin = null;
+        if (!(r && r.ok === true)) { A94.busy = false; A94.ask = false; a94Paint(); a94Msg(a94ErrText(r, true), false); return null; }
+        var nv = r.data && r.data.version !== undefined ? Number(r.data.version) : null;
+        if (isUndo) a94Store(A94_UNDO_KEY, null); else a94Store(A94_UNDO_KEY, { json: old.json, ver: nv, at: Date.now() });
+        var hs = a94Read(A94_HIST_KEY) || []; hs.unshift({ at: Date.now(), by: me, what: String(histWhat).slice(0, 300) }); a94Store(A94_HIST_KEY, hs.slice(0, 20));
+        return a94ReadSaved().then(function () {
+          A94.busy = false; A94.ed = {}; A94.bad = {}; A94.ask = false; A94.note = ''; A94.last = ''; a94Paint();
+          a94Msg(isUndo ? 'The last design is back. Phones use it from their next print.' : 'Saved. Phones use it from their next print.', true); a94Soon(); return true;
+        });
+      });
+    });
+  }).catch(function () { A94.busy = false; a94Msg(A94_ERR.SERVICE_UNAVAILABLE + ' Nothing was saved.', false); return null; });
+}
+function a94Save() {
+  if (!A94.ask) return Promise.resolve(null);
+  var g = a94Gate(); if (!g.ok) { A94.ask = false; a94Paint(); a94Msg(g.line, false); return Promise.resolve(null); }
+  var c = a94Changes(); return a94Put(a94Json(), 'Label design: ' + c.join('; '), c.join('; '), false);
+}
+/* Undo saves the design from before; it too may not break a size that works today (no new breakage) */
+function a94UndoGo() {
+  var u = a94Undo(); if (!u || !a94CanSave()) { a94Msg('There is nothing to put back.', false); return Promise.resolve(null); }
+  if (typeof window !== 'undefined' && window.confirm && !window.confirm('Put back the design saved before? All phones print with it from their next print.')) return Promise.resolve(null);
+  if (!A94.lines || !A94.lines.length) { a94Msg('No product to check the old design with. Type a product code in the preview first.', false); return Promise.resolve(null); }
+  a94Msg('Checking the old design at every label size...', true);
+  var res = {}, chain = Promise.resolve(), list = a94Sizes();
+  list.forEach(function (z) { chain = chain.then(function () { return a94Make(u.json, z).then(function (x) { res[z] = x; }); }); });
+  return chain.then(function () {
+    if (!list.length || !a94BaseOk()) { a94Msg('Not put back: wait until the preview of the design phones use today is complete. Nothing was saved.', false); return null; }
+    var c = a94Compare(res, list); if (c.bad.length || c.errs.length) { a94Msg('Not put back: ' + c.bad.concat(c.errs).join('; ') + '. Nothing was saved.', false); return null; }
+    return a94Put(u.json, 'Undo: put back the label design saved before', 'Undo: the design saved before is back', true);
+  });
+}
+function a94Click(e) {
+  var t = e && e.target && e.target.closest ? e.target.closest('[data-a94-act]') : null; if (!t || t.disabled) return;
+  var a = t.getAttribute('data-a94-act');
+  if (a === 'save') a94SaveAsk();
+  else if (a === 'yes') a94Save();
+  else if (a === 'no') { A94.ask = false; a94Paint(); }
+  else if (a === 'clear') { A94.ed = {}; A94.bad = {}; A94.ask = false; A94.note = ''; A94.last = ''; a94Paint(); a94Soon(); }
+  else if (a === 'undo') a94UndoGo();
+  else if (a === 'hist') { A94.hist = !A94.hist; a94Paint(); }
+  else if (a === 'real') { a94Login().then(function (ok) { if (ok) { a94PaintPv(); (A94.lines ? Promise.resolve() : a94Sample()).then(a94Preview); } }); }
+  else if (a === 'code') { var c = document.getElementById('a94-code'); A94.code = c ? String(c.value || '').trim().slice(0, 60) : ''; A94.pvMsg = ''; a94Sample().then(a94Preview); }
+}
+function a94Change(e) { var t = e && e.target; if (t && t.getAttribute && t.getAttribute('data-a94-f') !== null) a94Pick(t); }
+/* S5: on a narrow screen a control that gets the focus is lifted clear of the floating Text size button at the bottom */
+function a94Focus(e) {
+  try { var t = e && e.target; if (!t || !t.getBoundingClientRect || window.innerWidth > 900) return; var b = t.getBoundingClientRect().bottom; if (b > window.innerHeight - 90) window.scrollBy(0, b - window.innerHeight + 110); } catch (x) {}
+}
+function a94Init() {
+  var b = document.getElementById('a94-body');
+  if (b && !b.getAttribute('data-a94-wired')) { b.setAttribute('data-a94-wired', '1'); b.addEventListener('click', a94Click); b.addEventListener('change', a94Change); b.addEventListener('focusin', a94Focus); }
+  var l = document.getElementById('a94-load'); if (l && !l.getAttribute('data-a94-wired')) { l.setAttribute('data-a94-wired', '1'); l.addEventListener('click', function () { a94Load(); }); }
+  a94Paint(); if (A94.loaded) a94Soon();
+}
+function a94Leave() { clearTimeout(A94.pvT); A94.pvSeq++; a94Revoke(); A94.pv = null; A94.today = null; A94.ask = false; }
 </script>
 </body>
 </html>
