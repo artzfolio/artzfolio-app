@@ -4007,7 +4007,7 @@ button:focus-visible,select:focus-visible,input:focus-visible,textarea:focus-vis
 </style>
 </head>
 <body>
-<div class="ver-corner" id="verCornerBadge">v233t</div>
+<div class="ver-corner" id="verCornerBadge">v234b4</div>
 <!-- v112: the full-screen SKU page (opened by a12OpenSku) -->
 <div class="a12-skupage" id="a12-skupage"><div class="a12-sphead"><button type="button" onclick="a12CloseSku()">&larr; Back</button><div id="a12-sp-title" style="flex:1"></div><button type="button" onclick="shOpen('sku')" aria-label="Share this product page">&#128228; Share</button></div><div class="a12-spbody" id="a12-sp-body"></div></div>
 <!-- v63: Gap 2 — offline write-queue indicator. Hidden (display:none) unless
@@ -5226,7 +5226,7 @@ button:focus-visible,select:focus-visible,input:focus-visible,textarea:focus-vis
 
             <!-- Version -->
             <div class="ver-badge">
-                <div class="ver-name">&#128230; ArtzFolio Super App v233t</div>
+                <div class="ver-name">&#128230; ArtzFolio Super App v234b4</div>
                 <div class="ver-sub">Tap the button below to see what is new in this version.</div>
                 <button class="settings-btn" style="min-height:46px" onclick="wnOpen()">What is new and what is done</button>
             </div>
@@ -8704,6 +8704,676 @@ html.bl-x13 .bl13-empty{margin:8px 0}
 })();
 
 </script>
+<style id="lbx-css">
+/* v234a LBX (lane D, v26): Labels in 3 plain steps. Rules use #lb-bg / [data-lblayer] only, so with the layer off nothing here applies. Arial, navy, thin gold line. */
+#lb-bg .nv-sheet{font-family:Arial,Helvetica,sans-serif;overflow-x:hidden}
+#lb-bg #lb-tabs>.lbx-prog,#lb-bg #lb-tabs>.lbx-hd{flex:1 1 100%;width:100%;box-sizing:border-box}
+#lb-bg .lbx-prog{display:flex;gap:4px;margin:2px 0 6px}
+#lb-bg .lbx-prog span{flex:1;height:5px;border-radius:3px;background:#CBD5E1}
+#lb-bg .lbx-prog span.on{background:#1B3F6B}
+#lb-bg .lbx-hd{display:flex;align-items:center;gap:6px;border-bottom:1px solid #C9A84C;padding-bottom:6px;margin-bottom:8px}
+#lb-bg .lbx-hd b{flex:1 1 auto;min-width:0;color:#0A1628;font-size:var(--t-section);line-height:1.3}
+#lb-bg .lbx-back,#lb-bg .lbx-hist{flex:0 0 auto;min-height:44px;min-width:44px;border:0;background:#fff;color:#1B3F6B;font:700 var(--t-section) Arial,Helvetica,sans-serif;padding:0 6px;border-radius:10px}
+#lb-bg .lbx-hist{font-size:1.35rem;border:1px solid #CBD5E1}
+#lb-bg .lbx-kinds{display:flex;flex-wrap:wrap;gap:6px;margin:2px 0 10px}
+#lb-bg .lbx-kind{flex:1 1 auto;min-height:44px;padding:0 10px;border:2px solid #1B3F6B;border-radius:22px;background:#fff;color:#1B3F6B;font:700 var(--t-section) Arial,Helvetica,sans-serif;white-space:nowrap}
+#lb-bg .lbx-kind[aria-pressed="true"]{background:#1B3F6B;color:#fff}
+#lb-bg .lbx-big{display:block;width:100%;min-height:64px;margin:8px 0;border:0;border-radius:12px;background:#1B3F6B;color:#fff;font:700 1.15rem Arial,Helvetica,sans-serif;padding:10px 14px;text-align:left;white-space:normal;overflow-wrap:break-word}
+#lb-bg .lbx-big small{display:block;font-weight:400;font-size:var(--t-body);opacity:.92;margin-top:3px}
+#lb-bg .lbx-big.lbx-alt{background:#fff;color:#1B3F6B;border:2px solid #1B3F6B}
+#lb-bg .lbx-big[disabled],#lb-bg .lbx-print[disabled]{opacity:.65}
+#lb-bg .lbx-lab{display:block;font-weight:700;color:#0A1628;font-size:var(--t-section);margin:6px 2px 4px}
+#lb-bg .lbx-in,#lb-bg .lbx-sel{display:block;width:100%;box-sizing:border-box;min-height:48px;font:var(--t-section) Arial,Helvetica,sans-serif;border:2px solid #CBD5E1;border-radius:10px;padding:6px 10px;background:#fff;color:#0A1628}
+#lb-bg .lbx-chips{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+#lb-bg .lbx-chip{min-height:44px;padding:0 14px;border:2px solid #1B3F6B;border-radius:22px;background:#fff;color:#1B3F6B;font:700 var(--t-body) Arial,Helvetica,sans-serif}
+#lb-bg .lbx-chip[aria-pressed="true"]{background:#1B3F6B;color:#fff}
+#lb-bg .lbx-dim{color:#4B5563;font-size:var(--t-body);margin:6px 2px;line-height:1.4}
+#lb-bg .lbx-row,#lb-bg .lbx-line{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;border:1px solid #E2E8F0;border-radius:10px;padding:8px 10px;margin:6px 0;background:#fff}
+#lb-bg .lbx-nm{flex:1 1 9rem;min-width:0}
+#lb-bg .lbx-line .lbx-nm{flex:1 1 100%}
+#lb-bg .lbx-name{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;width:100%;text-align:left;border:0;background:none;padding:0;margin:0;font:700 var(--t-section) Arial,Helvetica,sans-serif;color:#0A1628;line-height:1.3;word-break:normal;overflow-wrap:break-word;cursor:pointer}
+#lb-bg .lbx-name.open{display:block;-webkit-line-clamp:unset;overflow:visible}
+#lb-bg .lbx-size{display:block;color:#4B5563;font-size:var(--t-body);margin-top:2px}
+#lb-bg .lbx-act,#lb-bg .lbx-ctl{display:flex;align-items:center;gap:6px;flex:0 0 auto;margin-left:auto}
+#lb-bg .lbx-add{min-height:48px;min-width:96px;border:0;border-radius:10px;background:#1B3F6B;color:#fff;font:700 var(--t-section) Arial,Helvetica,sans-serif;padding:0 12px}
+#lb-bg .lbx-added{display:inline-flex;align-items:center;min-height:44px;padding:0 10px;border-radius:10px;background:#E8F5EC;color:#14532D;font-weight:700;font-size:var(--t-body);white-space:nowrap}
+#lb-bg .lbx-pm,#lb-bg .lbx-x{min-height:44px;min-width:44px;border:2px solid #1B3F6B;border-radius:10px;background:#fff;color:#1B3F6B;font:700 1.2rem Arial,Helvetica,sans-serif;padding:0}
+#lb-bg .lbx-x{border-color:#B3261E;color:#B3261E}
+#lb-bg .lbx-n{min-width:2.2em;text-align:center;font-weight:700;font-size:var(--t-section);color:#0A1628}
+#lb-bg .lbx-miss{display:block;flex:1 1 100%;min-height:44px;text-align:left;border:0;background:#FEE2E2;color:#991B1B;border-radius:8px;padding:6px 10px;font:700 var(--t-body) Arial,Helvetica,sans-serif}
+#lb-bg .lbx-fix{flex:1 1 100%}
+#lb-bg .lbx-sum{font-weight:700;color:#0A1628;font-size:var(--t-section);margin:2px 2px 8px}
+#lb-bg .lbx-bar{position:sticky;bottom:-18px;background:#fff;border-top:1px solid #C9A84C;margin:10px -14px -18px;padding:8px 14px calc(18px + env(safe-area-inset-bottom,0px));z-index:2}
+#lb-bg .lbx-next,#lb-bg .lbx-print{display:block;width:100%;min-height:56px;border:0;border-radius:12px;background:#1B7A3A;color:#fff;font:700 1.15rem Arial,Helvetica,sans-serif;padding:8px 12px;white-space:normal}
+#lb-bg .lbx-sec,[data-lblayer] .lbx-sec{display:block;width:100%;min-height:48px;margin-top:8px;border:2px solid #1B3F6B;border-radius:12px;background:#fff;color:#1B3F6B;font:700 var(--t-section) Arial,Helvetica,sans-serif;white-space:normal}
+[data-lblayer] .lbx-print{display:block;width:100%;min-height:56px;border:0;border-radius:12px;background:#1B7A3A;color:#fff;font:700 1.15rem Arial,Helvetica,sans-serif;margin-top:8px}
+[data-lblayer] .lbx-q{font-size:var(--t-section);color:#0A1628;margin:4px 0;line-height:1.4}
+[data-lblayer] .lbx-dim{color:#4B5563;font-size:var(--t-body);margin:6px 2px}
+#lb-bg .lbx-link{display:block;margin:10px auto 2px;min-height:44px;border:0;background:none;color:#1B4F8A;text-decoration:underline;font:700 var(--t-body) Arial,Helvetica,sans-serif}
+#lb-bg .lbx-err{background:#FEE2E2;color:#991B1B;border-radius:8px;padding:8px;margin:6px 0;font-size:var(--t-body)}
+#lb-bg .lbx-ok{background:#E8F5EC;color:#14532D;border-radius:8px;padding:8px;margin:6px 0;font-size:var(--t-body)}
+#lb-bg .lbx-h{color:#0A1628;font-weight:700;font-size:var(--t-section);margin:10px 2px 4px;border-bottom:1px solid #C9A84C;padding-bottom:4px}
+#lb-bg .lbx-pvrow{display:flex;gap:6px;align-items:flex-start;margin:4px 0}
+#lb-bg .lbx-pvimg{display:block;flex:1 1 0;min-width:0;max-width:50%;height:auto;max-height:9rem;object-fit:contain;border:1px solid #CBD5E1;background:#fff}
+#lb-bg .lbx-file{display:flex;flex-wrap:wrap;align-items:center;gap:6px;border:1px solid #E2E8F0;border-radius:10px;padding:6px 8px;margin:4px 0}
+#lb-bg .lbx-file b{flex:1 1 8rem;min-width:0;overflow-wrap:anywhere;font-size:var(--t-body)}
+#lb-bg .lbx-file button{min-height:44px;border:0;border-radius:10px;background:#1B3F6B;color:#fff;font:700 var(--t-body) Arial,Helvetica,sans-serif;padding:0 12px}
+#lb-bg .lbx-spin{display:inline-block;width:1em;height:1em;border:3px solid rgba(255,255,255,.45);border-top-color:#fff;border-radius:50%;vertical-align:-3px;margin-right:6px;animation:lbxspin .8s linear infinite}
+#lb-bg .lbx-dim .lbx-spin,#lb-bg .lbx-alt .lbx-spin,#lb-bg .lbx-kind .lbx-spin{border-color:rgba(27,63,107,.25);border-top-color:#1B3F6B}
+@keyframes lbxspin{to{transform:rotate(360deg)}}
+#lb-bg .lbx-chk{flex:1 1 100%;color:#4B5563;font-size:var(--t-body);padding:4px 2px}
+html.lbx-on #tab-nav .nv-b{flex:1 1 auto!important;min-width:0!important;padding-left:1px!important;padding-right:1px!important}
+html.lbx-on #tab-nav .nv-b .nv-l{white-space:normal!important;overflow:hidden!important;text-overflow:clip!important;word-break:keep-all!important;overflow-wrap:normal!important;hyphens:none!important;max-width:100%;line-height:1.1}
+</style>
+<script id="lbx-js">
+/* v234a3 LBX (lane D, v26 section D + G; cold review S1-S4, S6, N2, N3; v234a3 = the engine's own data rule): LABELS IN 3 PLAIN STEPS. One additive layer over the Label Studio (LBS) block.
+   It only REDRAWS the screens. Every call to the label service is the old one with the old body: lbCall list / search / make preview / print / confirm /
+   history / reprint, lbAddLine, lbLinePayload, lbOptions, lbOutputBody, lbJobStep, lbJobRetry. The hidden choices use the saved company setting
+   (LB.preset production-standard, no person override), PDF only, only lines not printed before. The production / spare field keeps its stored value.
+   Steps: 1 What to print (Product / Bin / Sticker / Barcode; Today's orders or Pick products), 2 Check (copies, remove, one red line when data is missing),
+   3 Print (preview of 2, Label size, Printer, Print, Download PDF only). History is the clock button top right.
+   v234a3: the red line shows only what the label engine itself would refuse (not found, no ASIN, no name, no MRP, no net quantity), read from the
+   service's own search rows. The request is the old one: an override is sent only for what a person typed in the old editor.
+   Off switch: ?lbx=off for this page load only, or window.lbxOff() (window.lbxOff(true) keeps it off on this phone). The old functions are kept; the new
+   ones pass every call to them while off, so a wrapper added later by another layer is never dropped. */
+(function () {
+    var KEY = 'lbx_v234a2_keep_off', ON = false, INST = false, O = {}, NL = String.fromCharCode(10), LOGB = [];
+    function isOff() {   /* N3: the address works for this load only and never writes the phone's memory */
+        var q = ''; try { q = String(location.search || ''); } catch (e) {}
+        if (q.indexOf('lbx=off') >= 0) return true; if (q.indexOf('lbx=on') >= 0) return false;
+        try { return localStorage.getItem(KEY) === 'off'; } catch (e) { return false; }
+    }
+    function logRaw(where, raw) { try { LOGB.push({ at: new Date().toISOString(), where: String(where), text: String(raw).slice(0, 400) }); if (LOGB.length > 50) LOGB.shift(); console.warn('[labels] ' + where + ': ' + String(raw).slice(0, 400)); } catch (x) {} }
+    if (typeof lbTab !== 'function' || typeof LB === 'undefined') return;
+    var NAMES = ['What to print', 'Check', 'Print'];
+    function e(s) { return esc59(s); }
+    function plural(n, w) { return lbN(n) + ' ' + w + (Number(n) === 1 ? '' : 's'); }
+    function stepOf(t) { return (t === 'today' || t === 'pick') ? 1 : (t === 'list' ? 2 : (t === 'make' ? 3 : 0)); }
+    function spin() { return '<span class="lbx-spin" aria-hidden="true"></span>'; }
+
+    /* ---------- names: short name + size, never cut mid-word, 2 lines then ... with tap to open (section G) ---------- */
+    var SIZE_RE = /([0-9]+([.][0-9]+)? ?[xX×] ?[0-9]+([.][0-9]+)?( ?(inches|inch|in|cms|cm|mm|ft))?)/;
+    function shortName(t) {
+        t = String(t == null ? '' : t).trim(); if (t.toLowerCase().indexOf('artzfolio ') === 0 && t.length > 14) t = t.slice(10).trim();   /* the brand word starts every title: it is not shown */
+        if (!t) return '';
+        var cut = [' · ', ' | ', ' - ', ' – ', ', ', ' ('], i, best = t.length;
+        for (i = 0; i < cut.length; i++) { var p = t.indexOf(cut[i]); if (p >= 12 && p < best) best = p; }
+        var s = t.slice(0, best).trim();
+        if (s.length > 70) { var w = s.slice(0, 70), sp = w.lastIndexOf(' '); s = (sp > 20 ? w.slice(0, sp) : w) + ' …'; }
+        return s;
+    }
+    function sizeOf(t) { var m = SIZE_RE.exec(String(t || '')); return m ? m[1].trim() : ''; }
+    function nameHtml(title, code) {
+        var full = String(title || '').trim(), sh = shortName(full) || String(code || ''), sz = sizeOf(full);
+        if (sz && sh.indexOf(sz) >= 0) sz = '';
+        return '<button type="button" class="lbx-name" data-lbx="expand" aria-expanded="false" data-full="' + e(full || sh) + '" data-short="' + e(sh) + '">' + e(sh) + '</button>' + (sz ? '<span class="lbx-size">' + e(sz) + '</span>' : '');
+    }
+
+    /* ---------- the header: 3 steps, Back, History clock ---------- */
+    function head(t) {
+        var n = stepOf(t), bk = ({ pick: 'today', list: LB.lbxFrom || 'today', make: 'list', hist: 'today' })[t] || '', h = '';
+        if (n) { h += '<div class="lbx-prog" role="progressbar" aria-label="Step ' + n + ' of 3" aria-valuemin="1" aria-valuemax="3" aria-valuenow="' + n + '">'; for (var i = 1; i <= 3; i++) h += '<span' + (i <= n ? ' class="on"' : '') + '></span>'; h += '</div>'; }
+        h += '<div class="lbx-hd">' + (bk ? '<button type="button" class="lbx-back" data-lbx="go" data-v="' + bk + '">&lsaquo; Back</button>' : '') +
+            '<b>' + (n ? 'Step ' + n + ' of 3 &middot; ' + e(NAMES[n - 1]) : 'History') + '</b>' +
+            (t !== 'hist' ? '<button type="button" class="lbx-hist" data-lbx="go" data-v="hist" aria-label="History" title="History">&#128339;</button>' : '') + '</div>';
+        return h;
+    }
+    function title() { try { var b = lbEl('lb-bg').querySelector('.nv-top b'); if (b) b.innerHTML = '&#127991; Labels'; var d = lbEl('lb-bg').querySelector('.nv-sheet'); if (d) d.setAttribute('aria-label', 'Labels'); } catch (x) {} }
+    function top() { try { var d = lbEl('lb-bg').querySelector('.nv-sheet'); if (d) d.scrollTop = 0; } catch (x) {} }
+
+    function lbxTab(t) {
+        if (t === 'set' || t === 'prev') t = 'make';
+        if (!stepOf(t) && t !== 'hist') t = 'today';
+        LB.tab = t; var o = lbEl('lb-tabs'); if (!o) return;
+        title(); o.innerHTML = head(t); lbSay('', '');
+        var pv = lbEl('lb-pv'); if (pv) { if (t !== 'make') pv.innerHTML = ''; pv.hidden = (t !== 'make'); }
+        var sm = lbEl('lb-sample'); if (sm) { sm.innerHTML = ''; sm.hidden = true; }
+        var out = lbEl('lb-out'); if (out) out.hidden = !(t === 'make' || t === 'hist');
+        if (t === 'list') LB.shown = Math.max(LB.shown || 0, LB_ROW_PAGE);
+        try { ({ today: function () { lbDrawToday(); }, pick: function () { lbDrawPick(); }, list: function () { lbDrawList(); }, make: function () { lbDrawMake(); }, hist: function () { lbDrawHist(); } })[t](); }
+        catch (x) { var v = lbEl('lb-view'); if (v) v.innerHTML = '<div class="lbx-err">This screen could not be drawn. Close Labels and open it again.</div>'; }
+        top();
+    }
+
+    /* ---------- the sticky bar: N labels added -> Next ---------- */
+    function labelsAdded() { var n = 0; LB.lines.forEach(function (LN) { n += Number(LN.copies) || 0; }); return n; }
+    function barInner() { var n = labelsAdded(); return n ? '<button type="button" class="lbx-next" data-lbx="go" data-v="list">' + plural(n, 'label') + ' added &rarr; Next</button>' : '<div class="lbx-dim">Nothing added yet.</div>'; }
+    function bar() { return '<div class="lbx-bar" id="lbx-bar">' + barInner() + '</div>'; }
+    function barPaint() { var b = lbEl('lbx-bar'); if (b) b.innerHTML = barInner(); }
+    function afterBusy(fn) { var k = 0; (function w() { if (LB.busy && k++ < 600) { setTimeout(w, 200); return; } try { fn(); } catch (x) {} })(); }
+
+    /* ---------- step 1: what to print ---------- */
+    function kinds() {
+        var k = [];
+        try { if (lbCan()) k.push(['product', 'Product']); } catch (x) {}
+        try { if (stdCan()) k.push(['bin', 'Bin']); } catch (x) {}
+        try { if (typeof p6Can === 'function' && p6Can() && p6HasProd()) { k.push(['sticker', 'Sticker']); k.push(['barcode', 'Barcode']); } } catch (x) {}
+        if (k.length < 2) return '';
+        return '<div class="lbx-kinds" role="group" aria-label="Kind of label">' + k.map(function (x) { return '<button type="button" class="lbx-kind" data-lbx="kind" data-v="' + x[0] + '" aria-pressed="' + (x[0] === 'product' ? 'true' : 'false') + '">' + x[1] + '</button>'; }).join('') + '</div>';
+    }
+    function waiting() {
+        var t = LB.today || {}; if (!t.counts) return null;
+        var a = lbCountOf(t.counts, 'TO_MANUFACTURE'), b = lbCountOf(t.counts, 'CHECKED_BY_HAND');
+        if (!a && !b) return null; return (a ? a.lines : 0) + (b ? b.lines : 0);
+    }
+    function lbxDrawToday() {
+        var o = lbEl('lb-view'); if (!o) return;
+        var t = LB.today || {}, w = waiting(), busy = LB.todayLoad === 'lbx', h = kinds();
+        h += '<button type="button" class="lbx-big" id="lbx-today" data-lbx="today"' + (LB.busy ? ' disabled' : '') + '>' + (busy ? spin() + 'Loading today&rsquo;s orders...' : 'Today&rsquo;s orders' + (w != null ? ' (' + lbN(w) + ' waiting)' : '')) + '<small>Every order line that has no label yet</small></button>';
+        h += '<button type="button" class="lbx-big lbx-alt" data-lbx="go" data-v="pick">Pick products<small>Search by name, SKU or ASIN</small></button>';
+        if (t.msg && t.where === 'lbx') h += '<div class="' + (t.err ? 'lbx-err' : 'lbx-ok') + '" role="status">' + e(t.msg) + '</div>';
+        if (LB.lines.length) h += bar();
+        o.innerHTML = h;
+        if (!t.counts && !LB.lbxCnt && lbTokOk()) { LB.lbxCnt = 1; lbCall('list_counts', {}, { silent: true }).then(function (r) { if (r && r.ok === true && r.data) { LB.today = Object.assign({}, LB.today || {}, { counts: r.data }); if (LB.open && LB.tab === 'today' && !LB.busy) lbDrawToday(); } }); }
+    }
+    function pageList(name, off, rows) {
+        return lbCall('list', { list: name, limit: 600, offset: off }).then(function (r) {
+            if (!(r && r.ok === true && r.data)) return { r: r, rows: rows };
+            var rs = r.data.rows || []; rows = rows.concat(rs);
+            if (rs.length >= 600 && rows.length < LB_MAX_LINES) return pageList(name, off + 600, rows);
+            return { r: r, rows: rows };
+        });
+    }
+    function todayAll(b) {   /* both of today's lists, one after the other, added exactly as the old two buttons added them */
+        if (LB.busy) return; LB.busy = true; LB.todayLoad = 'lbx';
+        if (b) { b.disabled = true; b.innerHTML = spin() + 'Loading today&rsquo;s orders...'; }
+        var names = ['TO_MANUFACTURE', 'CHECKED_BY_HAND'], got = {}, i = 0, bad = null;
+        function next() { if (i >= names.length) return Promise.resolve(); var nm = names[i++]; return pageList(nm, 0, []).then(function (x) { if (!(x.r && x.r.ok === true)) { bad = x.r || {}; return; } got[nm] = x.rows; return next(); }); }
+        next().then(function () {
+            LB.busy = false; LB.todayLoad = '';
+            var total = 0;
+            names.forEach(function (name) {
+                var rows = got[name]; if (!rows) return;
+                LB.lines = LB.lines.filter(function (LN) { return LN.source !== 'today_' + name; });
+                rows.forEach(function (x) { total++; lbAddLine({ key: x.key, title: x.title, copies: Number(x.copies) > 0 ? x.copies : 1, group: name === 'CHECKED_BY_HAND' ? 'CHECK_SPARE' : (x.group === 'CHECK_SPARE' ? 'CHECK_SPARE' : 'PRODUCTION'), batch: x.batch, lineId: x.line_id, source: 'today_' + name }); });
+            });
+            var msg = bad ? (bad.cancelled ? '' : lbRefusal(bad)) : (total ? '' : 'No order line is waiting for a label.');
+            if (total && LB.open) { LB.lbxFrom = 'today'; fill(); lbTab('list'); lbSay(bad ? 'err' : 'ok', (bad ? msg + ' ' : '') + plural(total, 'order line') + ' added.'); return; }
+            LB.today = Object.assign({}, LB.today || {}, { msg: msg, err: !!bad, where: 'lbx' });
+            if (LB.open && LB.tab === 'today') lbDrawToday();
+        });
+    }
+    function kindGo(b, v) {
+        if (v === 'product') return;
+        Array.prototype.forEach.call(document.querySelectorAll('#lb-bg .lbx-kind'), function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+        b.innerHTML = spin() + b.textContent;
+        setTimeout(function () {
+            try { lbClose(); } catch (x) {}
+            setTimeout(function () {
+                try {
+                    if (v === 'bin') { STD.src = 'bins'; stdOpen(); }
+                    else { p6Open(); p6Act('type', { getAttribute: function () { return v === 'barcode' ? 'bar' : 'qr'; } }); }
+                } catch (x) {}
+            }, 300);
+        }, 60);
+    }
+
+    /* ---------- step 1b: pick products (one box; many codes = the old paste path) ---------- */
+    function codeLike(s) { s = String(s || ''); if (lbLooksAsin(s)) return true; if (s.indexOf('_') >= 0 || s.indexOf('^') >= 0) return s.length >= 3; return s.length >= 5 && /[0-9]/.test(s) && /[A-Za-z]/.test(s) && s === s.toUpperCase(); }
+    function tokens(v) { var out = [], cur = '', i, c; v = String(v || ''); for (i = 0; i < v.length; i++) { c = v.charCodeAt(i); if (c <= 32 || v[i] === ',' || v[i] === ';') { if (cur) out.push(cur); cur = ''; } else cur += v[i]; } if (cur) out.push(cur); return out; }
+    function pasteLines(v) {   /* -> null, or the lines for the old paste parser: "CODE" or "CODE n" */
+        var tk = tokens(v), lines = [], codes = 0, i;
+        for (i = 0; i < tk.length; i++) {
+            if (codeLike(tk[i])) { lines.push(tk[i]); codes++; }
+            else if (/^[0-9]{1,4}$/.test(tk[i]) && lines.length && lines[lines.length - 1].indexOf(' ') < 0) lines[lines.length - 1] += ' ' + tk[i];
+            else return null;
+        }
+        return codes >= 2 ? lines : null;
+    }
+    function lbxDrawPick() {
+        var o = lbEl('lb-view'); if (!o) return;
+        var h = '<label class="lbx-lab" for="lbx-q">Search by name, SKU or ASIN</label><input type="search" id="lbx-q" class="lbx-in" inputmode="search" autocomplete="off" autocapitalize="off" spellcheck="false" maxlength="20000" placeholder="Name, SKU or ASIN. Paste many codes too." value="' + e(LB.lbxQ || '') + '">';
+        h += '<div class="lbx-chips"><button type="button" class="lbx-chip" data-lbx="make" aria-pressed="' + (LB.lbxMake ? 'true' : 'false') + '">To make now</button></div>';
+        h += '<div id="lb-found" aria-live="polite">' + found() + '</div><div id="lb-paste-out">' + lbPasteHtml() + '</div><textarea id="lb-paste" hidden aria-hidden="true" tabindex="-1"></textarea>';
+        h += bar(); o.innerHTML = h;
+    }
+    function found() { if (LB.lbxCodes) return pasteCard(); return LB.lbxMake ? makeHtml() : lbResHtml(); }
+    function pasteCard() { var n = LB.lbxCodes.length; return '<div class="lbx-dim" role="status">' + plural(n, 'code') + ' found in the box.</div><button type="button" class="lbx-big" data-lbx="paste">Add these ' + plural(n, 'product') + '</button>'; }
+    function typeQ(v) {
+        LB.lbxQ = String(v || ''); LB.lbxShow = 20; clearTimeout(LB.t);
+        var pl = pasteLines(LB.lbxQ), fo = lbEl('lb-found');
+        LB.lbxCodes = pl;
+        if (pl || LB.lbxMake) { if (fo) fo.innerHTML = found(); return; }
+        var q = LB.lbxQ.trim();
+        LB.f.q = q; LB.f.mode = (q && (lbLooksAsin(q) || (codeLike(q) && q.indexOf(' ') < 0))) ? 'codes' : 'words';
+        if (fo) fo.innerHTML = q ? '<div class="lbx-dim">' + spin() + 'Searching...</div>' : lbResHtml();
+        LB.t = setTimeout(function () { if (LB.open && LB.tab === 'pick') lbSearchRun(true); }, 350);
+    }
+    function pasteGo(b) {
+        var ta = lbEl('lb-paste'); if (!ta || !LB.lbxCodes || LB.busy) return;
+        ta.value = LB.lbxCodes.join(NL);
+        if (b) { b.disabled = true; b.innerHTML = spin() + 'Adding...'; }
+        lbPasteAdd();
+        afterBusy(function () { LB.lbxCodes = null; LB.lbxQ = ''; var q = lbEl('lbx-q'); if (q) q.value = ''; var fo = lbEl('lb-found'); if (fo) fo.innerHTML = found(); barPaint(); });
+    }
+    function rowsNow() { return LB.lbxMake ? makeView() : ((LB.res && LB.res.rows) || []); }
+    function specOf(r) { if (LB.lbxMake) return { key: r.sku_code, sku: r.sku_code, asin: r.asin, title: r.product_name, mrp: r.mrp, copies: Math.max(1, Math.min(LB_MAX_COPIES, Math.floor(Number(r.qty_to_make)) || 1)), group: 'PRODUCTION', source: 'makelist' }; return lbRowToSpec(r); }
+    function freeLine(key) { var k = String(key || '').toUpperCase(), f = null; LB.lines.forEach(function (LN) { if (!f && LN.lineId == null && LN.group === 'PRODUCTION' && LN.key.toUpperCase() === k) f = LN; }); return f; }
+    function actHtml(i, n) {
+        if (!n) return '<button type="button" class="lbx-add" data-lbx="add" data-i="' + i + '">+ Add</button>';
+        return '<button type="button" class="lbx-pm" data-lbx="dec" data-i="' + i + '" aria-label="One label fewer">&minus;</button><span class="lbx-added">Added &#10003; (' + lbN(n) + ')</span><button type="button" class="lbx-pm" data-lbx="inc" data-i="' + i + '" aria-label="One label more">+</button>';
+    }
+    function rowHtml(r, i) {
+        var s = specOf(r), LN = freeLine(s.key);
+        return '<div class="lbx-row"><div class="lbx-nm">' + nameHtml(s.title, s.key) + '</div><div class="lbx-act" id="lbx-a' + i + '">' + actHtml(i, LN ? LN.copies : 0) + '</div></div>';
+    }
+    function rowPaint(i) { var r = rowsNow()[i], a = lbEl('lbx-a' + i); if (!r || !a) return; var LN = freeLine(specOf(r).key); a.innerHTML = actHtml(i, LN ? LN.copies : 0); barPaint(); }
+    function addOne(i) {
+        var r = rowsNow()[i]; if (!r) return;
+        var x = lbAddLine(specOf(r));
+        if (x === 'full') lbSay('err', 'The list is full (' + lbN(LB_MAX_LINES) + ' lines).'); else if (x === 'bad') lbSay('err', 'This product has no SKU or ASIN, so it cannot be labelled.');
+        rowPaint(i);
+    }
+    function step(i, d) {
+        var r = rowsNow()[i]; if (!r) return; var LN = freeLine(specOf(r).key); if (!LN) return;
+        LN.copies = Math.min(LB_MAX_COPIES, LN.copies + d);
+        if (LN.copies < 1) LB.lines.splice(LB.lines.indexOf(LN), 1);
+        rowPaint(i);
+    }
+    function lbxResHtml() {
+        var R = LB.res;
+        if (!R) return '<div class="lbx-dim">Type a name, SKU or ASIN. You can paste many codes at once.</div>';
+        if (!R.rows.length) return lbFbNote() + '<div class="lbx-dim">Nothing found. Check the spelling, or paste the exact SKU or ASIN.</div>';
+        var show = Math.min(R.rows.length, LB.lbxShow || 20), h = lbFbNote() + '<div class="lbx-dim" role="status">' + plural(R.total, 'product') + (R.capped ? ' or more' : '') + ' found. Showing ' + lbN(R.off + 1) + ' to ' + lbN(R.off + show) + '.</div>';
+        h += R.rows.slice(0, show).map(rowHtml).join('');
+        if (show < R.rows.length) h += '<button type="button" class="lbx-sec" data-lbx="more">Show 20 more</button>';
+        else if (R.hasMore) h += '<button type="button" class="lbx-sec" data-lbx="page" data-v="1">Show 20 more</button>';
+        if (R.off > 0) h += '<button type="button" class="lbx-sec" data-lbx="page" data-v="-1">Back to the first ones</button>';
+        if (R.total > show) h += '<button type="button" class="lbx-sec" data-lbx="addall"' + (LB.busy ? ' disabled' : '') + '>Add all ' + lbN(Math.min(R.total, LB_MAX_LINES)) + '</button>';
+        return h;
+    }
+    function addAll(b) {
+        if (LB.busy) return;
+        if (LB.lbxMake) {
+            var v = makeView(); if (!v.length || !window.confirm('Add all ' + plural(v.length, 'product') + '?')) return;
+            v.forEach(function (r) { lbAddLine(specOf(r)); }); var fo = lbEl('lb-found'); if (fo) fo.innerHTML = found(); barPaint(); lbSay('ok', plural(v.length, 'product') + ' added.'); return;
+        }
+        var R = LB.res; if (!R) return; var n = Math.min(R.total, LB_MAX_LINES);
+        if (!window.confirm('Add all ' + plural(n, 'product') + '?')) return;
+        if (b) { b.disabled = true; b.innerHTML = spin() + 'Adding...'; }
+        lbAddAll(); afterBusy(function () { barPaint(); });
+    }
+    /* "To make now" = the old Production list (sold in the last 30 days, nothing free to sell), as a filter inside Pick products */
+    function makeView() { var A = LB.lbxMakeAll || [], q = String(LB.lbxQ || '').trim().toUpperCase(); return q ? A.filter(function (r) { return (String(r.product_name || '') + ' ' + String(r.sku_code || '') + ' ' + String(r.asin || '')).toUpperCase().indexOf(q) >= 0; }) : A; }
+    function makeHtml() {
+        if (LB.lbxMakeErr) return '<div class="lbx-err">' + e(LB.lbxMakeErr) + '</div>';
+        if (!LB.lbxMakeAll) return '<div class="lbx-dim">' + spin() + 'Loading the products to make...</div>';
+        var v = makeView(); if (!v.length) return '<div class="lbx-dim">No product needs making now.</div>';
+        var show = Math.min(v.length, LB.lbxShow || 20), h = '<div class="lbx-dim" role="status">' + plural(v.length, 'product') + ' to make now (sold lately, none free to sell).</div>';
+        h += v.slice(0, show).map(rowHtml).join('');
+        if (show < v.length) h += '<button type="button" class="lbx-sec" data-lbx="more">Show 20 more</button>';
+        if (v.length > 1) h += '<button type="button" class="lbx-sec" data-lbx="addall">Add all ' + lbN(v.length) + '</button>';
+        return h;
+    }
+    function makeToggle(b) {
+        LB.lbxMake = !LB.lbxMake; LB.lbxShow = 20; if (b) b.setAttribute('aria-pressed', LB.lbxMake ? 'true' : 'false');
+        var fo = lbEl('lb-found'); if (fo) fo.innerHTML = found();
+        if (!LB.lbxMake) { typeQ(LB.lbxQ || ''); return; }
+        if (LB.lbxMakeAll) return; LB.lbxMakeErr = '';
+        var p; try { p = Promise.resolve(a12Ds('forecast', false)); } catch (x) { p = Promise.resolve({ ok: false, msg: 'The sales numbers are not available on this phone.' }); }
+        p.then(function (d) {
+            if (!(d && d.ok)) LB.lbxMakeErr = String((d && d.msg) || 'The sales numbers could not be read. Try again.');
+            else LB.lbxMakeAll = (d.data || []).filter(function (r) { return r && r.make_rule === 'SOLD_NO_STOCK' && r.sku_code; });
+            var f2 = lbEl('lb-found'); if (f2 && LB.open && LB.tab === 'pick' && LB.lbxMake) f2.innerHTML = found();
+        });
+    }
+
+    /* ---------- data check (v234a3): the label engine's own rule, mirrored ----------
+       Engine (label-service 1.x, read 21 Nov 2026): lbl_svc_prepare -> lbl_lookup_core -> view lbl_sku_v (oms_sku_master; title = product_name;
+       net_qty = units_in_pack when it is a whole number 1..100000, else the -S<n> part of the SKU, else empty). A label is REFUSED when the product is not
+       found, has no ASIN, (legal lines on) no title or a title over 400 letters, no MRP above 0, or no net quantity. A typed override (the old editor:
+       LN.ov title / mrp / net, sent by lbLinePayload) covers title, MRP and net quantity; nothing covers a missing ASIN. The app's read-only search
+       (lbl_svc_search, fields 'full') returns title, asin, mrp and net_qty from the same view, so it can tell in advance. Nothing it finds is sent. */
+    function typedOk(LN, f) { var o = (lbLinePayload(LN) || {}).override || {}; return f === 'net' ? !!o.net_qty : !!o[f]; }
+    function engMissing(LN) {   /* null = not checked yet (no claim); [] = the engine has everything; else the problems */
+        var E = LN.lbxEng; if (!E) return null;
+        if (!E.found) return ['notfound'];
+        var m = []; if (!String(E.asin || '').trim()) m.push('asin');
+        if (lbEff('text.legal_lines') !== false) {
+            var t = String(E.title || '').trim();
+            if (!typedOk(LN, 'title') && (!t || t.length > 400)) m.push(t ? 'longname' : 'name');
+            if (!typedOk(LN, 'mrp') && !(Number(E.mrp) > 0)) m.push('mrp');
+            if (!typedOk(LN, 'net') && (E.net === null || E.net === undefined || String(E.net).trim() === '')) m.push('net');
+        }
+        return m;
+    }
+    function missInfo(LN) {   /* -> null or { text, fix }: ONE line per row */
+        var m = engMissing(LN); if (!m || !m.length) return null;
+        if (m[0] === 'notfound') return { text: 'Not in the product list yet. This label may be refused.', fix: false };
+        if (m.indexOf('asin') >= 0) return { text: 'No ASIN in the product list. Ask the admin to add it.', fix: false };
+        var w = m.map(function (x) { return x === 'name' ? 'name' : (x === 'longname' ? 'shorter name' : (x === 'mrp' ? 'MRP' : 'net quantity')); });
+        var t = w.length === 1 ? w[0] : w.slice(0, -1).join(', ') + ' and ' + w[w.length - 1];
+        return { text: (m.indexOf('longname') >= 0 && m.length === 1 ? 'Name too long. Type a shorter name' : t.charAt(0).toUpperCase() + t.slice(1) + ' missing') + ' &ndash; tap to add', fix: true };
+    }
+    function missText(LN) { var i = missInfo(LN); return i ? i.text : ''; }
+    function looking(LN) { return !!(LN.lbxLook && !LN.lbxEng); }
+    function counts() {   /* lines the engine would refuse, by reason (only lines already checked) */
+        var c = { lines: LB.lines.length, checked: 0, refused: 0, notfound: 0, asin: 0, name: 0, mrp: 0, net: 0, typingFixes: 0 };
+        LB.lines.forEach(function (LN) { var m = engMissing(LN); if (!m) return; c.checked++; if (!m.length) return; c.refused++; m.forEach(function (x) { if (x === 'longname') x = 'name'; c[x]++; }); if (m[0] !== 'notfound' && m.indexOf('asin') < 0) c.typingFixes++; });
+        return c;
+    }
+    function fill() {   /* one read-only, silent search per 100 lines not checked yet; no PIN box opens by itself; names / MRP are kept for DISPLAY only */
+        var tok = lbTokOk(), todo = LB.lines.filter(function (LN) { return !LN.lbxEng && !LN.lbxLook && (tok || !LN.lbxNoCheck); });
+        todo.forEach(function (LN) { LN.lbxLook = true; });
+        for (var i = 0; i < todo.length; i += 100) (function (ch) {
+            lbCall('search', { filters: { codes: ch.map(function (LN) { return LN.key; }) }, page: { size: 100 } }, { silent: true }).then(function (r) {
+                if (!(r && r.ok === true && r.data)) { ch.forEach(function (LN) { LN.lbxLook = false; LN.lbxNoCheck = true; }); if (LB.open && !LB.busy && (LB.tab === 'list' || LB.tab === 'make')) (LB.tab === 'list' ? lbDrawList : lbDrawMake)(); return; }   /* not checked: no red line and no claim; tried again once a sign-in is held */
+                var bySku = {}, byAsin = {};
+                (r.data.rows || []).forEach(function (row) { var s1 = String(row.sku || '').toUpperCase(), a1 = String(row.asin || '').toUpperCase(); if (s1) bySku[s1] = row; if (a1) (byAsin[a1] = byAsin[a1] || []).push(row); });
+                ch.forEach(function (LN) {
+                    var k = LN.key.toUpperCase(), row = bySku[k] || bySku[String(LN.sku || '').toUpperCase()] || ((byAsin[k] && byAsin[k].length === 1) ? byAsin[k][0] : null);
+                    LN.lbxEng = row ? { found: true, title: row.title, asin: row.asin, mrp: row.mrp, net: row.net_qty } : { found: false };
+                    if (row && !LN.title && row.title) LN.title = String(row.title);
+                    if (row && !(Number(LN.mrp) > 0) && Number(row.mrp) > 0) LN.mrp = Number(row.mrp);
+                    LN.lbxLook = false;
+                });
+                if (LB.open && !LB.busy && (LB.tab === 'list' || LB.tab === 'make')) (LB.tab === 'list' ? lbDrawList : lbDrawMake)();
+            });
+        })(todo.slice(i, i + 100));
+    }
+
+    /* ---------- step 2: check ---------- */
+    function sumLine() { var t = lbTotals(LB.lines); return plural(t.lines, 'product') + ' &middot; ' + plural(t.labels, 'label'); }
+    function lineHtml(LN, i) {
+        var mt = missText(LN), h = '<div class="lbx-line" id="lbx-l' + i + '"><div class="lbx-nm">' + nameHtml(LN.title || (LN.ov && LN.ov.title), LN.sku || LN.asin || LN.key) + '</div>' +
+            '<div class="lbx-ctl"><button type="button" class="lbx-pm" data-lbx="ldec" data-i="' + i + '" aria-label="One label fewer">&minus;</button><span class="lbx-n" id="lbx-n' + i + '" aria-label="Labels">' + lbN(LN.copies) + '</span>' +
+            '<button type="button" class="lbx-pm" data-lbx="linc" data-i="' + i + '" aria-label="One label more">+</button><button type="button" class="lbx-x" data-lbx="lrm" data-i="' + i + '" aria-label="Remove">&#10005;</button></div>';
+        var mi = missInfo(LN);
+        if (looking(LN)) h += '<div class="lbx-chk">' + spin() + 'Checking this product...</div>';
+        else if (mi && mi.fix) h += '<button type="button" class="lbx-miss" data-lbx="fix" data-i="' + i + '">' + mi.text + '</button>';
+        else if (mi) h += '<div class="lbx-miss" role="note">' + mi.text + '</div>';
+        if (LN.ovOpen) h += '<div class="lbx-fix">' + lbOvField(i, 'title', 'Name on the label', 400, LN.ov.title) + lbOvField(i, 'mrp', 'MRP in rupees (like 499)', 12, LN.ov.mrp) + lbOvField(i, 'net', 'Net quantity (like 1 or 500 g)', 12, LN.ov.net) + '<button type="button" class="lbx-sec" data-lbx="fixdone" data-i="' + i + '">Done</button></div>';
+        return h + '</div>';
+    }
+    function lbxDrawList() {
+        var o = lbEl('lb-view'); if (!o) return;
+        LB.lines.forEach(function (LN) { LN.inc = true; });   /* every line on the list is printed; the cross removes a line */
+        if (!LB.lines.length) { o.innerHTML = '<div class="lbx-dim">The list is empty. Choose what to print first.</div><button type="button" class="lbx-big" data-lbx="go" data-v="today">Today&rsquo;s orders</button><button type="button" class="lbx-big lbx-alt" data-lbx="go" data-v="pick">Pick products</button>'; return; }
+        fill();
+        var shown = LB.lines.slice(0, LB.shown || LB_ROW_PAGE), h = '<div class="lbx-sum" role="status" id="lbx-sum">' + sumLine() + '</div>';
+        h += shown.map(lineHtml).join('');
+        if (LB.lines.length > shown.length) h += '<button type="button" class="lbx-sec" data-lbx="lmore">Show more (' + lbN(LB.lines.length - shown.length) + ' more)</button>';
+        h += '<div class="lbx-bar" id="lbx-bar"><button type="button" class="lbx-next" data-lbx="go" data-v="make">Next: print &rarr;</button></div>';
+        o.innerHTML = h;
+    }
+    function lineStep(i, d) {
+        var LN = LB.lines[i]; if (!LN) return;
+        LN.copies = Math.max(1, Math.min(LB_MAX_COPIES, LN.copies + d));
+        var n = lbEl('lbx-n' + i), s = lbEl('lbx-sum'); if (n) n.textContent = lbN(LN.copies); if (s) s.innerHTML = sumLine();
+    }
+
+    /* ---------- step 3: print ---------- */
+    function sig() { return LB.lines.map(function (LN) { return LN.key + '*' + LN.copies; }).slice(0, 2).join('|') + '#' + JSON.stringify(LB.ov); }
+    function printerField() { var f = null; ((LB.doc && LB.doc.fields) || []).forEach(function (x) { if (!f && x.group === 'printer' && x.type === 'enum' && (x.choices || []).length) f = x; }); return f; }
+    function loadDoc() {   /* the same options call and the same reading as lbLoadDoc; only the redraw is this step */
+        if (LB.docBusy || LB.docTried || !lbTokOk()) return; LB.docBusy = true; LB.docTried = true;
+        lbCall('options', {}, { silent: true }).then(function (r) {
+            LB.docBusy = false;
+            var d = r && r.ok === true && (r.options && r.options.fields ? r.options : (r.data && (r.data.fields ? r.data : (r.data.data || r.data.options))));
+            if (d && Array.isArray(d.fields)) { LB.doc = d; LB.fieldMap = {}; d.fields.forEach(function (f) { LB.fieldMap[f.path] = f; }); if (!LB.preset || !lbPresetKnown(LB.preset)) LB.preset = lbPresetKnown('production-standard') ? 'production-standard' : (d.default_preset || 'cloud-default'); }
+            if (LB.open && LB.tab === 'make' && !LB.busy) lbDrawMake();
+        });
+    }
+    function pvPaint() {
+        var pv = lbEl('lb-pv'); if (!pv || LB.tab !== 'make') return; pv.hidden = false;
+        if (!lbIncluded().length) { pv.innerHTML = ''; return; }
+        if (LB.busy) return;
+        if (LB.lbxPvSig === sig()) {   /* a preview that failed leaves no picture: offer the button again */
+            if (pv.querySelector('.lbx-spin')) setTimeout(function () { var p2 = lbEl('lb-pv'); if (p2 && !LB.busy && p2.querySelector('.lbx-spin') && !p2.querySelector('img')) { LB.lbxPvSig = ''; p2.innerHTML = '<div class="lbx-h">Preview</div><button type="button" class="lbx-sec" data-lbx="pv">Show 2 sample labels</button>'; } }, 3000);
+            return;
+        }
+        if (!lbTokOk()) { pv.innerHTML = '<div class="lbx-h">Preview</div><button type="button" class="lbx-sec" data-lbx="pv">Show 2 sample labels</button>'; return; }
+        LB.lbxPvSig = sig(); LB.prevN = 2;
+        pv.innerHTML = '<div class="lbx-h">Preview</div><div class="lbx-dim">' + spin() + 'Making the preview...</div>';
+        lbPreview();
+    }
+    function lbxPreviewShow(inc, rj, imgs) {
+        var o = lbEl('lb-pv') || lbEl('lb-out'); if (!o) return;
+        var h = '<div class="lbx-h">Preview</div>', k = 0, pics = '';
+        inc.slice(0, 2).forEach(function (LN) {
+            var p = lbProbOf(rj, LN), im = p ? null : imgs[k++];
+            if (p) h += '<div class="lbx-err"><b>' + e(shortName(LN.title) || LN.key) + ':</b> ' + e(plainReason(p.reason)) + '</div>';
+            else if (im) { var u = URL.createObjectURL(im.blob); LB.urls.push(u); pics += '<img class="lbx-pvimg" data-ui="' + (LB.urls.length - 1) + '" alt="Preview of a label">'; }
+        });
+        if (pics) h += '<div class="lbx-pvrow">' + pics + '</div>';
+        if (lbIsSmall()) h += '<div class="lbx-err">' + e(LB_CAVEAT) + '</div>';
+        o.innerHTML = h;
+        Array.prototype.forEach.call(o.querySelectorAll('img[data-ui]'), function (im) { var u2 = LB.urls[Number(im.getAttribute('data-ui'))]; if (u2) im.src = u2; });
+    }
+    function running() { return !!(LB.job && !LB.job.done && !LB.job.failed && LB.busy); }
+    function lbxDrawMake() {
+        var o = lbEl('lb-view'); if (!o) return; var inc = lbIncluded(), t = lbTotals(inc);
+        if (!inc.length) { o.innerHTML = '<div class="lbx-dim">The list is empty. Choose what to print first.</div><button type="button" class="lbx-big" data-lbx="go" data-v="today">Back to step 1</button>'; var pv0 = lbEl('lb-pv'); if (pv0) pv0.innerHTML = ''; return; }
+        loadDoc(); fill();
+        var miss = inc.filter(function (LN) { return !!missText(LN); }).length;
+        var size = Object.prototype.hasOwnProperty.call(LB.ov, 'label.size') ? LB.ov['label.size'] : '', pf = printerField(), legalOff = lbEff('text.legal_lines') === false, can = lbCanPrint();
+        var h = '<div class="lbx-sum" role="status">' + plural(t.lines, 'product') + ' &middot; ' + plural(t.labels, 'label') + '</div>';
+        h += '<label class="lbx-lab" for="lbx-size">Label size</label><select id="lbx-size" class="lbx-sel">' + [['', 'Usual size (company setting)'], ['75x50', '75 x 50 mm'], ['100x50', '100 x 50 mm'], ['60x40', '60 x 40 mm (small)']].map(function (x) { return '<option value="' + x[0] + '"' + (size === x[0] ? ' selected' : '') + '>' + x[1] + '</option>'; }).join('') + '</select>';
+        h += '<label class="lbx-lab" for="lbx-printer">Printer</label><select id="lbx-printer" class="lbx-sel"><option value="">Usual printer (company setting)</option>' +
+            (pf ? (pf.choices || []).map(function (c, j) { return '<option value="' + j + '"' + (Object.prototype.hasOwnProperty.call(LB.ov, pf.path) && LB.ov[pf.path] === c.value ? ' selected' : '') + '>' + e(String(c.plain || c.label || c.value).slice(0, 80)) + '</option>'; }).join('') : '') + '</select>';
+        if (lbIsSmall()) h += '<div class="lbx-err">' + e(LB_CAVEAT) + '</div>';
+        if (miss) h += '<button type="button" class="lbx-miss" data-lbx="go" data-v="list">' + plural(miss, 'product') + ' would be refused by the label service (name, MRP, net quantity or ASIN). Tap to see them.</button>';
+        if (legalOff) h += '<div class="lbx-err">The company label setting leaves out the price and maker lines, so printing is switched off. Ask the admin. You can still download the PDF.</div>';
+        h += '<div style="margin-top:14px">';
+        if (can) h += '<button type="button" class="lbx-print" data-lbx="print"' + ((LB.busy || legalOff) ? ' disabled' : '') + '>' + (running() && LB.job.mode === 'print' ? spin() + 'Printing...' : 'Print') + '</button>';
+        else h += '<div class="lbx-dim">Only an Admin or Supervisor can print. You can download the PDF.</div>';
+        h += '<button type="button" class="lbx-link" data-lbx="pdf"' + (LB.busy ? ' disabled' : '') + '>' + (running() && LB.job.mode === 'make' ? 'Making the PDF...' : 'Download PDF only') + '</button></div>';
+        h += '<div class="lbx-dim">Labels already printed for an order are skipped by themselves. To print them again, open History (the clock at the top).</div>';
+        o.innerHTML = h;
+        pvPaint();
+    }
+    function sizeSet(v) {   /* the same values the old size picker wrote */
+        if (v === '') { delete LB.ov['label.size']; delete LB.ov['text.small_label_legal']; delete LB.ov['label.width_mm']; delete LB.ov['label.height_mm']; }
+        else if (v === '75x50' || v === '100x50') { LB.ov['label.size'] = v; delete LB.ov['text.small_label_legal']; delete LB.ov['label.width_mm']; delete LB.ov['label.height_mm']; }
+        else if (LB_SMALL[v]) { LB.ov['label.size'] = v; LB.ov['text.small_label_legal'] = 'short'; delete LB.ov['label.width_mm']; delete LB.ov['label.height_mm']; }
+        lbDrawMake();
+    }
+    function printerSet(v) { var f = printerField(); if (!f) return; if (v === '') delete LB.ov[f.path]; else { var c = (f.choices || [])[Number(v)]; if (c) LB.ov[f.path] = c.value; } lbDrawMake(); }
+    function creds(why) {   /* section F: PIN once per session. The PIN this person typed earlier in this session (held in memory only, never stored) is reused; the server still checks it */
+        try { if (rmPinFresh() && r41lLbTyped(RM_PIN) && String(RM_PIN.code || '').toUpperCase() === String(sessionEmployeeCode() || '').toUpperCase()) return Promise.resolve({ code: RM_PIN.code, pin: RM_PIN.pin }); } catch (x) {}
+        return lbStepCreds(why);
+    }
+    function tooBig(inc) { var ch = lbChunks(inc, false); if (ch.length > LB_MAX_PARTS) { lbSay('err', 'This list is too long to print at once (' + plural(inc.length, 'product') + '). Remove some, print, then do the rest.'); return true; } return false; }
+    function printAsk() {
+        var inc = lbIncluded(); if (!inc.length || LB.busy) return;
+        if (tooBig(inc)) return; if (lbEff('text.legal_lines') === false) return;
+        var t = lbTotals(inc);
+        lbLayer('confirm', 'Print labels?', '<div class="lbx-q">Print ' + plural(t.labels, 'label') + ' for ' + plural(t.lines, 'product') + '?</div><div class="lbx-dim">Labels already printed for an order are skipped. The print is saved in History.</div>' +
+            '<button type="button" class="lbx-print" data-lbx="printgo">Yes, print</button><button type="button" class="lbx-sec" data-lbx="back">No, go back</button>');
+    }
+    function run(mode) {   /* = lbMakeGo: same job, same lbJobStep; PDF only, only labels not printed before */
+        if (mode === 'print') lbLayerDone('confirm');
+        var inc = lbIncluded(); if (!inc.length || LB.busy) return; if (tooBig(inc)) return;
+        LB.fmt = { pdf: true, png: false, jpg: false, xlsx: false }; LB.onlyNew = true;
+        var job = { mode: mode, chunks: lbChunks(inc, false), i: 0, base: '', parts: [], creds: null, retryId: '', retry: false, rate: 0, failed: null, done: false, started: Date.now() };
+        LB.parts = []; LB.job = job; LB.busy = true; lbRevoke(); LB.lbxPvSig = '';
+        var pv = lbEl('lb-pv'); if (pv) pv.innerHTML = ''; var out = lbEl('lb-out'); if (out) out.innerHTML = '';
+        lbBusyDraw();
+        if (mode === 'print') creds('Print labels: type your PIN.').then(function (c) { if (!c) { LB.busy = false; LB.job = null; lbBusyDraw(); lbSay('warn', 'Cancelled. Nothing was printed.'); return; } job.creds = c; lbJobStep(job); });
+        else lbJobStep(job);
+    }
+    function openFile(pi, fi) {
+        var p = LB.parts[pi], f = p && p.files[fi]; if (!f) { lbGone(); return; }
+        var w = null; try { var u = URL.createObjectURL(f.blob); LB.urls.push(u); w = window.open(u, '_blank'); } catch (x) {}
+        if (!w) lbSave(pi, fi);
+    }
+    function lbxRenderJob(job) {
+        var o = lbEl('lb-out'); if (!o || !job) return;
+        var probs = lbProblems(job), made = 0, skipped = 0, legalOff = false, small = false;
+        job.parts.forEach(function (p) { var c = (p.rj && p.rj.counts) || {}; made += (Number(c.labels_production) || 0) + (Number(c.labels_spare) || 0); skipped += Number(c.lines_nothing_new) || 0; if (p.legalOff) legalOff = true; ((p.rj && p.rj.warnings) || []).forEach(function (w) { if (w.code === 'LEGAL_LINES_OFF') legalOff = true; if (w.code === 'SMALL_LABEL_TEXT') small = true; }); });
+        var pr = job.mode === 'print', F = job.failed, why = F ? plainMsg(F.message, 'print') : '', h, head;
+        var skipTxt = skipped ? ' ' + plural(skipped, 'line') + ' skipped because ' + (skipped === 1 ? 'it was' : 'they were') + ' printed before.' : '';
+        if (F && F.error === 'CONFIRM' && made) { head = 'Not saved in History'; h = '<div class="lbx-err" role="status">' + plural(made, 'label') + ' made, but they are NOT saved in History yet. ' + e(why) + '</div>'; }
+        else if (F && !made) { head = pr ? 'Not printed' : 'PDF not made'; h = '<div class="lbx-err" role="status"><b>' + (pr ? 'Nothing was printed.' : 'No PDF was made.') + '</b> ' + e(F.error === 'CANCELLED' ? 'You cancelled it.' : why) + (F.stop ? ' Tell the admin.' : '') + '</div>'; }
+        else if (F) { head = pr ? 'Partly printed' : 'PDF partly made'; h = '<div class="lbx-err" role="status">' + plural(made, 'label') + (pr ? ' printed and saved in History.' : ' made.') + ' <b>The rest was NOT ' + (pr ? 'printed' : 'made') + '.</b> ' + e(why) + (F.stop ? ' Tell the admin.' : '') + '</div>'; }
+        else if (!made) { head = pr ? 'Not printed' : 'PDF not made'; h = '<div class="lbx-err" role="status"><b>No label was made.</b>' + skipTxt + (probs.length ? ' ' + plural(probs.length, 'product') + ' could not be made (see below).' : '') + '</div>'; }
+        else { head = pr ? 'Printed' : 'PDF ready'; h = '<div class="' + (probs.length ? 'lbx-err' : 'lbx-ok') + '" role="status">' + plural(made, 'label') + ' made' + (pr ? ' and saved in History.' : '. Nothing was saved in History.') + skipTxt + (probs.length ? ' ' + plural(probs.length, 'product') + ' could not be made (see below).' : '') + '</div>'; }
+        h = '<div class="lbx-h">' + head + '</div>' + h;
+        if (F && !F.stop && F.error !== 'CANCELLED') h += '<button type="button" class="lbx-sec" data-lbx="retry">Try again</button>';
+        if (legalOff) h += '<div class="lbx-err">These labels have no price and maker lines. Check them before selling.</div>';
+        if (small) h += '<div class="lbx-err">' + e(LB_CAVEAT) + '</div>';
+        if (probs.length) {
+            h += '<div class="lbx-h">Could not be made (' + lbN(probs.length) + ')</div>' + probs.slice(0, 100).map(function (p) { var LN = lbLineByKey(p.key); return '<div class="lbx-err"><b>' + e(LN ? (shortName(LN.title) || LN.key) : String(p.key || '')) + ':</b> ' + e(plainReason(p.reason)) + '</div>'; }).join('');
+            h += '<button type="button" class="lbx-sec" data-lbx="csv">Download this list</button>';
+        }
+        job.parts.forEach(function (p, pi) {
+            p.files.forEach(function (f, fi) {
+                h += '<div class="lbx-file"><b>' + e(f.safe) + '</b><button type="button" data-lbx="fopen" data-i="' + pi + '" data-v="' + fi + '">Open</button><button type="button" data-lbx="fsave" data-i="' + pi + '" data-v="' + fi + '">Save</button>' + (lbCanShare() ? '<button type="button" data-lbx="fshare" data-i="' + pi + '" data-v="' + fi + '">Share</button>' : '') + '</div>';
+            });
+        });
+        if (job.parts.length) h += '<div class="lbx-dim">Print at 100% size. Print one label first and scan it before a whole roll.</div>';
+        o.hidden = false; o.innerHTML = h; try { o.scrollIntoView({ block: 'nearest' }); } catch (x) {}
+    }
+
+    /* ---------- history (clock top right); "Print again" = the old reprint ---------- */
+    function lbxDrawHist() {
+        var o = lbEl('lb-view'); if (!o) return; var H = LB.hist, R = LB.histRun, h = '<div class="lbx-dim">Labels printed in the last 30 days.</div>';
+        if (!H && !LB.lbxHistTried) { LB.lbxHistTried = 1; afterBusy(function () { if (LB.open && LB.tab === 'hist' && !LB.hist) lbHistLoad(); }); }
+        if (LB.busy && !H) h += '<div class="lbx-dim">' + spin() + 'Loading...</div>';
+        if (H && H.err) h += '<div class="lbx-err">' + e(H.err) + '</div><button type="button" class="lbx-sec" data-lbx="hload">Try again</button>';
+        if (H && H.runs) {
+            if (!H.runs.length) h += '<div class="lbx-dim">Nothing printed in the last 30 days.</div>';
+            h += H.runs.map(function (r, i) {
+                return '<div class="lbx-row"><div class="lbx-nm"><b>' + e(r.when ? fmtIst(r.when, true) : 'Earlier') + '</b><span class="lbx-size">' + (r.who ? e(r.who) + ' &middot; ' : '') + (r.labels != null ? plural(r.labels, 'label') : '') + '</span></div><div class="lbx-act"><button type="button" class="lbx-add" data-lbx="hopen" data-i="' + i + '">See</button></div></div>';
+            }).join('');
+        }
+        if (R) {
+            h += '<div class="lbx-h">' + e(R.when ? fmtIst(R.when, true) : 'This print') + '</div>';
+            if (R.err) h += '<div class="lbx-err">' + e(R.err) + '</div>';
+            else {
+                h += R.lines.slice(0, 60).map(function (l) { return '<div class="lbx-row"><div class="lbx-nm">' + nameHtml(l.title, l.sku || l.key) + '</div><span class="lbx-n">&times; ' + lbN(l.copies) + '</span></div>'; }).join('');
+                if (R.lines.length > 60) h += '<div class="lbx-dim">Showing 60 of ' + lbN(R.lines.length) + '.</div>';
+                if (lbCanPrint() && R.lines.length) h += '<button type="button" class="lbx-print" data-lbx="again">Print again</button>';
+                else if (!lbCanPrint()) h += '<div class="lbx-dim">Only an Admin or Supervisor can print again.</div>';
+            }
+        }
+        o.innerHTML = h;
+    }
+
+    /* ---------- bottom bar: Today, Stock, Orders, Labels, Dashboard, More (at most 6) ---------- */
+    function nvGroupsX() {
+        var out = O.nvGroups.apply(this, arguments);
+        try {
+            var hasL = out.some(function (g) { return g.id === 'labels'; }), di = -1;
+            out.forEach(function (g, ix) { if (g.id === 'dash') di = ix; });
+            if (!hasL) {
+                var lb = false, sd = false, rm = false; try { lb = lbCan(); } catch (x) {} try { sd = stdCan(); } catch (x) {} try { var ri = nvInfo('rm'); rm = !!(ri && !ri.hidden); } catch (x) {}
+                var items = []; if (lb) items.push({ sp: 'labels', icon: '🏷', label: 'Label Studio' }); if (sd) items.push({ sp: 'stdsticker', icon: '🏷', label: 'Shelf, bin and box stickers' }); if (rm && (lb || sd)) items.push({ sp: 'matlabels', icon: '🏷', label: 'Material labels' });
+                if (items.length) { var g = { id: 'labels', label: 'Labels', bar: 'Labels', icon: '🏷', items: items, active: false, badge: '', n: 0 }; if (di >= 0) out.splice(di, 0, g); else out.push(g); }
+            }
+            while (out.length > 5) { var ci = -1; out.forEach(function (g, ix) { if (g.id !== 'today' && g.id !== 'stock' && g.id !== 'orders' && g.id !== 'labels' && g.id !== 'dash') ci = ix; }); if (ci < 0) break; out.splice(ci, 1); }
+        } catch (x) {}
+        return out;
+    }
+    function nvGrpX(id) { if (id === 'labels') { var ok = false; try { ok = lbCan(); } catch (x) {} if (ok) { lbOpen(''); return; } } return O.nvGrp.apply(this, arguments); }
+
+    /* ---------- one tap handler for every new button (no data in onclick) ---------- */
+    function inMine(b) { return !!(b.closest && (b.closest('#lb-bg') || b.closest('[data-lblayer]'))); }
+    function onClick(ev) {
+        if (!ON) return; var b = ev.target && ev.target.closest ? ev.target.closest('[data-lbx]') : null; if (!b || !inMine(b) || b.disabled) return;
+        var a = b.getAttribute('data-lbx'), v = b.getAttribute('data-v'), i = Number(b.getAttribute('data-i'));
+        if (a === 'go') { if (v === 'list') LB.lbxFrom = LB.tab === 'today' ? 'today' : 'pick'; if (v === 'hist') { LB.lbxHistTried = 0; } b.setAttribute('aria-busy', 'true'); lbTab(v); }
+        else if (a === 'kind') kindGo(b, v);
+        else if (a === 'today') todayAll(b);
+        else if (a === 'make') makeToggle(b);
+        else if (a === 'paste') pasteGo(b);
+        else if (a === 'add') addOne(i);
+        else if (a === 'inc') step(i, 1);
+        else if (a === 'dec') step(i, -1);
+        else if (a === 'more') { LB.lbxShow = (LB.lbxShow || 20) + 20; var fo = lbEl('lb-found'); if (fo) fo.innerHTML = found(); }
+        else if (a === 'page') { LB.lbxShow = 20; var f2 = lbEl('lb-found'); if (f2) f2.innerHTML = '<div class="lbx-dim">' + spin() + 'Loading...</div>'; lbPageMove(Number(v) || 1); }
+        else if (a === 'addall') addAll(b);
+        else if (a === 'expand') { var op = !b.classList.contains('open'); b.classList.toggle('open', op); b.setAttribute('aria-expanded', op ? 'true' : 'false'); b.textContent = op ? b.getAttribute('data-full') : b.getAttribute('data-short'); }
+        else if (a === 'linc') lineStep(i, 1);
+        else if (a === 'ldec') lineStep(i, -1);
+        else if (a === 'lrm') { var L0 = LB.lines[i]; if (L0) { LB.lines.splice(i, 1); lbDrawList(); } }
+        else if (a === 'fix' || a === 'fixdone') { var L1 = LB.lines[i]; if (L1) { L1.ovOpen = a === 'fix'; lbDrawList(); } }
+        else if (a === 'lmore') { LB.shown = (LB.shown || LB_ROW_PAGE) + LB_ROW_PAGE; lbDrawList(); }
+        else if (a === 'pv') { LB.lbxPvSig = sig(); LB.prevN = 2; b.disabled = true; b.innerHTML = spin() + 'Making the preview...'; lbPreview(); }
+        else if (a === 'print') { b.disabled = true; printAsk(); setTimeout(function () { if (!LB.busy) b.disabled = false; }, 400); }
+        else if (a === 'printgo') { b.disabled = true; b.innerHTML = spin() + 'Starting...'; run('print'); }
+        else if (a === 'pdf') { b.textContent = 'Making the PDF...'; run('make'); }
+        else if (a === 'back') { var ly = b.closest('[data-lblayer]'); if (ly) ly.style.display = 'none'; setTimeout(function () { lbBtnBack(); }, 0); }
+        else if (a === 'retry') { b.disabled = true; lbJobRetry(); }
+        else if (a === 'csv') lbCsvRefused();
+        else if (a === 'fopen') openFile(i, Number(v));
+        else if (a === 'fsave') lbSave(i, Number(v));
+        else if (a === 'fshare') lbShare(i, Number(v));
+        else if (a === 'hload') { LB.hist = null; lbHistLoad(); }
+        else if (a === 'hopen') { b.disabled = true; b.innerHTML = spin(); lbHistOpen(i); }
+        else if (a === 'again') lbReprintAsk();
+    }
+    function onInput(ev) { if (ON && ev.target && ev.target.id === 'lbx-q') typeQ(ev.target.value); }
+    function onChange(ev) { if (!ON || !ev.target) return; if (ev.target.id === 'lbx-size') sizeSet(String(ev.target.value)); else if (ev.target.id === 'lbx-printer') printerSet(String(ev.target.value)); }
+
+    /* ---------- S4: never show raw server text; the raw text goes to the app log (console + LBX.log(), memory only) ---------- */
+    var CODEY = /(rpc|relation|schema|tokens?|sql|exception|undefined|null|stack|lbl_|failed:|error:|function|column|constraint|violat|http [0-9]|[a-z0-9]+_[a-z0-9_]+|[a-z]+[.][a-z_]+[(]?)/i;
+    var PLAIN = { OFFLINE: 'No internet, or the label service did not answer. Nothing was printed.', SERVICE_UNAVAILABLE: 'The label service did not answer. Try again in a minute.',
+        PIN_REJECTED: 'That PIN is not right.', LOCKED: 'Too many wrong PINs. Wait a few minutes, then try again.', CANCELLED: 'You cancelled it.', FORBIDDEN: 'Your sign-in may not do this. Ask an Admin or Supervisor.',
+        RATE_LIMITED: 'Many people are making labels right now. Wait a minute and try again.' };
+    function plainMsg(t, where, code) {
+        t = String(t == null ? '' : t).trim();
+        if (t && !CODEY.test(t)) return t;
+        if (t) logRaw(where || 'label service', t);
+        return PLAIN[code] || 'The label service could not do that just now. Try again in a minute. If it keeps happening, tell the admin.';
+    }
+    function plainReason(r) { r = String(r == null ? '' : r).trim(); if (r && !CODEY.test(r)) return r; if (r) logRaw('label problem', r); return 'This label could not be made. Check its name, MRP and net quantity in step 2.'; }
+    function lbxRefusal(d) { return plainMsg(O.lbRefusal.apply(this, arguments), 'refusal ' + String((d && d.error) || ''), d && d.error); }
+    function lbxBad(r) { try { (r && r.errors || []).forEach(function (x) { logRaw('refused option', String((x && x.option) || '') + ' ' + String((x && x.reason) || '')); }); } catch (x) {} lbSay('err', lbRefusal(r)); }
+
+    /* ---------- S1: six bar buttons, every word whole. Buttons take the width their word needs; the label font gets smaller only until every
+       label fits (scrollWidth <= clientWidth). Single words never break; a label of two words may use 2 lines. ---------- */
+    function fitBar() {
+        var bar = document.getElementById('tab-nav'); if (!bar) return;
+        var ls = bar.querySelectorAll('.nv-l'), i, n = 0; if (!ls.length) return;
+        for (i = 0; i < ls.length; i++) ls[i].style.fontSize = '';
+        if (!ON) { bar.removeAttribute('data-lbxfs'); return; }
+        var fs = parseFloat(getComputedStyle(ls[0]).fontSize) || 12;
+        function bad() { for (var j = 0; j < ls.length; j++) if (ls[j].scrollWidth > ls[j].clientWidth) return true; return false; }
+        while (bad() && fs > 7 && n++ < 60) { fs -= 0.25; for (i = 0; i < ls.length; i++) ls[i].style.fontSize = fs + 'px'; }
+        bar.setAttribute('data-lbxfs', String(fs));
+    }
+    var fitT = 0; function fitSoon() { clearTimeout(fitT); fitT = setTimeout(fitBar, 0); }
+    function fitWatch() {
+        try {
+            var bar = document.getElementById('tab-nav'); if (!bar || bar.getAttribute('data-lbxw')) return; bar.setAttribute('data-lbxw', '1');
+            if (window.MutationObserver) { new MutationObserver(fitSoon).observe(bar, { childList: true }); new MutationObserver(fitSoon).observe(document.documentElement, { attributes: true, attributeFilter: ['style', 'class'] }); }
+            window.addEventListener('resize', fitSoon); fitSoon();
+        } catch (x) {}
+    }
+
+    var MAP = { lbRefusal: lbxRefusal, lbBad: lbxBad, lbTab: lbxTab, lbDrawToday: lbxDrawToday, lbDrawPick: lbxDrawPick, lbDrawList: lbxDrawList, lbDrawMake: lbxDrawMake, lbDrawHist: lbxDrawHist, lbResHtml: lbxResHtml, lbPreviewShow: lbxPreviewShow, lbRenderJob: lbxRenderJob, nvGroups: nvGroupsX, nvGrp: nvGrpX };
+    function put(name, f) {
+        if (name === 'lbRefusal') lbRefusal = f; else if (name === 'lbBad') lbBad = f; else if (name === 'lbTab') lbTab = f; else if (name === 'lbDrawToday') lbDrawToday = f; else if (name === 'lbDrawPick') lbDrawPick = f; else if (name === 'lbDrawList') lbDrawList = f;
+        else if (name === 'lbDrawMake') lbDrawMake = f; else if (name === 'lbDrawHist') lbDrawHist = f; else if (name === 'lbResHtml') lbResHtml = f; else if (name === 'lbPreviewShow') lbPreviewShow = f;
+        else if (name === 'lbRenderJob') lbRenderJob = f; else if (name === 'nvGroups') nvGroups = f; else if (name === 'nvGrp') nvGrp = f;
+    }
+    function get(name) { return ({ lbRefusal: lbRefusal, lbBad: lbBad, lbTab: lbTab, lbDrawToday: lbDrawToday, lbDrawPick: lbDrawPick, lbDrawList: lbDrawList, lbDrawMake: lbDrawMake, lbDrawHist: lbDrawHist, lbResHtml: lbResHtml, lbPreviewShow: lbPreviewShow, lbRenderJob: lbRenderJob, nvGroups: nvGroups, nvGrp: nvGrp })[name]; }
+    function install() {   /* N2: installed once; each new function passes the call to the old one while the layer is off, so nothing is ever re-assigned again */
+        if (INST) return; INST = true;
+        Object.keys(MAP).forEach(function (k) { var old = get(k), mine = MAP[k]; O[k] = old; put(k, function () { return (ON ? mine : old).apply(this, arguments); }); });
+    }
+    function cls() { try { document.documentElement.classList.toggle('lbx-on', ON); } catch (x) {} }
+    function on() {
+        install(); if (ON) return; ON = true; cls();
+        try { if (LB.tab === 'set' || LB.tab === 'prev') LB.tab = 'make'; if (LB.open) lbTab(LB.tab); } catch (x) {}
+        try { nvSoon(); } catch (x) {} fitWatch(); fitSoon();
+    }
+    function off(keep) {
+        try { if (keep === true) localStorage.setItem(KEY, 'off'); else localStorage.removeItem(KEY); } catch (x) {}
+        if (!ON) return; ON = false; cls();
+        try { if (LB.open) lbTab(LB.tab === 'make' ? 'make' : (LB.tab || 'today')); } catch (x) {}
+        try { nvSoon(); } catch (x) {} fitSoon();
+    }
+    document.addEventListener('click', onClick);
+    document.addEventListener('input', onInput);
+    document.addEventListener('change', onChange);
+    window.lbxOff = off; window.lbxOn = function () { try { localStorage.removeItem(KEY); } catch (x) {} on(); };
+    window.LBX = { on: on, off: off, isOn: function () { return ON; }, shortName: shortName, sizeOf: sizeOf, pasteLines: pasteLines, codeLike: codeLike, tokens: tokens, missText: missText, creds: creds, run: run, sig: sig,
+        counts: counts, fill: fill, engMissing: engMissing, plainMsg: plainMsg, fitBar: fitBar, log: function () { return LOGB.slice(); } };
+    if (!isOff()) { if (document.readyState === 'loading') { on(); document.addEventListener('DOMContentLoaded', function () { fitWatch(); fitSoon(); }); } else on(); }
+})();
+</script>
 <style id="bl-x10-css">
 /* RC34 B5 X10 Chats explained + Proof Bank. Every rule uses the layer's own classes (flag off = no node exists, no effect). Sizes in rem/em; text wraps, never clipped. */
 #cc-bg .bl-x10-help, #cc-bg .bl-x10-viewhelp { font-size: .92rem; color: #4A5568; margin: .4rem .1rem .6rem; line-height: 1.4; overflow-wrap: anywhere; }
@@ -11494,6 +12164,9 @@ html.screens3-on .s3-faqall { width: 100%; min-height: 44px; margin-top: .4rem; 
             openCode(v);
             return true;
         }
+        var hk = (typeof W.mtbRoute === 'function') ? W.mtbRoute(v, opts || {}, M.open) : false;   /* v234b C: scan anywhere (made piece for the oldest matching bill) */
+        if (hk === 'switch' && !M.queue.length && !M.busy) { close(); hk = W.mtbRoute(v, opts || {}, false); }
+        if (hk === true) return true;
         if (!M.open) return false;
         if (isSlip(v)) { later(); return false; }                 // in-stock slips: the normal pick, byte-for-byte; the MAKE screen re-reads soon after
         if (!pickFree()) return false;                             // a pick step is open: the scan belongs to it
@@ -11528,7 +12201,7 @@ html.screens3-on .s3-faqall { width: 100%; min-height: 44px; margin-top: .4rem; 
         save(); render(); startPoll();
         say('&#8987; Reading the TO MAKE list (' + p.ids.length + ' line' + (p.ids.length === 1 ? '' : 's') + ')...', 'waiting');
         log('TO MAKE code scanned (' + p.ids.length + ' line(s))');
-        load(true);
+        return load(true);   /* v234b C: the caller can wait for the list */
     }
     function load(first) {
         if (!M.open) return Promise.resolve(false);
@@ -11636,10 +12309,11 @@ html.screens3-on .s3-faqall { width: 100%; min-height: 44px; margin-top: .4rem; 
     }
 
     /* ---------- one scan = one piece ---------- */
-    function scan(raw) {
+    function scan(raw, dv) {
         if (M.err && M.errHard) { say(M.err, 'error'); buzz('e'); return; }
         if (!M.slips.length) { say('&#8987; The TO MAKE list is not read yet - tap <strong>Refresh</strong> on the TO MAKE screen, then scan again. This scan was <strong>not saved</strong>.', 'error'); buzz('e'); return; }
         var e = { qid: newQid(), raw: String(raw).slice(0, 200), ids: M.ids.slice(), at: now(), tries: 0, needYou: false };
+        if (dv) e.dev = String(dv).slice(0, 80);   /* v234b C: Mark made without scan: MANUAL:<reason> in the device field */
         M.queue.push(e); save();
         M.msg = { kind: 'wait', html: '&#8987; Saving this scan - <strong>not saved yet</strong> until the database answers.' };
         say(M.msg.html, 'waiting');
@@ -11660,7 +12334,7 @@ html.screens3-on .s3-faqall { width: 100%; min-height: 44px; margin-top: .4rem; 
         M.busy = true; e.tries++; e.sentAt = now(); save(); render();
         var p;
         try {
-            p = omsPinRpc('oms_make_fulfil_s', { p_res_ids: e.ids, p_scanned: e.raw, p_device_id: dev(), p_queue_id: e.qid }, 12000, 'Make save', { reason: 'Type your PIN to save this made piece.' });
+            p = omsPinRpc('oms_make_fulfil_s', { p_res_ids: e.ids, p_scanned: e.raw, p_device_id: e.dev || dev(), p_queue_id: e.qid }, 12000, 'Make save', { reason: 'Type your PIN to save this made piece.', protect: String(e.dev || '').indexOf('MANUAL:') === 0 });   /* v234b C: Mark made without scan: typed PIN */
         } catch (x) { p = Promise.reject(x); }
         Promise.resolve(p).then(function (r) { answer(e, r); }, function (x) {
             answer(e, { data: null, error: { message: 'Failed to fetch (' + String(x && x.message || 'no answer') + ')' }, status: 0 });
@@ -11703,6 +12377,7 @@ html.screens3-on .s3-faqall { width: 100%; min-height: 44px; margin-top: .4rem; 
                 log('Made piece saved: ' + (d.sku_code || '') + ' piece ' + d.piece_no + ' of ' + d.slip_qty);
             }
             say(M.msg.html, 'success'); buzz('s');
+            if (typeof W.mtbSaved === 'function') { try { W.mtbSaved(e, d); } catch (x) { } }   /* v234b C: Made + short name + order + n of N */
             check(); load(false);
             return;
         }
@@ -11815,6 +12490,7 @@ html.screens3-on .s3-faqall { width: 100%; min-height: 44px; margin-top: .4rem; 
         var el = panel();
         if (!el) return;
         if (!M.open) { el.style.display = 'none'; el.innerHTML = ''; return; }
+        if (typeof W.mtbRender === 'function') { try { if (W.mtbRender(el, counts())) return; } catch (x) { } }   /* v234b C: the make card */
         var c = counts(), h = '';
         h += '<div class="mto-head"><div class="mto-h1">TO MAKE &middot; Order <b>' + E(M.orderId || '...') + '</b></div>' +
              '<div class="mto-h2">Pieces made <b>' + c.made + '</b> of <b>' + c.need + '</b></div></div>';
@@ -11910,7 +12586,7 @@ html.screens3-on .s3-faqall { width: 100%; min-height: 44px; margin-top: .4rem; 
         if (bg) return bg;
         bg = document.createElement('div');
         bg.id = 'mto-tb-bg'; bg.className = 'mto-tb-bg'; bg.style.display = 'none';
-        bg.setAttribute('role', 'dialog'); bg.setAttribute('aria-modal', 'true'); bg.setAttribute('aria-label', 'Made pieces - take back');
+        bg.setAttribute('role', 'dialog'); bg.setAttribute('aria-modal', 'true'); bg.setAttribute('aria-label', 'Undo a wrong scan');
         (document.body || document.documentElement).appendChild(bg);
         bg.addEventListener('click', function (ev) {
             if (ev.target === bg) { tbClose(); return; }
@@ -11951,9 +12627,9 @@ html.screens3-on .s3-faqall { width: 100%; min-height: 44px; margin-top: .4rem; 
     function tbRender() {
         var bg = tbEl();
         if (!TBK.open) { bg.style.display = 'none'; return; }
-        var h = '<div class="mto-tb-box"><div class="mto-tb-head"><b>Made pieces' + (TBK.title ? ' &middot; ' + E(TBK.title) : '') + '</b>' +
+        var h = '<div class="mto-tb-box"><div class="mto-tb-head"><b>Undo a wrong scan' + (TBK.title ? ' &middot; ' + E(TBK.title) : '') + '</b>' +
             '<button type="button" class="mto-btn" data-tb="close" aria-label="Close">Close</button></div>' +
-            '<div class="mto-hint">Take back a piece only when it was scanned by mistake or failed the check. The stock entries are reversed, nothing is deleted, and the piece can be scanned again. Needs your typed PIN.</div>';
+            '<div class="mto-hint">Choose the piece that was scanned by mistake. Nothing is deleted, and the piece can be scanned again.</div>';
         if (TBK.msg) h += '<div class="mto-msg mto-m-' + E(TBK.msg.kind) + '">' + TBK.msg.html + '</div>';
         if (TBK.busy) h += '<div class="mto-info">&#8987; One moment...</div>';
         if (!TBK.busy && !TBK.pieces.length && !TBK.msg) h += '<div class="mto-info">No made pieces yet.</div>';
@@ -11985,7 +12661,7 @@ html.screens3-on .s3-faqall { width: 100%; min-height: 44px; margin-top: .4rem; 
             var d = J(r && r.data);
             if (tbNoDb(r, d)) TBK.msg = { kind: 'err', html: 'The take-back needs the database update MTO44 v2 (FOUNDER_17_MTO_DB_v2.cmd). Nothing was changed.' };
             else if (r && r.error) TBK.msg = { kind: 'err', html: '&#10060; Not done: ' + E((typeof plainErr === 'function') ? plainErr(r.error) : (r.error.message || 'no answer')) + ' If the connection dropped, tap Reload to see whether it was done.' };
-            else if (d && d.ok === true) { TBK.msg = { kind: 'ok', html: '&#9989; ' + E(d.message || 'Taken back.') }; TBK.ask = 0; log('Made piece taken back: scan ' + scanId); }
+            else if (d && d.ok === true) { TBK.msg = { kind: 'ok', html: '&#9989; Took back 1 piece. You can scan it again.' }; TBK.ask = 0; log('Made piece taken back: scan ' + scanId); }
             else TBK.msg = { kind: 'err', html: '&#10060; Not done: ' + E((d && (d.message || d.error)) || 'no clear answer') };
         }, function (x) { TBK.msg = { kind: 'err', html: '&#128268; No answer (' + E(String(x && x.message || x)).slice(0, 100) + '). Tap Reload to see whether it was done.' }; })
             .then(function () { TBK.busy = false; tbRender(); return tbLoad(); }).then(function () { if (M.open) load(false); });
@@ -14053,6 +14729,744 @@ html.ful-on #mto-panel [data-mto="refresh"][hidden]{display:none !important}
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start); else start();
 })();
 /* RC43-FULFIL-END */
+</script>
+<style id="mtb-css">
+/* v234b lane C (made-to-order that finishes). Every rule is scoped to html.mtb-on or an mtb- component; with ?mtb=off nothing here applies. */
+html.mtb-on #ful-badge-pick{display:none!important}
+html.mtb-on.mtb-idle #pick-tab .steps,html.mtb-on.mtb-idle #next-action-banner,html.mtb-on #pick-noslip39{display:none!important}
+html.mtb-on.mtb-make #b44-open-btn{display:none!important}
+#mtb-home{display:none}
+html.mtb-on.mtb-idle:not(.mtb-make) #mtb-home{display:block}
+.mtb-wait{display:flex;flex-wrap:wrap;align-items:center;gap:0 2px;margin:6px 0 10px;padding:4px 10px;border-radius:12px;border:2px solid #CBD5E1;font-family:Arial,sans-serif;font-size:var(--t-body,15px);color:#0A1628;box-sizing:border-box}
+.mtb-w-red{border-color:#B3261E;background:#FDECEA}
+.mtb-w-amber{border-color:#B45309;background:#FFF4E5}
+.mtb-w-green{border-color:#1B7A3A;background:#F0FAF3}
+.mtb-wl{font-weight:800;margin-right:4px}
+.mtb-wd{color:#6B7280}
+.mtb-wb{min-height:44px;padding:0 4px;border:0;background:transparent;color:inherit;font:inherit;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+.mtb-wb b{font-size:1.15em}
+.mtb-w-red .mtb-wlate b{color:#B3261E}
+.mtb-scan{display:flex;align-items:center;gap:12px;width:100%;min-height:76px;margin:0 0 10px;padding:10px 16px;border:0;border-radius:14px;background:#1B4F8A;color:#fff;text-align:left;cursor:pointer;box-shadow:0 2px 6px rgba(10,22,40,.18);box-sizing:border-box;font-family:Arial,sans-serif}
+.mtb-scan .mtb-si{font-size:30px;line-height:1;flex:0 0 auto}
+.mtb-scan b{display:block;font-size:24px}
+.mtb-scan small{display:block;font-size:var(--t-meta,13px);color:#DDE6F2;margin-top:2px}
+.mtb-n{display:inline-block;min-width:14px;margin-left:6px;padding:1px 7px;border-radius:999px;background:#B3261E;color:#fff;font-size:.8em;font-weight:800;line-height:1.4;text-align:center}
+#mto-panel.mtb-panel{padding:12px;border-top:3px solid #C9A227;font-family:Arial,sans-serif}
+.mtb-top{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.mtb-ord{font-size:var(--t-body,15px);color:#1B3F6B;word-break:break-word;min-width:0}
+.mtb-ch{display:inline-block;margin-left:4px;padding:2px 8px;border-radius:6px;background:#1B3F6B;color:#fff;font-size:var(--t-meta,13px);font-weight:800;vertical-align:middle}
+.mtb-dots{flex:0 0 auto;min-width:44px;min-height:44px;border:1.5px solid #CBD5E1;border-radius:10px;background:#fff;color:#1B3F6B;font-size:22px;font-weight:800;cursor:pointer}
+.mtb-menu{margin:6px 0;border:1px solid #CBD5E1;border-radius:10px;background:#fff;box-shadow:0 4px 14px rgba(10,22,40,.15);overflow:hidden}
+.mtb-menu button{display:block;width:100%;min-height:48px;padding:0 14px;border:0;background:#fff;color:#0A1628;font-weight:700;text-align:left;cursor:pointer;font-size:var(--t-body,15px)}
+.mtb-due{margin-top:4px;font-size:var(--t-meta,13px);color:#374151}
+.mtb-due.mtb-late{color:#B3261E;font-weight:800}
+.mtb-card{margin-top:10px;padding:12px;border:2px solid #B3261E;border-radius:12px;background:#fff}
+.mtb-card.mtb-c-done{border-color:#1B7A3A;background:#F0FAF3}
+.mtb-card.mtb-c-off{border-color:#CBD5E1;background:#F8FAFC;color:#6B7280}
+.mtb-name{font-weight:800;font-size:22px;line-height:1.25;color:#0A1628;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;word-break:break-word}
+.mtb-size{margin-top:2px;font-size:17px;color:#1B3F6B;font-weight:700}
+.mtb-qty{margin-top:6px;font-size:20px;color:#374151;font-weight:700}
+.mtb-big{font-size:56px;line-height:1;font-weight:800;color:#0A1628}
+.mtb-c-done .mtb-big{color:#1B7A3A}
+.mtb-ok{margin-top:4px;color:#1B7A3A;font-weight:800;font-size:18px}
+.mtb-main{display:block;width:100%;min-height:64px;margin-top:12px;padding:6px 12px;border:0;border-radius:14px;background:#1B4F8A;color:#fff;font-size:20px;font-weight:800;cursor:pointer;box-sizing:border-box}
+.mtb-main.mtb-danger{background:#B3261E}
+.mtb-main[disabled]{opacity:.5;cursor:default}
+.mtb-link{display:inline-block;min-height:44px;margin-top:4px;padding:0 4px;border:0;background:transparent;color:#1B4F8A;text-decoration:underline;font-size:var(--t-meta,13px);cursor:pointer}
+.mtb-back{display:block;width:100%;min-height:48px;margin-top:10px;border:1.5px solid #6B7280;border-radius:12px;background:#fff;color:#374151;font-weight:700;font-size:var(--t-body,15px);cursor:pointer}
+.mtb-msg{margin-top:8px;padding:8px 10px;border-radius:8px;font-size:var(--t-body,15px);word-break:break-word}
+.mtb-m-ok{background:#F0FAF3;color:#14532D;border:1px solid #1B7A3A}
+.mtb-m-err{background:#FDEDEC;color:#8A1C14;border:1px solid #B3261E}
+.mtb-m-wait{background:#F1F5F9;color:#1E293B;border:1px solid #CBD5E1}
+.mtb-done{margin-top:8px;padding:10px;border-radius:10px;background:#1B7A3A;color:#fff;font-weight:800}
+.mtb-pend{margin-top:8px;padding:8px 10px;border-radius:8px;background:#FFF4E5;border:1px solid #F0B429;color:#5C3B00}
+.mtb-btn{min-height:44px;padding:6px 14px;border-radius:10px;border:1.5px solid #1B4F8A;background:#fff;color:#1B4F8A;font-weight:700;cursor:pointer;font-size:var(--t-body,15px);white-space:normal;text-align:left}
+.mtb-btn.mtb-go{background:#1B4F8A;color:#fff}
+.mtb-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.mtb-lbl{display:block;margin-top:8px;font-weight:700;font-size:var(--t-meta,13px);color:#1B3F6B}
+.mtb-sel,.mtb-date{display:block;width:100%;box-sizing:border-box;min-height:48px;margin-top:4px;padding:0 10px;border:1.5px solid #94A3B8;border-radius:10px;background:#fff;font-size:16px;color:#0A1628}
+.mtb-stock{margin-top:8px;padding:8px 10px;border:1px solid #E2E8F0;border-radius:10px;font-size:var(--t-meta,13px);color:#374151;word-break:break-word}
+.mtb-info{margin-top:6px;font-size:var(--t-meta,13px);color:#6B7280}
+.mtb-bg{position:fixed;inset:0;z-index:9001;background:rgba(10,22,40,.45);display:flex;align-items:flex-end;justify-content:center}
+.mtb-bg[hidden]{display:none}
+.mtb-sheet{background:#fff;width:100%;max-width:560px;max-height:88vh;overflow:auto;border-radius:14px 14px 0 0;padding:12px 16px 20px;box-sizing:border-box;color:#0A1628;font-family:Arial,sans-serif;border-top:3px solid #C9A227}
+.mtb-sh-head{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:17px;color:#1B3F6B}
+.mtb-p{margin:8px 0 0;font-size:var(--t-body,15px);line-height:1.4}
+.mtb-li{display:block;width:100%;min-height:56px;margin-top:8px;padding:8px 12px;border:1.5px solid #CBD5E1;border-radius:10px;background:#fff;text-align:left;cursor:pointer;color:#0A1628;font-size:var(--t-body,15px);box-sizing:border-box;word-break:break-word}
+.mtb-li.mtb-li-late{border-color:#B3261E}
+.mtb-li small{display:block;color:#4A5568;font-size:var(--t-meta,13px);margin-top:2px}
+.mtb-chip{display:inline-block;margin-left:6px;padding:1px 7px;border-radius:6px;background:#B3261E;color:#fff;font-size:12px;font-weight:800}
+.mtb-owner{margin-top:16px;padding-top:10px;border-top:1px solid #E2E8F0}
+.mtb-ot{font-weight:800;color:#1B3F6B;font-size:var(--t-meta,13px);margin-bottom:6px}
+.mtb-prev{margin-top:10px;padding:10px;border-radius:10px;background:#F2F6FB;font-size:var(--t-body,15px);word-break:break-word}
+.mtb-prev b{font-size:1.2em}
+html.mtb-on .mto-tb-head b{min-width:0;word-break:break-word}
+html.mtb-on .mto-tb-head .mto-btn{flex:0 0 auto}
+</style>
+<script id="mtb-js">
+/* MTB-BEGIN  v234b4 lane C (v26 master prompt section C): made-to-order that finishes. v234b4 = v234b3 + verifier notes R1-R4 (VERIFY_V234B3_v1):
+   R1 after a finished pick, the last pick's own SKU counts as the same product (ask), and if that SKU is not in this phone's pick records it always asks;
+   R2 ?mtb=off is for this page load only; R3 the clean-start read takes MTO2 v1.1's {ok, ran:boolean, ...}; R4 clean-start errors in plain words only.
+   v234b3 = v234b2 + lead decision L-07: when the pick state is DONE,
+   or a pick finished on this phone in the last 10 minutes, and no pick record proves which product it was, the scan is never saved by itself: ask first.
+   v234b2 = v234b + the cold review REVIEW_V234B_v1 fixes:
+   B1 a scan handed back to the old path keeps every marker it had (knownChecked / known / af3Resolved) plus mtbSkip; the hook never takes a scan
+      that carries one of them; one routing attempt per scan value per 2 s; no new cold read for 60 s after a failed read (no request loop).
+   B2 after the make list is read, the pick state, the open card and the queue are checked again; a pick step opened meanwhile gets the scan.
+   B3 a product picked on this phone in the last 10 minutes, or the product of the current / last pick, is never saved by itself: the person is
+      asked 'Is this a made piece for order <id>?' and it is saved only on Yes. An open card is never switched to another order without asking.
+   Mark made without scan asks the typed PIN (one tagged change in the mto save call). Clean start: hidden until the server state read
+   oms_clean_start_state_v1 exists and says no run was done (DB batch #2); the date defaults to 3 days ago and can never be today; a count older
+   than 2 minutes is made again before closing.
+   (v234b text follows)
+   1. Scan anywhere: processScan -> mtoRoute -> W.mtbRoute (one tagged hook in the mto block). With the TO MAKE screen closed, no pick step open
+      (pickState empty / IDLE / DONE) and a code (SKU, ASIN or an Amazon /dp/ link) that matches an open make line (reservation SHORT, fewer pieces made
+      than needed) the OLDEST matching bill is opened with the existing openCode('AF3M|' + its res ids) and the existing scan() saves one piece.
+      The index is built from reads the app already makes: the pending bills (r43ful.loadRows = oms_fulfil_order_v1), oms_pick_reservations
+      (res_id, order_id, sku_code, asin, qty, status), the made counts (mtoApi.madeCounts = oms_make_made_v1) and oms_sku_master titles.
+      No match = the scan goes down the old path unchanged. A pick slip, a TO MAKE code, a shelf code or an open pick step never enter here.
+   2. The make card (drawn by W.mtbRender, called by the mto render): short name, size, "0 of 1" in big digits, due / days late in red, channel badge,
+      ONE big "Scan made piece" button (the app's camera). Managers (nyhMgr): "Mark made without scan" + reason -> the same scan() with the line's SKU
+      and the device field "MANUAL:<reason>". "Back to list". The take-back is in the order's 3-dot menu ("Undo a wrong scan") for the people the
+      take-back already allows (mtoApi.canTakeBack).
+   3. Orders home: one red / amber / green line "Waiting: N to pick - N to make - N late" (tap = the filtered list), one big Scan button, counts on the sub-tabs.
+   4. Owner (b4BossRole): one-time "Close all old pending orders made before [date]" in the pending-bills sheet and in the waiting list: preview from
+      oms_order_lines (status MTO / CHECK, order_date before the date), typed PIN, oms_ful47_close_override_s in parts of 500, reason
+      "Clean start: old order closed before <date>", reason code CLOSED_OLD. Hidden after success (local flag; a server flag comes with DB batch #2).
+   Off switch: ?mtb=off for this page load only (R2) = the v234a screens exactly. No backslash anywhere in this layer. */
+(function () {
+    'use strict';
+    var W = window;
+    var X = { on: false, idx: null, idxBusy: null, idxFailAt: 0, guard: {}, ask: null, cs: { at: 0, ok: false, done: false, busy: false }, pending: null, manual: null, menu: false, list: null, co: null, timers: [], homeHtml: '', fulMo: null, rowsAsk: 0 };
+    var DONE_KEY = 'mtb_clean_start_v1', REASONS = ['Label damaged', 'Scanner not working', 'Made earlier, not scanned', 'Other'];
+    var MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+    function flagOn() {
+        var q = ''; try { q = String(location.search || ''); } catch (e) { }
+        try { localStorage.removeItem('mtb_v234b'); } catch (e) { }   /* R2: no saved off switch; an old saved one is cleared */
+        return !/[?&]mtb=off/.test(q);
+    }
+    function $(id) { return document.getElementById(id); }
+    function E(s) { return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;'); }
+    function up(s) { return String(s == null ? '' : s).trim().toUpperCase(); }
+    function now() { return Date.now(); }
+    function st() { try { return (typeof state !== 'undefined' && state) ? state : {}; } catch (e) { return {}; } }
+    function signed() { var s = st().session; return !!(s && s.employee_code); }
+    function hasDb() { try { return typeof db !== 'undefined' && !!db && typeof db.from === 'function'; } catch (e) { return false; } }
+    function offline() { return !hasDb() || (typeof navigator !== 'undefined' && navigator.onLine === false); }
+    function timed(p, ms, label) { try { return (typeof withTimeout === 'function') ? withTimeout(p, ms, label) : Promise.resolve(p); } catch (e) { return Promise.resolve(p); } }
+    function J(d) { if (typeof d === 'string') { try { return JSON.parse(d); } catch (e) { return null; } } return d; }
+    function say(html, kind) { try { if (typeof setStatus === 'function') setStatus(html, kind); } catch (e) { } }
+    function toast(k, m) { try { if (typeof exToast === 'function') exToast(k, m); } catch (e) { } }
+    function api() { return W.mtoApi || null; }
+    function MTO() { return W.MTO || {}; }
+    function R() { return W.r43ful || null; }
+    function rows() { var r = R(); return (r && r.F && Array.isArray(r.F.rows)) ? r.F.rows : null; }
+    function isMgr() { try { return typeof nyhMgr === 'function' ? !!nyhMgr() : false; } catch (e) { return false; } }
+    function isBoss() { try { return typeof b4BossRole === 'function' ? !!b4BossRole() : false; } catch (e) { return false; } }
+    function canUndo() { try { var a = api(); return !!(a && a.canTakeBack && a.canTakeBack()); } catch (e) { return false; } }
+    function today() { return new Date(now() + 19800000).toISOString().slice(0, 10); }
+    function daysAgo(n) { return new Date(now() + 19800000 - n * 86400000).toISOString().slice(0, 10); }
+    function dayText(iso) { var p = String(iso || '').slice(0, 10).split('-'); if (p.length !== 3) return String(iso || ''); return Number(p[2]) + ' ' + (MON[Number(p[1]) - 1] || p[1]) + ' ' + p[0]; }
+    function istParts(ms) { var d = new Date(ms + 19800000); return { day: d.getUTCDate(), mon: MON[d.getUTCMonth()], hh: ('0' + d.getUTCHours()).slice(-2), mm: ('0' + d.getUTCMinutes()).slice(-2) }; }
+
+    /* ---------- names (section G: short name = before the first separator, brand word dropped, never cut mid-word) ---------- */
+    function shortName(t) {
+        var s = String(t == null ? '' : t).trim(); if (!s) return '';
+        var cut = [' | ', ' - ', ', ', ' (', ' – ', ' · '], k = s.length;
+        for (var i = 0; i < cut.length; i++) { var j = s.indexOf(cut[i]); if (j > 0 && j < k) k = j; }
+        s = s.slice(0, k).trim().replace(/^artzfolio[ ]+/i, '');
+        if (s.length > 70) { var sp = s.lastIndexOf(' ', 68); s = s.slice(0, sp > 20 ? sp : 68) + ' …'; }
+        return s;
+    }
+    var SIZE_RE = new RegExp('([0-9]+(?:[.][0-9]+)?[ ]*[xX×][ ]*[0-9]+(?:[.][0-9]+)?(?:[ ]*[xX×][ ]*[0-9]+(?:[.][0-9]+)?)?(?:[ ]*(?:inches|inch|in|cms|cm|mm|ft|feet)(?![A-Za-z]))?)');
+    function sizeOf(t) { var m = SIZE_RE.exec(String(t || '')); return m ? m[1].trim() : ''; }
+
+    /* ---------- codes ---------- */
+    var LINK_RE = new RegExp('[/](?:dp|gp[/]product|gp[/]aw[/]d|d)[/]([A-Za-z0-9]{10})(?![A-Za-z0-9])');
+    function keysOf(v) {
+        var t = String(v == null ? '' : v).trim(); if (!t) return [];
+        var m = LINK_RE.exec(t); if (m) return [up(m[1])];
+        if (/^https?:/i.test(t) || /^www[.]/i.test(t)) return [];
+        return [up(t)];
+    }
+    function skipCode(v) { var t = up(v); return !t || t.indexOf('AF2|') === 0 || t.indexOf('AF3|') === 0 || t.indexOf('AF3M|') === 0 || t.indexOf('BIN|') === 0; }
+    function pickFreeHere() { var ps = st().pickState; return !ps || ps === 'IDLE' || ps === 'DONE'; }
+
+    /* ---------- the make-line index (pure parts are tested in node) ---------- */
+    function byCreated(a, b) { var x = String(a.created_at || ''), y = String(b.created_at || ''); return x < y ? -1 : (x > y ? 1 : 0); }
+    function buildIndex(rs, res, made, titles) {
+        var byId = {}; (res || []).forEach(function (r) { if (r && String(r.status) === 'SHORT') byId[Number(r.res_id)] = r; });
+        var bills = {}, lines = [];
+        (rs || []).slice().sort(byCreated).forEach(function (r) {
+            var ids = (r.make_res_ids || []).map(Number).filter(function (n) { return n > 0; }).slice(0, 50);
+            if (!ids.length || !(Number(r.to_make) > 0)) return;
+            var key = String(r.order_key);
+            var b = bills[key] = { key: key, ref: String(r.order_ref || key), ids: ids, created: String(r.created_at || ''), channel: String(r.channel || ''), overdue: !!r.overdue, row: r };
+            ids.forEach(function (id) {
+                var x = byId[id]; if (!x) return;
+                lines.push({ res_id: id, bill: key, order_id: x.order_id, sku: up(x.sku_code), asin: up(x.asin), qty: Number(x.qty) || 0, made: Number(made && made[id]) || 0,
+                             title: (titles && titles[up(x.sku_code)]) || '', created: b.created });
+            });
+        });
+        lines.sort(function (a, b) { return a.created < b.created ? -1 : (a.created > b.created ? 1 : a.res_id - b.res_id); });
+        return { at: now(), bills: bills, lines: lines };
+    }
+    function findBill(idx, v, exclude) {
+        if (!idx || !idx.lines) return null;
+        var keys = keysOf(v); if (!keys.length) return null;
+        var ex = {}; (exclude || []).forEach(function (n) { ex[Number(n)] = 1; });
+        for (var i = 0; i < idx.lines.length; i++) {
+            var L = idx.lines[i];
+            if (ex[L.res_id] || L.made >= L.qty) continue;
+            if (keys.indexOf(L.sku) >= 0 || (L.asin && keys.indexOf(L.asin) >= 0)) return { line: L, bill: idx.bills[L.bill] };
+        }
+        return null;
+    }
+    function titlesFor(skus) {
+        var out = {}, g = []; for (var i = 0; i < skus.length; i += 100) g.push(skus.slice(i, i + 100));
+        return Promise.all(g.map(function (c) {
+            return timed(db.from('oms_sku_master').select('sku_code,product_name').in('sku_code', c), 10000, 'Titles').then(function (r) {
+                ((r && r.data) || []).forEach(function (m) { out[up(m.sku_code)] = m.product_name || ''; });
+            }, function () { });
+        })).then(function () { return out; });
+    }
+    function loadIndex(force) {
+        if (X.idxBusy) return X.idxBusy;
+        if (!force && X.idx && now() - X.idx.at < 60000) return Promise.resolve(X.idx);
+        var Rf = R(); if (offline() || !signed() || !Rf || !Rf.F) return Promise.resolve(X.idx);
+        var fresh = Array.isArray(Rf.F.rows) && now() - (Rf.F.rowsAt || 0) < 60000;
+        var p0 = fresh ? Promise.resolve() : Promise.resolve(typeof Rf.loadRows === 'function' ? Rf.loadRows() : null);
+        X.idxBusy = p0.then(function () {
+            var rs = (rows() || []).filter(function (r) { return Number(r.to_make) > 0 && (r.make_res_ids || []).length; });
+            if (!Array.isArray(Rf.F.rows)) throw new Error('no pending list');
+            var ids = []; rs.forEach(function (r) { (r.make_res_ids || []).slice(0, 50).forEach(function (n) { n = Number(n); if (n > 0) ids.push(n); }); });
+            if (!ids.length) return buildIndex([], [], {}, {});
+            var ch = []; for (var i = 0; i < ids.length; i += 150) ch.push(ids.slice(i, i + 150));
+            return Promise.all(ch.map(function (c) {
+                return timed(db.from('oms_pick_reservations').select('res_id,order_id,sku_code,asin,qty,status').in('res_id', c), 10000, 'Make lines').then(function (r) {
+                    if (!r || r.error) throw new Error('make lines not read'); return r.data || [];
+                });
+            })).then(function (parts) {
+                var res = [].concat.apply([], parts), shortIds = [], sk = {};
+                res.forEach(function (x) { if (x && String(x.status) === 'SHORT') { shortIds.push(Number(x.res_id)); if (x.sku_code) sk[up(x.sku_code)] = 1; } });
+                var a = api();
+                var mp = (a && typeof a.madeCounts === 'function') ? Promise.resolve(a.madeCounts(shortIds)).then(null, function () { return {}; }) : Promise.resolve({});
+                return Promise.all([mp, titlesFor(Object.keys(sk))]).then(function (z) { return buildIndex(rs, res, z[0] || {}, z[1] || {}); });
+            });
+        }).then(function (idx) { X.idx = idx; X.idxBusy = null; X.idxFailAt = 0; paintHome(); return idx; }, function () { X.idxBusy = null; X.idxFailAt = now(); return X.idx; });
+        return X.idxBusy;
+    }
+
+    /* ---------- 1. scan anywhere (called by the mto route) ---------- */
+    function oldPath(v, opts) {   /* B1: the scan goes back with every marker it already had, plus mtbSkip, so it can never come round again */
+        var o = {}; try { Object.keys(opts || {}).forEach(function (k) { o[k] = opts[k]; }); } catch (e) { }
+        o.mtbSkip = true;
+        try { if (typeof processScan === 'function') processScan(v, o); } catch (e) { }
+    }
+    function marked(opts) { return !!(opts && (opts.mtbSkip || opts.knownChecked || opts.known || opts.af3Resolved)); }
+    function cardBusy() { var M = MTO(); return !!((M.queue || []).length || M.busy); }
+    function recentPick(L) {   /* B3: the product of the current / last pick, or picked on this phone in the last 10 minutes */
+        try { var o = st().order; if (o && ((o.sku && up(o.sku) === L.sku) || (o.asin && L.asin && up(o.asin) === L.asin))) return true; } catch (e) { }
+        try { if (typeof _ownPicks === 'function') return _ownPicks().some(function (x) { return x && now() - Number(x.t) <= 600000 && up(x.sku) === L.sku; }); } catch (e) { }
+        return false;
+    }
+    function routeHook(v, opts, open) {
+        if (!X.on || marked(opts) || skipCode(v) || !pickFreeHere()) return false;
+        var M = MTO(), a = api(); if (!a) return false;
+        if (X.ask) { say('&#9888; Answer the question on the screen first (Yes or No).', 'error'); askRender(); return true; }
+        if (X.pending) { say('&#8987; One moment &ndash; still saving the last piece. Scan the next one in a second.', 'waiting'); return true; }
+        var gk = up(v), tn = now();   /* B1: one routing attempt per scan value per 2 s */
+        if (X.guard[gk] && tn - X.guard[gk] < 2000) return false;
+        if (Object.keys(X.guard).length > 60) X.guard = {};
+        X.guard[gk] = tn;
+        if (cardBusy()) return false;
+        if (open) {
+            var keys = keysOf(v);
+            var mine = (M.slips || []).some(function (s) { return s.status === 'SHORT' && (Number(s.made) || 0) < (Number(s.qty) || 0) && (keys.indexOf(up(s.sku_code)) >= 0 || (s.asin && keys.indexOf(up(s.asin)) >= 0)); });
+            if (mine) return false;
+            var other = findBill(X.idx, v, M.ids);
+            if (!other) return false;
+            askOpen('switch', v, other, opts);   /* never switch an open card without asking */
+            return true;
+        }
+        if (!X.idx) {
+            if (offline() || !signed() || !R()) return false;
+            if (X.idxFailAt && tn - X.idxFailAt < 60000) return false;   /* B1: the list could not be read a moment ago: old path, no new read */
+            X.pending = { raw: v, at: tn, cold: true };
+            say('&#8987; Checking&hellip;', 'waiting');
+            loadIndex(true).then(function () {
+                X.pending = null;
+                if (!X.on || !pickFreeHere() || MTO().open || cardBusy()) { oldPath(v, opts); return; }   /* B2: something started meanwhile */
+                var hit = findBill(X.idx, v, null);
+                if (hit) decide(v, hit, opts); else oldPath(v, opts);
+            });
+            return true;
+        }
+        var hit = findBill(X.idx, v, null);
+        if (!hit) return false;
+        if (opts && opts.format && M.last && v === M.last.raw && now() - M.last.at < 2500) {
+            say('&#8505; The camera read the same label twice in a moment &ndash; counted once. If that really was a second piece, scan it again now.', 'info');
+            return true;
+        }
+        decide(v, hit, opts);
+        return true;
+    }
+    function pickFinishedRecently() {   /* L-07: DONE, or the last pick on this phone finished in the last 10 minutes */
+        var s = st(); if (s.pickState === 'DONE') return true;
+        try { var lp = s.lastPick; if (lp && lp.t && now() - Number(lp.t) <= 600000) return true; } catch (e) { }
+        return false;
+    }
+    function pickRecords() { try { if (typeof _ownPicks === 'function') return _ownPicks().filter(function (x) { return x && x.sku && now() - Number(x.t) <= 600000; }); } catch (e) { } return []; }
+    function lastPickSkus() { var out = []; try { var lp = st().lastPick; ((lp && lp.lines) || []).forEach(function (x) { if (x && x.sku) out.push(up(x.sku)); }); } catch (e) { } return out; }
+    function decide(v, hit, opts) {
+        var recent = pickFinishedRecently(), last = recent ? lastPickSkus() : [];
+        if (recentPick(hit.line) || last.indexOf(hit.line.sku) >= 0) { askOpen('made', v, hit, opts, 'same'); return; }   /* R1: the last pick's own SKU is the same product */
+        if (recent) {   /* L-07 + R1: a pick finished here and its own SKU is not in this phone's pick records -> always ask */
+            var rec = pickRecords().map(function (x) { return up(x.sku); });
+            if (!last.length || last.some(function (s) { return rec.indexOf(s) < 0; })) { askOpen('made', v, hit, opts, 'unknown'); return; }
+        }
+        go(v, hit, opts);
+    }
+    function go(v, hit, opts) {
+        var a = api(), M = MTO(); if (!a) return;
+        var name = shortName(hit.line.title) || hit.line.sku;
+        X.pending = { raw: v, at: now(), order: hit.bill.ref, name: name };
+        X.menu = false; X.manual = null;
+        try { M.last = { raw: v, at: now() }; } catch (e) { }
+        try { if (st().tab && st().tab !== 'pick' && typeof switchTab === 'function') switchTab('pick'); } catch (e) { }
+        var p; try { p = a.openCode('AF3M|' + hit.bill.ids.join(',')); } catch (e) { p = null; }
+        say('&#8987; Saving&hellip; ' + E(name) + ' &ndash; order <strong>' + E(hit.bill.ref) + '</strong>', 'waiting');
+        toast('ok', 'Saving… ' + name);
+        Promise.resolve(p).then(function () {
+            var m2 = MTO(); X.pending = null;
+            if (!X.on || !pickFreeHere()) {   /* B2: a pick step opened while the list was read: not saved, the scan goes to the pick */
+                try { if (m2.open && !cardBusy()) a.close(); } catch (e) { }
+                oldPath(v, opts); return;
+            }
+            if (!m2.open || !(m2.slips || []).length || m2.err) {
+                say('&#10060; <strong>Not saved:</strong> the order could not be read just now. Scan the piece again.', 'error');
+                try { a.render(); } catch (e) { } return;
+            }
+            a.scan(v);
+        }, function () { X.pending = null; say('&#10060; <strong>Not saved:</strong> the order could not be read just now. Scan the piece again.', 'error'); });
+    }
+    /* B3 and the switch of an open card: one question, Yes or No; nothing is saved before Yes */
+    function askOpen(kind, v, hit, opts, why) { X.ask = { kind: kind, v: v, hit: hit, opts: opts || {}, at: now(), why: why || '' }; askRender(); say('&#9888; Answer the question on the screen: Yes or No.', 'info'); }
+    function askClose() { X.ask = null; var b = $('mtb-ask-bg'); if (b) { b.hidden = true; b.innerHTML = ''; } }
+    function askRender() {
+        var A = X.ask; if (!A) return;
+        var b = sheet('mtb-ask-bg'), ref = E(A.hit.bill.ref), nm = E(shortName(A.hit.line.title) || A.hit.line.sku), h;
+        if (A.kind === 'switch') h = '<div class="mtb-sheet"><div class="mtb-sh-head"><b>Count it on another order?</b></div><p class="mtb-p">This piece belongs to order <b>' + ref + '</b>, not the open one. Count it there?</p><p class="mtb-p">' + nm + '</p>' +
+            '<button type="button" class="mtb-main" data-mtb="ay">Yes, count it there</button><button type="button" class="mtb-back" data-mtb="an">No</button></div>';
+        else h = '<div class="mtb-sheet"><div class="mtb-sh-head"><b>Made piece?</b></div><p class="mtb-p">Is this a made piece for order <b>' + ref + '</b>?</p><p class="mtb-p">' + (A.why === 'unknown' ? 'A pick was just finished on this phone, so this scan is not counted by itself.' : nm + ' was just picked from stock on this phone, so it is not counted by itself.') + '</p>' +
+            '<button type="button" class="mtb-main" data-mtb="ay">Yes, it is made</button><button type="button" class="mtb-back" data-mtb="an">No</button></div>';
+        b.innerHTML = h; b.hidden = false;
+    }
+    function askYes() {
+        var A = X.ask; if (!A) return; askClose();
+        var a = api(); if (!a) return;
+        if (!pickFreeHere() || cardBusy()) { say('&#9888; A pick is open or a scan is still saving. Nothing was counted &ndash; scan the piece again when it is done.', 'error'); return; }
+        if (MTO().open) { a.close(); if (MTO().open) return; }
+        go(A.v, A.hit, A.opts);
+    }
+    function askNo() { askClose(); say('&#8505; Not counted as a made piece.', 'info'); }
+    function savedHook(e, d) {
+        if (!X.on || !d || d.duplicate) return;
+        var M = MTO(), rid = Number(d.res_id);
+        var s = (M.slips || []).filter(function (x) { return Number(x.res_id) === rid; })[0] || {};
+        var name = shortName(d.title || s.title || (M.titles || {})[up(d.sku_code)] || '') || String(d.sku_code || '');
+        var txt = 'Made ✓ ' + name + ' – order ' + (M.orderId || d.order_id || '') + ' – ' + d.piece_no + ' of ' + d.slip_qty;
+        M.msg = { kind: 'ok', html: 'Made &#10003; <strong>' + E(name) + '</strong> &ndash; order <strong>' + E(M.orderId || d.order_id || '') + '</strong> &ndash; ' + E(d.piece_no) + ' of ' + E(d.slip_qty) +
+                  (e && e.dev && String(e.dev).indexOf('MANUAL:') === 0 ? ' <span class="mtb-info">(marked without scan: ' + E(String(e.dev).slice(7)) + ')</span>' : '') };
+        say(M.msg.html, 'success'); toast('ok', txt);
+        var keep = M.msg;
+        Promise.resolve().then(function () { if (MTO().msg === keep) say(keep.html + (MTO().complete ? ' &middot; order complete' : ''), 'success'); });   // after the old ORDER COMPLETE line
+        if (X.idx) X.idx.lines.forEach(function (L) { if (L.res_id === rid) L.made = Math.min(L.made + 1, L.qty); });
+        X.manual = null;
+        setTimeout(function () { loadIndex(true); }, 1500);
+    }
+
+    /* ---------- 2. the make card ---------- */
+    function billRow(M) {
+        var ids = {}; (M.ids || []).forEach(function (n) { ids[Number(n)] = 1; });
+        var rs = rows() || [];
+        for (var i = 0; i < rs.length; i++) { var m = rs[i].make_res_ids || []; for (var j = 0; j < m.length; j++) if (ids[Number(m[j])]) return rs[i]; }
+        return null;
+    }
+    function alertHours() { try { var s = R().F.counts.settings || {}; var h = Number(s.alert_hours); return h > 0 ? h : 24; } catch (e) { return 24; } }
+    function dueHtml(row) {
+        if (!row || !row.created_at) return '';
+        var t = Date.parse(row.created_at); if (!(t > 0)) return '';
+        var due = t + alertHours() * 3600000, p = istParts(due);
+        if (now() > due) {
+            var late = Math.floor((now() - due) / 86400000);
+            return '<div class="mtb-due mtb-late">Due ' + p.day + ' ' + p.mon + ' &middot; ' + (late >= 1 ? late + ' day' + (late === 1 ? '' : 's') + ' late' : 'late') + '</div>';
+        }
+        return '<div class="mtb-due">Due ' + p.day + ' ' + p.mon + ', ' + p.hh + ':' + p.mm + '</div>';
+    }
+    function manualHtml(s) {
+        if (!isMgr()) return '';
+        if (X.manual && X.manual.res === Number(s.res_id)) {
+            return '<label class="mtb-lbl" for="mtb-why">Why without a scan?</label><select id="mtb-why" class="mtb-sel"><option value="">Choose a reason</option>' +
+                REASONS.map(function (r) { return '<option value="' + E(r) + '"' + (X.manual.why === r ? ' selected' : '') + '>' + E(r) + '</option>'; }).join('') + '</select>' +
+                (X.manual.err ? '<div class="mtb-msg mtb-m-err">' + E(X.manual.err) + '</div>' : '') +
+                '<div class="mtb-row"><button type="button" class="mtb-btn mtb-go" data-mtb="mgo" data-res="' + E(s.res_id) + '">Save as made</button><button type="button" class="mtb-btn" data-mtb="mx">Cancel</button></div>';
+        }
+        return '<button type="button" class="mtb-link" data-mtb="man" data-res="' + E(s.res_id) + '">Mark made without scan</button>';
+    }
+    function renderHook(el, c) {
+        if (!X.on) return false;
+        var M = MTO();
+        var ae = document.activeElement; if (ae && ae.id === 'mtb-why' && el.contains(ae)) return true;   // a reason list is open: draw after the pick
+        var row = billRow(M), ch = (row && row.channel) || ((M.slips || [])[0] || {}).channel || '';
+        var h = '<div class="mtb-top"><div class="mtb-ord">Order <b>' + E(M.orderId || '…') + '</b>' + (ch ? ' <span class="mtb-ch">' + E(ch) + '</span>' : '') + '</div>' +
+            (canUndo() ? '<button type="button" class="mtb-dots" data-mtb="menu" aria-label="More for this order" aria-expanded="' + (X.menu ? 'yes' : 'no') + '">&#8942;</button>' : '') + '</div>';
+        if (X.menu && canUndo()) h += '<div class="mtb-menu" role="menu"><button type="button" role="menuitem" data-mtb="undo">Undo a wrong scan</button></div>';
+        h += dueHtml(row);
+        if (M.loading && !(M.slips || []).length) h += '<div class="mtb-info">&#8987; Reading the order&hellip;</div>';
+        if (M.err) h += '<div class="mtb-msg mtb-m-err">' + M.err + '</div>';
+        if ((M.queue || []).length) {
+            var needs = M.queue[0].needYou;
+            h += '<div class="mtb-pend">&#9888; <strong>' + M.queue.length + ' scan' + (M.queue.length === 1 ? '' : 's') + ' not saved yet.</strong> ' +
+                 (needs ? 'Tap Retry now.' : (M.busy ? 'Saving now&hellip;' : 'Kept on this phone; sent again by itself.')) +
+                 ' <button type="button" class="mtb-btn" data-mto="retry">Retry now</button></div>';
+        }
+        if (M.msg) h += '<div class="mtb-msg mtb-m-' + E(M.msg.kind) + '">' + M.msg.html + '</div>';
+        if (M.complete) h += '<div class="mtb-done">&#9989; Order complete: every piece is made or picked.</div>';
+        (M.slips || []).forEach(function (s) {
+            var title = s.title || (M.titles || {})[up(s.sku_code)] || s.sku_code, q = Number(s.qty) || 0, m = Math.min(Number(s.made) || 0, q), act = s.status === 'SHORT';
+            var nm = shortName(title) || s.sku_code, sz = sizeOf(title); if (sz && nm.indexOf(sz) >= 0) sz = '';
+            h += '<div class="mtb-card ' + (!act ? 'mtb-c-off' : (m >= q ? 'mtb-c-done' : 'mtb-c-todo')) + '" data-res="' + E(s.res_id) + '">' +
+                '<div class="mtb-name" title="' + E(title) + '">' + E(nm) + '</div>' + (sz ? '<div class="mtb-size">' + E(sz) + '</div>' : '');
+            if (act) {
+                h += '<div class="mtb-qty"><span class="mtb-big">' + m + '</span> of <span class="mtb-big">' + q + '</span></div>';
+                h += m >= q ? '<div class="mtb-ok">Made &#10003;</div>' : manualHtml(s);
+            } else h += '<div class="mtb-info">' + (s.status === 'PICKED' ? 'Picked from stock &ndash; do not make' : (s.status === 'CANCELLED' ? 'Cancelled &ndash; do not make' : E(s.status))) + '</div>';
+            h += '</div>';
+        });
+        (M.stock || []).forEach(function (x) {
+            var nm = shortName((M.titles || {})[up(x.sku_code)] || x.sku_code) || x.sku_code, isMake = x.status === 'SHORT', made = (M.extra || {})[Number(x.res_id)] || 0, q = Number(x.qty) || 0;
+            h += '<div class="mtb-stock">' + (isMake ? 'Also to make: <b>' + E(nm) + '</b> &middot; ' + Math.min(made, q) + ' of ' + q + ' made'
+                : 'In stock: <b>' + E(nm) + '</b> &middot; bin ' + E(x.bin_code || '-') + ' &middot; ' + (x.status === 'PICKED' ? '<span class="mtb-ok">Picked &#10003;</span>' : 'pick it with its pick list')) + '</div>';
+        });
+        if (M.stockErr) h += '<div class="mtb-info">The in-stock lines could not be read just now. <button type="button" class="mtb-btn" data-mto="refresh">Try again now</button></div>';
+        if (c && c.need > c.made && !M.errHard) h += '<button type="button" class="mtb-main" data-mtb="cam">&#128247; Scan made piece</button>';
+        h += '<button type="button" class="mtb-back" data-mtb="back">Back to list</button>';
+        el.innerHTML = h; el.style.display = '';
+        el.className = 'mto-panel mtb-panel' + (M.complete ? ' mto-panel-done' : '');
+        return true;
+    }
+
+    /* ---------- 3. Orders home ---------- */
+    function waitCounts() {
+        var rs = rows(), Rf = R(), c = (Rf && Rf.F && Rf.F.counts) || null;
+        if (!rs) return c ? { known: false, pending: Number(c.pending_orders) || 0, late: Number(c.overdue_orders) || 0 } : null;
+        var o = { known: true, pick: 0, make: 0, late: 0 };
+        rs.forEach(function (r) { if (Number(r.to_pick) > 0) o.pick++; if (Number(r.to_make) > 0) o.make++; if (r.overdue) o.late++; });
+        return o;
+    }
+    function homeHtml() {
+        var w = waitCounts(), h;
+        if (!w) h = '<div class="mtb-wait"><span class="mtb-wl">Waiting:</span> <span class="mtb-wd">reading&hellip;</span></div>';
+        else if (!w.known) h = '<div class="mtb-wait ' + (w.late ? 'mtb-w-red' : (w.pending ? 'mtb-w-amber' : 'mtb-w-green')) + '"><span class="mtb-wl">Waiting:</span>' +
+            '<button type="button" class="mtb-wb" data-mtb="w" data-v="all"><b>' + w.pending + '</b> orders</button><span class="mtb-wd">&middot;</span>' +
+            '<button type="button" class="mtb-wb mtb-wlate" data-mtb="w" data-v="late"><b>' + w.late + '</b> late</button></div>';
+        else {
+            var cls = w.late ? 'mtb-w-red' : ((w.pick + w.make) ? 'mtb-w-amber' : 'mtb-w-green');
+            h = '<div class="mtb-wait ' + cls + '" role="group" aria-label="Waiting orders"><span class="mtb-wl">Waiting:</span>' +
+                '<button type="button" class="mtb-wb" data-mtb="w" data-v="pick"><b>' + w.pick + '</b> to pick</button><span class="mtb-wd">&middot;</span>' +
+                '<button type="button" class="mtb-wb" data-mtb="w" data-v="make"><b>' + w.make + '</b> to make</button><span class="mtb-wd">&middot;</span>' +
+                '<button type="button" class="mtb-wb mtb-wlate" data-mtb="w" data-v="late"><b>' + w.late + '</b> late</button></div>';
+        }
+        return h + '<button type="button" class="mtb-scan" data-mtb="scan"><span class="mtb-si">&#128247;</span><span><b>Scan</b><small>A pick list, or the back label of a made piece</small></span></button>';
+    }
+    function paintHome() {
+        if (!X.on) return;
+        var tab = $('pick-tab'); if (!tab) return;
+        var home = $('mtb-home');
+        if (!home) {
+            home = document.createElement('div'); home.id = 'mtb-home';
+            var at = $('r21d-again-row') || tab.querySelector('.steps');
+            if (at && at.parentNode === tab) tab.insertBefore(home, at); else tab.insertBefore(home, tab.firstChild);
+        }
+        var h = homeHtml(); if (h !== X.homeHtml) { home.innerHTML = h; X.homeHtml = h; }
+        var w = waitCounts(), b = $('pick-sub-pick');
+        if (b) {
+            var n = b.querySelector('.mtb-n');
+            if (w && w.known) { if (!n) { n = document.createElement('span'); n.className = 'mtb-n'; b.appendChild(n); } if (n.textContent !== String(w.pick)) n.textContent = String(w.pick); }
+            else if (n) n.parentNode.removeChild(n);
+        }
+    }
+    function tick() {
+        if (!X.on) return;
+        var M = MTO(), ps = st().pickState, sub = (typeof _pickSub !== 'undefined') ? _pickSub : 'pick';
+        var de = document.documentElement;
+        de.classList.toggle('mtb-idle', (!ps || ps === 'IDLE') && sub === 'pick');
+        de.classList.toggle('mtb-make', !!M.open);
+        paintHome(); decorateFul(); csCheck(false);
+        try { if (document.hidden) return; } catch (e) { }
+        if (st().tab === 'pick' && signed() && !offline()) {
+            var Rf = R();
+            if (Rf && Rf.F && !Rf.F.loading && now() - (Rf.F.rowsAt || 0) > 60000 && now() - X.rowsAsk > 60000 && typeof Rf.loadRows === 'function') {
+                X.rowsAsk = now(); Promise.resolve(Rf.loadRows()).then(function () { paintHome(); loadIndex(true); }, function () { });
+            } else if (!X.idxBusy && (!X.idx || now() - X.idx.at > 60000) && Array.isArray(rows()) && now() - X.idxFailAt > 60000) loadIndex(false);   /* B1: no retry for 60 s after a failed read */
+        }
+    }
+
+    /* ---------- the waiting list (tap on the line) ---------- */
+    function sheet(id) {
+        var b = $(id); if (b) return b;
+        b = document.createElement('div'); b.id = id; b.className = 'mtb-bg'; b.hidden = true; b.setAttribute('role', 'dialog'); b.setAttribute('aria-modal', 'true');
+        b.addEventListener('click', function (ev) { if (ev.target === b) { if (id === 'mtb-list-bg') listClose(); else if (id === 'mtb-ask-bg') askNo(); else coClose(); } });
+        (document.body || document.documentElement).appendChild(b);
+        return b;
+    }
+    function ageText(h) { h = Number(h) || 0; if (h < 1) return 'under 1 hour'; if (h < 48) return Math.floor(h) + ' hours'; return Math.floor(h / 24) + ' days'; }
+    function listRows(kind) {
+        return (rows() || []).filter(function (r) { return kind === 'make' ? Number(r.to_make) > 0 : (kind === 'pick' ? Number(r.to_pick) > 0 : (kind === 'late' ? !!r.overdue : true)); }).sort(byCreated);
+    }
+    function listOpen(kind) { X.list = { kind: kind }; listRender(); var Rf = R(); if (Rf && !rows() && typeof Rf.loadRows === 'function') Promise.resolve(Rf.loadRows()).then(listRender, listRender); }
+    function listClose() { X.list = null; var b = $('mtb-list-bg'); if (b) { b.hidden = true; b.innerHTML = ''; } }
+    function ownerHtml() {
+        if (!coAllowed()) return '';
+        return '<div class="mtb-owner"><div class="mtb-ot">Owner tools</div><button type="button" class="mtb-btn" data-mtb="co">Close all old pending orders made before a date</button></div>';
+    }
+    function listRender() {
+        if (!X.list) return;
+        var b = sheet('mtb-list-bg'), k = X.list.kind, rs = listRows(k);
+        var title = { make: 'Waiting to make', pick: 'Waiting to pick', late: 'Late orders', all: 'Waiting orders' }[k] || 'Waiting orders';
+        var h = '<div class="mtb-sheet"><div class="mtb-sh-head"><b>' + title + (rows() ? ' (' + rs.length + ')' : '') + '</b><button type="button" class="mtb-btn" data-mtb="lx">Close</button></div>';
+        if (!rows()) h += '<p class="mtb-p">Reading the list&hellip;</p>';
+        else if (!rs.length) h += '<p class="mtb-p">Nothing here. Every order in this list is done.</p>';
+        else h += '<p class="mtb-p">Oldest first. Tap an order' + (k === 'make' ? ' to open its make card.' : ' to see what is left.') + '</p>';
+        rs.forEach(function (r) {
+            h += '<button type="button" class="mtb-li' + (r.overdue ? ' mtb-li-late' : '') + '" data-mtb="lrow" data-key="' + E(r.order_key) + '"><b>' + E(r.order_ref) + '</b>' +
+                (r.overdue ? '<span class="mtb-chip">Late</span>' : '') + '<small>' + E(r.summary_text || '') + '</small><small>' + E(r.channel || '') + ' &middot; ' + E(ageText(r.age_hours)) + ' old</small></button>';
+        });
+        h += '<div class="mtb-row"><button type="button" class="mtb-btn" data-mtb="lfull">Open the full pending list</button></div>' + ownerHtml() + '</div>';
+        b.innerHTML = h; b.hidden = false;
+    }
+    function goMakeRow(r) {
+        var a = api(); var ids = (r.make_res_ids || []).map(Number).filter(function (n) { return n > 0; }).slice(0, 50);
+        if (!a || !ids.length) return;
+        listClose(); X.menu = false; X.manual = null;
+        try { if (st().tab !== 'pick' && typeof switchTab === 'function') switchTab('pick'); } catch (e) { }
+        try { a.openCode('AF3M|' + ids.join(',')); } catch (e) { }
+    }
+    function listRow(key) {
+        var r = (rows() || []).filter(function (x) { return String(x.order_key) === String(key); })[0]; if (!r) return;
+        if (X.list && X.list.kind !== 'pick' && Number(r.to_make) > 0) { goMakeRow(r); return; }
+        var Rf = R(); listClose();
+        if (Rf && typeof Rf.openSheet === 'function') { Rf.openSheet('pending'); if (typeof Rf.openDetail === 'function') Rf.openDetail(key); }
+    }
+
+    /* ---------- 4. owner: one-time clean start ---------- */
+    function coDone() { try { return !!localStorage.getItem(DONE_KEY); } catch (e) { return false; } }
+    function csCheck(force) {   /* the clean start stays hidden until oms_clean_start_state_v1 (DB batch #2) exists and answers that no run was done */
+        if (!isBoss() || offline() || X.cs.busy) return;
+        if (!force && now() - X.cs.at < 600000) return;
+        X.cs.at = now(); X.cs.busy = true;
+        Promise.resolve(timed(db.rpc('oms_clean_start_state_v1', {}), 10000, 'Clean start')).then(function (r) {
+            var d = J(r && r.data); if (Array.isArray(d)) d = d.length === 1 ? d[0] : null;
+            if (!r || r.error || !d || typeof d !== 'object' || d.ok === false) { X.cs.ok = false; return; }
+            if (typeof d.ran !== 'boolean') { X.cs.ok = false; return; }   /* R3: MTO2 v1.1 answers {ok:true, ran:boolean, ...}; any other shape keeps it hidden */
+            X.cs.ok = true; X.cs.done = d.ran === true;
+        }, function () { X.cs.ok = false; }).then(function () { X.cs.busy = false; });
+    }
+    function coAllowed() { return isBoss() && X.cs.ok && !X.cs.done && !coDone(); }
+    function coOpen() {
+        if (!coAllowed()) return;
+        X.co = { date: daysAgo(3), prev: null, busy: false, res: null, err: '' };
+        coRender(); coPreview();
+    }
+    function coClose() { if (X.co && X.co.busy) return; X.co = null; var b = $('mtb-co-bg'); if (b) { b.hidden = true; b.innerHTML = ''; } listRender(); }
+    function orderKey(l) { return String(l.tid || l.amazon_order_no || l.invoice_no || ('line ' + l.line_id)); }
+    function readOld(day) {
+        var out = [], page = 1000;
+        function step(from) {
+            return timed(db.from('oms_order_lines').select('line_id,order_date,status,tid,amazon_order_no,invoice_no').in('status', ['MTO', 'CHECK']).lt('order_date', day)
+                .order('line_id', { ascending: true }).range(from, from + page - 1), 15000, 'Old orders').then(function (r) {
+                if (!r || r.error) throw new Error((r && r.error && r.error.message) || 'no answer');
+                var d = r.data || []; out = out.concat(d);
+                if (d.length === page && from < 40000) return step(from + page);
+                return out;
+            });
+        }
+        return step(0);
+    }
+    function coPreview() {
+        var C = X.co; if (!C) return;
+        if (offline()) { C.prev = { err: 'This phone has no connection, so nothing is counted and nothing will close.' }; coRender(); return; }
+        var day = C.date; C.prev = { busy: true }; coRender();
+        readOld(day).then(function (lines) {
+            if (!X.co || X.co.date !== day) return;
+            var ord = {}; lines.forEach(function (l) { ord[orderKey(l)] = 1; });
+            X.co.prev = { at: now(), ids: lines.map(function (l) { return Number(l.line_id); }).filter(function (n) { return n > 0; }), lines: lines, orders: Object.keys(ord).length };
+            coRender();
+        }, function () {
+            if (!X.co || X.co.date !== day) return;
+            X.co.prev = { err: 'The order list could not be read on this phone, so nothing is counted and nothing will close. Try again later.' }; coRender();
+        });
+    }
+    function coRender() {
+        var C = X.co; if (!C) return;
+        var b = sheet('mtb-co-bg'), P = C.prev || {}, h = '<div class="mtb-sheet"><div class="mtb-sh-head"><b>Close old pending orders</b><button type="button" class="mtb-btn" data-mtb="cox">Close</button></div>';
+        if (C.res) {
+            h += '<div class="mtb-prev">&#9989; <b>Closed &ndash; old: ' + C.res.orders + '.</b><br>' + C.res.lines + ' order line' + (C.res.lines === 1 ? '' : 's') + ' closed' + (C.res.skipped ? ', ' + C.res.skipped + ' already closed or not found' : '') + '. Nothing was deleted.</div>' + coUndoHook(C.res);
+            h += '<button type="button" class="mtb-back" data-mtb="cox">Done</button></div>';
+            b.innerHTML = h; b.hidden = false; return;
+        }
+        h += '<p class="mtb-p">Every order made before this date that is still waiting to be made or checked is marked <b>Closed &ndash; old</b>. Nothing is deleted. Use this once, for a clean start.</p>' +
+            '<label class="mtb-lbl" for="mtb-co-date">Orders made before</label><input type="date" id="mtb-co-date" class="mtb-date" value="' + E(C.date) + '" max="' + E(daysAgo(1)) + '"' + (C.busy ? ' disabled' : '') + '>';
+        if (P.busy) h += '<div class="mtb-prev">&#8987; Counting&hellip;</div>';
+        else if (P.err) h += '<div class="mtb-prev">' + E(P.err) + '</div>';
+        else if (P.ids) {
+            if (!P.ids.length) {
+                var pend = 0; try { pend = Number(R().F.counts.pending_orders) || 0; } catch (e) { }
+                h += '<div class="mtb-prev">No order before ' + E(dayText(C.date)) + ' is waiting. Nothing will close.' + (pend ? ' If orders are still pending, the order list may be hidden from this phone: nothing is guessed.' : '') + '</div>';
+            } else h += '<div class="mtb-prev"><b>' + P.orders + ' order' + (P.orders === 1 ? '' : 's') + ' will close</b> (' + P.ids.length + ' order line' + (P.ids.length === 1 ? '' : 's') + ').<br>Note saved with each: Clean start: old order closed before ' + E(dayText(C.date)) + '</div>';
+        }
+        if (C.err) h += '<div class="mtb-msg mtb-m-err">' + C.err + '</div>';
+        if (C.busy) h += '<div class="mtb-msg mtb-m-wait">&#8987; ' + E(C.busy) + '</div>';
+        var can = !!(P.ids && P.ids.length && !C.busy);
+        h += '<button type="button" class="mtb-main mtb-danger" data-mtb="cogo"' + (can ? '' : ' disabled') + '>' + (P.ids && P.ids.length ? 'Close ' + P.orders + ' order' + (P.orders === 1 ? '' : 's') : 'Close old orders') + '</button></div>';
+        b.innerHTML = h; b.hidden = false;
+    }
+    function coUndoHook(res) {
+        /* DB-BATCH-2 HOOK: the 24-hour undo (oms_close_old_undo_s) and the server "already done" flag (oms_clean_start_state_v1) arrive in DB batch #2.
+           Until then no Undo button is shown here and the button hides itself with the local flag mtb_clean_start_v1. */
+        return '';
+    }
+    function coErr(plain, raw) { var e = new Error(plain); e.plainOk = true; e.raw = raw; return e; }   /* R4: plain words on screen, raw text to the app log */
+    function coPlain(code) {
+        var c = String(code || '').toUpperCase();
+        if (c === 'PIN_REJECTED') return 'That PIN is not right.';
+        if (c === 'LOCKED') return 'Too many wrong PINs. Wait a few minutes, then try again.';
+        if (c === 'NOT_ALLOWED') return 'Only the owner or an admin can close old orders.';
+        if (c === 'TOKEN_NOT_ALLOWED') return 'This step needs your PIN typed in.';
+        return 'The server did not close them.';
+    }
+    function chunks(ids, n) { var g = []; for (var i = 0; i < ids.length; i += n) g.push(ids.slice(i, i + n)); return g; }
+    function coRun() {
+        var C = X.co; if (!C || C.busy || !C.prev || !C.prev.ids || !C.prev.ids.length || !coAllowed()) return Promise.resolve(null);
+        if (now() - (C.prev.at || 0) > 120000) { C.err = 'The count was more than 2 minutes old, so it was counted again. Check the number, then tap Close again.'; coPreview(); return Promise.resolve(null); }
+        var parts = chunks(C.prev.ids, 500), reason = 'Clean start: old order closed before ' + dayText(C.date), lineOrd = {}, closedIds = [], skipped = 0, k = 0;
+        C.prev.lines.forEach(function (l) { lineOrd[Number(l.line_id)] = orderKey(l); });
+        C.err = ''; C.busy = 'Closing… part 1 of ' + parts.length; coRender();
+        function next() {
+            if (k >= parts.length) return Promise.resolve(true);
+            C.busy = 'Closing… part ' + (k + 1) + ' of ' + parts.length; coRender();
+            var p; try { p = omsPinRpc('oms_ful47_close_override_s', { p_line_ids: parts[k], p_reason: reason, p_reason_code: 'CLOSED_OLD' }, 30000, 'Close old orders', { protect: true, reason: 'Type your PIN to close the old orders.' }); } catch (x) { p = Promise.reject(x); }
+            return Promise.resolve(p).then(function (r) {
+                var d = J(r && r.data);
+                if (r && r.error) throw coErr(String(r.error.code) === 'PIN_NEEDED' ? 'Your PIN was not entered.' : 'There was no clear answer from the server.', String(r.error.code || '') + ' ' + String(r.error.message || ''));   /* R4 */
+                if (!d || d.ok !== true) throw coErr(coPlain(d && d.error), String((d && d.error) || '') + ' ' + String((d && d.message) || 'no clear answer'));
+                (d.closed_lines || []).forEach(function (x) { closedIds.push(Number(x.line_id)); });
+                skipped += (d.skipped || []).length;
+                k++; return next();
+            });
+        }
+        return next().then(function () {
+            var ord = {}; closedIds.forEach(function (id) { ord[lineOrd[id] || id] = 1; });
+            X.cs.done = true; setTimeout(function () { csCheck(true); }, 3000);
+            C.busy = false; C.res = { orders: Object.keys(ord).length, lines: closedIds.length, skipped: skipped, before: C.date };
+            try { localStorage.setItem(DONE_KEY, JSON.stringify({ at: now(), before: C.date, orders: C.res.orders, lines: C.res.lines })); } catch (e) { }
+            try { if (typeof logEvent === 'function') logEvent('CLEAN START', 'Closed - old: ' + C.res.orders + ' orders (' + C.res.lines + ' lines) made before ' + C.date); } catch (e) { }
+            coRender(); X.idx = null;
+            var Rf = R(); if (Rf && typeof Rf.loadRows === 'function') Promise.resolve(Rf.loadRows()).then(function () { paintHome(); }, function () { });
+            return C.res;
+        }, function (e) {
+            var ord = {}; closedIds.forEach(function (id) { ord[lineOrd[id] || id] = 1; });
+            C.busy = false;
+            try { if (typeof logEvent === 'function') logEvent('CLEAN START', 'Not closed: ' + String((e && (e.raw || e.message)) || e).slice(0, 300)); } catch (x) { }   /* R4: raw text to the app log */
+            C.err = '&#10060; ' + (closedIds.length ? 'Closed &ndash; old so far: ' + Object.keys(ord).length + '. The rest was <b>not</b> closed: ' : '<b>Nothing was closed:</b> ') + E(e && e.plainOk ? e.message : 'Something went wrong.') + ' Count again, then try again.';
+            coRender(); return null;
+        });
+    }
+    function decorateFul() {
+        var b = $('ful-bg'); if (!b) return;
+        if (!X.fulMo && typeof MutationObserver === 'function') { X.fulMo = new MutationObserver(function () { try { decorateFul(); } catch (e) { } }); X.fulMo.observe(b, { childList: true }); }
+        var box = b.querySelector('.ful-box'); if (b.hidden || !box || box.querySelector('.ful-back') || box.querySelector('.mtb-owner')) return;
+        var h = ownerHtml(); if (!h) return;
+        var d = document.createElement('div'); d.innerHTML = h; box.appendChild(d.firstChild);
+    }
+
+    /* ---------- taps ---------- */
+    function act(a, t) {
+        var M = MTO(), ap = api();
+        if (a === 'scan' || a === 'cam') { if (a === 'cam') { M.msg = { kind: 'wait', html: '&#128247; Point the camera at the barcode on the back label.' }; if (ap) ap.render(); } try { if (typeof openCamera === 'function') openCamera(); } catch (e) { } return; }
+        if (a === 'w') { listOpen(t.getAttribute('data-v')); return; }
+        if (a === 'lx') { listClose(); return; }
+        if (a === 'lrow') { listRow(t.getAttribute('data-key')); return; }
+        if (a === 'lfull') { listClose(); var Rf = R(); if (Rf && Rf.openSheet) Rf.openSheet('pending'); return; }
+        if (a === 'menu') { X.menu = !X.menu; if (ap) ap.render(); return; }
+        if (a === 'undo') {
+            X.menu = false; if (ap) ap.render();
+            if (ap && canUndo()) ap.tbOpen((M.ids || []).concat((M.stock || []).filter(function (x) { return x.status === 'SHORT'; }).map(function (x) { return Number(x.res_id); })), 'order ' + (M.orderId || ''));
+            return;
+        }
+        if (a === 'man') { if (!isMgr()) return; X.manual = { res: Number(t.getAttribute('data-res')), why: '', err: '' }; if (ap) ap.render(); try { var s0 = $('mtb-why'); if (s0) s0.focus(); } catch (e) { } return; }
+        if (a === 'mx') { X.manual = null; if (ap) ap.render(); return; }
+        if (a === 'mgo') {
+            if (!isMgr() || !X.manual || !ap) return;
+            var sel = $('mtb-why'), why = (sel && sel.value) || X.manual.why;
+            if (REASONS.indexOf(why) < 0) { X.manual.err = 'Choose a reason first. Nothing was saved.'; X.manual.why = ''; try { if (sel) sel.blur(); } catch (e) { } ap.render(); return; }
+            var rid = Number(t.getAttribute('data-res')), s = (M.slips || []).filter(function (x) { return Number(x.res_id) === rid; })[0];
+            if (!s) return;
+            X.manual = null; try { if (sel) sel.blur(); } catch (e) { }
+            ap.scan(String(s.sku_code || ''), 'MANUAL:' + why);
+            return;
+        }
+        if (a === 'back') {
+            X.menu = false; X.manual = null;
+            if (ap) ap.close();
+            if (!MTO().open) { say('Waiting for a pick list or a made piece.', 'idle'); listOpen('make'); }
+            return;
+        }
+        if (a === 'co') { listClose(); var Rf2 = R(); if (Rf2 && Rf2.closeSheet) Rf2.closeSheet(); coOpen(); return; }
+        if (a === 'cox') { coClose(); return; }
+        if (a === 'cogo') { coRun(); return; }
+        if (a === 'ay') { askYes(); return; }
+        if (a === 'an') { askNo(); return; }
+    }
+    function onClick(ev) {
+        if (!X.on) return;
+        var t = ev.target && ev.target.closest ? ev.target.closest('[data-mtb]') : null; if (!t || t.disabled) return;
+        act(t.getAttribute('data-mtb'), t);
+    }
+    function onChange(ev) {
+        if (!X.on) return;
+        var t = ev.target; if (!t || !t.id) return;
+        if (t.id === 'mtb-why' && X.manual) { X.manual.why = String(t.value || ''); X.manual.err = ''; }
+        if (t.id === 'mtb-co-date' && X.co && !X.co.busy) { var v = String(t.value || ''); if (/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/.test(v)) { X.co.date = v > daysAgo(1) ? daysAgo(1) : v; coPreview(); } }
+    }
+
+    function on() {
+        if (X.on) return;
+        X.on = true; W.MTB_ON = true; document.documentElement.classList.add('mtb-on');
+        document.addEventListener('click', onClick); document.addEventListener('change', onChange);
+        X.timers.push(setInterval(function () { try { tick(); } catch (e) { } }, 800));
+        tick(); try { var a = api(); if (a && MTO().open) a.render(); } catch (e) { }
+    }
+    function off() {
+        X.on = false; W.MTB_ON = false;   /* R2: off for this page load only */
+        document.documentElement.classList.remove('mtb-on', 'mtb-idle', 'mtb-make');
+        document.removeEventListener('click', onClick); document.removeEventListener('change', onChange);
+        X.timers.forEach(function (t) { clearInterval(t); }); X.timers = [];
+        if (X.fulMo) { X.fulMo.disconnect(); X.fulMo = null; }
+        ['mtb-home', 'mtb-list-bg', 'mtb-co-bg', 'mtb-ask-bg'].forEach(function (id) { var x = $(id); if (x && x.parentNode) x.parentNode.removeChild(x); });
+        var n = document.querySelector('#pick-sub-pick .mtb-n'); if (n && n.parentNode) n.parentNode.removeChild(n);
+        try { var a = api(); if (a && MTO().open) a.render(); } catch (e) { }
+    }
+    W.mtbRoute = routeHook; W.mtbSaved = savedHook; W.mtbRender = renderHook;
+    W.mtbApi = { on: on, off: off, X: X, shortName: shortName, sizeOf: sizeOf, keysOf: keysOf, buildIndex: buildIndex, findBill: findBill, loadIndex: loadIndex,
+                 waitCounts: waitCounts, homeHtml: homeHtml, paintHome: paintHome, tick: tick, listOpen: listOpen, listClose: listClose, coOpen: coOpen, coPreview: coPreview,
+                 coRun: coRun, coDone: coDone, csCheck: csCheck, coAllowed: coAllowed, askYes: askYes, askNo: askNo, recentPick: recentPick, daysAgo: daysAgo, pickFinishedRecently: pickFinishedRecently, pickRecords: pickRecords, lastPickSkus: lastPickSkus, coPlain: coPlain, flagOn: flagOn, chunks: chunks, readOld: readOld, act: act, dueHtml: dueHtml, version: 'mtb (v234b4)' };
+    function start() { if (flagOn()) { try { on(); } catch (e) { try { console.warn('mtb', e); } catch (x) { } } } else W.MTB_ON = false; }
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start); else start();
+})();
+/* MTB-END */
 </script>
 <style id="rm50-css">
 /* RM50 UI (Lane 3): every rule is scoped to html.rm50-on, so with ?rm50=off nothing here applies. */
