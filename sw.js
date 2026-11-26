@@ -137,7 +137,8 @@
 // v110 (2026-11-21, v43a): cache name bumped for App v234b4 (v43a = v234b4 (Labels in 3 plain steps + made-to-order that finishes) + Admin v2.92f). Nothing else changed.
 // v111 (2026-11-21, v43b): cache name bumped for App v234c3 (v43b = v234c3 (v234b4 + the v234c series fixes, incl. Search everything at text 130 pct) + Admin v2.92f). Nothing else changed.
 // v112 (2026-11-22, v43c2): cache name bumped for App v234d3 (v43c2 = v234d3 (v234c3 + the v234d series fixes) + Admin v2.93c (Label design)). Nothing else changed.
-const CACHE_NAME = 'artzfolio-oms-shell-v112';
+// v113 (2026-11-28, v43d): cache name bumped for App v234f4 (v43d = v234f4 (v234d3 + DB3 server reads + SALES1 + the B2 button, hidden while its flag is off) + Admin v2.93c unchanged). Nothing else changed.
+const CACHE_NAME = 'artzfolio-oms-shell-v113';
 const OPTIONAL_FILES = ['./zxing_reader_3.1.4.js', './zxing_reader_3.1.4.wasm'];
 const SHELL_FILES = ['./index.html', './manifest.json', './icon.svg'];
 
