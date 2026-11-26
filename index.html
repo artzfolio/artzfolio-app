@@ -4007,7 +4007,7 @@ button:focus-visible,select:focus-visible,input:focus-visible,textarea:focus-vis
 </style>
 </head>
 <body>
-<div class="ver-corner" id="verCornerBadge">v234d3</div>
+<div class="ver-corner" id="verCornerBadge">v234f4</div>
 <!-- v112: the full-screen SKU page (opened by a12OpenSku) -->
 <div class="a12-skupage" id="a12-skupage"><div class="a12-sphead"><button type="button" onclick="a12CloseSku()">&larr; Back</button><div id="a12-sp-title" style="flex:1"></div><button type="button" onclick="shOpen('sku')" aria-label="Share this product page">&#128228; Share</button></div><div class="a12-spbody" id="a12-sp-body"></div></div>
 <!-- v63: Gap 2 — offline write-queue indicator. Hidden (display:none) unless
@@ -5226,7 +5226,7 @@ button:focus-visible,select:focus-visible,input:focus-visible,textarea:focus-vis
 
             <!-- Version -->
             <div class="ver-badge">
-                <div class="ver-name">&#128230; ArtzFolio Super App v234d3</div>
+                <div class="ver-name">&#128230; ArtzFolio Super App v234f4</div>
                 <div class="ver-sub">Tap the button below to see what is new in this version.</div>
                 <button class="settings-btn" style="min-height:46px" onclick="wnOpen()">What is new and what is done</button>
             </div>
@@ -10336,7 +10336,7 @@ html.dash2-on #dash-tab > :not(#dash2) { display: none !important; }
     if (E1) PERIODS.splice(4, 0, ['90d', '90 days']);   /* v234c E1: Days = Today / 7 / 30 / 90 / custom */
     var NEED = { overview: ['sales', 'master', 'forecast'], sales: ['sales', 'master', 'forecast'], inventory: ['master', 'stock', 'bins', 'resv', 'forecast', 'rop', 'sales'],
         forecast: ['forecast', 'master', 'sales'], production: ['forecast', 'master', 'bins', 'sales'], insights: ['sales', 'master', 'forecast'], restock: ['forecast', 'master', 'sales'] };
-    var GROUPS = [['sku', 'Product'], ['category', 'Category'], ['channel', 'Channel'], ['day', 'Day'], ['week', 'Week'], ['month', 'Month']];
+    var GROUPS = [['sku', 'Product'], ['category', 'Category'], ['channel', 'Channel'], ['day', 'Day'], ['week', 'Week'], ['month', 'Month']];   /* v234e5 S2: Every order is added when drawn, only while SALES1 is on */ function groupsNow() { return GROUPS.concat((E1 && typeof window.e2xS1On === 'function' && window.e2xS1On()) ? [['ordered', 'Every order (category, sub-category, product)']] : []); }
     var HELP = {
         overview: ['The tiles show stock right now and sales for the period you picked at the top. Tap a tile to open its list with the right filter already set.',
             'Stock value is at selling price including GST; the small lines show it without GST and at MRP. Low = at or below the buy-more level. Out of stock = stocked products (shelf stock now, or sold from the shelf in the last 90 days) with nothing on hand. Made to order = products made only when ordered: never counted as out of stock.',
@@ -10361,9 +10361,9 @@ html.dash2-on #dash-tab > :not(#dash2) { display: none !important; }
     var D2 = { ldAt: 0, on: false, tab: 'overview', period: { p: '30d', from: '', to: '' }, f: null, T: {}, m: {}, sk: null, seq: 0, loading: false, at: 0, ready: {}, err: '', view: null, qT: null, orig: {}, sheet: '' };
     function blankF() {
         return { sales: { q: '', cat: '', chan: '', group: 'sku' }, inventory: { q: '', status: '', cat: '', bin: '' }, forecast: { q: '', tier: '', make: '', band: '', cat: '', basis: '' },
-            production: { q: '', status: 'make', cat: '', size: '' }, insights: { q: '', cat: '', chan: '', measure: 'units', group: 'category' }, restock: { q: '', cat: '' }, overview: { cat: '', chan: '' } };
+            production: { q: '', status: 'make', cat: '', size: '' }, insights: { q: '', cat: '', chan: '', measure: 'units', group: 'category' }, restock: { q: '', cat: '' }, overview: { cat: '', chan: '', staff: '' } };   /* v234e: Staff on the Overview (server filter) */
     }
-    var FKEYS = { sales: ['q', 'cat', 'chan'], inventory: ['q', 'status', 'cat', 'bin'], forecast: ['q', 'tier', 'make', 'band', 'cat', 'basis'], production: ['q', 'status', 'cat', 'size'], insights: ['q', 'cat', 'chan'], restock: ['q', 'cat'], overview: ['cat', 'chan'] };
+    var FKEYS = { sales: ['q', 'cat', 'chan'], inventory: ['q', 'status', 'cat', 'bin'], forecast: ['q', 'tier', 'make', 'band', 'cat', 'basis'], production: ['q', 'status', 'cat', 'size'], insights: ['q', 'cat', 'chan'], restock: ['q', 'cat'], overview: ['cat', 'chan', 'staff'] };
     D2.f = blankF();
     function e1xWho() { try { return String((state.session && state.session.employee_code) || '').toUpperCase(); } catch (e) { return ''; } }   /* v234c E1: helpers */
     function e1xDone(res) { if (E1 && typeof window.e1xPainted === 'function') { try { window.e1xPainted(res, D2); } catch (e) { } } }
@@ -10412,7 +10412,7 @@ html.dash2-on #dash-tab > :not(#dash2) { display: none !important; }
 
     /* ---------- pure: the rows of each tab ---------- */
     function salesView(data, f, rg) {
-        var ms = mapOf(data.master), fc = mapOf(data.forecast), G = {}, tot = { units: 0, orders: 0, value: 0, noMrp: 0 }, grp = f.group || 'sku';
+        var ms = mapOf(data.master), fc = mapOf(data.forecast), G = {}, tot = { units: 0, orders: 0, value: 0, noMrp: 0 }, grp = (f.group && f.group !== 'ordered') ? f.group : 'sku';   /* v234e5 S2 */
         (data.sales || []).forEach(function (r) {
             if (r.sale_date < rg[0] || r.sale_date > rg[1]) return;
             if (f.chan && r.channel !== f.chan) return;
@@ -10573,7 +10573,7 @@ html.dash2-on #dash-tab > :not(#dash2) { display: none !important; }
         if ((typeof n43On === 'function' && n43On())) { N43.onData = function () { try { paintRes(); } catch (e) { } }; N43.setMaster(rows('master')); if (tab === 'inventory') N43.loadStocked(); }
         var data = { sales: rows('sales'), master: rows('master'), forecast: rows('forecast') };
         if (tab === 'sales') {
-            var S = salesView(data, f, rg), g = f.group || 'sku', gl = (GROUPS.filter(function (x) { return x[0] === g; })[0] || ['', 'Group'])[1];
+            var S = salesView(data, f, rg), g = (f.group && f.group !== 'ordered') ? f.group : 'sku', gl = (GROUPS.filter(function (x) { return x[0] === g; })[0] || ['', 'Group'])[1];
             var cols = [g === 'sku' ? C('name', 'Product', { text: true, cell: nameCell, sv: function (r) { return shortName(r.name, r.sku, r.cat); }, csv: function (r) { return r.name; } }) : C('key', gl, { text: true, cell: keyCell }),
                 C('units', 'Units'), C('orders', (typeof n43On === 'function' && n43On()) ? 'Order lines' : 'Orders'), (typeof n43On === 'function' && n43On()) ? C('sell', 'Sales value (incl. GST)', { cell: function (r) { return E(inr(r.sell)) + '<br><small class="n43-mrp">MRP ' + E(inr(r.value)) + '</small>'; }, csv: function (r) { return Math.round(r.sell); } }) : C('value', 'Value at MRP', { cell: function (r) { return E(inr(r.value)); }, csv: function (r) { return Math.round(r.value); } }),
                 C('share', '% of total', { cell: function (r) { return E((Math.round(r.share * 10) / 10).toLocaleString('en-IN')) + '%'; }, csv: function (r) { return Math.round(r.share * 10) / 10; } })];
@@ -10596,7 +10596,7 @@ html.dash2-on #dash-tab > :not(#dash2) { display: none !important; }
         }
         if (tab === 'forecast' || tab === 'production') {
             if (!ok('forecast')) return { error: D2.m.forecast };
-            var base = fcJoin(a12FcBase({ forecast: D2.m.forecast, master: D2.m.master || { ok: false } }), mapOf(data.master)), sold = soldIn(rg);
+            var base = fcJoin(a12FcBase({ forecast: (tab === 'production' && E1 && typeof window.e2xSteady === 'function') ? window.e2xSteady(D2.m.forecast) : D2.m.forecast, master: D2.m.master || { ok: false } }), mapOf(data.master)), sold = soldIn(rg);   /* v234e2 S5: the steady copy, Make plan only */
             var perCol = C('perday', 'Sells per day', { cell: function (r) { var t = basisTag(r.basis); return (r.perday == null ? '-' : E(a12N1(r.perday))) + '<span class="d2-tag ' + t[0] + '">' + E(t[1]) + '</span>'; }, csv: function (r) { return r.perday == null ? '' : Math.round(r.perday * 10) / 10; } });   /* RC42q-F11 */
             var nm = C('name', 'Product', { text: true, cell: nameCell, sv: function (r) { return shortName(r.name, r.sku, r.cat); }, csv: function (r) { return r.name; } });
             var daysCol = C('days', 'Days left', { cell: function (r) { return r.days == null ? '-' : E(a12N1(r.days)); }, csv: function (r) { return r.days == null ? '' : Math.round(r.days * 10) / 10; } });   /* RC42q-F11 */
@@ -10644,7 +10644,7 @@ html.dash2-on #dash-tab > :not(#dash2) { display: none !important; }
         var f = D2.f[tab]; if (!f) return '';
         var h = '<div class="d2-fb" role="search" aria-label="Filters"><input type="search" class="d2-q" data-f="q" aria-label="Search" placeholder="Search name, SKU, ASIN or size" autocomplete="off" value="' + E(f.q) + '">';
         if (tab === 'sales') {
-            h += sel('cat', 'Category', cats(), f.cat, 'All categories') + sel('chan', 'Channel', uniq(rows('sales').map(function (r) { return r.channel; })), f.chan, 'All channels') + selNoAll('group', 'Group by', GROUPS.map(function (g) { return [g[0], 'Group by: ' + g[1]]; }), f.group);
+            h += sel('cat', 'Category', cats(), f.cat, 'All categories') + sel('chan', 'Channel', uniq(rows('sales').map(function (r) { return r.channel; })), f.chan, 'All channels') + selNoAll('group', 'Group by', groupsNow().map(function (g) { return [g[0], 'Group by: ' + g[1]]; }), f.group);
         } else if (tab === 'inventory') {
             var bins = {}; rows('bins').forEach(function (b) { if (num(b.qty_on_hand) !== 0) bins[b.bin_code || 'RECEIVING'] = 1; });
             h += sel('status', 'Stock status', [['in', 'In stock'], ['low', 'Low'], ['out', (typeof n43On === 'function' && n43On()) ? 'Out of stock (stocked)' : 'Out of stock'], ['neg', 'Below zero']].concat((typeof n43On === 'function' && n43On()) ? [['mto', 'Made to order']] : []), f.status, 'Any stock status') + sel('cat', 'Category', cats(), f.cat, 'All categories') + sel('bin', 'Bin', uniq(Object.keys(bins)), f.bin, 'All bins');
@@ -10656,7 +10656,8 @@ html.dash2-on #dash-tab > :not(#dash2) { display: none !important; }
             var sz = uniq(rows('forecast').map(function (r) { return sizeOf((r.product_name || ((mapOf(rows('master'))[r.sku_code] || {}).product_name) || '') + ' ' + r.sku_code); }));
             h += sel('status', 'Status', [['make', 'Make now'], ['ondemand', 'On demand'], ['covered', 'Well covered'], ['stuck', 'Stuck stock']], f.status, 'Any status') + sel('cat', 'Category', cats(), f.cat, 'All categories') + sel('size', 'Size', sz, f.size, 'All sizes');
         } else if (E1 && (tab === 'restock' || tab === 'overview')) {   /* v234c E1: shared Category / Channel */
-            h += sel('cat', 'Category', cats(), f.cat, 'All categories') + (tab === 'overview' ? sel('chan', 'Channel', uniq(rows('sales').map(function (r) { return r.channel; })), f.chan, 'All channels') : '');
+            h += sel('cat', 'Category', (tab === 'overview' && typeof window.e2xFl === 'function' && window.e2xFl('categories')) || cats(), f.cat, 'All categories') + (tab === 'overview' ? sel('chan', 'Channel', (typeof window.e2xFl === 'function' && window.e2xFl('channels')) || uniq(rows('sales').map(function (r) { return r.channel; })), f.chan, 'All channels') +
+                ((typeof window.e2xFl === 'function' && window.e2xFl('staff')) ? sel('staff', 'Staff', window.e2xFl('staff'), f.staff, 'All staff') : '') : '');   /* v234e: choices from the server; Staff = employee codes only */
         } else if (tab === 'insights') {
             var ms = (typeof IN_MEASURES !== 'undefined' ? IN_MEASURES : [['units', 'Units sold']]).map(function (x) { return [x[0], 'Measure: ' + x[1]]; });
             var gs = (typeof IN_GROUPS !== 'undefined' ? IN_GROUPS : [['category', 'Category']]).map(function (x) { return [x[0], 'Group by: ' + x[1]]; });
@@ -10747,6 +10748,7 @@ html.dash2-on #dash-tab > :not(#dash2) { display: none !important; }
         var rg = range(), t0 = today(), sk = D2.sk || (typeof SKC !== 'undefined' ? SKC.last : null), td = (typeof R41C !== 'undefined') ? R41C.today : null, held = null;
         try { held = r41cHeld(); } catch (e) { held = null; }
         var data = { sales: e1xOvSales(rows('sales')), master: rows('master'), forecast: rows('forecast') }, o = overviewNums(data, rg, t0), per = perLabel(), h = '';   /* v234c E1: Category / Channel */
+        var e2s = (E1 && typeof window.e2xOv === 'function') ? window.e2xOv(D2, rg, o) : null; if (e2s && e2s.o) o = e2s.o; if (e2s && e2s.line) h += e2s.line;   /* v234e: the server summary first; the phone's own count only as the fallback */
         var mon = sk ? skMoney(sk) : null, n43x = (typeof n43On === 'function' && n43On()) ? N43.stockEx(rows('forecast'), rows('master')) : null, n43s = (typeof n43On === 'function' && n43On()) ? N43.split() : null;
         if ((typeof n43On === 'function' && n43On())) N43.onData = function () { try { paintRes(); } catch (e) { } };
         h += '<div class="d2-tiles" id="d2-tiles">';
@@ -10755,22 +10757,22 @@ html.dash2-on #dash-tab > :not(#dash2) { display: none !important; }
         h += tile('out', sk ? E(N(sk.out)) : '…', n43s ? 'Out of stock (stocked)' : 'Out of stock', n43s ? 'stocked products with nothing on hand' : 'nothing on hand', sk && sk.out > 0 ? 'bad' : '');
         if (n43s) h += tile('mto', E(N(n43s.made_to_order)), 'Made to order', 'made only when ordered: no shelf stock kept, not out of stock');
         h += tile('in', sk ? E(N(sk.inStock)) : '…', 'In stock', sk ? E(N(sk.units)) + ' units on the shelf' : '');
-        if (ok('sales')) {
-            h += tile('today', E(N(o.todayUnits)), 'Units sold today', E(N(o.todayOrders)) + ' order lines');
+        if (ok('sales') || (e2s && e2s.o)) {   /* v234e */
+            h += (o.todayUnits == null) ? tile('today', '-', 'Units sold today', 'could not be read') : tile('today', E(N(o.todayUnits)), 'Units sold today', E(N(o.todayOrders)) + ' order lines');   /* v234e2 S2: never a false 0 */
             h += tile('period', E(N(o.units)), 'Units sold (' + per + ')', '');
-            h += (typeof n43On === 'function' && n43On()) ? tile('svalue', E(r41lInr(o.sell || 0)), 'Sales value (' + per + ', incl. GST)', N43.subLine(o.ex, o.value, o.noSell)) : tile('svalue', E(r41lInr(o.value)), 'Sales value (' + per + ')', 'units x MRP, not money received');
-        } else h += tile('period', '-', 'Sales', 'could not be read');
+            h += (e2s && e2s.o) ? ((typeof n43On === 'function' && n43On()) ? tile('svalue', o.sellOk ? E(r41lInr(o.sell)) : (o.sellPending ? '…' : '-'), 'Sales value (' + per + ', selling price incl. GST)', o.sellOk ? N43.subLine(o.sellEx, o.sellMrp, o.sellNo) + (o.sellAsOf ? '<br>selling value as of ' + E(o.sellAsOf) : '') : (o.sellPending ? 'counting at selling price, as on the Sales tab' : E(o.sellWhy || 'could not be read'))) : tile('svalue', E(r41lInr(o.value)), 'Sales value (' + per + ', at MRP)', 'units x MRP, as on the Sales tab; not money received')) : (typeof n43On === 'function' && n43On()) ? tile('svalue', E(r41lInr(o.sell || 0)), 'Sales value (' + per + ', incl. GST)', N43.subLine(o.ex, o.value, o.noSell)) : tile('svalue', E(r41lInr(o.value)), 'Sales value (' + per + ')', 'units x MRP, not money received');
+        } else h += (e2s && e2s.pending) ? tile('period', '…', 'Units sold (' + per + ')', 'reading the server numbers') : tile('period', '-', 'Sales', 'could not be read');
         if (ok('forecast')) h += tile('make', E(N(o.make)), 'Products to make now', E(N(o.makeQty)) + ' units suggested', o.make ? 'warn' : '');
         h += tile('log', td ? E(N(td.inN)) + ' / ' + E(N(td.outN)) : '…', 'Today in / out (units)', td ? E(N(td.txns)) + ' stock entries' + ((typeof n43On === 'function' && n43On()) ? ' (moves between bins not counted)' : '') : '');
         if (held !== false) h += tile('held', held == null ? '…' : E(N(held)), 'Held for pick slips', 'units');
         if (td && td.cyc) h += tile('check', E(N(td.cyc)), 'Daily check', 'products still to count today', 'warn');
         h += '</div>';
         try { if (typeof r42oOvCards === 'function') h += r42oOvCards(); } catch (e42o) { }   /* RC42o-D1: folded cards under the tiles */
-        if (!ok('sales')) h += errBox(D2.m.sales);
+        if (!ok('sales') && !(e2s && (e2s.o || e2s.pending))) h += errBox(D2.m.sales);
         /* compact charts */
         var days = []; for (var d = rg[0], i = 0; d <= rg[1] && i < 400; d = a12AddDays(d, 1), i++) days.push(d);
         var items = days.length > 62 ? (function () { var w = {}, L = []; days.forEach(function (x) { var k = a12Monday(x); if (!(k in w)) { w[k] = 0; L.push(k); } w[k] += o.byDay[x] || 0; }); return L.map(function (k) { return { l: 'week of ' + k, v: w[k] }; }); })() : days.map(function (x) { return { l: x, v: o.byDay[x] || 0 }; });
-        if (ok('sales') && items.length > 1) {
+        if ((ok('sales') || (e2s && e2s.o)) && items.length > 1) {
             var mx = 1, pk = items[0]; items.forEach(function (x) { if (x.v > mx) mx = x.v; if (x.v > pk.v) pk = x; });
             h += '<div class="d2-card"><h3>Units sold per ' + (days.length > 62 ? 'week' : 'day') + '</h3><div class="d2-bars" role="img" aria-label="Units sold per day, peak ' + E(pk.l) + ' with ' + E(N(pk.v)) + '">' + items.map(function (x) { return '<i style="height:' + Math.max(x.v > 0 ? 3 : 0, Math.round(x.v / mx * 100)) + '%"></i>'; }).join('') + '</div><div class="d2-bax"><span>' + E(items[0].l) + '</span><span>peak ' + E(N(pk.v)) + '</span><span>' + E(items[items.length - 1].l) + '</span></div></div>';
         }
@@ -10783,27 +10785,30 @@ html.dash2-on #dash-tab > :not(#dash2) { display: none !important; }
             var tot = Math.max(1, num(sk.tracked));
             h += '<div class="d2-card"><h3>Stock levels (' + E(N(sk.tracked)) + ' tracked products)</h3><div class="d2-hb">' + [['In stock', sk.inStock], ['Low', sk.low], ['Out of stock', sk.out]].map(function (x) { return '<span>' + E(x[0]) + '</span><i style="width:' + Math.max(2, Math.round(num(x[1]) / tot * 100)) + '%;background:' + (x[0] === 'Low' ? '#E0A800' : x[0] === 'Out of stock' ? '#D93025' : '#1B7A3A') + '"></i><b>' + E(N(x[1])) + '</b>'; }).join('') + '</div></div>';
         }
-        var ms = mapOf(data.master), top = Object.keys(o.bySku).map(function (k) { var m = ms[k] || {}; return { sku: k, name: m.product_name || '', asin: m.asin || '', cat: m.product_type || '', units: o.bySku[k] }; });
+        var ms = mapOf(data.master), top = Object.keys(o.bySku).map(function (k) { var m = ms[k] || {}; return { sku: k, name: m.product_name || (e2s && e2s.names && e2s.names[k]) || '', asin: m.asin || '', cat: m.product_type || '', units: o.bySku[k] }; });
         if (top.length) {
             var spec = { id: 'ov_top', title: 'Top sellers', noun: 'products', rows: top, sort: { k: 'units', dir: 'desc' }, cols: [C('name', 'Top sellers (' + per + ')', { text: true, cell: nameCell, csv: function (r) { return r.name; } }), C('units', 'Units'), C('cat', 'Category', { text: true })] };
             var V = viewOf(spec); V.T.show = 5; D2.view = V;
             h += '<div class="d2-card"><h3>Top 5 sellers (' + E(per) + ')</h3>' + tableHtml(V, true) + '</div>';
         }
+        if (E1 && typeof window.e2xSalesSlot === 'function') h += window.e2xSalesSlot(D2, rg);   /* v234e: SALES1 slot, hidden until that read is live */
         return h;
     }
 
     /* ---------- loading and refresh ---------- */
     function load(tab, force) {
         var my = ++D2.seq; D2.loading = true; paintBar();
-        var keys = NEED[tab] || [], ps = [a12Many(keys, !!force)];
+        var keys = NEED[tab] || []; if (E1 && tab === 'overview' && typeof window.e2xSkip === 'function' && window.e2xSkip()) keys = keys.filter(function (k) { return k !== 'sales'; });   /* v234e: the server summary replaces the raw sales read on the Overview */
+        var ps = [a12Many(keys, !!force)];
         if (tab === 'overview') {
             ps.push(Promise.resolve(stockCounts({ force: !!force })).then(null, function () { return null; }));
             if (force || !(typeof R41C !== 'undefined' && R41C.today)) setTimeout(function () { try { if (force || Date.now() - D2.ldAt > 2500) loadDashboard(!!force); } catch (e) { } }, 60);
             try { loadReservedSummary(!!force); } catch (e) { }
         }
+        var e2p = (E1 && typeof window.e2xLoad === 'function') ? window.e2xLoad(D2, tab, range(), !!force, keys) : null; if (e2p) ps[2] = e2p;   /* v234e: the server reads, waited for so the first paint is final */
         return Promise.all(ps).then(function (rr) {
             if (my !== D2.seq) return;
-            var m = rr[0] || {}; Object.keys(m).forEach(function (k) { D2.m[k] = m[k]; });
+            var m = rr[0] || {}; Object.keys(m).forEach(function (k) { D2.m[k] = m[k]; }); if (e2p && typeof window.e2xApply === 'function') { try { window.e2xApply(D2, tab, rr[2]); } catch (e) { } }
             if (rr[1]) D2.sk = rr[1];
             D2.loading = false; D2.at = Date.now(); D2.ready[tab] = true;
             if (D2.tab === tab) { paintBar(); paintFilters(); paintRes(); if (D2.sheet === 'share') openShare(); }
@@ -10834,7 +10839,7 @@ html.dash2-on #dash-tab > :not(#dash2) { display: none !important; }
         paintAll();
         try { window.scrollTo(0, 0); } catch (e) { }
         try { var c42o = document.querySelector('.content'); if (c42o) c42o.scrollTop = 0; } catch (e) { }   /* RC42o-D2 */
-        if (!D2.ready[tab] || !NEED[tab].every(function (k) { return D2.m[k]; })) { D2.ready[tab] = false; paintRes(); load(tab, false); }
+        if (!D2.ready[tab] || !NEED[tab].every(function (k) { return D2.m[k] || (k === 'sales' && tab === 'overview' && E1 && typeof window.e2xSkip === 'function' && window.e2xSkip()); })) {   /* v234e */ D2.ready[tab] = false; paintRes(); load(tab, false); }
         else if (Date.now() - D2.at > 300000) load(tab, false);
     }
 
@@ -16898,7 +16903,7 @@ html.e1x-pinwait:has(#rm-pin-bg.active) #e1x-bg { pointer-events: none; }   /* v
         var V = D.view, tab = D.tab;
         if (tab === 'overview') {
             var tr = res.querySelector('.d2-t tbody tr[data-sku]'), top = tr ? ((tr.querySelector('.d2-nm') || {}).textContent || '') : '', oc = ocCached();
-            return keyRow('e1x-dtop', [{ k: 'd-svalue', v: E(tileText(res, 'svalue') || '-'), l: 'Sales' }, { k: 'd-period', v: E(tileText(res, 'period') || '-'), l: 'Units sold' },
+            return keyRow('e1x-dtop', [{ k: 'd-svalue', v: E(tileText(res, 'svalue') || '-'), l: (/selling price|incl[.] GST/.test((res.querySelector('.d2-tile[data-go="svalue"] .d2-tl') || {}).textContent || '') ? 'Sales (selling price)' : 'Sales at MRP') }, { k: 'd-period', v: E(tileText(res, 'period') || '-'), l: 'Units sold' },
                 { k: 'd-top', v: E(top || '-'), l: 'Top product', sku: tr ? tr.getAttribute('data-sku') : '' }, { k: 'd-late', v: oc ? E(N(oc.d.late_total)) : '-', l: 'Late orders', s: oc ? 'as of ' + E(ago(oc.at)) : '', cls: oc && num(oc.d.late_total) > 0 ? 'bad' : '' }]);
         }
         if (!V) return '';
@@ -16906,7 +16911,7 @@ html.e1x-pinwait:has(#rm-pin-bg.active) #e1x-bg { pointer-events: none; }   /* v
         if (tab === 'sales') {
             var u = 0, o = 0, v = 0, best = null; L.forEach(function (r) { u += num(r.units); o += num(r.orders); v += num(r.sell != null ? r.sell : r.value); if (r.sku && (!best || num(r.units) > num(best.units))) best = r; });
             var inr = function (x) { try { return r41lInr(x); } catch (e) { return N(x); } };
-            return keyRow('e1x-dtop', [{ k: 's-units', v: E(N(u)), l: 'Units sold' }, { k: 's-orders', v: E(N(o)), l: 'Order lines' }, { k: 's-value', v: E(inr(v)), l: 'Sales value' },
+            return keyRow('e1x-dtop', [{ k: 's-units', v: E(N(u)), l: 'Units sold' }, { k: 's-orders', v: E(N(o)), l: 'Order lines' }, { k: 's-value', v: E(inr(v)), l: (L.some(function (r) { return r.sell != null; }) ? 'Sales (selling price)' : 'Sales at MRP') },
                 { k: 'd-top', v: E(best ? showName(best.name, best.sku, best.cat) : '-'), l: 'Top product', sku: best ? best.sku : '' }]);
         }
         if (tab === 'inventory') {
@@ -16915,7 +16920,7 @@ html.e1x-pinwait:has(#rm-pin-bg.active) #e1x-bg { pointer-events: none; }   /* v
                 { k: 'i-low', v: sk ? E(N(sk.low)) : '-', l: 'Low', cls: sk && sk.low > 0 ? 'warn' : '' }, { k: 'i-out', v: sk ? E(N(sk.out)) : '-', l: 'Out of stock', cls: sk && sk.out > 0 ? 'bad' : '' }]);
         }
         if (tab === 'production') {
-            var fc = (D.m.forecast && D.m.forecast.ok && D.m.forecast.data) || [], mk = 0, q = 0, od = 0, urg = 0;
+            var fs2 = typeof W.e2xSteady === 'function' ? W.e2xSteady(D.m.forecast) : D.m.forecast, fc = (fs2 && fs2.ok && fs2.data) || [], mk = 0, q = 0, od = 0, urg = 0;   /* v234e2 S5: the same rows as the Make plan list */
             fc.forEach(function (r) { if (r.make_now === 'YES - MAKE') { mk++; q += num(r.qty_to_make); if (r.days_of_cover != null && Number(r.days_of_cover) < 7) urg++; } else if (r.make_now === 'ON DEMAND') od++; });
             return keyRow('e1x-dtop', [{ k: 'm-make', v: E(N(mk)), l: 'Products to make', cls: mk ? 'warn' : '' }, { k: 'm-make', v: E(N(q)), l: 'Units to make' }, { k: 'm-urg', v: E(N(urg)), l: 'Run out within 7 days', cls: urg ? 'bad' : '' }, { k: 'm-od', v: E(N(od)), l: 'Made only when ordered' }]);
         }
@@ -17185,13 +17190,13 @@ html.e1x-pinwait:has(#rm-pin-bg.active) #e1x-bg { pointer-events: none; }   /* v
     }
     function searchText() { var i = document.getElementById('stock-search-input'); var v = i ? String(i.value || '').trim() : ''; if (!v) { var j = document.querySelector('#stock-tab input[type="search"]:not([tabindex="-1"])'); v = j ? String(j.value || '').trim() : ''; } return v; }
     function sbKey() { return 'e1x_sb:' + cacheId(); }
-    function sbGet() { var s = lsGet(sbKey()); return s && s.until > now() ? s : null; }
+    function sbGet(cb) { return W.e2xSw ? W.e2xSw.latest(cb) : null; }   /* v234e: the server list of switches (24-hour undo), not this phone */
     function openSwitch(o) {
         if (!canSwitch()) return;
         var b = bg(), q = searchText(), types = typesList(), pre = o.back || null;
         SW = { sku: o.sku || '', bulk: !!o.bulk, to: pre ? !!pre.to : (o.bulk ? false : !o.on), src: pre ? 'back' : (o.bulk ? (q ? 'search' : 'paste') : 'one'), prev: null, busy: false, q: q, back: pre };
         var h = '<div class="e1x-sheet" role="dialog" aria-modal="true" aria-labelledby="e1x-sh-h"><h3 id="e1x-sh-h">' + (pre ? 'Switch back' : (SW.bulk ? 'Switch listings ON or OFF' : 'Listing ON or OFF')) + '</h3>';
-        if (pre) h += '<p>This switches <b>' + E(pre.label) + '</b> ' + (pre.to ? 'ON' : 'OFF') + ' again, with the same choice as at ' + E(istTime(pre.at)) + '. It uses that choice as it is now, so it can also switch listings that were already ' + (pre.to ? 'OFF' : 'ON') + ' before.</p>';
+        if (pre) h += '<p>This puts back the <b>' + E(pre.label) + '</b> switched ' + (pre.to ? 'OFF' : 'ON') + ' at ' + E(istTime(pre.at)) + ', as they were before that switch. A listing changed since then, or that now holds stock, is left as it is. It can be done once, until ' + E(istTime(pre.until)) + '.</p>';   /* v234e: the server undo */
         else if (!SW.bulk) h += '<p><b>' + E(o.title || o.sku) + '</b><br>' + E(o.sku) + '</p>';
         else {
             h += '<label for="e1x-src">Which products</label><select id="e1x-src" data-e1x-sw="src">' + (q ? '<option value="search" selected>What you searched: ' + E(q) + '</option>' : '') +
@@ -17201,9 +17206,9 @@ html.e1x-pinwait:has(#rm-pin-bg.active) #e1x-bg { pointer-events: none; }   /* v
         }
         if (!pre) h += '<div class="e1x-row2" role="radiogroup" aria-label="Switch to"><button type="button" class="e1x-btn' + (SW.to ? ' on' : '') + '" data-e1x-sw="on" role="radio" aria-checked="' + SW.to + '">Switch ON</button><button type="button" class="e1x-btn' + (SW.to ? '' : ' on') + '" data-e1x-sw="off" role="radio" aria-checked="' + (!SW.to) + '">Switch OFF</button></div>' +
             '<p class="e1x-hint">OFF hides a listing from Stock lists and new orders. Nothing is deleted. A listing that still has stock stays ON.' + (SW.bulk ? ' Switching OFF many listings always asks for your PIN.' : '') + '</p>';
-        h += '<label for="e1x-why">Reason</label><select id="e1x-why" data-e1x-sw="why">' + REASONS.map(function (r, i) { return '<option' + (i === (SW.to ? 1 : 0) ? ' selected' : '') + '>' + E(r) + '</option>'; }).join('') + '</select>' +
+        h += (pre ? '<div hidden>' : '') + '<label for="e1x-why">Reason</label><select id="e1x-why" data-e1x-sw="why">' + REASONS.map(function (r, i) { return '<option' + (i === (SW.to ? 1 : 0) ? ' selected' : '') + '>' + E(r) + '</option>'; }).join('') + '</select>' + (pre ? '</div>' : '') +   /* v234e: the undo takes no reason */
             '<div class="e1x-msg" id="e1x-msg" role="status" aria-live="polite"></div>' +
-            '<div class="e1x-row2"><button type="button" class="e1x-btn" data-e1x-sw="close">Close</button><button type="button" class="e1x-btn go" data-e1x-sw="check" id="e1x-go">Check how many</button></div></div>';
+            '<div class="e1x-row2"><button type="button" class="e1x-btn" data-e1x-sw="close">Close</button><button type="button" class="e1x-btn go" data-e1x-sw="' + (pre ? 'undo' : 'check') + '" id="e1x-go">' + (pre ? 'Switch back' : 'Check how many') + '</button></div></div>';
         b.innerHTML = h; b.hidden = false;
         try { b.querySelector('[data-e1x-sw="close"]').focus(); } catch (e) { }
     }
@@ -17258,15 +17263,37 @@ html.e1x-pinwait:has(#rm-pin-bg.active) #e1x-bg { pointer-events: none; }   /* v
             clearTimeout(wd); if (S.gone) { var dg = J(r && r.data), ng = dg && dg.ok === true ? num(dg.changed) : 0; toast(dg && dg.ok === true ? 'Switched ' + N(ng) + ' listing' + (ng === 1 ? '' : 's') + ' ' + (S.to ? 'ON' : 'OFF') + ' ✓' : 'Not saved: the answer came too late. Check Stock.'); return; }
             S.busy = false; var d = J(r && r.data), ok = !!(r && !r.error && d && d.ok === true), nn = ok ? num(d.changed) : 0, to = S.to;
             var done = ok ? N(nn) + ' listing' + (nn === 1 ? '' : 's') + ' switched ' + (to ? 'ON' : 'OFF') + '.' + (num(d.skipped_has_stock) ? ' ' + N(d.skipped_has_stock) + ' still have stock and stay ON.' : '') : '';
-            if (ok && nn && S.bulk) { if (S.back) { try { localStorage.removeItem(sbKey()); } catch (e) { } } else lsSet(sbKey(), { fl: S.fl, to: !to, n: nn, label: lbl, at: now(), until: now() + 86400000 }); }
+            if (ok && nn) { try { if (W.e2xSw) W.e2xSw.refresh(); } catch (e) { } }   /* v234e: the undo list comes from the server; nothing kept on this phone */
             if (ok && nn && !S.bulk && typeof B5 !== 'undefined' && B5.data && B5.data.m && B5.data.m.sku_code === S.sku) { B5.data.m.active = to; try { b5Draw(); } catch (e) { } }
             if (ok && nn) { try { usMark(S.fl, to); } catch (e) { } }
             if (ok && nn && S.bulk) { try { loadStockTab(true); } catch (e) { } try { stockTop(); } catch (e) { } }
             if (!live(S)) { toast(ok ? 'Switched ' + N(nn) + ' listing' + (nn === 1 ? '' : 's') + ' ' + (to ? 'ON' : 'OFF') + ' ✓' + (num(d.skipped_has_stock) ? ' ' + N(d.skipped_has_stock) + ' still have stock and stay ON.' : '') : 'Not saved: ' + plainSwErr(d, r).replace(/<[^>]+>/g, '')); return; }   /* v234d3: plain toast */   /* the sheet was closed meanwhile: say the result anyway */
             if (!ok) { say(plainSwErr(d, r), 'bad'); S.prev = null; if (go) { go.disabled = false; go.setAttribute('data-e1x-sw', 'check'); go.textContent = 'Check again'; } return; }
-            say('&#9989; ' + E(done) + (nn && S.bulk && !S.back ? ' You can switch them back from Stock for 24 hours.' : ''), 'ok');
+            say('&#9989; ' + E(done) + (nn && S.bulk ? (W.e2xSw && W.e2xSw.canUndo() ? ' You can switch them back from Stock for 24 hours.' : ' An Owner or Admin can switch them back from Stock for 24 hours.') : ''), 'ok');
             if (go) { go.textContent = 'Done'; go.setAttribute('data-e1x-sw', 'close'); go.disabled = false; }
         }, function () { clearTimeout(wd); if (S.gone) return; S.busy = false; if (!live(S)) { toast('Not saved: there was no answer. Check Stock to see if the listings changed.'); return; } say('There was no answer. Nothing was changed. Try again.', 'bad'); if (go) { go.disabled = false; go.setAttribute('data-e1x-sw', 'check'); go.textContent = 'Check again'; } });
+    }
+    function swUndo() {   /* v234e2: the server 24-hour undo (oms_ful47_sku_switch_undo_s, Owner / Admin). A PIN typed now; Close is never blocked; one call at a time;
+                             the 60 s stuck timer counts only while the PIN box is closed (REVIEW_V234E S6); after 24 h a plain too-late line, nothing sent. */
+        if (!SW || SW.busy || SW.inflight || !SW.back || SW.back.id == null || !W.e2xSw) return; var S = SW, go = document.getElementById('e1x-go'), id = S.back.id;
+        if (S.back.until && S.back.until <= now()) { say(E(W.e2xSw.tooLate()), 'bad'); if (go) { go.disabled = true; go.textContent = 'Too late'; } return; }
+        S.busy = true; S.inflight = true; if (go) { go.disabled = true; go.innerHTML = '<span class="e1x-spin" aria-hidden="true"></span> Waiting for your PIN…'; }
+        freshPin();   /* founder rule: an undo = a PIN typed now */
+        var waited = 0, wd = setInterval(function () {
+            if (!S.busy) { clearInterval(wd); return; }
+            var pb = document.getElementById('rm-pin-bg'); if (pb && pb.classList.contains('active')) return;   /* paused while the PIN box is open */
+            waited += 1000; if (waited < 60000) return;
+            clearInterval(wd); S.busy = false; var m = 'No answer after 60 seconds. Check Stock to see if the listings changed.';
+            if (live(S)) { say(m, 'bad'); if (go) { go.disabled = true; go.textContent = 'Still waiting for the answer'; } } else toast(m);
+        }, 1000);
+        pinWait(omsPinRpc('oms_ful47_sku_switch_undo_s', { p_batch_id: id }, 30000, 'Switch back', { protect: true, reason: 'Undo the listing switch.' })).then(function (r) {
+            clearInterval(wd); S.busy = false; S.inflight = false; var d = J(r && r.data), ok = !!(r && !r.error && d && d.ok === true);
+            if (ok) { try { W.e2xSw.done(id); } catch (e) { } try { loadStockTab(true); } catch (e) { } try { stockTop(); } catch (e) { } }
+            if (!live(S)) { toast(ok ? W.e2xSw.text(d) : 'Not switched back: ' + W.e2xSw.err(d, r)); return; }
+            if (!ok) { say(E(W.e2xSw.err(d, r)), 'bad'); if (go) { var late = String((d && d.error) || '') === 'TOO_LATE' || String((d && d.error) || '') === 'ALREADY_UNDONE'; go.disabled = late; go.textContent = late ? 'Too late' : 'Try again'; } return; }
+            say('&#9989; ' + E(W.e2xSw.text(d)), 'ok');
+            if (go) { go.textContent = 'Done'; go.setAttribute('data-e1x-sw', 'close'); go.disabled = false; }
+        }, function () { clearInterval(wd); S.busy = false; S.inflight = false; if (!live(S)) { toast('Not switched back: there was no answer. Check Stock to see if the listings changed.'); return; } say('There was no answer. Check Stock before trying again.', 'bad'); if (go) { go.disabled = false; go.textContent = 'Try again'; } });
     }
     function swClick(ev) {
         var b = document.getElementById('e1x-bg'); if (ev.target === b) return closeSw();   /* v234d3: Close is never blocked; a running save goes on and its result shows as a toast */
@@ -17281,6 +17308,7 @@ html.e1x-pinwait:has(#rm-pin-bg.active) #e1x-bg { pointer-events: none; }   /* v
         }
         if (a === 'check') return swCheck();
         if (a === 'apply') return swApply();
+        if (a === 'undo') return swUndo();   /* v234e */
     }
     function swChange(ev) {
         var t = ev.target; if (!t || !SW || SW.busy) return; var k = t.getAttribute('data-e1x-sw');
@@ -17318,7 +17346,7 @@ html.e1x-pinwait:has(#rm-pin-bg.active) #e1x-bg { pointer-events: none; }   /* v
         document.addEventListener('click', function (ev) {
             var t = ev.target && ev.target.closest ? ev.target.closest('[data-e1x="swus"],[data-e1x="swst"],[data-e1x="swback"]') : null; if (!t) return;
             ev.stopPropagation();
-            if (t.getAttribute('data-e1x') === 'swback') { var sb = sbGet(); if (sb) openSwitch({ bulk: true, back: sb }); return; }
+            if (t.getAttribute('data-e1x') === 'swback') { var sb = sbGet(); if (sb) openSwitch({ bulk: true, back: sb }); else { toast(W.e2xSw ? W.e2xSw.tooLate() : 'Too late to switch back.'); try { stockTop(); } catch (e3) { } } return; }   /* v234e2 S6 */
             var sku = t.getAttribute('data-sku'), on = t.getAttribute('aria-checked') === 'true', title = sku;
             try { var i = t.getAttribute('data-i'); if (i != null) { var e = US.res.p[Number(i)].e; title = showName(e.title || e.name || '', sku, e.type || ''); } } catch (e2) { }
             openSwitch({ sku: sku, title: title, on: on });
@@ -17338,7 +17366,7 @@ html.e1x-pinwait:has(#rm-pin-bg.active) #e1x-bg { pointer-events: none; }   /* v
         var h0 = document.getElementById('r21c-h'), h = h0 && h0.parentNode && h0.parentNode.classList.contains('log-header') ? h0.parentNode : h0; if (!h || !h.parentNode) return;   /* above the heading row, not inside it */
         var c = cache(), s = c.stock || null;
         function paint(v, at) {
-            var mgr = canSwitch(), sb = mgr ? sbGet() : null;
+            var mgr = canSwitch(), sb = mgr ? sbGet(function () { try { stockTop(); } catch (e) { } }) : null;   /* v234e */
             var html = keyRow('e1x-stop', [{ k: 'k-all', v: v ? E(N(v.all)) : '-', l: 'Products you sell' }, { k: 'k-out', v: v ? E(N(v.out)) : '-', l: 'Out of stock', cls: v && v.out > 0 ? 'bad' : '' },
                 { k: 'k-low', v: v ? E(N(v.low)) : '-', l: 'Low', cls: v && v.low > 0 ? 'warn' : '' }, { k: 'k-value', v: v ? E(v.value || '-') : '-', l: 'Stock value', s: at && now() - at > 120000 ? 'saved ' + E(ago(at)) : '' }]) +
                 (mgr ? '<div id="e1x-bulk" class="e1x-bulkw"><button type="button" class="e1x-btn e1x-bulk" data-e1x-k="k-bulk">Switch listings ON / OFF</button>' +
@@ -17557,6 +17585,7 @@ html #w2-bg { z-index: 2147309600 !important; }
 html .r41e-sh { z-index: 2147309600 !important; }
 html #e1x-bg { z-index: 2147309700 !important; }
 html #d4-bg { z-index: 2147309800 !important; }
+html #b2-bg { z-index: 2147309810 !important; }   /* v234f: Print today's papers sheet */
 html .bl8-sheet { z-index: 2147309900 !important; }
 html #bn-banner { z-index: 2147200150 !important; }
 html #bn-banner2 { z-index: 2147200150 !important; }
@@ -17781,7 +17810,7 @@ html.d4x-on .nv-x { width: auto !important; min-width: 44px; padding: 0 .5rem !i
         var c = String(e.code || ''), m = String(e.message || ''), s = Number(res.status || e.status || 0);
         return c === 'PGRST202' || c === '42883' || /could not find the function/i.test(m) || s === 404;
     }
-    API.isMissing = isMissing;
+    API.isMissing = isMissing; API.paintHealth = function () { try { paintHealth(); } catch (e) { } };   /* v234e4 */
 
     /* ---------- time words (India time) ---------- */
     var IST = 19800000, DOW = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'], MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -17806,7 +17835,7 @@ html.d4x-on .nv-x { width: auto !important; min-width: 44px; padding: 0 .5rem !i
     /* ================= I-2: ship-by countdown and next pickup ================= */
     var PICK_OPTS = []; (function () { for (var m = 8 * 60; m <= 22 * 60; m += 30) PICK_OPTS.push(m); })();
     function pickKey() { return 'd4_pickup:' + company(); }
-    function pickupMin() { var v = Number(lsGet(pickKey())); return (isFinite(v) && v >= 0 && v < 1440 && PICK_OPTS.indexOf(v) >= 0) ? v : 17 * 60; }
+    function pickupMin() { var v = null; try { if (W.e2xPickup) v = W.e2xPickup.min(); } catch (e) { } if (v == null || v === '') return 17 * 60; v = Number(v); return (isFinite(v) && v >= 0 && v < 1440 && v % 15 === 0) ? v : 17 * 60; }   /* v234e: the company time from the server (oms_company_settings_v1); no copy kept on this phone */
     function pickupWords() { var m = pickupMin(); return clock(Math.floor(m / 60), m % 60); }
     function nextPickup(base) { base = base == null ? now() : base; var t = istMidnight(base) + pickupMin() * 60000; return base < t ? t : t + 86400000; }
     function alertHoursDefault() { try { var s = W.r43ful.F.counts.settings || {}; var h = Number(s.alert_hours); return h > 0 ? h : 24; } catch (e) { return 24; } }
@@ -17847,11 +17876,12 @@ html.d4x-on .nv-x { width: auto !important; min-width: 44px; padding: 0 .5rem !i
         }
     };
     API.shipBy = shipBy; API.shipText = shipText; API.nextPickup = nextPickup; API.pickupMin = pickupMin; API.beforePickup = beforePickup; API.PICK_OPTS = PICK_OPTS;
-    function setHtml() {
-        var cur = pickupMin();
-        return '<label class="d4-set" id="d4-set-pickup"><b>Courier pickup time</b><select data-d4set="pickup" aria-label="Courier pickup time">' + PICK_OPTS.map(function (m) { return '<option value="' + m + '"' + (m === cur ? ' selected' : '') + '>' + E(clock(Math.floor(m / 60), m % 60)) + '</option>'; }).join('') + '</select>' +
-            '<span>The courier picks up once a day at this time. Orders shows "Next pickup only" for orders that will be late by then. Saved on this phone (each phone keeps its own time for now).</span></label>';   /* a label: the help pass never folds it */
+    function setHtml() {   /* v234e: the company time from the server; only an Owner or Admin changes it (the server checks the PIN and the role); nothing saved on this phone */
+        var P = W.e2xPickup || null, cur = pickupMin(), adm = !!(P && P.canSet()), opts = PICK_OPTS.slice(); if (opts.indexOf(cur) < 0) { opts.push(cur); opts.sort(function (a, b) { return a - b; }); }
+        return '<label class="d4-set" id="d4-set-pickup"><b>Courier pickup time</b>' + (adm ? '<select data-d4set="pickup" aria-label="Courier pickup time">' + opts.map(function (m) { return '<option value="' + m + '"' + (m === cur ? ' selected' : '') + '>' + E(clock(Math.floor(m / 60), m % 60)) + '</option>'; }).join('') + '</select>' : '<span class="d4-setv">' + E(pickupWords()) + '</span>') +
+            '<span>The courier picks up once a day at this time, the same for every phone. Orders shows "Next pickup only" for orders that will be late by then. ' + E(P ? P.note() : '') + '</span></label>';   /* a label: the help pass never folds it */
     }
+    API.setHtml = setHtml; API.pickupRedraw = function () { OT.html = ''; try { ordersTop(); } catch (e) { } };   /* v234e: redrawn when the server answers */
     function injectSetting() {
         var s = $('settings-tab'); if (!s || $('d4-set-pickup')) return;
         var d = document.createElement('div'); d.innerHTML = setHtml();
@@ -17941,7 +17971,8 @@ html.d4x-on .nv-x { width: auto !important; min-width: 44px; padding: 0 .5rem !i
         'Product fill': 'New product details are not filling in by themselves. Tell the Admin.',
         'Background jobs': 'Some background jobs did not run. Tell the Admin today.',
         'Stock movements': 'No stock movement for a long time. If staff are working, check their phones are online.',
-        'Orders': 'No new order lines for a long time. Check that today’s orders were added.'
+        'Orders': 'No new order lines for a long time. Check that today’s orders were added.',
+        'Sales record': 'New orders are not being added to the sales record. Tell the owner.'   /* v234e4 */
     };
     var LVL = { green: 'OK', amber: 'Late', red: 'Stopped', off: 'Off' };
     function ageWords(a) {
@@ -17960,7 +17991,7 @@ html.d4x-on .nv-x { width: auto !important; min-width: 44px; padding: 0 .5rem !i
             HL.p = null;
             if (isMissing(r)) { HL.missing = true; HL.d = null; paintHealth(); return null; }
             var d = J(r && r.data);
-            if (r && !r.error && d && d.ok === true && Array.isArray(d.areas)) { HL.d = d; HL.at = now(); HL.err = false; } else { HL.err = true; HL.errAt = now(); }
+            if (r && !r.error && d && d.ok === true && Array.isArray(d.areas)) { HL.d = d; HL.at = now(); HL.err = false; try { if (typeof W.e2xHealthAdd === 'function') W.e2xHealthAdd(d); } catch (e2) { } }   /* v234e4: + Sales record */ else { HL.err = true; HL.errAt = now(); }
             paintHealth(); return HL.d;
         }, function () { HL.p = null; HL.err = true; HL.errAt = now(); paintHealth(); return HL.d; });
         return HL.p;
@@ -18369,7 +18400,7 @@ html.d4x-on .nv-x { width: auto !important; min-width: 44px; padding: 0 .5rem !i
     document.addEventListener('input', kInput);
     document.addEventListener('change', function (ev) {
         var t = ev.target; if (!t) return;
-        if (t.getAttribute && t.getAttribute('data-d4set') === 'pickup') { lsSet(pickKey(), String(Number(t.value))); toast('Courier pickup time: ' + pickupWords()); OT.html = ''; try { ordersTop(); } catch (e) { } return; }
+        if (t.getAttribute && t.getAttribute('data-d4set') === 'pickup') { if (W.e2xPickup) W.e2xPickup.save(Number(t.value), t); return; }   /* v234e: saved on the server for everyone (Owner / Admin, PIN asked); never on this phone */
         if (t.id === 'd4r-reason' && RS) { rsRead(); var w = $('d4r-notew'); if (w) w.hidden = RS.reason !== 'OTHER'; return; }
         kChange(ev);
     });
@@ -18571,6 +18602,1064 @@ html.d4x-on .nv-x { width: auto !important; min-width: 44px; padding: 0 .5rem !i
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start); else start();
 })();
 /* D4X-END */
+</script>
+<style id="e2x-css">
+/* E2X v234e: the DB3 server reads (Dashboard summary, staff filter, company pickup time, 24-hour switch undo, make-or-buy, steady make flag) and the hidden SALES1 slot.
+   No new overlay: the switch undo uses the E1X sheet (already in the one layer order). Sizes in rem so the 130% text setting works. */
+#dash2 .e2x-src { font-size: .82rem; color: #4A5568; margin: .1rem 0 .4rem; overflow-wrap: anywhere; }
+#dash2 .e2x-src.e2x-late { color: #7A4B00; }
+#dash2 .e2x-card[hidden], #e2x-sales1[hidden] { display: none !important; }
+#dash2 .e2x-card h3 { font-size: .95rem; margin: 0 0 .3rem; }
+#dash2 .e2x-card p { font-size: .88rem; margin: .15rem 0; overflow-wrap: anywhere; }
+#dash2 .e2x-held { display: inline-block; font-size: .78rem; font-weight: 700; color: #1B4F8A; border: 1px solid #9FB0C6; border-radius: .4rem; padding: 0 .3rem; }
+#dash2 .e2x-os { display: flex; gap: .6rem; flex-wrap: wrap; margin: 0 0 .3rem; }
+#dash2 .e2x-os > div { flex: 1 1 8rem; min-width: 0; border: 1px solid #DCE3EC; border-radius: .6rem; padding: .35rem .5rem; }
+#dash2 .e2x-os b { display: block; font-size: 1.3rem; } #dash2 .e2x-os span { display: block; font-weight: 700; } #dash2 .e2x-os small { display: block; color: #4A5568; font-size: .78rem; }
+#dash2 .e2x-un summary { min-height: 44px; line-height: 44px; cursor: pointer; font-weight: 700; } #dash2 .e2x-un li { margin: .3rem 0; overflow-wrap: anywhere; font-size: .86rem; }
+.d4-set .d4-setv { display: block; font-size: 1rem; font-weight: 700; color: #0A1628; min-height: 44px; line-height: 44px; }
+</style>
+<script id="e2x-js">
+/* E2X-BEGIN v234f4 = v234e5 + one raw sales read per Overview load (the older readers are answered from the shared 400-day read). v234e5 = v234e4 + REVIEW_V234E4_DELTA (S1 health sentence follows the worst level, S2 Every order only while SALES1 is on, S3 exact age + failed refresh said, S4 a missing number shows -). v234e4 = v234e3 + SALES1 live (Ordered / Shipped card, every-order Sales table, Selling but not in stock, order lines with no product, Sales record health). v234e3 = v234e2 + REVIEW_V234E2_DELTA C1 (the selling-price value is read again on Refresh and every 5 minutes, B1 backoff kept, and says its age when older than the units). v234e2 = v234e + REVIEW_V234E_v1 (B1 no request loop when both sales reads fail, S1-S8). v234e (v26 lane e2). One runtime layer, placed last. It changes no function text; the Dashboard, E1X and D4X layers ask it through small hooks.
+   Reads (no PIN, the DB3 functions open to the app key): oms_dash_summary_v1 (15-minute server cache), oms_dash_filters_v1, oms_company_settings_v1,
+   oms_ful47_sku_switch_recent_v1, oms_make_buy_v1 (paged by product codes, at most 500 a call). Writes (both through omsPinRpc, PIN asked, the server checks it
+   and the role): oms_courier_pickup_set_s (Owner / Admin) and oms_ful47_sku_switch_undo_s (Owner / Admin, a PIN typed now).
+   SALES1 (live): oms_sales_daily_v1, oms_sales_unmapped_v1, oms_sales_health_v1 (reads, no PIN); localStorage e2x_sales1 = off hides them; hidden while missing.
+   Local storage: nothing new is written. The old phone-only pickup time (d4_pickup:company) is read once, used only until the company time is saved, and removed
+   once the server holds a saved time. Switch: ?e2x=off (this page load) or localStorage e2x_v1 = off turns off the Dashboard part (pickup and undo stay on,
+   because their phone-only copies are gone). No backslash anywhere in this layer. */
+(function () {
+    'use strict';
+    var W = window;
+    function flag() {
+        var q = ''; try { q = String(location.search || ''); } catch (e) { }
+        if (/[?&]e2x=off/.test(q)) return false;
+        try { return localStorage.getItem('e2x_v1') !== 'off'; } catch (e) { return true; }
+    }
+    var ON = flag();
+    var X = W.E2X = { on: ON, version: 'e2x-6 (v234f4)' };
+
+    /* ---------- small helpers ---------- */
+    function E(s) { s = s == null ? '' : String(s); try { return esc59(s); } catch (e) { return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); } }
+    function num(v) { v = Number(v); return isFinite(v) ? v : 0; }
+    function N(v) { try { return a12N(v); } catch (e) { return num(v).toLocaleString('en-IN'); } }
+    function inr(v) { try { return r41lInr(v); } catch (e) { return N(Math.round(num(v))); } }
+    function now() { return Date.now(); }
+    function J(d) { if (typeof d === 'string') { try { return JSON.parse(d); } catch (e) { return null; } } return d; }
+    function sess() { try { return (typeof state !== 'undefined' && state && state.session) || null; } catch (e) { return null; } }
+    function who() { var s = sess(); return String((s && s.employee_code) || '').toUpperCase(); }
+    function role() { var s = sess(); return String((s && s.role) || '').toUpperCase().replace(/[^A-Z_]/g, ''); }
+    function isAdmin() { var r = role(); return r === 'OWNER' || r === 'ADMIN'; }
+    function isMgr() { var r = role(); return r === 'OWNER' || r === 'ADMIN' || r === 'SUPERVISOR'; }
+    function company() { var s = sess() || {}; return String(s.workspace_code || s.company_id || 'artzfolio').toLowerCase(); }
+    function toast(m) { try { if (typeof idToast === 'function') { idToast(m); return; } } catch (e) { } try { if (typeof exToast === 'function') exToast('ok', m); } catch (e) { } }
+    function today() { try { return a12Today(); } catch (e) { return new Date(now() + 19800000).toISOString().slice(0, 10); } }
+    function hasDb() { try { return typeof db !== 'undefined' && !!db && typeof db.rpc === 'function'; } catch (e) { return false; } }
+    function isMissing(res) {   /* the same rule as the D4X layer: the function is not in the database yet */
+        var e = res && res.error; if (!e) return false;
+        var c = String(e.code || ''), m = String(e.message || ''), s = Number(res.status || e.status || 0);
+        return c === 'PGRST202' || c === '42883' || /could not find the function/i.test(m) || s === 404;
+    }
+    function rpc(fn, args, ms) {
+        if (!hasDb()) return Promise.resolve({ data: null, error: { code: 'NO_DB', message: 'not connected' } });
+        var p; try { p = db.rpc(fn, args || {}); } catch (e) { return Promise.resolve({ data: null, error: { message: String(e && e.message || e) } }); }
+        try { if (typeof withTimeout === 'function') p = withTimeout(p, ms || 15000, 'Dashboard'); } catch (e) { }
+        return Promise.resolve(p).then(function (r) { return r || { data: null, error: { message: 'no answer' } }; }, function (e) { return { data: null, error: { message: String(e && e.message || e) } }; });
+    }
+    function minsAgo(m) { m = Math.max(0, Math.round(num(m))); if (m < 1) return 'just now'; if (m < 60) return m + ' min ago'; var h = Math.floor(m / 60); return h + (h === 1 ? ' hour' : ' hours') + (m % 60 ? ' ' + (m % 60) + ' min' : '') + ' ago'; }
+    function D2s() { try { return W.dash2 && W.dash2.state ? W.dash2.state() : null; } catch (e) { return null; } }
+    function repaint() { try { var D = D2s(); if (D && D.on && W.dash2) W.dash2.paintRes(); } catch (e) { } }
+
+    /* ================= 3. Company pickup time (always on: the phone-only copy is gone) ================= */
+    var PK = { min: null, dflt: true, at: 0, p: null, bad: false, leg: null, legFor: '', busy: false };
+    function legKey() { return 'd4_pickup:' + company(); }
+    function legacy() {   /* read once per company: the time this phone saved before v234e. Never written again. */
+        var c = company(); if (PK.legFor === c) return PK.leg;
+        PK.legFor = c; PK.leg = null;
+        try { var v = localStorage.getItem(legKey()); if (v != null && v !== '') { var n = Number(v); if (isFinite(n) && n >= 0 && n < 1440 && n % 15 === 0) PK.leg = n; } } catch (e) { }
+        return PK.leg;
+    }
+    function dropLegacy() { try { localStorage.removeItem(legKey()); } catch (e) { } PK.leg = null; }
+    function clockOf(m) { var h = Math.floor(m / 60), mi = m % 60, ap = h >= 12 ? 'pm' : 'am', h12 = h % 12 === 0 ? 12 : h % 12; return h12 + (mi ? ':' + (mi < 10 ? '0' : '') + mi : '') + ' ' + ap; }
+    function pkRedraw() {
+        try { var el = document.getElementById('d4-set-pickup'); if (el && W.d4xApi && typeof W.d4xApi.setHtml === 'function') { var d = document.createElement('div'); d.innerHTML = W.d4xApi.setHtml(); if (d.firstChild) el.parentNode.replaceChild(d.firstChild, el); } } catch (e) { }
+        try { if (W.d4xApi && typeof W.d4xApi.pickupRedraw === 'function') W.d4xApi.pickupRedraw(); } catch (e) { }
+    }
+    function pkLoad(force) {
+        if (PK.p) return PK.p;
+        if (!force && PK.at && now() - PK.at < 600000) return Promise.resolve(PK);
+        if (!hasDb()) return Promise.resolve(PK);
+        var before = pkMin();
+        PK.p = rpc('oms_company_settings_v1', {}, 12000).then(function (r) {
+            PK.p = null; PK.at = now();
+            if (isMissing(r)) { PK.bad = true; return PK; }
+            var d = J(r && r.data);
+            if (r && !r.error && d && d.ok === true && d.courier_pickup_minutes != null) {
+                var m = Number(d.courier_pickup_minutes);
+                if (isFinite(m) && m >= 0 && m < 1440) { PK.min = m; PK.dflt = d.courier_pickup_is_default === true; PK.bad = false; if (!PK.dflt) dropLegacy(); }
+            } else PK.at = now() - 540000;   /* no clear answer (for example not signed in yet): ask again in a minute */
+            if (pkMin() !== before || document.getElementById('d4-set-pickup')) pkRedraw();
+            return PK;
+        });
+        return PK.p;
+    }
+    function pkMin() {   /* the saved company time; while none is saved, a time this phone had before; else nothing (the app uses 5 pm) */
+        if (PK.min != null && !PK.dflt) return PK.min;
+        var l = legacy(); if (l != null) return l;
+        return PK.min != null ? PK.min : null;
+    }
+    function pkNote() {
+        var l = legacy();
+        if (PK.min != null && !PK.dflt) return 'Saved for everyone by an Owner or Admin.';
+        if (l != null) return 'This phone still uses the ' + clockOf(l) + ' it had saved before, until an Owner or Admin saves the time for everyone.';
+        if (PK.min != null) return 'Not saved for the company yet, so the usual ' + clockOf(PK.min) + ' is used.';
+        return 'The saved time could not be read yet, so ' + clockOf(17 * 60) + ' is used.';
+    }
+    function pkErr(d, r) {
+        var c = String((d && d.error) || (r && r.error && r.error.code) || '').toUpperCase();
+        if (c === 'PIN_NEEDED') return 'Your PIN was not entered. Nothing was changed.';
+        if (c === 'PIN_REJECTED') return 'That PIN is not right. Nothing was changed.';
+        if (c === 'LOCKED') return 'Too many wrong PINs. Wait a few minutes, then try again.';
+        if (c === 'TOKEN_NOT_ALLOWED') return 'This step needs your PIN. Nothing was changed.';
+        if (d && d.message && /^[A-Za-z0-9 ,.:()-]+$/.test(String(d.message))) return String(d.message);
+        return 'The time was not saved. Nothing was changed.';
+    }
+    function pkSave(m, sel) {
+        if (PK.busy) return Promise.resolve(false);
+        if (!isAdmin()) { if (sel) sel.value = String(pkMin() == null ? 17 * 60 : pkMin()); toast('Only an Owner or Admin can change the courier pickup time.'); return Promise.resolve(false); }
+        if (!(isFinite(m) && m >= 0 && m < 1440 && m % 15 === 0) || typeof omsPinRpc !== 'function') return Promise.resolve(false);
+        PK.busy = true; if (sel) sel.disabled = true;
+        return Promise.resolve(omsPinRpc('oms_courier_pickup_set_s', { p_minutes: m }, 20000, 'Courier pickup time', { protect: true, reason: 'Change the courier pickup time for everyone.' })).then(function (r) {
+            PK.busy = false; if (sel) sel.disabled = false;
+            var d = J(r && r.data), ok = !!(r && !r.error && d && d.ok === true);
+            if (ok) { PK.min = m; PK.dflt = false; PK.at = now(); dropLegacy(); toast('Saved: the courier picks up at ' + clockOf(m) + ' for everyone.'); pkRedraw(); return true; }
+            toast('Not saved: ' + pkErr(d, r)); pkRedraw(); return false;
+        }, function () { PK.busy = false; if (sel) sel.disabled = false; toast('Not saved: there was no answer. Nothing was changed.'); pkRedraw(); return false; });
+    }
+    W.e2xPickup = {
+        min: function () { if (!PK.p && (!PK.at || now() - PK.at > 600000)) { try { pkLoad(false); } catch (e) { } } return pkMin(); },
+        note: pkNote, canSet: isAdmin, save: pkSave, load: pkLoad, state: function () { return PK; }, legacy: legacy, clock: clockOf
+    };
+
+    /* ================= 4. Listing switch: the server 24-hour undo (always on: the phone memory is gone) ================= */
+    var SWL = { list: null, at: 0, p: null, bad: false, gone: {} };
+    try { var ks = []; for (var i = 0; i < localStorage.length; i++) { var k = localStorage.key(i); if (k && k.indexOf('e1x_sb:') === 0) ks.push(k); } ks.forEach(function (k) { localStorage.removeItem(k); }); } catch (e) { }   /* the old phone-side stand-in */
+    function swLoad(force) {
+        if (SWL.p) return SWL.p;
+        if (SWL.bad || !hasDb() || (!force && SWL.at && now() - SWL.at < 60000)) return Promise.resolve(SWL);
+        SWL.p = rpc('oms_ful47_sku_switch_recent_v1', {}, 12000).then(function (r) {
+            SWL.p = null; SWL.at = now();
+            if (isMissing(r)) { SWL.bad = true; SWL.list = null; return SWL; }
+            var d = J(r && r.data); if (r && !r.error && d && d.ok === true && Array.isArray(d.switches)) SWL.list = d.switches;
+            return SWL;
+        });
+        return SWL.p;
+    }
+    function swLatest(cb) {
+        if (!isAdmin() || SWL.bad) return null;
+        if (!SWL.p && (!SWL.at || now() - SWL.at > 60000)) { var had = JSON.stringify(SWL.list); swLoad(false).then(function () { if (cb && JSON.stringify(SWL.list) !== had) { try { cb(); } catch (e) { } } }); }
+        var L = SWL.list || [], t = now();
+        for (var i = 0; i < L.length; i++) {
+            var s = L[i] || {}, id = s.switch_batch_id, until = Date.parse(s.undo_until || '');
+            if (s.can_undo !== true || SWL.gone[id] || !(num(s.changed) > 0) || !(until > t)) continue;
+            return { id: id, n: num(s.changed), to: String(s.switched || '') === 'OFF', at: Date.parse(s.at || '') || t, until: until, by: String(s.by || ''), label: N(s.changed) + ' listing' + (num(s.changed) === 1 ? '' : 's') };
+        }
+        return null;
+    }
+    function swText(d) {
+        var n = num(d && d.restored), k = num(d && d.skipped);
+        return N(n) + ' listing' + (n === 1 ? ' is' : 's are') + ' back as before the switch.' + (k ? ' ' + N(k) + ' changed since then or now hold stock, and were left as they are.' : '');
+    }
+    function tooLate() { return 'Too late to switch back: a switch can be undone only within 24 hours, and only once. Nothing was changed.'; }   /* v234e2 S6 */
+    function swErr(d, r) {
+        var c = String((d && d.error) || (r && r.error && r.error.code) || '').toUpperCase();
+        if (c === 'PIN_NEEDED') return 'Your PIN was not entered. Nothing was changed.';
+        if (c === 'PIN_REJECTED') return 'That PIN is not right. Nothing was changed.';
+        if (c === 'LOCKED') return 'Too many wrong PINs. Wait a few minutes, then try again.';
+        if (c === 'TOKEN_NOT_ALLOWED') return 'This step needs your PIN. Nothing was changed.';
+        if (c === 'TOO_LATE') return tooLate();
+        if (c === 'ALREADY_UNDONE') return 'This switch was undone already. Nothing was changed.';
+        if (c === 'NOT_FOUND') return 'That switch was not found. Nothing was changed.';
+        if (c === 'NOT_ALLOWED') return 'Only an Owner or Admin can undo a listing switch. Nothing was changed.';
+        return 'The server did not switch them back. Nothing was changed.';
+    }
+    W.e2xSw = {
+        latest: swLatest, load: swLoad, text: swText, err: swErr, canUndo: isAdmin, tooLate: tooLate,
+        refresh: function () { SWL.at = 0; return swLoad(true); },
+        done: function (id) { SWL.gone[id] = 1; SWL.at = 0; return swLoad(true); },
+        state: function () { return SWL; }
+    };
+
+    if (!ON) return;   /* ---------- below: the Dashboard part (switch e2x_v1) ---------- */
+
+    /* ================= 1 + 2. Dashboard: the server summary first, the phone's own count only as the fallback ================= */
+    /* v234e2 (REVIEW_V234E B1): a failed read is remembered per filter choice and not tried again for 60 seconds; a repaint follows a success,
+       or once after a failure so the error box shows; no loop. S2 today unknown = "could not be read". S3 over 400 days = "Choose at most 400 days".
+       S4 the Sales value tile uses the Sales tab basis. S7 a saved Staff filter is cleared when the staff list cannot be read. */
+    var RETRY = 60000, SELL_TTL = 300000;   /* v234e3 C1: the selling-price rows are read again after 5 minutes (the app's own cache time) */
+    var S = { key: '', data: null, tdata: null, tFail: false, at: 0, p: null, pkey: '', bad: false, failKey: '', failWhy: '', failAt: 0, fl: null, flAt: 0, flP: null, flBad: false, flTried: false, fbP: null, fbFail: {}, staffOff: false };
+    function ovF(D) { var f = (D && D.f && D.f.overview) || {}; return { chan: String(f.chan || ''), cat: String(f.cat || ''), staff: String(f.staff || '') }; }
+    function keyOf(D, rg) { var f = ovF(D); return rg[0] + '|' + rg[1] + '|' + f.chan + '|' + f.cat + '|' + f.staff; }
+    function sumOn() { return ON && !S.bad && hasDb(); }
+    function sumArgs(f, a, b) { return { p_from: a, p_to: b, p_channel: f.chan || null, p_category: f.cat || null, p_staff: f.staff || null, p_top: 20 }; }
+    function daysIn(rg) { var a = Date.parse(rg[0] + 'T00:00:00Z'), b = Date.parse(rg[1] + 'T00:00:00Z'); return isFinite(a) && isFinite(b) ? Math.abs(b - a) / 86400000 : 0; }
+    function staffList() { var st = ((S.fl && S.fl.staff) || []).map(function (x) { return x && x.employee_code ? String(x.employee_code) : ''; }).filter(Boolean); return st.length ? st : null; }
+    function staffCheck(D) {   /* S7: a saved staff code with no staff list on screen is cleared, and a line says so */
+        var f = D && D.f && D.f.overview; if (!f || !f.staff) return;
+        if (sumOn() && !S.flTried) return;
+        if (sumOn() && staffList()) return;
+        f.staff = ''; S.staffOff = true;
+    }
+    function fetchSum(D, rg, force) {
+        var key = keyOf(D, rg), f = ovF(D), t0 = today();
+        if (S.p && S.pkey === key) return S.p;
+        if (!force && S.data && S.key === key && now() - S.at < 120000) return Promise.resolve({ ok: true });
+        if (daysIn(rg) > 400) { S.failKey = key; S.failWhy = 'long'; S.failAt = now(); return Promise.resolve({ ok: false, long: true }); }   /* S3: the server answers at most 400 days */
+        S.pkey = key;
+        var p = rpc('oms_dash_summary_v1', sumArgs(f, rg[0], rg[1]), 15000).then(function (r) {
+            var d = J(r && r.data);
+            if (isMissing(r)) { if (S.p === p) S.p = null; S.bad = true; return { ok: false, missing: true }; }
+            if (!r || r.error || !d || d.ok !== true) {
+                if (S.p === p) S.p = null;
+                S.failKey = key; S.failAt = now(); S.failWhy = (d && String(d.error || '') === 'BAD_INPUT') ? 'long' : 'error';
+                return { ok: false, msg: (d && d.message) || (r && r.error && r.error.message) || '' };
+            }
+            if (rg[0] === t0 && rg[1] === t0) { if (S.p === p) S.p = null; S.data = d; S.tdata = d; S.tFail = false; S.key = key; S.at = now(); S.failKey = ''; return { ok: true }; }
+            return rpc('oms_dash_summary_v1', sumArgs(f, t0, t0), 15000).then(function (r2) {   /* today only after the period answered (one call when the server is down) */
+                if (S.p === p) S.p = null;
+                var t = J(r2 && r2.data);
+                S.data = d; S.tdata = (r2 && !r2.error && t && t.ok === true) ? t : null; S.tFail = !S.tdata; S.key = key; S.at = now(); S.failKey = '';
+                return { ok: true };
+            });
+        });
+        S.p = p; return p;
+    }
+    function fetchFl(force) {
+        if (S.flP) return S.flP;
+        if (S.flBad || (!force && S.fl && now() - S.flAt < 900000)) return Promise.resolve(S.fl);
+        S.flP = rpc('oms_dash_filters_v1', {}, 12000).then(function (r) {
+            S.flP = null; S.flTried = true; if (isMissing(r)) { S.flBad = true; return null; }
+            var d = J(r && r.data); if (r && !r.error && d && d.ok === true) { S.fl = d; S.flAt = now(); }
+            return S.fl;
+        });
+        return S.flP;
+    }
+    function fbOk(key) { var t = S.fbFail[key]; return !t || now() - t >= RETRY; }
+    function fallbackSales(key, force) {   /* the server numbers failed: read the raw sales the old way; a failure is remembered for this key for 60 s */
+        if (S.fbP) return S.fbP;
+        if (typeof a12Many !== 'function') return Promise.resolve(null);
+        if (!force && !fbOk(key)) return Promise.resolve(null);
+        S.fbP = Promise.resolve(a12Many(['sales'], !!force)).then(function (m) {
+            S.fbP = null; var s = m && m.sales;
+            if (s && s.ok === true) { delete S.fbFail[key]; return s; }
+            S.fbFail[key] = now(); return null;
+        }, function () { S.fbP = null; S.fbFail[key] = now(); return null; });
+        return S.fbP;
+    }
+    function n43() { try { return typeof n43On === 'function' && !!n43On(); } catch (e) { return false; } }
+    /* v234f4 (lead QA H2): one raw sales read per Overview load. The older screens' readers (Today cards, period tiles, listing extras) ask oms_sales_daily
+       for parts of the same rows. While the app's own 400-day sales read (A12 'sales') is cached (5 minutes, cleared by Refresh) or running, those requests
+       are answered from it on the phone instead of asking the database again. A request with other filters or columns, older dates, or the 400-day read itself
+       goes to the database exactly as before. If the shared read fails, the request goes to the database once (no retry loop). */
+    var A12C = ['sku_code', 'asin', 'sale_date', 'channel', 'bin_code', 'units', 'orders'], A12SIG = A12C.join(',');
+    var SH2 = { served: 0, real: 0 };
+    function a12SalesLive() {
+        try {
+            var f = (typeof A12 !== 'undefined' && A12.inflight) ? A12.inflight.sales : null; if (f) return f;
+            var c = (typeof A12 !== 'undefined' && A12.cache) ? A12.cache.sales : null, ttl = (typeof A12_TTL !== 'undefined') ? A12_TTL : 300000;
+            if (c && c.ok && Array.isArray(c.data) && now() - c.at < ttl) return Promise.resolve(c);
+        } catch (e) { }
+        return null;
+    }
+    function planOf(calls) {
+        var p = { cols: null, conds: [], order: [], range: null, limit: null }, lo = null, t0 = today();
+        for (var i = 0; i < calls.length; i++) {
+            var m = calls[i][0], a = calls[i][1];
+            if (m === 'select') { p.cols = String(a[0] || '*').replace(/[ ]/g, ''); continue; }
+            if (m === 'order') { p.order.push([String(a[0]), !(a[1] && a[1].ascending === false)]); continue; }
+            if (m === 'range') { p.range = [num(a[0]), num(a[1])]; continue; }
+            if (m === 'limit') { p.limit = num(a[0]); continue; }
+            if ((m === 'eq' || m === 'gte' || m === 'lte' || m === 'gt' || m === 'lt') && a[0] === 'sale_date' && typeof a[1] === 'string') { p.conds.push([m, a[1]]); if (m === 'eq' || m === 'gte' || m === 'gt') lo = lo == null || a[1] > lo ? a[1] : lo; continue; }
+            return null;   /* any other filter: the database answers */
+        }
+        if (!p.cols || p.cols === '*' || p.cols === A12SIG) return null;   /* the 400-day read itself, or every column */
+        if (!p.cols.split(',').every(function (c) { return A12C.indexOf(c) >= 0; })) return null;
+        var floor = new Date(Date.parse(t0 + 'T00:00:00Z') - 399 * 86400000).toISOString().slice(0, 10);
+        if (lo == null || lo < floor) return null;   /* older than the shared 400 days */
+        return p;
+    }
+    function serveRows(rows, p) {
+        var out = rows.filter(function (r) {
+            var d = String(r.sale_date || '').slice(0, 10);
+            return p.conds.every(function (c) { return c[0] === 'eq' ? d === c[1] : c[0] === 'gte' ? d >= c[1] : c[0] === 'lte' ? d <= c[1] : c[0] === 'gt' ? d > c[1] : d < c[1]; });
+        });
+        if (p.order.length) out.sort(function (a, b) { for (var i = 0; i < p.order.length; i++) { var k = p.order[i][0], x = a[k], y = b[k]; if (x === y) continue; var r = (x == null ? -1 : y == null ? 1 : (x < y ? -1 : 1)); return p.order[i][1] ? r : -r; } return 0; });
+        var cols = p.cols.split(',');
+        out = out.map(function (r) { var o = {}; cols.forEach(function (c) { o[c] = r[c] == null ? null : r[c]; }); return o; });
+        if (p.range) out = out.slice(p.range[0], p.range[1] + 1);
+        if (p.limit != null) out = out.slice(0, p.limit);
+        return out;
+    }
+    function shareBuilder(orig) {
+        var calls = [], b = {}, M = ['select', 'eq', 'neq', 'gt', 'gte', 'lt', 'lte', 'in', 'is', 'like', 'ilike', 'not', 'or', 'filter', 'match', 'order', 'limit', 'range', 'abortSignal', 'single', 'maybeSingle', 'csv', 'contains', 'textSearch'];
+        M.forEach(function (m) { b[m] = function () { calls.push([m, [].slice.call(arguments)]); return b; }; });
+        function real() { SH2.real++; var q = orig.call(db, 'oms_sales_daily'); calls.forEach(function (c) { q = q[c[0]].apply(q, c[1]); }); return q; }
+        function run() {
+            if (b._p) return b._p;
+            var p = planOf(calls), src = p ? a12SalesLive() : null;
+            b._p = src ? Promise.resolve(src).then(function (r) { if (!r || !r.ok || !Array.isArray(r.data)) return real(); SH2.served++; return { data: serveRows(r.data, p), error: null, count: null, status: 200, statusText: 'OK' }; }, function () { return real(); }) : Promise.resolve(real());
+            return b._p;
+        }
+        b.then = function (ok, bad) { return run().then(ok, bad); };
+        return b;
+    }
+    function wrapFrom() {
+        try {
+            if (!hasDb() || db._e2xShare || typeof db.from !== 'function') return;
+            var orig = db.from;
+            db.from = function (t) { if (t === 'oms_sales_daily' && sumOn()) return shareBuilder(orig); return orig.apply(this, arguments); };
+            db._e2xShare = 1;
+        } catch (e) { }
+    }
+    function salesKick(force) {   /* the one 400-day read starts first on an Overview load, so the older readers join it */
+        if (!n43() || typeof a12Ds !== 'function') return;
+        try { a12Ds('sales', !!force); } catch (e) { }
+    }
+    function ovObj(local, D, key) {
+        var d = S.data || {}, t = S.tdata, tt = d.totals || {}, o = { units: num(tt.units), value: num(tt.value_mrp), ex: num(tt.value_ex_gst), noMrp: num(tt.units_no_mrp), todayUnits: null, todayOrders: null, byDay: {}, byChan: {}, bySku: {}, make: local ? local.make : 0, makeQty: local ? local.makeQty : 0, server: true };
+        (d.by_day || []).forEach(function (x) { if (x && x.day) o.byDay[String(x.day).slice(0, 10)] = num(x.units); });
+        (d.by_channel || []).forEach(function (x) { if (x) o.byChan[x.channel || '(none)'] = num(x.units); });
+        var names = {}; (d.top_products || []).forEach(function (x) { if (x && x.sku_code) { o.bySku[x.sku_code] = num(x.units); if (x.product_name) names[x.sku_code] = x.product_name; } });
+        var tt2 = (t && t.totals) || null; if (tt2) { o.todayUnits = num(tt2.units); o.todayOrders = num(tt2.orders); }   /* S2: unknown stays null, shown as "could not be read" */
+        if (n43()) {   /* S4: the Sales tab basis (selling price incl. GST) needs the product prices, so the value comes from the raw rows, the same count as the Sales tab */
+            var f = ovF(D), salesOk = !!(D && D.m && D.m.sales && D.m.sales.ok);
+            if (f.staff) { o.sellWhy = 'not split by staff'; }
+            else if (salesOk && local) { o.sellOk = true; o.sell = num(local.sell); o.sellEx = num(local.ex); o.sellMrp = num(local.value); o.sellNo = num(local.noSell); o.sellAsOf = sellAge(D); }
+            else if (fbOk(key)) { o.sellPending = true; fallbackSales(key, false).then(function (s) { if (s && D && D.m) { D.m.sales = s; repaint(); } else repaint(); }); }
+            else o.sellWhy = 'could not be read';
+        }
+        return { o: o, names: names };
+    }
+    function hhmm(ms) { try { return new Date(ms).toLocaleTimeString('en-IN', { hour: 'numeric', minute: '2-digit', timeZone: 'Asia/Kolkata' }); } catch (e) { var d = new Date(ms); return d.getHours() + ':' + ('0' + d.getMinutes()).slice(-2); } }
+    function sellAge(D) {   /* v234e3 C1: the time of the selling-price count when it is older than the units tiles (more than a minute); never hidden */
+        var sa = num(D && D.m && D.m.sales && D.m.sales.at);
+        if (!sa) return 'an unknown time';
+        return (S.at && S.at - sa > 60000) ? hhmm(sa) : '';
+    }
+    function rangeOf(D) { var P = (D && D.period) || { p: '30d' }, t = today(), back = function (n) { return new Date(Date.parse(t + 'T00:00:00Z') - n * 86400000).toISOString().slice(0, 10); }; if (P.p === '90d') return [back(89), t]; try { return r41cPeriodRange(P.p, t, P.from, P.to); } catch (e) { return [back(29), t]; } }
+    function ageMin() { var c = (S.data && S.data.cache) || {}; return num(c.age_minutes) + (now() - S.at) / 60000; }
+    function srcLine(kind) {
+        var f = ovF(D2s()), staffNote = f.staff ? ' The staff filter needs the server numbers, so all staff are counted here.' : '';
+        var off = S.staffOff ? ' Staff filter off: the staff list could not be read.' : '';
+        if (kind === 'pending') return '<div class="e2x-src" id="e2x-src" role="status">Reading the sales numbers from the server…' + E(off) + '</div>';
+        if (kind === 'long') return '<div class="e2x-src e2x-late" id="e2x-src" role="status">Choose at most 400 days for the server numbers, so these sales numbers are counted on this phone.' + E(staffNote + off) + '</div>';
+        if (kind === 'longfail') return '<div class="e2x-src e2x-late" id="e2x-src" role="status">Choose at most 400 days. The sales numbers could not be counted on this phone either.' + E(off) + '</div>';
+        if (kind === 'local') return '<div class="e2x-src e2x-late" id="e2x-src" role="status">The server sales numbers could not be read, so these sales numbers are counted on this phone.' + E(staffNote + off) + '</div>';
+        if (kind === 'failed') return '<div class="e2x-src e2x-late" id="e2x-src" role="status">The sales numbers could not be read, from the server or on this phone. Tap Refresh to try again, or wait a minute.' + E(off) + '</div>';
+        if (kind === 'off') return '<div class="e2x-src e2x-late" id="e2x-src" role="status">' + E(off.trim()) + '</div>';
+        var c = (S.data && S.data.cache) || {}, late = c.stale === true;
+        return '<div class="e2x-src' + (late ? ' e2x-late' : '') + '" id="e2x-src" role="status">Sales numbers from the server, updated ' + E(minsAgo(ageMin())) + '.' + (late ? ' The server update is late, so they may be old.' : ' They refresh every 15 minutes.') + E(off) + '</div>';
+    }
+    W.e2xSkip = function () { return sumOn(); };
+    W.e2xOv = function (D, rg, local) {
+        if (!D) return null;
+        staffCheck(D);
+        if (!sumOn()) return S.staffOff ? { line: srcLine('off') } : null;
+        var key = keyOf(D, rg);
+        if (S.data && S.key === key) { var b = ovObj(local, D, key); b.line = srcLine('server'); return b; }
+        var salesOk = !!(D.m && D.m.sales && D.m.sales.ok);
+        if (S.failKey === key && S.failWhy === 'error' && now() - S.failAt >= RETRY) S.failKey = '';   /* try the server again after 60 s */
+        if (S.failKey === key) {
+            var lg = S.failWhy === 'long';
+            if (salesOk) return { line: srcLine(lg ? 'long' : 'local') };
+            if (fbOk(key)) {   /* one raw read; a repaint after it ends (success or the first failure), never a loop */
+                fallbackSales(key, false).then(function (s) { if (s && D.m) D.m.sales = s; repaint(); });
+                return { pending: true, line: srcLine('pending') };
+            }
+            return { line: srcLine(lg ? 'longfail' : 'failed') };   /* no "pending": the error box shows */
+        }
+        if (!(S.p && S.pkey === key)) fetchSum(D, rg, false).then(function (r) {
+            if (r && r.ok) { repaint(); return; }
+            if (D.m && D.m.sales && D.m.sales.ok) { repaint(); return; }
+            fallbackSales(key, false).then(function (s) { if (s && D.m) D.m.sales = s; repaint(); });
+        });
+        return { pending: true, line: srcLine('pending') };
+    };
+    W.e2xFl = function (what) {   /* the filter choices from the server (staff = employee codes only, no names) */
+        if (!sumOn() || !S.fl) return null;
+        if (what === 'staff') return staffList();
+        if (what === 'channels') { var ch = (S.fl.channels || []).map(function (x) { return x && x.channel ? String(x.channel) : ''; }).filter(Boolean); return ch.length ? ch : null; }
+        if (what === 'categories') { var ca = (S.fl.categories || []).map(function (x) { return x && x.category ? String(x.category) : ''; }).filter(Boolean); return ca.length ? ca.sort(function (a, b) { return a.localeCompare(b, 'en', { numeric: true }); }) : null; }
+        return null;
+    };
+
+    /* ================= 5 + 6. Make or buy and the steady make flag (oms_make_buy_v1) ================= */
+    var MB = { map: {}, at: 0, p: null, bad: false, failed: false, n: 0, held: 0, keys: '', src: null, copy: null, heldSkus: {} };
+    function mbSkus(rows) { var s = []; (rows || []).forEach(function (r) { if (r && r.sku_code && num(r.sold_30) > 0) s.push(String(r.sku_code)); }); return s.sort(); }
+    function fetchMb(rows, force) {
+        var skus = mbSkus(rows), key = skus.join(',');
+        if (MB.bad || !hasDb() || !skus.length) return Promise.resolve(MB);
+        if (MB.p) return MB.p;
+        if (!force && MB.at && MB.keys === key && now() - MB.at < 600000) return Promise.resolve(MB);
+        var parts = []; for (var i = 0; i < skus.length && i < 20000; i += 500) parts.push(skus.slice(i, i + 500));
+        MB.p = Promise.all(parts.map(function (part) { return rpc('oms_make_buy_v1', { p_source: null, p_skus: part, p_limit: part.length }, 15000); })).then(function (rr) {
+            MB.p = null;
+            if (rr.some(isMissing)) { MB.bad = true; return MB; }
+            if (rr.some(function (r) { return !r || r.error || !Array.isArray(J(r.data)); })) { MB.failed = true; return MB; }
+            var m = {}; rr.forEach(function (r) { J(r.data).forEach(function (x) { if (x && x.sku_code) m[x.sku_code] = x; }); });
+            MB.map = m; MB.at = now(); MB.keys = key; MB.failed = false; MB.n = Object.keys(m).length; MB.src = null;
+            return MB;
+        });
+        return MB.p;
+    }
+    function heldBy(r) {   /* S5: really held = the server's steady answer differs from the server's own latest answer, for a product sold in a few big orders */
+        var m = r && MB.map[r.sku_code];
+        if (!m || m.lumpy !== true || r.make_rule || !m.steady_make_now || m.make_now == null) return null;
+        if (String(m.steady_make_now) === String(m.make_now)) return null;
+        if (String(r.make_now || '') === String(m.steady_make_now)) return null;
+        return m;
+    }
+    function steadyOf(fc) {   /* S5: a copy of the forecast rows for the Make plan only; the shared cache is never changed */
+        if (!fc || !fc.ok || !Array.isArray(fc.data) || !MB.at) return fc;
+        if (MB.src === fc.data && MB.copy) return MB.copy;
+        var held = 0, hs = {}, any = false;
+        var rows = fc.data.map(function (r) {
+            var m = heldBy(r); if (!m) return r;
+            any = true; held++; hs[r.sku_code] = 1;
+            var c = {}; Object.keys(r).forEach(function (k) { c[k] = r[k]; });
+            c.make_now = String(m.steady_make_now); c.qty_to_make = m.steady_make_now === 'YES - MAKE' ? num(m.steady_qty_to_make) : 0; c.e2x_held = true;
+            return c;
+        });
+        MB.src = fc.data; MB.held = held; MB.heldSkus = hs;
+        MB.copy = any ? { ok: true, key: fc.key, at: fc.at, data: rows } : fc;
+        return MB.copy;
+    }
+    W.e2xSteady = steadyOf;
+    W.e2xLoad = function (D, tab, rg, force, keys) {
+        var out = {}, ps = [];
+        keys = keys || [];
+        if (force) { S.fbFail = {}; S.failKey = ''; SR = {}; SH.failAt = 0; SH.at = 0; }   /* v234e4: Refresh asks the SALES1 reads again too */
+        wrapFrom();   /* v234f4 */
+        if (tab === 'overview' && sumOn()) {
+            salesKick(force);   /* v234f4: the one raw read starts first */
+            ps.push(fetchFl(force).then(function (fl) { out.fl = fl; }, function () { }).then(function () {
+                staffCheck(D);
+                var key = keyOf(D, rg);
+                return fetchSum(D, rg, force).then(function (r) {
+                    out.sum = r;
+                    if (r && r.ok && n43() && D.m && D.m.sales && D.m.sales.ok && keys.indexOf('sales') < 0) {   /* v234e3 C1: Refresh (force) or older than 5 minutes -> read the selling-price rows again; a failure keeps the 60 s backoff and the old value with its time */
+                        var sa = num(D.m.sales.at);
+                        if ((force || !sa || now() - sa >= SELL_TTL) && (force || fbOk(key))) return fallbackSales(key, false).then(function (s) { if (s) out.sales = s; });   /* v234f4: the read the Overview started (salesKick) is joined, never a second one */
+                        return;
+                    }
+                    if ((!r || !r.ok) && keys.indexOf('sales') < 0) return fallbackSales(key, force).then(function (s) { out.sales = s; });
+                });
+            }));
+        }
+        if (keys.indexOf('forecast') >= 0 && typeof a12Many === 'function') {   /* S8: a forced refresh waits for the fresh forecast before asking make-or-buy */
+            ps.push(Promise.resolve(a12Many(['forecast'], !!force)).then(function (m) { var f = m && m.forecast; if (f && f.ok) return fetchMb(f.data, force).then(function () { out.mb = true; }); }, function () { }));
+        }
+        return Promise.all(ps).then(function () { return out; }, function () { return out; });
+    };
+    W.e2xApply = function (D, tab, out) {
+        if (!D) return;
+        if (out && out.sales && out.sales.ok) D.m.sales = out.sales;
+    };
+    function mbWord(sku) { var m = MB.map[sku]; if (!m) return ''; if (m.source === 'BUY') return 'Buy'; return m.make_mode === 'ON_ORDER' ? 'Make to order' : 'Make'; }
+    function wrapSpec() {
+        var o = W.e1xSpec; if (typeof o !== 'function' || o._e2x) return;
+        var f = function (tab, spec, H) {
+            var s = o.apply(this, arguments);
+            try {
+                if (!s || !s.cols || !H || !H.C) return s;
+                var C = H.C, e = H.E;
+                if (tab === 'sales' && s1On() && hasDb()) { var Ds = D2s(); if (Ds && Ds.f && Ds.f.sales && Ds.f.sales.group === 'ordered') return ordSpec(Ds, rangeOf(Ds), H); }   /* v234e4: Group by Every order */
+                if (tab === 'restock' && s.rows) {
+                    var mbCol = C('mb', 'Make or buy', { text: true, cell: function (r) { return e(mbWord(r.sku) || '-'); }, csv: function (r) { return mbWord(r.sku); }, sv: function (r) { return mbWord(r.sku); } });
+                    s.cols = [s.cols[0], mbCol].concat(s.cols.slice(1));
+                    var nb = 0, nm = 0; s.rows.forEach(function (r) { var w = mbWord(r.sku); if (w === 'Buy') nb++; else if (w) nm++; });
+                    var line = MB.bad ? '' : (MB.at ? 'Make or buy is from the server: ' + N(nb) + ' to buy, ' + N(nm) + ' to make.' + (MB.n && !Object.keys(MB.map).some(function (k) { return MB.map[k].source === 'BUY'; }) ? ' No product type is marked as bought yet, so every product shows Make.' : '') : (MB.failed ? 'Make or buy could not be read from the server.' : ''));
+                    if (line) s.notes = (s.notes || []).concat([line]);
+                }
+                if (tab === 'production' && s.rows) {
+                    var stw = function (r) { return MB.heldSkus[r.sku] ? 'Held steady' : ''; };   /* v234e2 S5: only rows of the Make plan copy */
+                    var HW = 'Held steady: sold in a few big orders, so the make answer stays as it was until 2 server updates agree.';
+                    if (MB.held) {
+                        s.cols = s.cols.map(function (c) { if (!c || c.k !== 'why') return c; var o2 = c; return { k: o2.k, l: o2.l, n: o2.n, text: o2.text, cell: function (r) { return MB.heldSkus[r.sku] ? '<span class="e2x-held">' + e(HW) + '</span>' : o2.cell(r); }, csv: function (r) { return MB.heldSkus[r.sku] ? HW : (o2.csv ? o2.csv(r) : ''); }, sv: function (r) { return MB.heldSkus[r.sku] ? HW : (o2.sv ? o2.sv(r) : ''); } }; });
+                        s.cols = s.cols.concat([C('steady', 'Steady', { text: true, cell: function (r) { var w = stw(r); return w ? '<span class="e2x-held">' + e(w) + '</span>' : '-'; }, csv: stw, sv: stw })]);
+                    }
+                    if (MB.held) s.notes = (s.notes || []).concat([N(MB.held) + ' product' + (MB.held === 1 ? ' sold in a few big orders keeps' : 's sold in a few big orders keep') + ' the steady answer from the server, so the suggestion does not flip between updates.']);
+                    if (s1On() && hasDb()) { var nl = nisLine(); if (nl) s.notes = (s.notes || []).concat([nl]); }   /* v234e4: Selling but not in stock */
+                }
+            } catch (err) { }
+            return s;
+        };
+        f._e2x = 1; W.e1xSpec = f;
+    }
+
+    /* ================= 7. SALES1 (live 28 Nov 00:57): every sale, in stock or not ================= */
+    /* v234e4. Reads (no PIN, the app key, the same workspace rule as oms_dash_summary_v1): oms_sales_daily_v1, oms_sales_unmapped_v1, oms_sales_health_v1.
+       Same failure rules as B1: one read per question in flight; a failed read is remembered for 60 s and not asked again before that; a repaint follows the end
+       of a read (once), never a loop; the error is said in plain words. Refresh clears the remembered failures. Switch: localStorage e2x_sales1 = off. */
+    var SR = {};
+    function NN(v) { return v == null || v === '' || !isFinite(Number(v)) ? '-' : N(v); }   /* v234e5 S4: a missing number shows '-', never a broken number */
+    function nv(v) { return v == null || v === '' || !isFinite(Number(v)) ? null : Number(v); }
+    function s1On() { try { return localStorage.getItem('e2x_sales1') !== 'off'; } catch (e) { return true; } }
+    function s1Err(e) {
+        if (!e) return '';
+        if (e.code === 'NO_WORKSPACE') return 'Sign in again to see sales.';
+        if (e.code === 'BAD_INPUT') return /400 days/.test(e.message || '') ? 'Choose at most 400 days.' : 'These sales choices cannot be read.';
+        if (e.missing) return 'The sales record is not switched on yet.';
+        return 'The order numbers could not be read. Tap Refresh to try again, or wait a minute.';
+    }
+    function sread(fn, args, ttl, done) {   /* one cached read: { d, err, busy } */
+        var k = fn + '|' + JSON.stringify(args), x = SR[k] || (SR[k] = { d: null, at: 0, err: null, failAt: 0, p: null });
+        if (x.p || !hasDb()) return x;
+        if (x.d && now() - x.at < ttl) return x;
+        if (x.err && now() - x.failAt < RETRY) return x;
+        x.p = rpc(fn, args, 20000).then(function (r) {
+            x.p = null;
+            var d = J(r && r.data);
+            if (r && !r.error && d && d.ok === true) { x.d = d; x.at = now(); x.err = null; }
+            else { x.failAt = now(); x.err = isMissing(r) ? { missing: true } : { code: String((d && d.error) || ''), message: String((d && d.message) || '') }; }
+            if (typeof done === 'function') { try { done(); } catch (e) { } }
+        });
+        return x;
+    }
+    function sState(x) { return { d: x.d, err: x.d ? null : x.err, busy: !x.d && !!x.p, at: x.at, stale: !!(x.d && x.err) }; }   /* v234e5 S3: old numbers + a failed refresh = stale */
+    function sArgs(rg, group, f, lim) { return { p_from: rg[0], p_to: rg[1], p_group: group, p_channel: (f && f.chan) || null, p_category: (f && f.cat) || null, p_sub_category: null, p_sku: null, p_limit: lim }; }
+    function ageLine(x) {   /* v234e5 S3: the server age plus the time since the phone read it; a failed refresh is said */
+        var d = x && x.d, c = (d && d.cache) || {}, m = num(c.age_minutes) + (x && x.at ? Math.max(0, now() - x.at) / 60000 : 0);
+        return 'Order numbers updated ' + minsAgo(m) + (c.stale === true ? ', the update is late' : '') + '.' + (x && x.stale ? ' The last refresh failed, so these are the numbers from before.' : '');
+    }
+    function osCard(D, rg) {
+        var f = ovF(D), x = sState(sread('oms_sales_daily_v1', sArgs(rg, 'company', f, 50), 120000, repaint));
+        var h = '<div class="d2-card e2x-card" id="e2x-sales1"><h3>Ordered and shipped</h3>';
+        if (x.err) return h + '<p class="e2x-src e2x-late">' + E(s1Err(x.err)) + '</p></div>';
+        if (!x.d) return h + '<p class="e2x-src">Reading every order from the server…</p></div>';
+        var t = x.d.totals || {};
+        h += '<div class="e2x-os"><div><b>' + E(NN(t.units_ordered)) + '</b><span>Ordered</span><small>every sale, in stock or not</small></div>' +
+            '<div><b>' + E(NN(t.units_shipped)) + '</b><span>Shipped</span><small>scanned out</small></div></div>';
+        h += '<p>Of the units ordered: <b>' + E(NN(t.units_from_stock)) + '</b> from stock, <b>' + E(NN(t.units_to_make)) + '</b> to make' +
+            (num(t.units_unsplit) ? ', <b>' + E(NN(t.units_unsplit)) + '</b> not split (on ' + E(NN(t.lines_unsplit)) + ' order line' + (num(t.lines_unsplit) === 1 ? '' : 's') + ' the stock and make parts do not add up)' : '') + '.</p>';
+        if (num(t.no_sku_units)) h += '<p>' + E(NN(t.no_sku_units)) + ' of them ' + (num(t.no_sku_units) === 1 ? 'has' : 'have') + ' no product code.</p>';
+        if (f.staff) h += '<p>This card counts all staff (orders are not split by staff).</p>';
+        return h + '<p class="e2x-src">' + E(ageLine(x)) + '</p></div>';
+    }
+    function unCard() {
+        if (!isMgr()) return '';
+        var x = sState(sread('oms_sales_unmapped_v1', { p_days: 60 }, 600000, repaint));
+        var h = '<div class="d2-card e2x-card" id="e2x-unmapped"><h3>Order lines with no product</h3>';
+        if (x.err) return h + '<p class="e2x-src e2x-late">' + E(s1Err(x.err)) + '</p></div>';
+        if (!x.d) return '';
+        var d = x.d, ns = num(d.no_sku_lines), nc = num(d.no_category_lines);
+        if (!ns && !nc) return '';
+        h += '<p><b>' + E(NN(ns)) + '</b> order line' + (ns === 1 ? ' has' : 's have') + ' no product (' + E(NN(d.no_sku_units)) + ' unit' + (num(d.no_sku_units) === 1 ? '' : 's') + ') in the last 60 days.' +
+            (nc ? ' ' + E(NN(nc)) + ' more ' + (nc === 1 ? 'has a product' : 'have a product') + ' with no category.' : '') + '</p>' +
+            '<p>Matching them to products is a step for the owner: order lines are not changed from the phone.</p>';
+        var items = (d.items || []).slice(0, 50);
+        if (items.length) h += '<details class="e2x-un"><summary>Show the list (' + E(NN(d.items_total || items.length)) + ')</summary><ul>' + items.map(function (it) {
+            var what = it.reason === 'NO_SKU' ? 'No product code' : 'No category';
+            var id = it.reason === 'NO_SKU' ? (it.asin ? 'ASIN ' + it.asin : 'no ASIN either') : String(it.sku_code || '') + (it.asin ? ' · ' + it.asin : '');
+            return '<li><b>' + E(what) + '</b> · ' + E(id) + (it.title ? '<br>' + E(String(it.title).slice(0, 120)) : '') + '<br><small>' + E(NN(it.lines)) + ' line' + (num(it.lines) === 1 ? '' : 's') + ', ' + E((it.channels || []).join(', ')) + ', last ' + E(it.last_day || '') + '</small></li>';
+        }).join('') + '</ul></details>';
+        return h + '</div>';
+    }
+    W.e2xS1On = function () { return ON && s1On() && hasDb(); };   /* v234e5 S2: the Dashboard offers Every order only while this is true */
+    W.e2xSalesSlot = function (D, rg) {
+        var hid = '<div class="d2-card e2x-card" id="e2x-sales1" hidden></div>';
+        if (!ON || !hasDb() || !rg || !s1On()) return hid;
+        var k = 'oms_sales_daily_v1|' + JSON.stringify(sArgs(rg, 'company', ovF(D), 50)), x = SR[k];
+        if (x && x.err && x.err.missing) return hid;   /* not live: hidden */
+        return osCard(D, rg) + unCard();
+    };
+    function ordRows(D, rg) {   /* the Sales table: every order, category > sub-category > product */
+        var f = (D.f && D.f.sales) || {}, x = sState(sread('oms_sales_daily_v1', sArgs(rg, 'product', f, 5000), 120000, repaint));
+        if (!x.d) return { x: x, rows: [] };
+        var q = String(f.q || '').toUpperCase().trim();
+        var rows = (x.d.rows || []).filter(function (r) { return !q || (String(r.sku_code || '') + ' ' + (r.asin || '') + ' ' + (r.title || '') + ' ' + (r.category || '') + ' ' + (r.sub_category || '')).toUpperCase().indexOf(q) >= 0; }).map(function (r) {
+            return { sku: r.sku_code && r.sku_code !== '(no SKU)' ? r.sku_code : '', name: r.title || '', asin: r.asin || '', cat: r.category || '(none)', sub: r.sub_category || '(none)', units: nv(r.units_ordered), fs: nv(r.units_from_stock), tm: nv(r.units_to_make), uu: nv(r.units_unsplit), shipped: nv(r.units_shipped), orders: nv(r.lines), value: nv(r.value_mrp), code: r.sku_code || '' };   /* v234e5 S4: missing = '-' */
+        });
+        return { x: x, rows: rows };
+    }
+    function pad(n) { n = Math.max(0, 1e9 - Math.round(num(n))); var s = String(n); while (s.length < 10) s = '0' + s; return s; }
+    function ordSpec(D, rg, H) {
+        var C = H.C, e = H.E, R = ordRows(D, rg), x = R.x;
+        var nm = function (r) { return '<span class="d2-nm">' + e(r.name ? W.dash2.shortName(r.name, r.sku, r.cat) : (r.code || '-')) + '</span><span class="d2-sk">' + e(r.code || '') + '</span>'; };
+        var spec = { id: 'sales_ordered', title: 'Every order', noun: 'products', rows: R.rows, sort: { k: 'cat', dir: 'asc' },
+            empty: x.err ? s1Err(x.err) : (x.busy ? 'Reading every order from the server…' : 'No order matches these filters.'),
+            cols: [C('cat', 'Category', { text: true, sv: function (r) { return r.cat + '|' + r.sub + '|' + pad(r.units); }, csv: function (r) { return r.cat; } }), C('sub', 'Sub-category', { text: true }),
+                C('name', 'Product', { text: true, cell: nm, sv: function (r) { return r.name || r.code; }, csv: function (r) { return r.name; } }), C('code', 'SKU', { text: true }), C('asin', 'ASIN', { text: true }),
+                C('units', 'Ordered'), C('fs', 'From stock'), C('tm', 'To make'), C('uu', 'Not split'), C('shipped', 'Shipped'), C('orders', 'Order lines'), C('value', 'Value at MRP', { cell: function (r) { return r.value == null ? '-' : e(inr(r.value)); } })] };
+        var t = x.d && x.d.totals;
+        if (t) spec.notes = ['Every order line, in stock or not: ' + NN(t.units_ordered) + ' units ordered (' + NN(t.units_from_stock) + ' from stock, ' + NN(t.units_to_make) + ' to make' + (num(t.units_unsplit) ? ', ' + NN(t.units_unsplit) + ' not split' : '') + '), ' + NN(t.units_shipped) + ' shipped. ' + ageLine(x) +
+            (num(x.d.rows_total) > (x.d.rows || []).length ? ' Showing the first ' + NN((x.d.rows || []).length) + ' of ' + NN(x.d.rows_total) + ' products.' : '')];
+        else if (x.err) spec.notes = [s1Err(x.err)];
+        return spec;
+    }
+    function nisLine() {   /* Make plan: products that sell but have no stock (last 30 days) */
+        var t0 = today(), a = new Date(Date.parse(t0 + 'T00:00:00Z') - 29 * 86400000).toISOString().slice(0, 10);
+        var x = sState(sread('oms_sales_daily_v1', sArgs([a, t0], 'company', null, 3), 300000, repaint));
+        if (x.err) return x.err.missing ? '' : 'Selling but not in stock: ' + s1Err(x.err);
+        if (!x.d) return 'Selling but not in stock: reading…';
+        var n = num(x.d.not_in_stock_selling_total), top = (x.d.not_in_stock_selling || []).slice(0, 3);
+        if (!n) return 'Selling but not in stock (last 30 days): none.';
+        return 'Selling but not in stock (last 30 days): ' + NN(n) + ' product' + (n === 1 ? '' : 's') + ' had orders to make and no stock. Most: ' +
+            top.map(function (r) { return (r.title ? W.dash2.shortName(r.title, r.sku_code, r.category) : r.sku_code) + ' (' + NN(r.units_to_make) + ' to make)'; }).join('; ') + '.';
+    }
+    /* Health strip: the "Sales record" area from oms_sales_health_v1, added to the oms_health_v1 picture (that read is not changed) */
+    var SH = { d: null, at: 0, p: null, failAt: 0 };
+    function shLoad() {
+        if (SH.p || !hasDb() || (SH.d && now() - SH.at < 60000) || (SH.failAt && now() - SH.failAt < RETRY)) return;
+        SH.p = rpc('oms_sales_health_v1', {}, 8000).then(function (r) {
+            SH.p = null; var d = J(r && r.data);
+            if (r && !r.error && d && d.ok === true && d.area) { SH.d = d; SH.at = now(); SH.failAt = 0; } else SH.failAt = now();
+            try { var A = W.d4xApi, hl = A && A.hl && A.hl(); if (hl && hl.d) { W.e2xHealthAdd(hl.d); if (typeof A.paintHealth === 'function') A.paintHealth(); } } catch (e) { }
+        });
+    }
+    var RANK = { green: 0, amber: 1, red: 2 };
+    W.e2xHealthAdd = function (d) {
+        if (!d || !Array.isArray(d.areas)) return d;
+        if (!SH.d) { shLoad(); return d; }
+        if (now() - SH.at >= 60000) shLoad();
+        if (d.e2xSum0 == null) { d.e2xSum0 = String(d.summary || ''); d.e2xOv0 = d.overall; }   /* v234e5 S1: the oms_health_v1 sentence and level as they came */
+        var a = { area: 'Sales record', level: SH.d.level, age: SH.d.age }, i = -1;
+        d.areas.forEach(function (x, j) { if (x && x.area === 'Sales record') i = j; });
+        if (i >= 0) d.areas[i] = a; else d.areas.push(a);
+        var r0 = RANK[d.e2xOv0] == null ? 0 : RANK[d.e2xOv0], r1 = RANK[a.level] == null ? 0 : RANK[a.level], say = String(SH.d.say || '');
+        if (r1 > r0) { d.overall = a.level; d.summary = say || ('Sales record: ' + (a.level === 'red' ? 'stopped.' : 'late.')); }   /* the worst level is the Sales record: its sentence */
+        else if (r1 === r0 && r1 > 0 && say) { d.overall = d.e2xOv0; d.summary = (d.e2xSum0 ? d.e2xSum0 + ' ' : '') + say; }   /* as bad as another area: both said */
+        else { d.overall = d.e2xOv0; d.summary = d.e2xSum0; }
+        return d;
+    };
+
+    function start() { wrapSpec(); wrapFrom(); }
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start); else start();
+    X.api = { SH2: SH2, planOf: planOf, serveRows: serveRows, wrapFrom: wrapFrom, rangeOf: rangeOf, ordSpec: ordSpec, nisLine: nisLine, SR: function () { return SR; }, SH: SH, s1Err: s1Err, sellAge: sellAge, keyOf: keyOf, ovObj: ovObj, srcLine: srcLine, fetchSum: fetchSum, fetchFl: fetchFl, fetchMb: fetchMb, steadyOf: steadyOf, mbWord: mbWord, mbSkus: mbSkus, minsAgo: minsAgo, staffCheck: staffCheck, S: S, MB: MB, wrapSpec: wrapSpec };
+})();
+/* E2X-END */
+</script>
+<style id="b2x-css">
+/* B2X v234f: "Print today's papers" (B2 app part). The sheet #b2-bg is placed in the one layer order (D4Z block: above the other sheets, below confirm, camera
+   and the PIN box). No z-index here. Sizes in rem so the 130% text setting works. */
+.b2-btn { display: block; width: 100%; min-height: 48px; margin: .3rem 0 .5rem; border: 0; border-radius: .6rem; background: #1B3F6B; color: #fff; font-weight: 700; font-size: 1rem; cursor: pointer; }
+#b2-bg { position: fixed; inset: 0; background: rgba(10, 22, 40, .45); display: flex; align-items: flex-end; justify-content: center; }
+#b2-bg[hidden] { display: none !important; }
+.b2-sheet { background: #fff; width: 100%; max-width: 560px; max-height: 90vh; overflow: auto; border-radius: 1rem 1rem 0 0; padding: .9rem 1rem 1.2rem; box-sizing: border-box; font-family: Arial, Helvetica, sans-serif; color: #0A1628; }
+.b2-sheet h3 { margin: 0 0 .4rem; font-size: 1.1rem; }
+.b2-sheet p { margin: .3rem 0; font-size: .95rem; overflow-wrap: anywhere; }
+.b2-sheet .b2-dim { color: #4A5568; font-size: .86rem; }
+.b2-sheet .b2-msg { min-height: 1.2rem; margin: .5rem 0; font-size: .95rem; overflow-wrap: anywhere; }
+.b2-sheet .b2-msg.bad { color: #7F1D1D; }
+.b2-sheet .b2-msg.ok { color: #14532D; }
+.b2-row { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: .5rem; }
+.b2-row button { flex: 1 1 10rem; min-height: 48px; border-radius: .6rem; border: 1.5px solid #1B4F8A; background: #fff; color: #1B4F8A; font-weight: 700; font-size: 1rem; cursor: pointer; }
+.b2-row button.go { background: #1B4F8A; color: #fff; }
+.b2-row button[disabled] { opacity: .55; cursor: default; }
+</style>
+<script id="b2x-js">
+/* B2X-BEGIN v234f3 = v234f2 + the print-again PIN box line (browser QA v43d: the reason did not start with Print again). v234f2 = v234f + REVIEW_V234F_v1 (C1 left-out label pictures said, C2 Close stops the label parts + part k of n, S1 roles exactly as the server, S2 big day: page-by-page build and a 1,500-slip limit, S3 fresh label run ids on a reprint, S4 a reprint keeps the label sign-in of the person signed in). v234f (v26 lane B2, "Print today's papers", app part). One runtime layer, placed last. It changes no function text.
+   Server: B2DB v1.1 (live, flag OFF). Reads: oms_b2_papers_v1 (anon, refused while the server flag is OFF), the pick reservations table (the same read B-44 makes),
+   the label service list + make actions (make = files only, nothing recorded). Write: oms_b2_papers_save_v1 = the day's list only (no stock, slip or label change),
+   with the saved sign-in (tok1.); the server checks the role (Admin, Supervisor, Inventory lead, Production lead). Print again = a PIN typed now, checked by the label
+   service sign-in (SIG1 rule). Invoice and Amazon shipping label are NOT made here. Button only while the server flag is ON: one quiet check per 30 minutes,
+   only for those roles; OFF or missing = hidden and nothing else is called. Switch on this phone: localStorage b2_v1 = off. No backslash anywhere in this layer. */
+(function () {
+    'use strict';
+    var W = window, NL = String.fromCharCode(10), BSL = String.fromCharCode(92);
+    function flag() {
+        var q = ''; try { q = String(location.search || ''); } catch (e) { }
+        if (/[?&]b2=off/.test(q)) return false;
+        try { return localStorage.getItem('b2_v1') !== 'off'; } catch (e) { return true; }
+    }
+    var X = W.B2X = { on: flag(), version: 'b2x-3 (v234f3)' };
+    if (!X.on) return;
+
+    /* ---------- helpers ---------- */
+    function E(s) { s = s == null ? '' : String(s); try { return esc59(s); } catch (e) { return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); } }
+    function num(v) { v = Number(v); return isFinite(v) ? v : 0; }
+    function N(v) { try { return a12N(v); } catch (e) { return String(num(v)); } }
+    function now() { return Date.now(); }
+    function J(d) { if (typeof d === 'string') { try { return JSON.parse(d); } catch (e) { return null; } } return d; }
+    function sess() { try { return (typeof state !== 'undefined' && state && state.session) || null; } catch (e) { return null; } }
+    function me() { var s = sess(); return String((s && s.employee_code) || '').toUpperCase(); }
+    function role() { var s = sess(); return String((s && s.role) || '').toUpperCase().replace(/[^A-Z_]/g, ''); }
+    var ROLES = { ADMIN: 1, SUPERVISOR: 1, INVENTORY_LEAD: 1, PRODUCTION_LEAD: 1 };   /* v234f2 S1: exactly the roles oms_b2_papers_save_v1 allows */
+    function canUse() { return !!ROLES[role()]; }
+    function hasDb() { try { return typeof db !== 'undefined' && !!db && typeof db.rpc === 'function'; } catch (e) { return false; } }
+    function isMissing(res) { var e = res && res.error; if (!e) return false; var c = String(e.code || ''), m = String(e.message || ''), s = Number(res.status || e.status || 0); return c === 'PGRST202' || c === '42883' || /could not find the function/i.test(m) || s === 404; }
+    function rpc(fn, args, ms) {
+        if (!hasDb()) return Promise.resolve({ data: null, error: { code: 'NO_DB', message: 'not connected' } });
+        var p; try { p = db.rpc(fn, args || {}); } catch (e) { return Promise.resolve({ data: null, error: { message: String(e && e.message || e) } }); }
+        try { if (typeof withTimeout === 'function') p = withTimeout(p, ms || 20000, 'Papers'); } catch (e) { }
+        return Promise.resolve(p).then(function (r) { return r || { data: null, error: { message: 'no answer' } }; }, function (e) { return { data: null, error: { message: String(e && e.message || e) } }; });
+    }
+    function $(id) { return document.getElementById(id); }
+    function hhmm(iso) { try { return new Date(iso).toLocaleTimeString('en-IN', { hour: 'numeric', minute: '2-digit', timeZone: 'Asia/Kolkata' }); } catch (e) { return ''; } }
+
+    /* ---------- the server flag: one quiet check per 30 minutes, only for the roles that may use it ---------- */
+    var FL = { state: '', at: 0, p: null };
+    function flagLoad(force) {
+        if (!canUse() || !hasDb()) return Promise.resolve(FL.state);
+        if (FL.p) return FL.p;
+        if (!force && FL.at && now() - FL.at < (FL.state === 'err' ? 60000 : 1800000)) return Promise.resolve(FL.state);
+        FL.p = rpc('oms_b2_papers_v1', {}, 12000).then(function (r) {
+            FL.p = null; FL.at = now(); var d = J(r && r.data);
+            if (isMissing(r)) FL.state = 'missing';
+            else if (d && d.ok === true) FL.state = 'on';
+            else if (d && d.error === 'FLAG_OFF') FL.state = 'off';
+            else FL.state = 'err';
+            drawBtns(); return FL.state;
+        });
+        return FL.p;
+    }
+    function btnOn() { return FL.state === 'on' && canUse(); }
+    function btn(id) { var b = document.createElement('button'); b.type = 'button'; b.className = 'b2-btn'; b.id = id; b.setAttribute('data-b2', 'open'); b.textContent = 'Print today’s papers'; return b; }
+    function drawBtns() {
+        var on = btnOn(), t = $('pick-tab'), ob = $('b2-btn-orders');
+        if (!on) { if (ob) ob.remove(); var lb0 = $('b2-btn-labels'); if (lb0) lb0.remove(); return; }
+        if (t && !ob) { var at = $('d4-ohost'); if (at && at.parentNode === t) t.insertBefore(btn('b2-btn-orders'), at); else t.insertBefore(btn('b2-btn-orders'), t.firstChild); }
+        var tabs = $('lb-tabs'); if (tabs && !$('b2-btn-labels')) tabs.parentNode.insertBefore(btn('b2-btn-labels'), tabs);
+    }
+    function wrap() {
+        var o = W.switchTab; if (typeof o === 'function' && !o._b2) { var f = function (t) { var r = o.apply(this, arguments); try { if (t === 'pick') { drawBtns(); flagLoad(false); } } catch (e) { } return r; }; f._b2 = 1; W.switchTab = f; }
+        var l = W.lbOpen; if (typeof l === 'function' && !l._b2) { var g = function () { var r = l.apply(this, arguments); try { setTimeout(function () { drawBtns(); flagLoad(false); }, 0); } catch (e) { } return r; }; g._b2 = 1; W.lbOpen = g; }
+    }
+
+    /* ---------- the sheet ---------- */
+    var S = null;
+    function bg() { var b = $('b2-bg'); if (!b) { b = document.createElement('div'); b.id = 'b2-bg'; b.hidden = true; document.body.appendChild(b); b.addEventListener('click', onClick); } return b; }
+    function toast(m) { try { if (typeof idToast === 'function') { idToast(m); return; } } catch (e) { } }
+    function close() { var b = $('b2-bg'); if (b) b.hidden = true; if (S) { if (S.busy) toast('Stopped. Nothing was printed.'); S.closed = true; } S = null; }   /* v234f2 C2 */
+    function say(m, cls) { var e = $('b2-msg'); if (e) { e.className = 'b2-msg' + (cls ? ' ' + cls : ''); e.innerHTML = m; } }
+    function live(s) { return s && S === s && !s.closed; }
+    var NOTE = 'Not included: the invoice and the Amazon shipping label. They still come from AOMS.';
+    function open() {
+        if (!btnOn()) return;
+        var b = bg(); S = { busy: false, closed: false };
+        b.innerHTML = '<div class="b2-sheet" role="dialog" aria-modal="true" aria-labelledby="b2-h"><h3 id="b2-h">Print today’s papers</h3>' +
+            '<p>One PDF for today: pick slips first, then TO MAKE codes, then product labels, in the AOMS order.</p><p class="b2-dim">' + E(NOTE) + '</p>' +
+            '<p class="b2-dim">It uses your saved sign-in. Printing again on the same day needs your PIN.</p>' +
+            '<div class="b2-msg" id="b2-msg" role="status" aria-live="polite"></div><div class="b2-row" id="b2-acts"><button type="button" data-b2="close">Close</button><button type="button" class="go" data-b2="make">Make the PDF</button></div></div>';
+        b.hidden = false;
+    }
+    function acts(h) { var a = $('b2-acts'); if (a) a.innerHTML = '<button type="button" data-b2="close">Close</button>' + h; }
+    function onClick(ev) {
+        var b = $('b2-bg'); if (ev.target === b) return close();
+        var t = ev.target.closest ? ev.target.closest('[data-b2]') : null; if (!t || t.disabled) return;
+        var a = t.getAttribute('data-b2');
+        if (a === 'close') return close();
+        if (a === 'make') return run();
+        if (a === 'new') return build(S && S.newRuns, false);
+        if (a === 'again') return again();
+        if (a === 'save') return savePdf();
+    }
+    document.addEventListener('click', function (ev) { var t = ev.target && ev.target.closest ? ev.target.closest('.b2-btn[data-b2="open"]') : null; if (t) { ev.preventDefault(); open(); } });
+    document.addEventListener('keydown', function (ev) { if (ev.key === 'Escape' && S) { var pb = $('rm-pin-bg'); if (pb && pb.classList.contains('active')) return; close(); } });
+
+    /* ---------- plain words for the server answers ---------- */
+    function plain(d, r) {
+        var c = String((d && d.error) || (r && r.error && r.error.code) || '');
+        if (c === 'SESSION_REQUIRED' || c === 'TOKEN_EXPIRED' || c === 'TOKEN_NOT_ALLOWED' || c === 'NO_SESSION') return 'This button uses your saved sign-in, and it has ended on this phone. Sign in again, then tap Make the PDF. Nothing was printed.';
+        if (c === 'NOT_ALLOWED') return 'Only an Admin, Supervisor, Inventory lead or Production lead can print today’s papers.';
+        if (c === 'FLAG_OFF') return 'Print today’s papers is switched off. Nothing was printed.';
+        if (c === 'NO_WORKSPACE') return 'Sign in again. Nothing was printed.';
+        if (c === 'TOO_MANY') return 'More than 5,000 slips or labels today. Nothing was printed. Ask the owner to split the day.';
+        if (c === 'BAD_DAY') return 'Papers can be made for today only. Nothing was printed.';
+        return 'The papers could not be made: there was no clear answer. Nothing was printed. Try again in a minute.';
+    }
+
+    /* ---------- one tap ---------- */
+    function sessionTok() { try { var o = typeof tokRead === 'function' ? tokRead() : null; return (o && String(o.code || '').toUpperCase() === me()) ? o : null; } catch (e) { return null; } }
+    function run() {
+        if (!S || S.busy) return; var s = S;
+        var tk = sessionTok(); if (!tk) { say(E(plain({ error: 'SESSION_REQUIRED' })), 'bad'); return; }
+        s.busy = true; acts('<button type="button" class="go" disabled>Working…</button>'); say('Reading today’s list…');
+        var before = null;
+        rpc('oms_b2_papers_v1', {}, 15000).then(function (r0) {
+            var d0 = J(r0 && r0.data);
+            if (!(r0 && !r0.error && d0 && d0.ok === true)) throw { d: d0, r: r0 };
+            before = num(d0.n_runs);
+            return rpc('oms_b2_papers_save_v1', { p_employee_code: tk.code, p_tok: tk.token, p_day: null, p_seq: null, p_preview: false }, 30000);
+        }).then(function (r1) {
+            var d1 = J(r1 && r1.data);
+            if (!(r1 && !r1.error && d1 && d1.ok === true)) throw { d: d1, r: r1 };
+            s.save = d1;
+            if (d1.nothing_today) throw { line: E(d1.message || 'No pick slips, TO MAKE codes or labels for today yet.'), ok: true };
+            return rpc('oms_b2_papers_v1', {}, 15000);   /* S1: the whole day comes from the read, never only the newest list */
+        }).then(function (r2) {
+            var d2 = J(r2 && r2.data);
+            if (!(r2 && !r2.error && d2 && d2.ok === true && Array.isArray(d2.runs))) throw { d: d2, r: r2 };
+            if (!live(s)) return;
+            s.busy = false; s.runs = d2.runs.map(function (x) { return x.run; }).filter(Boolean);
+            var sv = s.save, run1 = sv.run || {};
+            if (sv.written && before === 0) return build(s.runs, false);
+            if (sv.written) {
+                s.newRuns = s.runs.filter(function (x) { return x.seq === run1.seq; });
+                say('Today’s papers were printed before. New since then: ' + E(N(run1.n_orders)) + ' order' + (num(run1.n_orders) === 1 ? '' : 's') + ' (' + E(N(run1.n_res)) + ' slips, ' + E(N(run1.n_lines)) + ' labels).');
+                acts('<button type="button" class="go" data-b2="new">Print the new ones</button><button type="button" data-b2="again">Print the whole day again (needs your PIN)</button>');
+                return;
+            }
+            var last = s.runs[s.runs.length - 1] || run1;
+            say('Already printed today' + (last.created_at ? ' at ' + E(hhmm(last.created_at)) : '') + (last.created_by ? ' by ' + E(last.created_by) : '') + '. Nothing new since then. Print again?');
+            acts('<button type="button" class="go" data-b2="again">Print again (needs your PIN)</button>');
+        }).catch(function (x) {
+            if (!live(s)) return; s.busy = false;
+            if (x && x.d && x.d.error === 'FLAG_OFF') { FL.state = 'off'; FL.at = now(); drawBtns(); }
+            say(x && x.line ? x.line : E(plain(x && x.d, x && x.r)), x && x.ok ? '' : 'bad');
+            acts('');
+        });
+    }
+    function again() {   /* print again = a PIN typed now (SIG1), checked by the label service sign-in */
+        if (!S || S.busy) return; var s = S;
+        if (typeof lbStepCreds !== 'function' || typeof lbFetch !== 'function') { say('This phone cannot check the PIN right now. Nothing was printed.', 'bad'); return; }
+        s.busy = true; acts('<button type="button" class="go" disabled>Waiting for your PIN…</button>');
+        try { if (typeof rqpForget === 'function') rqpForget(); } catch (e) { }
+        lbStepCreds('Print again: today' + String.fromCharCode(39) + 's papers.').then(function (c) {   /* v234f3: the words start with Print again, so the PIN box says the always-ask line */
+            if (!c) throw { line: 'Your PIN was not entered. Nothing was printed.' };
+            if (String(c.code || '').toUpperCase() !== me()) throw { line: 'Type the employee code of the person signed in on this phone (' + me() + '). Nothing was printed.' };   /* v234f2 S4: the reprinter is the signed-in person */
+            return lbFetch({ action: 'login', code: c.code, pin: c.pin }).then(function (r) {
+                c = null;
+                if (!(r && r.ok === true && r.token)) throw { line: (r && (r.error === 'PIN_REJECTED' || r.error === 'LOCKED')) ? 'That PIN is not right. Nothing was printed.' : 'The PIN could not be checked. Nothing was printed. Try again.' };
+                try { var held = LB.tok && LB.tok.t && LB.tok.exp > now() + 15000; if (!held) LB.tok = { t: String(r.token), exp: r.expires_at ? Date.parse(r.expires_at) || (now() + 28800000) : now() + 28800000, role: String(r.role || ''), canPrint: r.can_print === true }; } catch (e) { }   /* v234f2 S4: a label sign-in already held stays as it is */
+            });
+        }).then(function () { if (!live(s)) return; s.busy = false; build(s.runs, true); }, function (x) { if (!live(s)) return; s.busy = false; say(E((x && x.line) || 'Nothing was printed.'), 'bad'); acts('<button type="button" class="go" data-b2="again">Print again (needs your PIN)</button>'); });
+    }
+
+    /* ---------- build: slips (re-checked now, S2) + labels -> one PDF ---------- */
+    function idsOf(runs) {
+        var res = [], lines = [], seenR = {}, seenL = {}, base = {}, seqs = [];
+        (runs || []).slice().sort(function (a, b) { return num(a.seq) - num(b.seq); }).forEach(function (r) {
+            seqs.push(num(r.seq));
+            (r.res_ids || []).forEach(function (i) { i = num(i); if (!seenR[i]) { seenR[i] = 1; res.push(i); } });
+            (r.line_ids || []).forEach(function (i) { i = num(i); if (!seenL[i]) { seenL[i] = 1; lines.push(i); base[i] = String(r.label_run_base || ('B2-s' + r.seq)); } });
+        });
+        return { res: res, lines: lines, base: base, seqs: seqs, day: runs && runs[0] ? String(runs[0].day || '') : '' };
+    }
+    function readRes(ids) {
+        var parts = []; for (var i = 0; i < ids.length; i += 200) parts.push(ids.slice(i, i + 200));
+        return Promise.all(parts.map(function (p) {
+            var q; try { q = db.from('oms_pick_reservations').select('res_id,batch_id,order_id,order_line,pick_line,pick_total,sku_code,asin,bin_code,qty,status').in('res_id', p); } catch (e) { return Promise.resolve({ error: { message: 'no read' } }); }
+            try { if (typeof withTimeout === 'function') q = withTimeout(q, 15000, 'Pick slips'); } catch (e) { }
+            return Promise.resolve(q).then(function (r) { return r; }, function (e) { return { error: { message: String(e) } }; });
+        })).then(function (rr) {
+            if (rr.some(function (r) { return !r || r.error || !Array.isArray(r.data); })) return null;
+            var m = {}; rr.forEach(function (r) { r.data.forEach(function (x) { m[num(x.res_id)] = x; }); }); return m;
+        });
+    }
+    function slips(ids, map) {   /* AOMS order (the server list order); S2: each id checked now */
+        var orders = [], byKey = {}, out = { orders: orders, picks: 0, makes: 0, dropped: 0, gone: 0, picked: 0 };
+        ids.forEach(function (id) {
+            var r = map[id]; if (!r) { out.gone++; return; }
+            var st = String(r.status || '').toUpperCase(); if (st === 'CANCELLED') { out.dropped++; return; }
+            var k = r.batch_id + '|' + r.order_id, o = byKey[k];
+            if (!o) { o = byKey[k] = { order: String(r.order_id || ''), picks: [], makes: [] }; orders.push(o); }
+            if (r.pick_line != null || r.bin_code) o.picks.push(r); else o.makes.push(r);
+            if (st === 'PICKED') out.picked++;
+        });
+        orders.forEach(function (o) { out.picks += o.picks.length; for (var i = 0; i < o.makes.length; i += 50) out.makes++; });
+        return out;
+    }
+    function lblRows(lines) {   /* the label rows of the day's line ids, from the label service lists (TO_MANUFACTURE, CHECKED_BY_HAND) */
+        var need = {}, left = lines.length, got = {};
+        lines.forEach(function (i) { need[i] = 1; });
+        function page(list, off) {
+            return lbCall('list', { list: list, limit: 600, offset: off }).then(function (r) {
+                if (!(r && r.ok === true && r.data)) return r && r.cancelled ? { cancelled: true } : { bad: r };
+                var rs = r.data.rows || [];
+                rs.forEach(function (x) { var i = num(x.line_id); if (need[i] && !got[i]) { got[i] = { key: x.key, copies: num(x.copies) > 0 ? num(x.copies) : 1, group: list === 'CHECKED_BY_HAND' ? 'CHECK_SPARE' : (x.group === 'CHECK_SPARE' ? 'CHECK_SPARE' : 'PRODUCTION'), batch: x.batch, line_id: i }; left--; } });
+                if (left > 0 && rs.length >= 600 && off < 6000) return page(list, off + 600);
+                return null;
+            });
+        }
+        return page('TO_MANUFACTURE', 0).then(function (a) { if (a) return a; return left > 0 ? page('CHECKED_BY_HAND', 0) : null; }).then(function (b) { return b || { rows: got }; });
+    }
+    function jpgSize(u8) {
+        if (!u8 || u8[0] !== 0xFF || u8[1] !== 0xD8) return null;
+        var i = 2;
+        while (i + 9 < u8.length) {
+            if (u8[i] !== 0xFF) { i++; continue; }
+            var m = u8[i + 1], len = (u8[i + 2] << 8) | u8[i + 3];
+            if (m >= 0xC0 && m <= 0xCF && m !== 0xC4 && m !== 0xC8 && m !== 0xCC) return { h: (u8[i + 5] << 8) | u8[i + 6], w: (u8[i + 7] << 8) | u8[i + 8], c: u8[i + 9] };
+            i += 2 + len;
+        }
+        return null;
+    }
+    var MAX_SLIPS = 1500, MAX_PIC_BYTES = 25e6;   /* v234f2 S2: a day above these sizes is not built in one PDF on a phone */
+    function makeLabels(rows, lines, base, s, tag) {   /* label service "make" (files only, nothing recorded) as JPG, one run id per part: <list base>[-r<time>]-pNN */
+        var groups = {}, order = [];
+        lines.forEach(function (i) { var r = rows[i]; if (!r) return; var b = base[i]; if (!groups[b]) { groups[b] = []; order.push(b); } groups[b].push(r); });
+        var jobs = []; order.forEach(function (b) { var g = groups[b]; for (var i = 0, n = 1; i < g.length; i += 40, n++) jobs.push({ run: b + (tag ? '-' + tag : '') + '-p' + (n < 10 ? '0' : '') + n, lines: g.slice(i, i + 40) }); });
+        var imgs = [], k = 0, total = 0, big = [], bad = [];
+        function next() {
+            if (!live(s)) return Promise.resolve({ imgs: imgs, stopped: true });   /* v234f2 C2: Close stops the label parts */
+            if (k >= jobs.length) return Promise.resolve({ imgs: imgs, big: big, bad: bad, parts: jobs.length });
+            var j = jobs[k++], opts; try { opts = typeof lbOptions === 'function' ? lbOptions() : {}; } catch (e) { opts = {}; }
+            say('Making labels: part ' + k + ' of ' + jobs.length + '…');
+            return lbCall('make', { lines: j.lines, options: opts, output: { formats: ['jpg'], image_dpi: 300, jpg_quality: 90 }, only_new: false, run_id: j.run }).then(function (r) {
+                if (!live(s)) return { imgs: imgs, stopped: true };
+                if (!(r && r.ok === true && r.zip)) return { imgs: imgs, big: big, bad: bad, parts: jobs.length, fail: r || {}, failPart: k };
+                return lbUnzip(r.zip).then(function (ents) {
+                    ents.filter(function (e) { return /[.]jpe?g$/i.test(e.name); }).sort(function (a, b) { return a.name < b.name ? -1 : 1; }).forEach(function (e) {
+                        var sz = jpgSize(e.bytes), nm = 'part ' + k + ' ' + String(e.name).split('/').pop();
+                        if (!sz) { bad.push(nm); return; }   /* v234f2 C1: never silent */
+                        if (total + e.bytes.length > MAX_PIC_BYTES) { big.push(nm); return; }
+                        total += e.bytes.length; imgs.push({ bytes: e.bytes, w: sz.w, h: sz.h, c: sz.c });
+                    });
+                    return next();
+                }, function () { return { imgs: imgs, big: big, bad: bad, parts: jobs.length, fail: { message: 'The label files of part ' + k + ' came back, but this phone could not open them.' }, failPart: k }; });
+            });
+        }
+        return next();
+    }
+    function listNames(a) { return a.slice(0, 6).join(', ') + (a.length > 6 ? ' and ' + N(a.length - 6) + ' more' : ''); }
+    function build(runs, isAgain) {
+        if (!S || S.busy) return; var s = S; s.busy = true;
+        acts('<button type="button" class="go" disabled>Making the PDF…</button>');
+        var I = idsOf(runs || []); s.I = I;
+        if (I.res.length > MAX_SLIPS) { s.busy = false; say('Today has ' + E(N(I.res.length)) + ' slips: more than ' + E(N(MAX_SLIPS)) + ' is too much for one PDF on a phone. Nothing was printed. Use Print the new ones after each AOMS run, or print from a computer.', 'bad'); acts(''); return; }
+        var tag = isAgain ? 'r' + new Date().toISOString().replace(/[^0-9]/g, '').slice(8, 14) : '';   /* v234f2 S3: a reprint gets fresh label run ids */
+        say('Checking each slip now…');
+        readRes(I.res).then(function (map) {
+            if (!live(s)) return null;
+            if (!map) throw { line: 'The pick slips could not be read. Nothing was printed. Try again.' };
+            s.sl = slips(I.res, map);
+            if (!I.lines.length || typeof lbCall !== 'function') return { imgs: [] };
+            say('Finding the product labels…');
+            return lblRows(I.lines).then(function (lr) {
+                if (!live(s)) return null;
+                if (lr.cancelled) return { imgs: [], fail: { message: 'The label sign-in was not given, so the labels were left out.' } };
+                if (lr.bad) return { imgs: [], fail: lr.bad };
+                s.lblMissing = I.lines.filter(function (i) { return !lr.rows[i]; }).length;
+                return makeLabels(lr.rows, I.lines, I.base, s, tag);
+            });
+        }).then(function (L) {
+            if (!L || L.stopped || !live(s)) return null;
+            return pdfPapers(s.sl, L.imgs, I, isAgain, s).then(function (pdf) { return pdf ? { L: L, pdf: pdf } : null; });
+        }).then(function (o) {
+            if (!o || !live(s)) return;
+            var L = o.L; s.busy = false; s.pdf = o.pdf;
+            var sq = I.seqs.join('-'); s.name = 'Papers_' + String(I.day || '').replace(/-/g, '') + '_s' + sq + (isAgain ? '_again' : '') + '.pdf';
+            var sl = s.sl, msg = 'Ready: ' + N(sl.orders.length) + ' order' + (sl.orders.length === 1 ? '' : 's') + ', ' + N(sl.picks) + ' pick slip' + (sl.picks === 1 ? '' : 's') + ', ' + N(sl.makes) + ' TO MAKE code' + (sl.makes === 1 ? '' : 's') + ', ' + N(L.imgs.length) + ' label picture' + (L.imgs.length === 1 ? '' : 's') + '.';
+            if (sl.dropped) msg += ' ' + N(sl.dropped) + ' slip' + (sl.dropped === 1 ? ' was' : 's were') + ' cancelled since the list was saved and ' + (sl.dropped === 1 ? 'is' : 'are') + ' left out.';
+            if (sl.gone) msg += ' ' + N(sl.gone) + ' slip' + (sl.gone === 1 ? ' is' : 's are') + ' no longer there and ' + (sl.gone === 1 ? 'is' : 'are') + ' left out.';
+            if (sl.picked) msg += ' ' + N(sl.picked) + ' ' + (sl.picked === 1 ? 'is' : 'are') + ' already picked or made: marked on the page.';
+            if (s.lblMissing) msg += ' ' + N(s.lblMissing) + ' label line' + (s.lblMissing === 1 ? ' is' : 's are') + ' no longer waiting and ' + (s.lblMissing === 1 ? 'is' : 'are') + ' left out.';
+            var left = (L.big || []).length + (L.bad || []).length;
+            if ((L.big || []).length) msg += ' ' + N(L.big.length) + ' label picture' + (L.big.length === 1 ? ' was' : 's were') + ' left out: too many for one PDF (' + listNames(L.big) + ').';
+            if ((L.bad || []).length) msg += ' ' + N(L.bad.length) + ' label picture' + (L.bad.length === 1 ? '' : 's') + ' could not be read and ' + (L.bad.length === 1 ? 'was' : 'were') + ' left out (' + listNames(L.bad) + ').';
+            if (left) msg += ' Print the missing labels from Labels.';
+            if (L.fail) msg += ' The labels could not all be made' + (L.failPart ? ' (stopped at part ' + L.failPart + ' of ' + L.parts + ')' : '') + ': ' + (typeof lbRefusal === 'function' ? lbRefusal(L.fail) : 'the label service did not answer') + '. The PDF has what was made.';
+            say(E(msg) + ' ' + E(NOTE), (L.fail || left) ? 'bad' : 'ok');
+            acts('<button type="button" class="go" data-b2="save">Save or share the PDF</button>');
+        }).catch(function (x) { if (!live(s)) return; s.busy = false; say(E((x && x.line) || 'The papers could not be made. Nothing was printed. Try again.'), 'bad'); acts(''); });
+    }
+    function savePdf() {   /* a tap = a user gesture, so share / download is allowed */
+        if (!S || !S.pdf) return; var blob = new Blob([S.pdf], { type: 'application/pdf' }), name = S.name;
+        try { var f = new File([blob], name, { type: 'application/pdf' }); if (navigator.share && navigator.canShare && navigator.canShare({ files: [f] })) { navigator.share({ files: [f], title: 'Today’s papers' }).then(function () { }, function () { dl(blob, name); }); return; } } catch (e) { }
+        dl(blob, name);
+    }
+    function dl(blob, name) { try { var u = URL.createObjectURL(blob), a = document.createElement('a'); a.href = u; a.download = name; document.body.appendChild(a); a.click(); setTimeout(function () { try { URL.revokeObjectURL(u); a.remove(); } catch (e) { } }, 60000); } catch (e) { } }
+
+    /* ---------- a small PDF writer: A4 slip pages (Helvetica text + vector QR squares), then one page per label picture (JPG as it came) ---------- */
+    function pstr(s) {   /* PDF text: printable ASCII only, with the three special characters escaped */
+        s = String(s == null ? '' : s).replace(/[^ -~]/g, '?');
+        return '(' + s.split(BSL).join(BSL + BSL).split('(').join(BSL + '(').split(')').join(BSL + ')') + ')';
+    }
+    function f2(n) { return (Math.round(n * 100) / 100).toString(); }
+    function txt(x, y, size, bold, s) { return 'BT /' + (bold ? 'F2' : 'F1') + ' ' + size + ' Tf ' + f2(x) + ' ' + f2(y) + ' Td ' + pstr(s) + ' Tj ET' + NL; }
+    function qrOps(text, x, y, size) {
+        if (typeof qrcode !== 'function') return txt(x, y + size / 2, 8, false, text);
+        var q = qrcode(0, 'M'); q.addData(text); q.make();
+        var n = q.getModuleCount(), c = size / n, o = '0 0 0 rg' + NL;
+        for (var r = 0; r < n; r++) for (var k = 0; k < n; k++) if (q.isDark(r, k)) o += f2(x + k * c) + ' ' + f2(y + size - (r + 1) * c) + ' ' + f2(c + 0.02) + ' ' + f2(c + 0.02) + ' re' + NL;
+        return o + 'f' + NL;
+    }
+    function cut(s, n) { s = String(s || ''); return s.length > n ? s.slice(0, n - 1) + '~' : s; }
+    function cellPick(o, r, x, y, w, h) {
+        var ops = '0.6 G ' + f2(x) + ' ' + f2(y) + ' ' + f2(w) + ' ' + f2(h) + ' re S 0 G' + NL;
+        ops += txt(x + 8, y + h - 16, 11, true, 'PICK');
+        ops += qrOps('AF3|R' + r.res_id + (r.bin_code ? '|' + String(r.bin_code).toUpperCase() : ''), x + 8, y + 18, 104);
+        var tx = x + 122, ty = y + h - 34;
+        ops += txt(tx, ty, 9, false, 'Order ' + o.order); ty -= 14;
+        ops += txt(tx, ty, 9, true, cut(r.sku_code, 26)); ty -= 14;
+        if (String(r.sku_code || '').length > 25) { ops += txt(tx, ty, 9, true, cut(String(r.sku_code).slice(25), 26)); ty -= 14; }
+        ops += txt(tx, ty, 11, true, 'Bin ' + (r.bin_code || '-')); ty -= 16;
+        ops += txt(tx, ty, 11, true, 'Qty ' + num(r.qty)); ty -= 16;
+        if (r.pick_line != null) { ops += txt(tx, ty, 9, false, 'Line ' + r.pick_line + ' of ' + (r.pick_total || '?')); ty -= 14; }
+        if (String(r.status || '').toUpperCase() === 'PICKED') ops += '0.45 g' + NL + txt(tx, ty, 9, true, 'Status now: picked already') + '0 g' + NL;
+        ops += f2(x + w - 26) + ' ' + f2(y + 10) + ' 16 16 re S' + NL;
+        return ops;
+    }
+    function cellMake(o, rs, x, y, w, h) {
+        var ops = '0.6 G ' + f2(x) + ' ' + f2(y) + ' ' + f2(w) + ' ' + f2(h) + ' re S 0 G' + NL;
+        ops += txt(x + 8, y + h - 16, 11, true, 'TO MAKE');
+        ops += qrOps('AF3M|' + rs.map(function (r) { return r.res_id; }).join(','), x + 8, y + 18, 104);
+        var tx = x + 122, ty = y + h - 34, made = rs.every(function (r) { return String(r.status || '').toUpperCase() === 'PICKED'; });
+        ops += txt(tx, ty, 9, false, 'Order ' + o.order); ty -= 14;
+        rs.slice(0, 7).forEach(function (r) { ops += txt(tx, ty, 8, false, num(r.qty) + ' x ' + cut(r.sku_code, 30)); ty -= 12; });
+        if (rs.length > 7) { ops += txt(tx, ty, 8, false, '+ ' + (rs.length - 7) + ' more lines'); ty -= 12; }
+        if (made) ops += '0.45 g' + NL + txt(tx, ty, 9, true, 'Status now: made already') + '0 g' + NL;
+        return ops;
+    }
+    function pdfPapers(sl, imgs, I, isAgain, s) {   /* v234f2 S2: pages are made a few at a time, the phone breathes in between (page k of n); Close stops it */
+        var cells = [];
+        sl.orders.forEach(function (o) {
+            o.picks.forEach(function (r) { cells.push(function (x, y, w, h) { return cellPick(o, r, x, y, w, h); }); });
+            for (var i = 0; i < o.makes.length; i += 50) { var part = o.makes.slice(i, i + 50); cells.push((function (p) { return function (x, y, w, h) { return cellMake(o, p, x, y, w, h); }; })(part)); }
+        });
+        var pages = [], per = 8, nSlipPages = Math.ceil(cells.length / per), lists = I.seqs.join(', '), total = nSlipPages + imgs.length, p = 0;
+        var head = 'Papers for ' + (I.day || '') + ' - list ' + lists + (isAgain ? ' - printed again by ' + me() : '');
+        function slipPage(k) {
+            var ops = txt(20, 818, 9, false, head + ' - slips page ' + (k + 1) + ' of ' + nSlipPages + ' - no invoice, no shipping label');
+            for (var c = 0; c < per; c++) { var f = cells[k * per + c]; if (!f) break; var col = c % 2, row = Math.floor(c / 2); ops += f(20 + col * 282, 612 - row * 198, 274, 190); }
+            return { w: 595, h: 842, ops: ops, img: null };
+        }
+        function step() {
+            if (s && !live(s)) return Promise.resolve(null);
+            var end = Math.min(total, p + 4);
+            for (; p < end; p++) {
+                if (p < nSlipPages) pages.push(slipPage(p));
+                else { var im = imgs[p - nSlipPages], w = im.w * 72 / 300, h = im.h * 72 / 300; pages.push({ w: w, h: h, ops: 'q ' + f2(w) + ' 0 0 ' + f2(h) + ' 0 0 cm /Im0 Do Q' + NL, img: im }); }
+            }
+            if (p < total) { if (s) say('Making the PDF: page ' + p + ' of ' + total + '…'); return new Promise(function (res) { setTimeout(res, 0); }).then(step); }
+            if (!pages.length) pages.push({ w: 595, h: 842, ops: txt(40, 780, 12, true, 'Nothing to print for this list.'), img: null });
+            return Promise.resolve(pdfBytes(pages));
+        }
+        return step();
+    }
+    function pdfBytes(pages) {   /* objects: 1 catalog, 2 pages, 3 Helvetica, 4 Helvetica-Bold, then per page: page, content (+ image) */
+        var chunks = [], len = 0, offs = [];
+        function addS(s) { var u = new Uint8Array(s.length); for (var i = 0; i < s.length; i++) u[i] = s.charCodeAt(i) & 255; chunks.push(u); len += u.length; }
+        function addB(u) { chunks.push(u); len += u.length; }
+        var nextId = 5, kids = [], objs = [];
+        pages.forEach(function (pg) { pg.id = nextId++; pg.cid = nextId++; if (pg.img) pg.iid = nextId++; kids.push(pg.id + ' 0 R'); });
+        addS('%PDF-1.4' + NL + '%' + String.fromCharCode(226, 227, 207, 211) + NL);
+        function obj(id, body) { offs[id] = len; addS(id + ' 0 obj' + NL + body + NL + 'endobj' + NL); }
+        obj(1, '<< /Type /Catalog /Pages 2 0 R >>');
+        obj(2, '<< /Type /Pages /Kids [' + kids.join(' ') + '] /Count ' + pages.length + ' >>');
+        obj(3, '<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>');
+        obj(4, '<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding >>');
+        pages.forEach(function (pg) {
+            obj(pg.id, '<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ' + f2(pg.w) + ' ' + f2(pg.h) + '] /Resources << /Font << /F1 3 0 R /F2 4 0 R >>' + (pg.img ? ' /XObject << /Im0 ' + pg.iid + ' 0 R >>' : '') + ' >> /Contents ' + pg.cid + ' 0 R >>');
+            obj(pg.cid, '<< /Length ' + pg.ops.length + ' >>' + NL + 'stream' + NL + pg.ops + 'endstream');
+            if (pg.img) {
+                offs[pg.iid] = len;
+                addS(pg.iid + ' 0 obj' + NL + '<< /Type /XObject /Subtype /Image /Width ' + pg.img.w + ' /Height ' + pg.img.h + ' /ColorSpace /' + (pg.img.c === 1 ? 'DeviceGray' : 'DeviceRGB') + ' /BitsPerComponent 8 /Filter /DCTDecode /Length ' + pg.img.bytes.length + ' >>' + NL + 'stream' + NL);
+                addB(pg.img.bytes); addS(NL + 'endstream' + NL + 'endobj' + NL);
+            }
+        });
+        var xref = len, n = nextId, x = 'xref' + NL + '0 ' + n + NL + '0000000000 65535 f ' + NL;
+        for (var i = 1; i < n; i++) { var o = String(offs[i] || 0); while (o.length < 10) o = '0' + o; x += o + ' 00000 n ' + NL; }
+        addS(x + 'trailer' + NL + '<< /Size ' + n + ' /Root 1 0 R >>' + NL + 'startxref' + NL + xref + NL + '%%EOF' + NL);
+        var out = new Uint8Array(len), at = 0; chunks.forEach(function (c) { out.set(c, at); at += c.length; });
+        return out;
+    }
+
+    function start() { wrap(); try { var pt = $('pick-tab'); if (pt && pt.classList.contains('active')) flagLoad(false); } catch (e) { } }
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start); else start();
+    X.api = { MAX_SLIPS: MAX_SLIPS, flagLoad: flagLoad, FL: FL, drawBtns: drawBtns, open: open, run: run, again: again, build: build, idsOf: idsOf, slips: slips, readRes: readRes, lblRows: lblRows, makeLabels: makeLabels, jpgSize: jpgSize, pdfPapers: pdfPapers, pdfBytes: pdfBytes, pstr: pstr, plain: plain, state: function () { return S; }, btnOn: btnOn };
+})();
+/* B2X-END */
 </script>
 </body>
 </html>
