@@ -4007,7 +4007,7 @@ button:focus-visible,select:focus-visible,input:focus-visible,textarea:focus-vis
 </style>
 </head>
 <body>
-<div class="ver-corner" id="verCornerBadge">v234f4</div>
+<div class="ver-corner" id="verCornerBadge">v234g2</div>
 <!-- v112: the full-screen SKU page (opened by a12OpenSku) -->
 <div class="a12-skupage" id="a12-skupage"><div class="a12-sphead"><button type="button" onclick="a12CloseSku()">&larr; Back</button><div id="a12-sp-title" style="flex:1"></div><button type="button" onclick="shOpen('sku')" aria-label="Share this product page">&#128228; Share</button></div><div class="a12-spbody" id="a12-sp-body"></div></div>
 <!-- v63: Gap 2 — offline write-queue indicator. Hidden (display:none) unless
@@ -5226,7 +5226,7 @@ button:focus-visible,select:focus-visible,input:focus-visible,textarea:focus-vis
 
             <!-- Version -->
             <div class="ver-badge">
-                <div class="ver-name">&#128230; ArtzFolio Super App v234f4</div>
+                <div class="ver-name">&#128230; ArtzFolio Super App v234g2</div>
                 <div class="ver-sub">Tap the button below to see what is new in this version.</div>
                 <button class="settings-btn" style="min-height:46px" onclick="wnOpen()">What is new and what is done</button>
             </div>
@@ -8740,6 +8740,13 @@ html.bl-x13 .bl13-empty{margin:8px 0}
 #lb-bg .lbx-pm,#lb-bg .lbx-x{min-height:44px;min-width:44px;border:2px solid #1B3F6B;border-radius:10px;background:#fff;color:#1B3F6B;font:700 1.2rem Arial,Helvetica,sans-serif;padding:0}
 #lb-bg .lbx-x{border-color:#B3261E;color:#B3261E}
 #lb-bg .lbx-n{min-width:2.2em;text-align:center;font-weight:700;font-size:var(--t-section);color:#0A1628}
+#lb-bg .lbx-num{width:4.4em;min-height:44px;box-sizing:border-box;border:2px solid #1B3F6B;border-radius:10px;text-align:center;font:700 var(--t-section) Arial,Helvetica,sans-serif;color:#0A1628;padding:0 4px;background:#fff}
+#lb-bg .lbx-x{padding:0 8px;font-size:var(--t-body)}
+#lb-bg .lbx-hist{font-size:.85rem;padding:0 .5rem}
+#lb-bg .lbx-ctl{flex:0 1 auto;flex-wrap:wrap;justify-content:flex-end;max-width:100%;min-width:0}
+#lb-bg .lbx-lim{flex:1 1 100%;color:#7A4A00;font-weight:700;font-size:var(--t-body)}   /* v234g2 C1: the Check-list controls wrap at 320 px / 130%; S1: the limit line */
+#lb-bg .hp56-q,[data-lblayer] .hp56-q{width:auto;padding:0 .6rem}
+#lb-bg .hp56-q::after,[data-lblayer] .hp56-q::after{content:' Help';font:700 .8rem Arial,Helvetica,sans-serif}   /* v234g: number box; Remove, History and Help in words */
 #lb-bg .lbx-miss{display:block;flex:1 1 100%;min-height:44px;text-align:left;border:0;background:#FEE2E2;color:#991B1B;border-radius:8px;padding:6px 10px;font:700 var(--t-body) Arial,Helvetica,sans-serif}
 #lb-bg .lbx-fix{flex:1 1 100%}
 #lb-bg .lbx-sum{font-weight:700;color:#0A1628;font-size:var(--t-section);margin:2px 2px 8px}
@@ -8785,7 +8792,7 @@ html.lbx-on #tab-nav .nv-b .nv-l{white-space:normal!important;overflow:hidden!im
     }
     function logRaw(where, raw) { try { LOGB.push({ at: new Date().toISOString(), where: String(where), text: String(raw).slice(0, 400) }); if (LOGB.length > 50) LOGB.shift(); console.warn('[labels] ' + where + ': ' + String(raw).slice(0, 400)); } catch (x) {} }
     if (typeof lbTab !== 'function' || typeof LB === 'undefined') return;
-    var NAMES = ['What to print', 'Check', 'Print'];
+    var NAMES = ['What to print', 'Check', 'Make PDF'];   /* v234g2 S3 */
     function e(s) { return esc59(s); }
     function plural(n, w) { return lbN(n) + ' ' + w + (Number(n) === 1 ? '' : 's'); }
     function stepOf(t) { return (t === 'today' || t === 'pick') ? 1 : (t === 'list' ? 2 : (t === 'make' ? 3 : 0)); }
@@ -8815,7 +8822,7 @@ html.lbx-on #tab-nav .nv-b .nv-l{white-space:normal!important;overflow:hidden!im
         if (n) { h += '<div class="lbx-prog" role="progressbar" aria-label="Step ' + n + ' of 3" aria-valuemin="1" aria-valuemax="3" aria-valuenow="' + n + '">'; for (var i = 1; i <= 3; i++) h += '<span' + (i <= n ? ' class="on"' : '') + '></span>'; h += '</div>'; }
         h += '<div class="lbx-hd">' + (bk ? '<button type="button" class="lbx-back" data-lbx="go" data-v="' + bk + '">&lsaquo; Back</button>' : '') +
             '<b>' + (n ? 'Step ' + n + ' of 3 &middot; ' + e(NAMES[n - 1]) : 'History') + '</b>' +
-            (t !== 'hist' ? '<button type="button" class="lbx-hist" data-lbx="go" data-v="hist" aria-label="History" title="History">&#128339;</button>' : '') + '</div>';
+            (t !== 'hist' ? '<button type="button" class="lbx-hist" data-lbx="go" data-v="hist" aria-label="History" title="History">&#128339; History</button>' : '') + '</div>';
         return h;
     }
     function title() { try { var b = lbEl('lb-bg').querySelector('.nv-top b'); if (b) b.innerHTML = '&#127991; Labels'; var d = lbEl('lb-bg').querySelector('.nv-sheet'); if (d) d.setAttribute('aria-label', 'Labels'); } catch (x) {} }
@@ -8952,7 +8959,7 @@ html.lbx-on #tab-nav .nv-b .nv-l{white-space:normal!important;overflow:hidden!im
     function freeLine(key) { var k = String(key || '').toUpperCase(), f = null; LB.lines.forEach(function (LN) { if (!f && LN.lineId == null && LN.group === 'PRODUCTION' && LN.key.toUpperCase() === k) f = LN; }); return f; }
     function actHtml(i, n) {
         if (!n) return '<button type="button" class="lbx-add" data-lbx="add" data-i="' + i + '">+ Add</button>';
-        return '<button type="button" class="lbx-pm" data-lbx="dec" data-i="' + i + '" aria-label="One label fewer">&minus;</button><span class="lbx-added">Added &#10003; (' + lbN(n) + ')</span><button type="button" class="lbx-pm" data-lbx="inc" data-i="' + i + '" aria-label="One label more">+</button>';
+        return '<button type="button" class="lbx-pm" data-lbx="dec" data-i="' + i + '" aria-label="One label fewer">&minus;</button><span class="lbx-added">Added &#10003;</span><input type="number" class="lbx-num" data-lbx-n="pick" data-i="' + i + '" min="1" max="999" inputmode="numeric" value="' + n + '" aria-label="Labels for this product"><button type="button" class="lbx-pm" data-lbx="inc" data-i="' + i + '" aria-label="One label more">+</button>';
     }
     function rowHtml(r, i) {
         var s = specOf(r), LN = freeLine(s.key);
@@ -8967,7 +8974,7 @@ html.lbx-on #tab-nav .nv-b .nv-l{white-space:normal!important;overflow:hidden!im
     }
     function step(i, d) {
         var r = rowsNow()[i]; if (!r) return; var LN = freeLine(specOf(r).key); if (!LN) return;
-        LN.copies = Math.min(LB_MAX_COPIES, LN.copies + d);
+        LN.copies = Math.min(999, LN.copies + d);   /* v234g2 S2: - and + stop at 999, like the number box */
         if (LN.copies < 1) LB.lines.splice(LB.lines.indexOf(LN), 1);
         rowPaint(i);
     }
@@ -9077,8 +9084,8 @@ html.lbx-on #tab-nav .nv-b .nv-l{white-space:normal!important;overflow:hidden!im
     function sumLine() { var t = lbTotals(LB.lines); return plural(t.lines, 'product') + ' &middot; ' + plural(t.labels, 'label'); }
     function lineHtml(LN, i) {
         var mt = missText(LN), h = '<div class="lbx-line" id="lbx-l' + i + '"><div class="lbx-nm">' + nameHtml(LN.title || (LN.ov && LN.ov.title), LN.sku || LN.asin || LN.key) + '</div>' +
-            '<div class="lbx-ctl"><button type="button" class="lbx-pm" data-lbx="ldec" data-i="' + i + '" aria-label="One label fewer">&minus;</button><span class="lbx-n" id="lbx-n' + i + '" aria-label="Labels">' + lbN(LN.copies) + '</span>' +
-            '<button type="button" class="lbx-pm" data-lbx="linc" data-i="' + i + '" aria-label="One label more">+</button><button type="button" class="lbx-x" data-lbx="lrm" data-i="' + i + '" aria-label="Remove">&#10005;</button></div>';
+            '<div class="lbx-ctl"><button type="button" class="lbx-pm" data-lbx="ldec" data-i="' + i + '" aria-label="One label fewer">&minus;</button><input id="lbx-n' + i + '" type="number" class="lbx-num" data-lbx-n="line" data-i="' + i + '" min="1" max="999" inputmode="numeric" value="' + LN.copies + '" aria-label="Labels for this product">' +
+            '<button type="button" class="lbx-pm" data-lbx="linc" data-i="' + i + '" aria-label="One label more">+</button><button type="button" class="lbx-x" data-lbx="lrm" data-i="' + i + '" aria-label="Remove">&#10005; Remove</button></div>';
         var mi = missInfo(LN);
         if (looking(LN)) h += '<div class="lbx-chk">' + spin() + 'Checking this product...</div>';
         else if (mi && mi.fix) h += '<button type="button" class="lbx-miss" data-lbx="fix" data-i="' + i + '">' + mi.text + '</button>';
@@ -9094,13 +9101,13 @@ html.lbx-on #tab-nav .nv-b .nv-l{white-space:normal!important;overflow:hidden!im
         var shown = LB.lines.slice(0, LB.shown || LB_ROW_PAGE), h = '<div class="lbx-sum" role="status" id="lbx-sum">' + sumLine() + '</div>';
         h += shown.map(lineHtml).join('');
         if (LB.lines.length > shown.length) h += '<button type="button" class="lbx-sec" data-lbx="lmore">Show more (' + lbN(LB.lines.length - shown.length) + ' more)</button>';
-        h += '<div class="lbx-bar" id="lbx-bar"><button type="button" class="lbx-next" data-lbx="go" data-v="make">Next: print &rarr;</button></div>';
+        h += '<div class="lbx-bar" id="lbx-bar"><button type="button" class="lbx-next" data-lbx="go" data-v="make">Next: make PDF &rarr;</button></div>';
         o.innerHTML = h;
     }
     function lineStep(i, d) {
         var LN = LB.lines[i]; if (!LN) return;
-        LN.copies = Math.max(1, Math.min(LB_MAX_COPIES, LN.copies + d));
-        var n = lbEl('lbx-n' + i), s = lbEl('lbx-sum'); if (n) n.textContent = lbN(LN.copies); if (s) s.innerHTML = sumLine();
+        LN.copies = Math.max(1, Math.min(999, LN.copies + d));   /* v234g2 S2: 1 to 999, like the number box */
+        var n = lbEl('lbx-n' + i), s = lbEl('lbx-sum'); if (n) n.value = String(LN.copies); if (s) s.innerHTML = sumLine();   /* v234g: the count is a number box */
     }
 
     /* ---------- step 3: print ---------- */
@@ -9150,16 +9157,16 @@ html.lbx-on #tab-nav .nv-b .nv-l{white-space:normal!important;overflow:hidden!im
         var size = Object.prototype.hasOwnProperty.call(LB.ov, 'label.size') ? LB.ov['label.size'] : '', pf = printerField(), legalOff = lbEff('text.legal_lines') === false, can = lbCanPrint();
         var h = '<div class="lbx-sum" role="status">' + plural(t.lines, 'product') + ' &middot; ' + plural(t.labels, 'label') + '</div>';
         h += '<label class="lbx-lab" for="lbx-size">Label size</label><select id="lbx-size" class="lbx-sel">' + [['', 'Usual size (company setting)'], ['75x50', '75 x 50 mm'], ['100x50', '100 x 50 mm'], ['60x40', '60 x 40 mm (small)']].map(function (x) { return '<option value="' + x[0] + '"' + (size === x[0] ? ' selected' : '') + '>' + x[1] + '</option>'; }).join('') + '</select>';
-        h += '<label class="lbx-lab" for="lbx-printer">Printer</label><select id="lbx-printer" class="lbx-sel"><option value="">Usual printer (company setting)</option>' +
+        h += '<label class="lbx-lab" for="lbx-printer">Printer type (the PDF is shaped for it)</label><select id="lbx-printer" class="lbx-sel"><option value="">Usual printer (company setting)</option>' +
             (pf ? (pf.choices || []).map(function (c, j) { return '<option value="' + j + '"' + (Object.prototype.hasOwnProperty.call(LB.ov, pf.path) && LB.ov[pf.path] === c.value ? ' selected' : '') + '>' + e(String(c.plain || c.label || c.value).slice(0, 80)) + '</option>'; }).join('') : '') + '</select>';
         if (lbIsSmall()) h += '<div class="lbx-err">' + e(LB_CAVEAT) + '</div>';
         if (miss) h += '<button type="button" class="lbx-miss" data-lbx="go" data-v="list">' + plural(miss, 'product') + ' would be refused by the label service (name, MRP, net quantity or ASIN). Tap to see them.</button>';
-        if (legalOff) h += '<div class="lbx-err">The company label setting leaves out the price and maker lines, so printing is switched off. Ask the admin. You can still download the PDF.</div>';
+        if (legalOff) h += '<div class="lbx-err">The company label setting leaves out the price and maker lines, so the labels PDF saved in History is switched off. Ask the admin. You can still use PDF only, below.</div>';
         h += '<div style="margin-top:14px">';
-        if (can) h += '<button type="button" class="lbx-print" data-lbx="print"' + ((LB.busy || legalOff) ? ' disabled' : '') + '>' + (running() && LB.job.mode === 'print' ? spin() + 'Printing...' : 'Print') + '</button>';
-        else h += '<div class="lbx-dim">Only an Admin or Supervisor can print. You can download the PDF.</div>';
-        h += '<button type="button" class="lbx-link" data-lbx="pdf"' + (LB.busy ? ' disabled' : '') + '>' + (running() && LB.job.mode === 'make' ? 'Making the PDF...' : 'Download PDF only') + '</button></div>';
-        h += '<div class="lbx-dim">Labels already printed for an order are skipped by themselves. To print them again, open History (the clock at the top).</div>';
+        if (can) h += '<button type="button" class="lbx-print" data-lbx="print"' + ((LB.busy || legalOff) ? ' disabled' : '') + '>' + (running() && LB.job.mode === 'print' ? spin() + 'Making the PDF...' : 'Make labels PDF') + '</button>';
+        else h += '<div class="lbx-dim">Only an Admin or Supervisor can make the labels PDF saved in History. You can still use PDF only, below.</div>';
+        h += '<button type="button" class="lbx-link" data-lbx="pdf"' + (LB.busy ? ' disabled' : '') + '>' + (running() && LB.job.mode === 'make' ? 'Making the PDF...' : 'PDF only, not saved in History') + '</button></div>';
+        h += '<div class="lbx-dim">The labels come as a PDF: open it and print it to your label printer. Labels already printed for an order are skipped by themselves. To print them again, open History at the top.</div>';
         o.innerHTML = h;
         pvPaint();
     }
@@ -9179,8 +9186,8 @@ html.lbx-on #tab-nav .nv-b .nv-l{white-space:normal!important;overflow:hidden!im
         var inc = lbIncluded(); if (!inc.length || LB.busy) return;
         if (tooBig(inc)) return; if (lbEff('text.legal_lines') === false) return;
         var t = lbTotals(inc);
-        lbLayer('confirm', 'Print labels?', '<div class="lbx-q">Print ' + plural(t.labels, 'label') + ' for ' + plural(t.lines, 'product') + '?</div><div class="lbx-dim">Labels already printed for an order are skipped. The print is saved in History.</div>' +
-            '<button type="button" class="lbx-print" data-lbx="printgo">Yes, print</button><button type="button" class="lbx-sec" data-lbx="back">No, go back</button>');
+        lbLayer('confirm', 'Make the labels PDF?', '<div class="lbx-q">Make a PDF of ' + plural(t.labels, 'label') + ' for ' + plural(t.lines, 'product') + '?</div><div class="lbx-dim">They are saved in History as printed, and labels already printed for an order are skipped. Next: open the PDF and print it to your label printer. The app does not print by itself.</div>' +
+            '<button type="button" class="lbx-print" data-lbx="printgo">Yes, make PDF</button><button type="button" class="lbx-sec" data-lbx="back">No, go back</button>');
     }
     function run(mode) {   /* = lbMakeGo: same job, same lbJobStep; PDF only, only labels not printed before */
         if (mode === 'print') lbLayerDone('confirm');
@@ -9208,7 +9215,7 @@ html.lbx-on #tab-nav .nv-b .nv-l{white-space:normal!important;overflow:hidden!im
         else if (F && !made) { head = pr ? 'Not printed' : 'PDF not made'; h = '<div class="lbx-err" role="status"><b>' + (pr ? 'Nothing was printed.' : 'No PDF was made.') + '</b> ' + e(F.error === 'CANCELLED' ? 'You cancelled it.' : why) + (F.stop ? ' Tell the admin.' : '') + '</div>'; }
         else if (F) { head = pr ? 'Partly printed' : 'PDF partly made'; h = '<div class="lbx-err" role="status">' + plural(made, 'label') + (pr ? ' printed and saved in History.' : ' made.') + ' <b>The rest was NOT ' + (pr ? 'printed' : 'made') + '.</b> ' + e(why) + (F.stop ? ' Tell the admin.' : '') + '</div>'; }
         else if (!made) { head = pr ? 'Not printed' : 'PDF not made'; h = '<div class="lbx-err" role="status"><b>No label was made.</b>' + skipTxt + (probs.length ? ' ' + plural(probs.length, 'product') + ' could not be made (see below).' : '') + '</div>'; }
-        else { head = pr ? 'Done ✓' : 'PDF ready'; h = '<div class="' + (probs.length ? 'lbx-err' : 'lbx-ok') + '" role="status">' + (pr ? 'Done ✓ ' : '') + plural(made, 'label') + ' made' + (pr ? ' and saved in History. The labels are in a PDF: tap Open below, print it from there and choose your label printer in the print window.' : '. Nothing was saved in History.') + skipTxt + (probs.length ? ' ' + plural(probs.length, 'product') + ' could not be made (see below).' : '') + '</div>'; }
+        else { head = pr ? 'Done ✓' : 'PDF ready'; h = '<div class="' + (probs.length ? 'lbx-err' : 'lbx-ok') + '" role="status">' + (pr ? 'Done ✓ ' : '') + plural(made, 'label') + ' made' + (pr ? ' in ' + (function () { var nf = 0; job.parts.forEach(function (p) { nf += p.files.length; }); return nf === 1 ? 'one PDF' : nf + ' PDF files'; })() + ', saved in History. Tap Open, then print to your label printer.' : '. Nothing was saved in History.') + skipTxt + (probs.length ? ' ' + plural(probs.length, 'product') + ' could not be made (see below).' : '') + '</div>'; }
         h = '<div class="lbx-h">' + head + '</div>' + h;
         if (F && !F.stop && F.error !== 'CANCELLED') h += '<button type="button" class="lbx-sec" data-lbx="retry">Try again</button>';
         if (legalOff) h += '<div class="lbx-err">These labels have no price and maker lines. Check them before selling.</div>';
@@ -9223,7 +9230,7 @@ html.lbx-on #tab-nav .nv-b .nv-l{white-space:normal!important;overflow:hidden!im
             });
         });
         if (job.parts.length) h += '<div class="lbx-dim">Print at 100% size. Print one label first and scan it before a whole roll.</div>';
-        o.hidden = false; o.innerHTML = h; try { o.scrollIntoView({ block: 'nearest' }); } catch (x) {}
+        o.hidden = false; o.innerHTML = h; try { o.scrollIntoView({ block: 'nearest' }); } catch (x) {} setTimeout(function () { try { var ff = o.querySelector('.lbx-file'); if (ff && !o.hidden) ff.scrollIntoView({ block: 'nearest' }); } catch (x) {} }, 400);   /* v234g: after the screen settles, Open and Save come fully into view */
     }
 
     /* ---------- history (clock top right); "Print again" = the old reprint ---------- */
@@ -9304,8 +9311,25 @@ html.lbx-on #tab-nav .nv-b .nv-l{white-space:normal!important;overflow:hidden!im
         else if (a === 'hopen') { b.disabled = true; b.innerHTML = spin(); lbHistOpen(i); }
         else if (a === 'again') lbReprintAsk();
     }
-    function onInput(ev) { if (ON && ev.target && ev.target.id === 'lbx-q') typeQ(ev.target.value); }
-    function onChange(ev) { if (!ON || !ev.target) return; if (ev.target.id === 'lbx-size') sizeSet(String(ev.target.value)); else if (ev.target.id === 'lbx-printer') printerSet(String(ev.target.value)); }
+    function limHint(el, show, txt) {   /* v234g2: the 1 to 999 limit in words, on its own line under the box */
+        try { var c = el.parentNode, nx = c && c.nextSibling, h = (nx && nx.className === 'lbx-lim') ? nx : null;
+            if (show) { if (!h && c && c.parentNode) { h = document.createElement('div'); h.className = 'lbx-lim'; h.setAttribute('role', 'status'); c.parentNode.insertBefore(h, c.nextSibling); } if (h) h.textContent = txt; }
+            else if (h) h.parentNode.removeChild(h); } catch (x) {}
+    }
+    function numSet(el, soft) {   /* v234g: the typed count beside - and + (1 to 999); the label service still checks every count */
+        var raw = String(el.value).trim(), v = Math.floor(Number(raw)), i = Number(el.getAttribute('data-i')), kind = el.getAttribute('data-lbx-n'), LN = null;
+        var outside = raw !== '' && (!isFinite(v) || v < 1 || v > 999);   /* v234g2 S1: say the limit when a typed count is outside it */
+        if (!isFinite(v) || v < 1) { if (soft) { limHint(el, outside, 'A count can be from 1 to 999.'); return; } v = 1; }
+        if (v > 999) v = 999;
+        if (soft || outside) limHint(el, outside, 'A count can be from 1 to 999. It is set to ' + v + '.');
+        if (kind === 'pick') { var r = rowsNow()[i]; if (r) LN = freeLine(specOf(r).key); } else LN = LB.lines[i];
+        if (!LN) return;
+        var was = LN.copies; LN.copies = v; if (!soft && String(el.value) !== String(v)) el.value = String(v);
+        if (was === v) return;   /* leaving the box after typing: nothing is redrawn, so a tap on Next is not lost */
+        if (kind === 'pick') barPaint(); else { var s = lbEl('lbx-sum'); if (s) s.innerHTML = sumLine(); }
+    }
+    function onInput(ev) { if (ON && ev.target && ev.target.id === 'lbx-q') typeQ(ev.target.value); else if (ON && ev.target && ev.target.classList && ev.target.classList.contains('lbx-num')) numSet(ev.target, true); }
+    function onChange(ev) { if (!ON || !ev.target) return; if (ev.target.id === 'lbx-size') sizeSet(String(ev.target.value)); else if (ev.target.id === 'lbx-printer') printerSet(String(ev.target.value)); else if (ev.target.classList && ev.target.classList.contains('lbx-num')) numSet(ev.target, false); }
 
     /* ---------- S4: never show raw server text; the raw text goes to the app log (console + LBX.log(), memory only) ---------- */
     var CODEY = /(rpc|relation|schema|tokens?|sql|exception|undefined|null|stack|lbl_|failed:|error:|function|column|constraint|violat|http [0-9]|[a-z0-9]+_[a-z0-9_]+|[a-z]+[.][a-z_]+[(]?)/i;
@@ -18232,7 +18256,7 @@ html.d4x-on .nv-x { width: auto !important; min-width: 44px; padding: 0 .5rem !i
     function kRow(r, i) {
         var on = kIdx(r.code) >= 0;
         return '<div class="lbx-row"><div class="lbx-nm"><b class="lbx-name" style="display:block">' + E(r.name ? kShort(r.name) : r.code) + '</b>' + (r.name ? '<span class="lbx-size">' + E(r.code) + '</span>' : '') + '</div><div class="lbx-act">' +
-            (on ? '<span class="lbx-added">Added &#10003;</span><button type="button" class="lbx-x" data-d4k="rm" data-c="' + E(r.code) + '" aria-label="Remove ' + E(r.code) + '">&#10005;</button>' : '<button type="button" class="lbx-add" data-d4k="add" data-i="' + i + '">+ Add</button>') + '</div></div>';
+            (on ? '<span class="lbx-added">Added &#10003;</span><button type="button" class="lbx-x" data-d4k="rm" data-c="' + E(r.code) + '" aria-label="Remove ' + E(r.code) + '">&#10005; Remove</button>' : '<button type="button" class="lbx-add" data-d4k="add" data-i="' + i + '">+ Add</button>') + '</div></div>';
     }
     function kStep1() {
         var h = '<label class="lbx-lab" for="d4k-q">' + (KS.kind === 'bin' ? 'Find a bin or shelf' : 'Find a product') + '</label><input type="search" id="d4k-q" class="lbx-in" value="' + E(KS.q) + '" placeholder="' + (KS.kind === 'bin' ? 'Bin or shelf code' : 'Name, SKU or ASIN') + '" autocomplete="off" spellcheck="false">';
@@ -18261,7 +18285,7 @@ html.d4x-on .nv-x { width: auto !important; min-width: 44px; padding: 0 .5rem !i
         h += '<div class="d4k-cp">Copies of each <button type="button" class="lbx-pm" data-d4k="cp" data-v="-1" aria-label="One copy less">&minus;</button><span class="lbx-n" id="d4k-cpn">' + KS.copies + '</span><button type="button" class="lbx-pm" data-d4k="cp" data-v="1" aria-label="One copy more">+</button></div>';
         if (kTotal() > kMax()) h += '<div class="lbx-err">That is ' + kTotal() + ' labels. Make at most ' + kMax() + ' at a time: remove some or use fewer copies.</div>';
         h += KS.sel.map(function (x) {
-            return '<div class="lbx-line"><div class="lbx-nm"><b class="lbx-name" style="display:block">' + E(x.name ? kShort(x.name) : x.code) + '</b>' + (x.name ? '<span class="lbx-size">' + E(x.code) + '</span>' : '') + '</div><div class="lbx-ctl"><span class="lbx-n">&times; ' + KS.copies + '</span><button type="button" class="lbx-x" data-d4k="rm" data-c="' + E(x.code) + '" aria-label="Remove ' + E(x.code) + '">&#10005;</button></div>' +
+            return '<div class="lbx-line"><div class="lbx-nm"><b class="lbx-name" style="display:block">' + E(x.name ? kShort(x.name) : x.code) + '</b>' + (x.name ? '<span class="lbx-size">' + E(x.code) + '</span>' : '') + '</div><div class="lbx-ctl"><span class="lbx-n">&times; ' + KS.copies + '</span><button type="button" class="lbx-x" data-d4k="rm" data-c="' + E(x.code) + '" aria-label="Remove ' + E(x.code) + '">&#10005; Remove</button></div>' +
                 (bad[x.code] ? '<div class="lbx-miss" role="note">' + E(bad[x.code]) + ' It will not print.</div>' : '') + '</div>';
         }).join('');
         if (!KS.sel.length) h += '<div class="lbx-dim">Nothing on the list. Go Back and add some.</div>';
