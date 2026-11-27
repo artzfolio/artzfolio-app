@@ -4007,7 +4007,7 @@ button:focus-visible,select:focus-visible,input:focus-visible,textarea:focus-vis
 </style>
 </head>
 <body>
-<div class="ver-corner" id="verCornerBadge">v234g3</div>
+<div class="ver-corner" id="verCornerBadge">v234g5</div>
 <!-- v112: the full-screen SKU page (opened by a12OpenSku) -->
 <div class="a12-skupage" id="a12-skupage"><div class="a12-sphead"><button type="button" onclick="a12CloseSku()">&larr; Back</button><div id="a12-sp-title" style="flex:1"></div><button type="button" onclick="shOpen('sku')" aria-label="Share this product page">&#128228; Share</button></div><div class="a12-spbody" id="a12-sp-body"></div></div>
 <!-- v63: Gap 2 — offline write-queue indicator. Hidden (display:none) unless
@@ -5226,7 +5226,7 @@ button:focus-visible,select:focus-visible,input:focus-visible,textarea:focus-vis
 
             <!-- Version -->
             <div class="ver-badge">
-                <div class="ver-name">&#128230; ArtzFolio Super App v234g3</div>
+                <div class="ver-name">&#128230; ArtzFolio Super App v234g5</div>
                 <div class="ver-sub">Tap the button below to see what is new in this version.</div>
                 <button class="settings-btn" style="min-height:46px" onclick="wnOpen()">What is new and what is done</button>
             </div>
@@ -14796,6 +14796,24 @@ html.ful-on #mto-panel [data-mto="refresh"][hidden]{display:none !important}
 html.mtb-on #ful-badge-pick{display:none!important}
 html.mtb-on.mtb-idle #pick-tab .steps,html.mtb-on.mtb-idle #next-action-banner,html.mtb-on #pick-noslip39{display:none!important}
 html.mtb-on.mtb-make #b44-open-btn{display:none!important}
+html.mtb-on.mtb-make #d4-olist,html.mtb-on.mtb-make #d4-ohost,html.mtb-on.mtb-make #mtb-home{display:none!important}   /* v234g4: the open TO MAKE card stands alone */
+html.mtb-on.mtb-make #pick-tab > .hp56-bar,html.mtb-on.mtb-make #ful-banner{display:none!important}   /* v234g4: one How to (the card has its own); the bills-not-finished line waits until Back to list */
+html.mtb-on #mto-panel.mtb-panel{margin:8px 0 12px;padding:12px 14px 14px;border:1px solid #E2E8F0;border-top:3px solid #C9A227;border-radius:12px;background:#fff;box-sizing:border-box}
+html.mtb-on .mtb-top{align-items:flex-start;padding-bottom:8px;border-bottom:1px solid #E2E8F0}
+html.mtb-on .mtb-top .mtb-due{margin-top:2px}
+html.mtb-on .mtb-card{margin-top:12px}
+html.mtb-on .mtb-main{margin-top:14px}
+html.mtb-on .mtb-back{margin-top:8px}
+html.mtb-on #d4-olist h4{display:flex;align-items:baseline;justify-content:space-between;gap:8px;margin:12px 0 4px;padding-bottom:6px;border-bottom:1px solid #E2E8F0;font-size:var(--t-section,17px)}
+html.mtb-on #d4-olist h4 small{font-weight:400;font-size:var(--t-meta,13px);color:#4A5568}
+html.mtb-on #d4-olist .mtb-li{margin-top:8px;padding:10px 12px;border-radius:12px}
+html.mtb-on #d4-olist .mtb-li small{margin-top:3px}   /* v234g4: neat waiting list (same spacing, one title line) */
+html.mtb-on #mto-panel.mtb-panel{padding-top:8px}
+html.mtb-on #mto-panel > .hp56-bar{margin:0 0 2px}
+html.mtb-on .mtb-top{padding-bottom:6px}
+html.mtb-on .mtb-card{margin-top:8px;padding:10px 12px}
+html.mtb-on .mtb-main{margin-top:10px}
+html.mtb-on .mtb-type{display:block;margin:4px auto 0}   /* v234g5 S2: a compact card header; S1: the Type a code button */
 #mtb-home{display:none}
 html.mtb-on.mtb-idle:not(.mtb-make) #mtb-home{display:block}
 .mtb-wait{display:flex;flex-wrap:wrap;align-items:center;gap:0 2px;margin:6px 0 10px;padding:4px 10px;border-radius:12px;border:2px solid #CBD5E1;font-family:Arial,sans-serif;font-size:var(--t-body,15px);color:#0A1628;box-sizing:border-box}
@@ -15019,6 +15037,51 @@ html.mtb-on .mto-tb-head .mto-btn{flex:0 0 auto}
         return X.idxBusy;
     }
 
+    /* ---------- v234g4: every pending bill, not only the 500 oldest (MTO root cause 2) ----------
+       r43ful.loadRows asks oms_fulfil_order_v1 (pending, oldest first, limit 500). That exact request is answered here by ONE paged read:
+       1,000 bills a page, at most 20 pages, oldest first, shared by every caller for 20 s. A failed first page gives the same error as before;
+       a failed later page keeps the bills already read. Any other request on the view goes to the database unchanged. */
+    var BILLS = { p: null, at: 0, res: null, pages: 0, reads: 0 };
+    function billsPaged(orig, cols) {
+        if (BILLS.p) return BILLS.p;
+        if (BILLS.res && now() - BILLS.at < 20000) return Promise.resolve(BILLS.res);
+        var all = []; BILLS.reads++;
+        function page(n) {
+            BILLS.pages++;
+            return Promise.resolve(orig.call(db, 'oms_fulfil_order_v1').select(cols).eq('pending', true).order('created_at', { ascending: true }).order('order_key', { ascending: true }).range(n * 1000, n * 1000 + 999)).then(function (r) {
+                if (!r || r.error) return n ? { data: all, error: null, status: 200, partial: true } : r;
+                var d = Array.isArray(r.data) ? r.data : []; all = all.concat(d);
+                if (d.length === 1000 && n < 19) return page(n + 1);
+                return { data: all, error: null, status: 200 };
+            });
+        }
+        BILLS.p = page(0).then(function (r) { BILLS.p = null; if (r && !r.error) { BILLS.res = r; BILLS.at = now(); } return r; }, function (e) { BILLS.p = null; throw e; });
+        return BILLS.p;
+    }
+    function billsBuilder(orig) {
+        var calls = [], b = {}, MS = ['select', 'eq', 'neq', 'gt', 'gte', 'lt', 'lte', 'in', 'is', 'like', 'ilike', 'not', 'or', 'filter', 'match', 'order', 'limit', 'range', 'abortSignal', 'single', 'maybeSingle', 'csv', 'contains', 'textSearch'];
+        MS.forEach(function (m) { b[m] = function () { calls.push([m, [].slice.call(arguments)]); return b; }; });
+        function plain() { var q = orig.call(db, 'oms_fulfil_order_v1'); calls.forEach(function (c) { q = q[c[0]].apply(q, c[1]); }); return q; }
+        function listCols() {   /* select(cols) + eq(pending, true) + order(created_at, oldest first) + limit(500), nothing else */
+            var s = null, pend = false, ord = false, lim = false, other = false;
+            calls.forEach(function (c) { var m = c[0], a = c[1];
+                if (m === 'select' && s === null && a.length === 1) s = String(a[0] || ''); else if (m === 'eq' && a[0] === 'pending' && a[1] === true) pend = true;
+                else if (m === 'order' && a[0] === 'created_at' && a[1] && a[1].ascending === true) ord = true; else if (m === 'limit' && Number(a[0]) === 500) lim = true; else other = true; });
+            return (s && pend && ord && lim && !other) ? s : null;
+        }
+        function run() { if (b._p) return b._p; var s = listCols(); b._p = s ? billsPaged(orig, s) : Promise.resolve(plain()); return b._p; }
+        b.then = function (ok, bad) { return run().then(ok, bad); };
+        return b;
+    }
+    function wrapBills() {
+        try {
+            if (!hasDb() || db._mtbBills) return;
+            var orig = db.from;
+            db.from = function (t) { if (t === 'oms_fulfil_order_v1' && X.on) return billsBuilder(orig); return orig.apply(this, arguments); };
+            db._mtbBills = 1;
+        } catch (e) { }
+    }
+
     /* ---------- 1. scan anywhere (called by the mto route) ---------- */
     function oldPath(v, opts) {   /* B1: the scan goes back with every marker it already had, plus mtbSkip, so it can never come round again */
         var o = {}; try { Object.keys(opts || {}).forEach(function (k) { o[k] = opts[k]; }); } catch (e) { }
@@ -15176,15 +15239,43 @@ html.mtb-on .mto-tb-head .mto-btn{flex:0 0 auto}
         }
         return '<button type="button" class="mtb-link" data-mtb="man" data-res="' + E(s.res_id) + '">Mark made without scan</button>';
     }
+    /* v234g4 (MTO root cause 1): the card opens at the top of the screen, under the fixed header and scan box, once per opened order */
+    function topCover() {
+        var m = 0;
+        try { for (var y = 2; y < 300; y += 10) { var e = document.elementFromPoint(Math.round(window.innerWidth / 2), y), hit = false;
+            while (e && e !== document.body && e !== document.documentElement) { var p = getComputedStyle(e).position; if (p === 'fixed' || p === 'sticky') { var bt = e.getBoundingClientRect().bottom; if (bt > m && bt < window.innerHeight / 2) m = bt; hit = true; break; } e = e.parentElement; }
+            if (!hit) break; } } catch (e) { }
+        return m;
+    }
+    function kbNone(on) {   /* v234g5 S1: in make mode the scan box keeps the focus for a hardware scanner, without the phone keyboard; Type a code opens it */
+        var sb = $('scan-input'); if (!sb) return;
+        if (on) { if (!sb.hasAttribute('data-mtb-im')) sb.setAttribute('data-mtb-im', sb.getAttribute('inputmode') || ''); sb.setAttribute('inputmode', 'none'); }
+        else if (sb.hasAttribute('data-mtb-im')) { var o = sb.getAttribute('data-mtb-im'); if (o) sb.setAttribute('inputmode', o); else sb.removeAttribute('inputmode'); sb.removeAttribute('data-mtb-im'); }
+    }
+    function typeCode() { var sb = $('scan-input'); if (!sb) return; sb.setAttribute('inputmode', 'text'); try { sb.blur(); sb.focus(); } catch (e) { } }
+    function cardTop(el) {
+        try { document.documentElement.classList.add('mtb-make'); } catch (e) { }   /* v234g5 S2: make mode at once, so the card is placed with the list already hidden */
+        kbNone(true);
+        function place(focus) {
+            try {
+                if (!el || !el.isConnected || !MTO().open) return;
+                el.scrollIntoView({ block: 'start' });
+                var m = topCover(), t = el.getBoundingClientRect().top;
+                if (Math.abs(t - (m + 8)) > 2) window.scrollBy(0, t - m - 8);
+                var sb = $('scan-input'); if (focus && sb && typeof sb.focus === 'function') sb.focus({ preventScroll: true });
+            } catch (e) { }
+        }
+        setTimeout(function () { place(true); }, 60);
+        setTimeout(function () { place(false); }, 450);   /* again once the order details are drawn */
+    }
     function renderHook(el, c) {
         if (!X.on) return false;
         var M = MTO();
         var ae = document.activeElement; if (ae && ae.id === 'mtb-why' && el.contains(ae)) return true;   // a reason list is open: draw after the pick
         var row = billRow(M), ch = (row && row.channel) || ((M.slips || [])[0] || {}).channel || '';
-        var h = '<div class="mtb-top"><div class="mtb-ord">Order <b>' + E(M.orderId || '…') + '</b>' + (ch ? ' <span class="mtb-ch">' + E(ch) + '</span>' : '') + '</div>' +
+        var h = '<div class="mtb-top"><div class="mtb-ord">Order <b>' + E(M.orderId || '…') + '</b>' + (ch ? ' <span class="mtb-ch">' + E(ch) + '</span>' : '') + dueHtml(row) + '</div>' +   /* v234g4: one header line block: order, channel, due */
             (canUndo() ? '<button type="button" class="mtb-dots" data-mtb="menu" aria-label="More for this order" aria-expanded="' + (X.menu ? 'yes' : 'no') + '">&#8942;</button>' : '') + '</div>';
         if (X.menu && canUndo()) h += '<div class="mtb-menu" role="menu"><button type="button" role="menuitem" data-mtb="undo">Undo a wrong scan</button></div>';
-        h += dueHtml(row);
         if (M.loading && !(M.slips || []).length) h += '<div class="mtb-info">&#8987; Reading the order&hellip;</div>';
         if (M.err) h += '<div class="mtb-msg mtb-m-err">' + M.err + '</div>';
         if ((M.queue || []).length) {
@@ -15213,9 +15304,11 @@ html.mtb-on .mto-tb-head .mto-btn{flex:0 0 auto}
         });
         if (M.stockErr) h += '<div class="mtb-info">The in-stock lines could not be read just now. <button type="button" class="mtb-btn" data-mto="refresh">Try again now</button></div>';
         if (c && c.need > c.made && !M.errHard) h += '<button type="button" class="mtb-main" data-mtb="cam">&#128247; Scan made piece</button>';
+        h += '<button type="button" class="mtb-link mtb-type" data-mtb="type">Type a code</button>';   /* v234g5 S1: opens the phone keyboard on the scan box */
         h += '<button type="button" class="mtb-back" data-mtb="back">Back to list</button>';
         if (el.__mtbH !== h || !el.querySelector('.mtb-top')) { el.innerHTML = h; el.__mtbH = h; } el.style.display = '';   /* v234d T2: redraw only when something changed, so a tap never lands on a button that was just replaced */
         el.className = 'mto-panel mtb-panel' + (M.complete ? ' mto-panel-done' : '');
+        var ck = (M.ids || []).join(','); if (ck && X.cardKey !== ck) { X.cardKey = ck; cardTop(el); }   /* v234g4: to the top once per opened order */
         return true;
     }
 
@@ -15264,7 +15357,7 @@ html.mtb-on .mto-tb-head .mto-btn{flex:0 0 auto}
         var M = MTO(), ps = st().pickState, sub = (typeof _pickSub !== 'undefined') ? _pickSub : 'pick';
         var de = document.documentElement;
         de.classList.toggle('mtb-idle', (!ps || ps === 'IDLE') && sub === 'pick');
-        de.classList.toggle('mtb-make', !!M.open);
+        de.classList.toggle('mtb-make', !!M.open); if (!M.open) { X.cardKey = ''; kbNone(false); } wrapBills();   /* v234g4; v234g5 S1: the scan box as before when the card closes */
         paintHome(); decorateFul(); csCheck(false);
         try { if (document.hidden) return; } catch (e) { }
         if (st().tab === 'pick' && signed() && !offline()) {
@@ -15497,7 +15590,8 @@ html.mtb-on .mto-tb-head .mto-btn{flex:0 0 auto}
     function onClick(ev) {
         if (!X.on) return;
         var t = ev.target && ev.target.closest ? ev.target.closest('[data-mtb]') : null; if (!t || t.disabled) return;
-        act(t.getAttribute('data-mtb'), t);
+        var a1 = t.getAttribute('data-mtb'); if (a1 === 'type') { typeCode(); return; }   /* v234g5 S1 */
+        act(a1, t);
     }
     function onChange(ev) {
         if (!X.on) return;
@@ -15508,7 +15602,7 @@ html.mtb-on .mto-tb-head .mto-btn{flex:0 0 auto}
 
     function on() {
         if (X.on) return;
-        X.on = true; W.MTB_ON = true; document.documentElement.classList.add('mtb-on');
+        X.on = true; W.MTB_ON = true; document.documentElement.classList.add('mtb-on'); wrapBills();   /* v234g4 */
         document.addEventListener('click', onClick); document.addEventListener('change', onChange);
         X.timers.push(setInterval(function () { try { tick(); } catch (e) { } }, 800));
         tick(); try { var a = api(); if (a && MTO().open) a.render(); } catch (e) { }
@@ -15524,7 +15618,7 @@ html.mtb-on .mto-tb-head .mto-btn{flex:0 0 auto}
         try { var a = api(); if (a && MTO().open) a.render(); } catch (e) { }
     }
     W.mtbRoute = routeHook; W.mtbSaved = savedHook; W.mtbRender = renderHook;
-    W.mtbApi = { on: on, off: off, X: X, shortName: shortName, sizeOf: sizeOf, keysOf: keysOf, buildIndex: buildIndex, findBill: findBill, loadIndex: loadIndex,
+    W.mtbApi = { on: on, off: off, X: X, BILLS: BILLS, billsBuilder: billsBuilder, wrapBills: wrapBills, cardTop: cardTop, shortName: shortName, sizeOf: sizeOf, keysOf: keysOf, buildIndex: buildIndex, findBill: findBill, loadIndex: loadIndex,
                  waitCounts: waitCounts, homeHtml: homeHtml, paintHome: paintHome, tick: tick, listOpen: listOpen, listClose: listClose, coOpen: coOpen, coPreview: coPreview,
                  coRun: coRun, coDone: coDone, csCheck: csCheck, coAllowed: coAllowed, askYes: askYes, askNo: askNo, recentPick: recentPick, daysAgo: daysAgo, pickFinishedRecently: pickFinishedRecently, pickRecords: pickRecords, lastPickSkus: lastPickSkus, coPlain: coPlain, flagOn: flagOn, chunks: chunks, readOld: readOld, act: act, dueHtml: dueHtml, version: 'mtb (v234b4)' };
     function start() { if (flagOn()) { try { on(); } catch (e) { try { console.warn('mtb', e); } catch (x) { } } } else W.MTB_ON = false; }
@@ -18567,7 +18661,7 @@ html.d4x-on .nv-x { width: auto !important; min-width: 44px; padding: 0 .5rem !i
         var h = '';
         if (rs) {
             var w = rs.filter(waitingRow).slice().sort(function (a, b) { return String(a.created_at || '') < String(b.created_at || '') ? -1 : 1; });
-            h = '<h4>Waiting orders (' + w.length + ')</h4>' + (w.length ? w.slice(0, 8).map(function (r) {
+            h = '<h4><span>Waiting orders</span><small>oldest first</small></h4>' + (w.length ? w.slice(0, 8).map(function (r) {
                 return '<button type="button" class="mtb-li' + (r.overdue ? ' mtb-li-late' : '') + '" data-mtb="lrow" data-key="' + E(r.order_key) + '"><b>' + E(r.order_ref || r.order_key) + '</b>' + (r.overdue ? '<span class="mtb-chip">Late</span>' : '') +
                     '<small>' + E(r.summary_text || '') + '</small><small>' + E(r.channel || '') + '</small>' + shipHtml(r) + '</button>';
             }).join('') + (w.length > 8 ? '<button type="button" class="d4-chip" data-mtb="w" data-v="all">All ' + w.length + ' waiting orders</button>' : '') : '<p class="mtb-p">Nothing is waiting. Every order is done.</p>');
