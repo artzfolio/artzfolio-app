@@ -142,7 +142,8 @@
 // v115 (2026-11-28, v43f): cache name bumped for App v234g3 (v43f = v234g3 (v234g2 + phone code with the saved sign-in, the server selling value, the More badge fits) + Admin v2.93c unchanged). Nothing else changed.
 // v116 (2026-11-28, v43g): cache name bumped for App v234g5 (v43g = v234g5 (v234g3 + the TO MAKE card on top with no keyboard pop, every pending bill read, neater Orders waiting list) + Admin v2.93c unchanged). Nothing else changed.
 // v117 (2026-11-28, v43h): cache name bumped for App v234g6 (v43h = v234g6 (v234g5 + the top camera button back on Orders, the pick steps at the top with a camera button, Close this bill for bills that could not be read) + Admin v2.93c unchanged). Nothing else changed.
-const CACHE_NAME = 'artzfolio-oms-shell-v117';
+// v118 (2026-11-28, v43i): cache name bumped for App v234g7 (v43i = v234g7 (v234g6 + Close this bill only for lines with no product, Refresh reads the older Overview cards fresh, the MRP missing card and listings opened with the session sign-in when the server allows it, neater Orders and Stock) + Admin v2.93c unchanged). Nothing else changed.
+const CACHE_NAME = 'artzfolio-oms-shell-v118';
 const OPTIONAL_FILES = ['./zxing_reader_3.1.4.js', './zxing_reader_3.1.4.wasm'];
 const SHELL_FILES = ['./index.html', './manifest.json', './icon.svg'];
 
