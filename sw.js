@@ -144,7 +144,8 @@
 // v117 (2026-11-28, v43h): cache name bumped for App v234g6 (v43h = v234g6 (v234g5 + the top camera button back on Orders, the pick steps at the top with a camera button, Close this bill for bills that could not be read) + Admin v2.93c unchanged). Nothing else changed.
 // v118 (2026-11-28, v43i): cache name bumped for App v234g7 (v43i = v234g7 (v234g6 + Close this bill only for lines with no product, Refresh reads the older Overview cards fresh, the MRP missing card and listings opened with the session sign-in when the server allows it, neater Orders and Stock) + Admin v2.93c unchanged). Nothing else changed.
 // v119 (2026-11-28, v43j): cache name bumped for App v234g8 (v43j = v234g8 (v234g7 + order-type colour lines on the pick and make cards, 3-step markers, plain step-aware scan errors, every printed code format read, a question before any stray made-piece save, What can I scan) + Admin v2.93c unchanged). Nothing else changed.
-const CACHE_NAME = 'artzfolio-oms-shell-v119';
+// v120 (2026-11-28, v43k): cache name bumped for App v234g9 (v43k = v234g9 (v234g8 + the reason back in the made-piece question, a product that also waits to be picked in the same order is not counted as made, printable A4 bin stickers BIN:code) + Admin v2.93c unchanged). Nothing else changed.
+const CACHE_NAME = 'artzfolio-oms-shell-v120';
 const OPTIONAL_FILES = ['./zxing_reader_3.1.4.js', './zxing_reader_3.1.4.wasm'];
 const SHELL_FILES = ['./index.html', './manifest.json', './icon.svg'];
 
