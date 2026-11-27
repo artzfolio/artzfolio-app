@@ -4007,7 +4007,7 @@ button:focus-visible,select:focus-visible,input:focus-visible,textarea:focus-vis
 </style>
 </head>
 <body>
-<div class="ver-corner" id="verCornerBadge">v234g8</div>
+<div class="ver-corner" id="verCornerBadge">v234g9</div>
 <!-- v112: the full-screen SKU page (opened by a12OpenSku) -->
 <div class="a12-skupage" id="a12-skupage"><div class="a12-sphead"><button type="button" onclick="a12CloseSku()">&larr; Back</button><div id="a12-sp-title" style="flex:1"></div><button type="button" onclick="shOpen('sku')" aria-label="Share this product page">&#128228; Share</button></div><div class="a12-spbody" id="a12-sp-body"></div></div>
 <!-- v63: Gap 2 — offline write-queue indicator. Hidden (display:none) unless
@@ -4895,6 +4895,7 @@ button:focus-visible,select:focus-visible,input:focus-visible,textarea:focus-vis
                 <div id="db-bins-body" style="display:none;">
                     <div class="settings-info">Every bin in the warehouse and what it holds. A bin is made the first time stock is put into it. A typing mistake can make a stray bin, like "22" on 25-Sep. <strong>Delete</strong> removes an empty bin for good; <strong>Off</strong> hides it from the lists but keeps it; <strong>Not for picking</strong> keeps the stock out of order picking (for example, stock on hold for a quality check). A bin that still holds stock cannot be deleted &mdash; transfer or count it out first.</div>
                     <div class="move-result" id="db-bins-result"></div>
+                    <button type="button" class="settings-btn" id="bin-print-btn" data-mtb="binprint" style="width:100%;margin:4px 0 8px;">&#128424; Print bin stickers (A4)</button>
                     <div id="db-bins-list"></div>
                 </div>
             </div>
@@ -5226,7 +5227,7 @@ button:focus-visible,select:focus-visible,input:focus-visible,textarea:focus-vis
 
             <!-- Version -->
             <div class="ver-badge">
-                <div class="ver-name">&#128230; ArtzFolio Super App v234g8</div>
+                <div class="ver-name">&#128230; ArtzFolio Super App v234g9</div>
                 <div class="ver-sub">Tap the button below to see what is new in this version.</div>
                 <button class="settings-btn" style="min-height:46px" onclick="wnOpen()">What is new and what is done</button>
             </div>
@@ -15005,7 +15006,7 @@ html.mtb-on .mto-tb-head .mto-btn{flex:0 0 auto}
 
     /* ---------- the make-line index (pure parts are tested in node) ---------- */
     function byCreated(a, b) { var x = String(a.created_at || ''), y = String(b.created_at || ''); return x < y ? -1 : (x > y ? 1 : 0); }
-    function buildIndex(rs, res, made, titles) {
+    function buildIndex(rs, res, made, titles, openKeys) {   /* v234g9 F1: openKeys = order|SKU of OPEN pick lines */
         var byId = {}; (res || []).forEach(function (r) { if (r && String(r.status) === 'SHORT') byId[Number(r.res_id)] = r; });
         var bills = {}, lines = [];
         (rs || []).slice().sort(byCreated).forEach(function (r) {
@@ -15016,7 +15017,7 @@ html.mtb-on .mto-tb-head .mto-btn{flex:0 0 auto}
             ids.forEach(function (id) {
                 var x = byId[id]; if (!x) return;
                 lines.push({ res_id: id, bill: key, order_id: x.order_id, sku: up(x.sku_code), asin: up(x.asin), qty: Number(x.qty) || 0, made: Number(made && made[id]) || 0,
-                             title: (titles && titles[up(x.sku_code)]) || '', created: b.created });
+                             title: (titles && titles[up(x.sku_code)]) || '', created: b.created, open: !!(openKeys && openKeys[String(x.order_id) + '|' + up(x.sku_code)]) });
             });
         });
         lines.sort(function (a, b) { return a.created < b.created ? -1 : (a.created > b.created ? 1 : a.res_id - b.res_id); });
@@ -15028,7 +15029,7 @@ html.mtb-on .mto-tb-head .mto-btn{flex:0 0 auto}
         var ex = {}; (exclude || []).forEach(function (n) { ex[Number(n)] = 1; });
         for (var i = 0; i < idx.lines.length; i++) {
             var L = idx.lines[i];
-            if (ex[L.res_id] || L.made >= L.qty) continue;
+            if (ex[L.res_id] || L.made >= L.qty || L.open) continue;   /* v234g9 F1: the same product also waits to be PICKED from stock in this order - a scan of it is that pick */
             if (keys.indexOf(L.sku) >= 0 || (L.asin && keys.indexOf(L.asin) >= 0)) return { line: L, bill: idx.bills[L.bill] };
         }
         return null;
@@ -15040,6 +15041,18 @@ html.mtb-on .mto-tb-head .mto-btn{flex:0 0 auto}
                 ((r && r.data) || []).forEach(function (m) { out[up(m.sku_code)] = m.product_name || ''; });
             }, function () { });
         })).then(function () { return out; });
+    }
+    function openFor(res) {   /* v234g9 F1: order|SKU of the OPEN pick lines (to be picked from stock) of the orders that also have make lines; a failed read = {} */
+        var oids = {}; (res || []).forEach(function (x) { if (x && String(x.status) === 'SHORT' && x.order_id != null) oids[String(x.order_id)] = 1; });
+        var ks = Object.keys(oids), g = [], out = {}; if (!ks.length || !hasDb()) return Promise.resolve(out);
+        for (var i = 0; i < ks.length; i += 150) g.push(ks.slice(i, i + 150));
+        return Promise.all(g.map(function (c) {
+            try {
+                return timed(db.from('oms_pick_reservations').select('order_id,sku_code,status').in('order_id', c).eq('status', 'OPEN'), 8000, 'Open pick lines').then(function (r) {
+                    ((r && !r.error && r.data) || []).forEach(function (x) { if (x && String(x.status) === 'OPEN' && x.sku_code) out[String(x.order_id) + '|' + up(x.sku_code)] = 1; });
+                }, function () { });
+            } catch (e) { return null; }
+        })).then(function () { return out; }, function () { return {}; });
     }
     function loadIndex(force) {
         if (X.idxBusy) return X.idxBusy;
@@ -15062,7 +15075,7 @@ html.mtb-on .mto-tb-head .mto-btn{flex:0 0 auto}
                 res.forEach(function (x) { if (x && String(x.status) === 'SHORT') { shortIds.push(Number(x.res_id)); if (x.sku_code) sk[up(x.sku_code)] = 1; } });
                 var a = api();
                 var mp = (a && typeof a.madeCounts === 'function') ? Promise.resolve(a.madeCounts(shortIds)).then(null, function () { return {}; }) : Promise.resolve({});
-                return Promise.all([mp, titlesFor(Object.keys(sk))]).then(function (z) { return buildIndex(rs, res, z[0] || {}, z[1] || {}); });
+                return Promise.all([mp, titlesFor(Object.keys(sk)), openFor(res)]).then(function (z) { return buildIndex(rs, res, z[0] || {}, z[1] || {}, z[2] || {}); });
             });
         }).then(function (idx) { X.idx = idx; X.idxBusy = null; X.idxFailAt = 0; paintHome(); return idx; }, function () { X.idxBusy = null; X.idxFailAt = now(); return X.idx; });
         return X.idxBusy;
@@ -15176,12 +15189,51 @@ html.mtb-on .mto-tb-head .mto-btn{flex:0 0 auto}
     function lastPickSkus() { var out = []; try { var lp = st().lastPick; ((lp && lp.lines) || []).forEach(function (x) { if (x && x.sku) out.push(up(x.sku)); }); } catch (e) { } return out; }
     function decide(v, hit, opts) {
         if (isLink(String(v || ''))) { openOnly(v, hit); return; }   /* v234g8 C7: a product-page QR never saves by itself: it opens the make card */
-        askOpen('made', v, hit, opts, 'ask'); return;   /* v234g8 C7: a scan with no TO MAKE card open is always asked first (Yes / No); nothing is saved before Yes */
+        askOpen('made', v, hit, opts, askWhy(hit)); return;   /* v234g8 C7: a scan with no TO MAKE card open is always asked first (Yes / No); nothing is saved before Yes. v234g9 S2: with the reason */
     }
     function openOnly(v, hit) {
         var a = api(); if (!a) return;
         try { if (st().tab !== 'pick' && typeof switchTab === 'function') switchTab('pick'); } catch (e) { }
         Promise.resolve(a.openCode('AF3M|' + hit.bill.ids.join(','))).then(function () { var M = MTO(); M.msg = { kind: 'wait', html: '&#128247; Now scan the label on the finished piece (the product QR only opens the order).' }; try { a.render(); } catch (e) { } });
+    }
+    function askWhy(hit) {   /* v234g9 S2: the reason shown in the C7 question - the product was just picked here / a pick just finished here / plain */
+        var recent = false, last = [];
+        try { recent = pickFinishedRecently(); last = recent ? lastPickSkus() : []; } catch (e) { }
+        try { if (recentPick(hit.line) || last.indexOf(hit.line.sku) >= 0) return 'same'; } catch (e) { }
+        if (recent) {
+            var rec = []; try { rec = pickRecords().map(function (x) { return up(x.sku); }); } catch (e) { }
+            if (!last.length || last.some(function (s) { return rec.indexOf(s) < 0; })) return 'unknown';
+        }
+        return 'ask';
+    }
+    /* v234g9 B1: printable bin stickers - QR = BIN:<code> (read as BIN|<code>), the code in big letters, 3 across x 8 down on A4, cut lines dashed */
+    function binSheetHtml(codes) {
+        var list = (codes || []).map(function (c) { return up(c); }).filter(function (c) { return !!c; });
+        var cells = list.map(function (code) {
+            var svg = '';
+            try { var q = qrcode(0, 'M'); q.addData('BIN:' + code); q.make(); svg = q.createSvgTag({ cellSize: 4, margin: 8, scalable: true }); } catch (e) { svg = ''; }
+            return '<div class="bs"><div class="bq">' + svg + '</div><div class="bt"><small>BIN</small><b>' + E(code) + '</b></div></div>';
+        }).join('');
+        return '<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Bin stickers</title><style>' +
+            '@page{size:A4;margin:8mm}*{box-sizing:border-box}body{margin:0;padding:0;font-family:Arial,Helvetica,sans-serif;color:#000;background:#fff}' +
+            '.top{padding:10px 4px;font-size:15px;line-height:1.4}.top button{font-size:16px;padding:8px 16px;margin-top:6px}' +
+            '.g{display:grid;grid-template-columns:repeat(3,1fr)}.bs{display:flex;align-items:center;gap:3mm;height:35mm;padding:3mm;border:1px dashed #999;break-inside:avoid;page-break-inside:avoid;overflow:hidden}' +
+            '.bq{width:28mm;height:28mm;flex:none}.bq svg{width:100%;height:100%;display:block}.bt{min-width:0}' +
+            '.bt small{display:block;font-size:11pt;font-weight:700;letter-spacing:1px}.bt b{display:block;font-size:28pt;line-height:1.05;overflow-wrap:anywhere}' +
+            '@media print{.top{display:none}}</style></head><body><div class="top"><b>' + list.length + ' bin sticker(s)</b> &ndash; print on A4 paper (3 across, 8 down), cut on the dashed lines and stick each one on its shelf. ' +
+            'The QR on each sticker reads BIN and the bin code.<br><button type="button" onclick="window.print()">Print</button></div><div class="g">' + cells + '</div></body></html>';
+    }
+    function binPrint() {
+        var w = null; try { w = window.open('', '_blank'); } catch (e) { w = null; }
+        if (!w) { toast('err', 'The print page could not open. Allow pop-ups for this site, then tap Print bin stickers again.'); return; }
+        function put(h) { try { w.document.open(); w.document.write(h); w.document.close(); } catch (e) { } }
+        put('<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Bin stickers</title></head><body style="font-family:Arial,sans-serif;padding:16px">Reading the bin list&hellip;</body></html>');
+        if (!hasDb()) { put('<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Bin stickers</title></head><body style="font-family:Arial,sans-serif;padding:16px">The bin list could not be read. Close this page and try again.</body></html>'); return; }
+        timed(db.from('oms_bins').select('bin_code').eq('active', true).order('bin_code'), 10000, 'Bin list').then(function (r) {
+            if (!r || r.error) throw new Error('bins');
+            var codes = (r.data || []).map(function (x) { return x && x.bin_code; }).filter(function (c) { return !!c && (typeof mtoHiddenBin !== 'function' || !mtoHiddenBin(c)); });
+            put(binSheetHtml(codes)); try { w.focus(); } catch (e) { }
+        }).then(null, function () { put('<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Bin stickers</title></head><body style="font-family:Arial,sans-serif;padding:16px">The bin list could not be read just now. Close this page and try again.</body></html>'); });
     }
     function decideOld(v, hit, opts) {   /* v234g7 rule, kept for reference: no longer called */
         var recent = pickFinishedRecently(), last = recent ? lastPickSkus() : [];
@@ -15721,10 +15773,12 @@ html.mtb-on .mto-tb-head .mto-btn{flex:0 0 auto}
        TO MAKE card) the product label QR - an Amazon /dp/ link (with or without ?th=1), gp/product, or an amzn.in/d/ link - = that ASIN.
        processScan itself is not changed; the last code read is kept for the Open TO MAKE button. */
     var RE_BINSP = new RegExp('^BIN[ :_#-]+([^ |]+)$', 'i');
+    var RE_BINCOL = new RegExp('^BIN:[ ]*([^ |:]+)$', 'i');   /* v234g9 B1: the printed bin sticker */
     function isLink(s) { return /^https?:/i.test(s) || /^www[.]/i.test(s) || /amazon[.]|amzn[.]/i.test(s); }
     function normScan(v) {
         var s = String(v == null ? '' : v).trim(), ps = st().pickState, m;
         if (ps === 'NEED_BIN') { m = RE_BINSP.exec(s); if (m) return up(m[1]); }
+        else { m = RE_BINCOL.exec(s); if (m) return 'BIN|' + up(m[1]); }   /* v234g9 B1: BIN:A2 from the printed sticker = the app's own BIN|A2 at every other step */
         if ((ps === 'NEED_SKU' || (MTO().open && pickFreeHere())) && isLink(s)) { m = LINK_RE.exec(s); if (m) return up(m[1]); }
         return null;
     }
@@ -15833,6 +15887,7 @@ html.mtb-on .mto-tb-head .mto-btn{flex:0 0 auto}
         var a1 = t.getAttribute('data-mtb'); if (a1 === 'type') { typeCode(); return; }   /* v234g5 S1 */
         if (a1 === 'cb') { cbOpen(t.getAttribute('data-key')); return; } if (a1 === 'cbx') { cbClose(); return; } if (a1 === 'cbgo') { cbRun(); return; }   /* v234g6 D3 */
         if (a1 === 'openmake') { openMakeFor(t.getAttribute('data-order'), t.getAttribute('data-res')); return; } if (a1 === 'help') { helpOpen(); return; } if (a1 === 'helpx') { var hb = $('mtb-help-bg'); if (hb) { hb.hidden = true; hb.innerHTML = ''; } return; }   /* v234g8 G4 / C8 / C9 */
+        if (a1 === 'binprint') { binPrint(); return; }   /* v234g9 B1 */
         act(a1, t);
     }
     function onChange(ev) {
@@ -15860,7 +15915,7 @@ html.mtb-on .mto-tb-head .mto-btn{flex:0 0 auto}
         try { var a = api(); if (a && MTO().open) a.render(); } catch (e) { }
     }
     W.mtbRoute = routeHook; W.mtbSaved = savedHook; W.mtbRender = renderHook;
-    W.mtbApi = { on: on, off: off, X: X, plainStatus: plainStatus, typeBadges: typeBadges, normScan: normScan, makeType: makeType, STK: STK, openMakeFor: openMakeFor, decide: decide, pickPaint: pickPaint, checkOnly: checkOnly, cbOpen: cbOpen, cbRun: cbRun, PICK_STEPS: PICK_STEPS, BILLS: BILLS, billsBuilder: billsBuilder, wrapBills: wrapBills, cardTop: cardTop, shortName: shortName, sizeOf: sizeOf, keysOf: keysOf, buildIndex: buildIndex, findBill: findBill, loadIndex: loadIndex,
+    W.mtbApi = { askWhy: askWhy, openFor: openFor, binSheetHtml: binSheetHtml, binPrint: binPrint, on: on, off: off, X: X, plainStatus: plainStatus, typeBadges: typeBadges, normScan: normScan, makeType: makeType, STK: STK, openMakeFor: openMakeFor, decide: decide, pickPaint: pickPaint, checkOnly: checkOnly, cbOpen: cbOpen, cbRun: cbRun, PICK_STEPS: PICK_STEPS, BILLS: BILLS, billsBuilder: billsBuilder, wrapBills: wrapBills, cardTop: cardTop, shortName: shortName, sizeOf: sizeOf, keysOf: keysOf, buildIndex: buildIndex, findBill: findBill, loadIndex: loadIndex,
                  waitCounts: waitCounts, homeHtml: homeHtml, paintHome: paintHome, tick: tick, listOpen: listOpen, listClose: listClose, coOpen: coOpen, coPreview: coPreview,
                  coRun: coRun, coDone: coDone, csCheck: csCheck, coAllowed: coAllowed, askYes: askYes, askNo: askNo, recentPick: recentPick, daysAgo: daysAgo, pickFinishedRecently: pickFinishedRecently, pickRecords: pickRecords, lastPickSkus: lastPickSkus, coPlain: coPlain, flagOn: flagOn, chunks: chunks, readOld: readOld, act: act, dueHtml: dueHtml, version: 'mtb (v234b4)' };
     function start() { if (flagOn()) { try { on(); } catch (e) { try { console.warn('mtb', e); } catch (x) { } } } else W.MTB_ON = false; }
