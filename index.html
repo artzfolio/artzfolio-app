@@ -4007,7 +4007,7 @@ button:focus-visible,select:focus-visible,input:focus-visible,textarea:focus-vis
 </style>
 </head>
 <body>
-<div class="ver-corner" id="verCornerBadge">v234g5</div>
+<div class="ver-corner" id="verCornerBadge">v234g6</div>
 <!-- v112: the full-screen SKU page (opened by a12OpenSku) -->
 <div class="a12-skupage" id="a12-skupage"><div class="a12-sphead"><button type="button" onclick="a12CloseSku()">&larr; Back</button><div id="a12-sp-title" style="flex:1"></div><button type="button" onclick="shOpen('sku')" aria-label="Share this product page">&#128228; Share</button></div><div class="a12-spbody" id="a12-sp-body"></div></div>
 <!-- v63: Gap 2 — offline write-queue indicator. Hidden (display:none) unless
@@ -5226,7 +5226,7 @@ button:focus-visible,select:focus-visible,input:focus-visible,textarea:focus-vis
 
             <!-- Version -->
             <div class="ver-badge">
-                <div class="ver-name">&#128230; ArtzFolio Super App v234g5</div>
+                <div class="ver-name">&#128230; ArtzFolio Super App v234g6</div>
                 <div class="ver-sub">Tap the button below to see what is new in this version.</div>
                 <button class="settings-btn" style="min-height:46px" onclick="wnOpen()">What is new and what is done</button>
             </div>
@@ -14814,6 +14814,12 @@ html.mtb-on .mtb-top{padding-bottom:6px}
 html.mtb-on .mtb-card{margin-top:8px;padding:10px 12px}
 html.mtb-on .mtb-main{margin-top:10px}
 html.mtb-on .mtb-type{display:block;margin:4px auto 0}   /* v234g5 S2: a compact card header; S1: the Type a code button */
+html.mtb-on.mtb-pick #d4-olist,html.mtb-on.mtb-pick #d4-ohost,html.mtb-on.mtb-pick #ful-banner,html.mtb-on.mtb-pick #pick-tab > .hp56-bar,html.mtb-on.mtb-pick #mtb-home,html.mtb-on.mtb-pick #mto-panel{display:none!important}   /* v234g6 D2: pick mode */
+#mtb-pickcam{display:none}
+html.mtb-on.mtb-pick #mtb-pickcam{display:flex;margin:8px 0 10px}
+.mtb-cb{margin:10px 0;padding:10px 12px;border:1.5px solid #B45309;border-radius:12px;background:#FFF4E5;color:#5C3B00;font-family:Arial,sans-serif;font-size:var(--t-body,15px)}
+.mtb-cb .mtb-btn{margin-top:8px}   /* v234g6 D3: a bill that could not be read */
+html.d4x-on #ful-banner.ful-banner{z-index:1!important}   /* v234g6 D4: the bills line sits in the page under the big Scan now; it must never paint over the bottom bar */
 #mtb-home{display:none}
 html.mtb-on.mtb-idle:not(.mtb-make) #mtb-home{display:block}
 .mtb-wait{display:flex;flex-wrap:wrap;align-items:center;gap:0 2px;margin:6px 0 10px;padding:4px 10px;border-radius:12px;border:2px solid #CBD5E1;font-family:Arial,sans-serif;font-size:var(--t-body,15px);color:#0A1628;box-sizing:border-box}
@@ -15357,7 +15363,10 @@ html.mtb-on .mto-tb-head .mto-btn{flex:0 0 auto}
         var M = MTO(), ps = st().pickState, sub = (typeof _pickSub !== 'undefined') ? _pickSub : 'pick';
         var de = document.documentElement;
         de.classList.toggle('mtb-idle', (!ps || ps === 'IDLE') && sub === 'pick');
-        de.classList.toggle('mtb-make', !!M.open); if (!M.open) { X.cardKey = ''; kbNone(false); } wrapBills();   /* v234g4; v234g5 S1: the scan box as before when the card closes */
+        var pk = PICK_STEPS.indexOf(String(ps || '')) >= 0, mk = !!M.open && !pk;   /* v234g6 D2 / D5: a pick step wins over the make card */
+        de.classList.toggle('mtb-make', mk); de.classList.toggle('mtb-pick', pk);
+        if (!mk) kbNone(false); if (!M.open) X.cardKey = '';   /* v234g6 D5: make layout and the scan box fully back whenever make mode is off */
+        pickPaint(pk, ps); wrapBills();
         paintHome(); decorateFul(); csCheck(false);
         try { if (document.hidden) return; } catch (e) { }
         if (st().tab === 'pick' && signed() && !offline()) {
@@ -15544,9 +15553,88 @@ html.mtb-on .mto-tb-head .mto-btn{flex:0 0 auto}
     function decorateFul() {
         var b = $('ful-bg'); if (!b) return;
         if (!X.fulMo && typeof MutationObserver === 'function') { X.fulMo = new MutationObserver(function () { try { decorateFul(); } catch (e) { } }); X.fulMo.observe(b, { childList: true }); }
-        var box = b.querySelector('.ful-box'); if (b.hidden || !box || box.querySelector('.ful-back') || box.querySelector('.mtb-owner')) return;
+        var box = b.querySelector('.ful-box'); try { closeBillDecor(b, box); } catch (e) { }   /* v234g6 D3 */
+        if (b.hidden || !box || box.querySelector('.ful-back') || box.querySelector('.mtb-owner')) return;
         var h = ownerHtml(); if (!h) return;
         var d = document.createElement('div'); d.innerHTML = h; box.appendChild(d.firstChild);
+    }
+
+    /* ---------- v234g6 D2: pick mode - the step and a big camera button at the top while a pick is open ---------- */
+    var PICK_STEPS = ['CHECKING', 'NEED_BIN', 'NEED_SKU', 'SAVING', 'SAVE_FAILED', 'NEXT_LINE'];
+    function pickPaint(pk, ps) {
+        var b = $('mtb-pickcam'), sm = $('next-action-banner') || $('status-msg');   /* right under the step banner (SCAN BIN / SCAN PRODUCT) */
+        if (pk && !b && sm && sm.parentNode) { b = document.createElement('button'); b.type = 'button'; b.id = 'mtb-pickcam'; b.className = 'mtb-scan'; b.setAttribute('data-mtb', 'scan'); sm.parentNode.insertBefore(b, sm.nextSibling); }
+        if (b) { var h = '<span class="mtb-si">&#128247;</span><span><b>' + (ps === 'NEED_SKU' ? 'Scan the product' : (ps === 'NEED_BIN' ? 'Scan the bin' : 'Open the camera')) + '</b><small>Opens the camera</small></span>'; if (b.__h !== h) { b.innerHTML = h; b.__h = h; } }
+        if (pk && !X.pickOn) {
+            X.pickOn = true;
+            setTimeout(function () { try { var e = document.querySelector('#pick-tab .steps') || $('next-action-banner'); if (!e) return; e.scrollIntoView({ block: 'start' }); var m = topCover(), t = e.getBoundingClientRect().top; if (Math.abs(t - (m + 8)) > 2) window.scrollBy(0, t - m - 8); } catch (x) { } }, 80);
+        }
+        if (!pk) X.pickOn = false;
+    }
+
+    /* ---------- v234g6 D3: a bill that could not be read (only CHECK lines, nothing to pick or make): a manager closes it ---------- */
+    var CB_WHY = ['Checked by hand: the order was sent', 'Checked by hand: the order was cancelled', 'Checked by hand: not a real order'];
+    function checkOnly(r) { return !!(r && Number(r.to_check) > 0 && !(Number(r.to_pick) > 0) && !(Number(r.to_make) > 0)); }
+    function closeBillDecor(b, box) {
+        var Rf = R(), r = Rf && Rf.F && Rf.F.detail;
+        if (!b || b.hidden || !box || !box.querySelector('.ful-back') || !checkOnly(r) || !(isMgr() || isBoss()) || box.querySelector('.mtb-cb')) return;
+        var d = document.createElement('div'); d.className = 'mtb-cb';
+        d.innerHTML = '<b>This bill could not be read.</b> It has no product to pick or make, so there is nothing to scan. Check the invoice by hand, then close the bill.' +
+            '<br><button type="button" class="mtb-btn mtb-go" data-mtb="cb" data-key="' + E(r.order_key) + '">Close this bill</button>';
+        var at = box.querySelector('.ful-r3'); if (at && at.parentNode === box) box.insertBefore(d, at.nextSibling); else box.appendChild(d);
+    }
+    function cbOpen(key) {
+        var Rf = R(), r = (Rf && Rf.F && Rf.F.detail) || {}; if (!key) return;
+        X.cb = { key: String(key), ref: String(r.order_ref || key), lines: null, err: '', busy: '', res: null, why: CB_WHY[0] };
+        cbRender(); cbRead();
+    }
+    function cbClose() { if (X.cb && X.cb.busy) return; var done = X.cb && X.cb.res; X.cb = null; var b = $('mtb-cb-bg'); if (b) { b.hidden = true; b.innerHTML = ''; }
+        if (done) { var Rf = R(); try { if (Rf && typeof Rf.openSheet === 'function') Rf.openSheet('pending'); } catch (e) { } } }
+    function cbRead() {
+        var C = X.cb; if (!C) return;
+        if (offline()) { C.err = 'This phone has no connection, so nothing will close.'; cbRender(); return; }
+        var cols = 'line_id,status,sku_code,tid,amazon_order_no,invoice_no', key = C.key;
+        Promise.all(['tid', 'amazon_order_no'].map(function (c) { return timed(db.from('oms_order_lines').select(cols).eq(c, key).eq('status', 'CHECK').limit(50), 10000, 'Bill lines'); })).then(function (rs) {
+            if (!X.cb || X.cb.key !== key) return;
+            if (rs.some(function (r) { return !r || r.error; })) { X.cb.err = 'The bill lines could not be read just now, so nothing will close. Try again later.'; cbRender(); return; }
+            var seen = {}, out = []; rs.forEach(function (r) { (r.data || []).forEach(function (l) { var id = Number(l.line_id); if (id > 0 && !seen[id] && String(l.status) === 'CHECK') { seen[id] = 1; out.push(id); } }); });
+            X.cb.lines = out; cbRender();
+        }, function () { if (X.cb && X.cb.key === key) { X.cb.err = 'The bill lines could not be read just now, so nothing will close. Try again later.'; cbRender(); } });
+    }
+    function cbRender() {
+        var C = X.cb; if (!C) return;
+        var b = sheet('mtb-cb-bg'), h = '<div class="mtb-sheet"><div class="mtb-sh-head"><b>Close this bill</b><button type="button" class="mtb-btn" data-mtb="cbx">Close</button></div>';
+        if (C.res) { b.innerHTML = h + '<div class="mtb-prev">&#9989; <b>Bill ' + E(C.ref) + ' closed.</b><br>' + C.res + ' order line' + (C.res === 1 ? '' : 's') + ' closed. Nothing was deleted.</div><button type="button" class="mtb-back" data-mtb="cbx">Done</button></div>'; b.hidden = false; return; }
+        h += '<p class="mtb-p">Bill <b>' + E(C.ref) + '</b> could not be read, so there is nothing to scan. Check the invoice by hand first.</p>';
+        if (C.lines === null && !C.err) h += '<div class="mtb-prev">&#8987; Reading the bill&hellip;</div>';
+        else if (C.lines && !C.lines.length) h += '<div class="mtb-prev">No line of this bill is waiting to be checked. Nothing will close.</div>';
+        else if (C.lines) h += '<div class="mtb-prev"><b>' + C.lines.length + ' order line' + (C.lines.length === 1 ? '' : 's') + ' will close.</b> The reason below is saved with ' + (C.lines.length === 1 ? 'it' : 'each') + '.</div>';
+        h += '<label class="mtb-lbl" for="mtb-cb-why">Reason</label><select id="mtb-cb-why" class="mtb-sel"' + (C.busy ? ' disabled' : '') + '>' + CB_WHY.map(function (w) { return '<option' + (w === C.why ? ' selected' : '') + '>' + E(w) + '</option>'; }).join('') + '</select>';
+        if (C.err) h += '<div class="mtb-msg mtb-m-err">' + C.err + '</div>';
+        if (C.busy) h += '<div class="mtb-msg mtb-m-wait">&#8987; ' + E(C.busy) + '</div>';
+        var can = !!(C.lines && C.lines.length && !C.busy);
+        h += '<button type="button" class="mtb-main mtb-danger" data-mtb="cbgo"' + (can ? '' : ' disabled') + '>Close this bill</button></div>';
+        b.innerHTML = h; b.hidden = false;
+    }
+    function cbPlain(code) { var c = String(code || '').toUpperCase(); if (c === 'NOT_ALLOWED') return 'Closing a bill needs the owner, an admin, or a supervisor with the tick Close with exceptions.'; return coPlain(c); }
+    function cbRun() {
+        var C = X.cb; if (!C || C.busy || !C.lines || !C.lines.length) return Promise.resolve(null);
+        var s = $('mtb-cb-why'); if (s && CB_WHY.indexOf(String(s.value)) >= 0) C.why = String(s.value);
+        C.err = ''; C.busy = 'Closing…'; cbRender();
+        var p; try { p = omsPinRpc('oms_ful47_close_override_s', { p_line_ids: C.lines.slice(0, 50), p_reason: C.why, p_reason_code: 'CHECKED_MANUAL' }, 30000, 'Close this bill', { protect: true, reason: 'Close this bill: checked by hand.' }); } catch (x) { p = Promise.reject(x); }
+        return Promise.resolve(p).then(function (r) {
+            var d = J(r && r.data); if (!X.cb) return null;
+            if (r && r.error) throw coErr(String(r.error.code) === 'PIN_NEEDED' ? 'Your PIN was not entered.' : 'There was no clear answer from the server.', String(r.error.code || '') + ' ' + String(r.error.message || ''));
+            if (!d || d.ok !== true) throw coErr(cbPlain(d && d.error), String((d && d.error) || '') + ' ' + String((d && d.message) || ''));
+            X.cb.busy = ''; X.cb.res = (d.closed_lines || []).length || C.lines.length;
+            try { if (typeof logEvent === 'function') logEvent('BILL CLOSED', 'Bill ' + C.ref + ' closed as checked by hand (' + X.cb.res + ' lines): ' + C.why); } catch (e) { }
+            var Rf = R(); if (Rf && typeof Rf.loadRows === 'function') Promise.resolve(Rf.loadRows()).then(function () { paintHome(); }, function () { });
+            cbRender(); return X.cb.res;
+        }).then(null, function (e) {
+            if (!X.cb) return null; X.cb.busy = '';
+            try { if (typeof logEvent === 'function') logEvent('BILL CLOSED', 'Not closed: ' + String((e && (e.raw || e.message)) || e).slice(0, 300)); } catch (x) { }
+            X.cb.err = '&#10060; <b>Nothing was closed:</b> ' + E(e && e.plainOk ? e.message : 'Something went wrong.'); cbRender(); return null;
+        });
     }
 
     /* ---------- taps ---------- */
@@ -15591,6 +15679,7 @@ html.mtb-on .mto-tb-head .mto-btn{flex:0 0 auto}
         if (!X.on) return;
         var t = ev.target && ev.target.closest ? ev.target.closest('[data-mtb]') : null; if (!t || t.disabled) return;
         var a1 = t.getAttribute('data-mtb'); if (a1 === 'type') { typeCode(); return; }   /* v234g5 S1 */
+        if (a1 === 'cb') { cbOpen(t.getAttribute('data-key')); return; } if (a1 === 'cbx') { cbClose(); return; } if (a1 === 'cbgo') { cbRun(); return; }   /* v234g6 D3 */
         act(a1, t);
     }
     function onChange(ev) {
@@ -15618,7 +15707,7 @@ html.mtb-on .mto-tb-head .mto-btn{flex:0 0 auto}
         try { var a = api(); if (a && MTO().open) a.render(); } catch (e) { }
     }
     W.mtbRoute = routeHook; W.mtbSaved = savedHook; W.mtbRender = renderHook;
-    W.mtbApi = { on: on, off: off, X: X, BILLS: BILLS, billsBuilder: billsBuilder, wrapBills: wrapBills, cardTop: cardTop, shortName: shortName, sizeOf: sizeOf, keysOf: keysOf, buildIndex: buildIndex, findBill: findBill, loadIndex: loadIndex,
+    W.mtbApi = { on: on, off: off, X: X, pickPaint: pickPaint, checkOnly: checkOnly, cbOpen: cbOpen, cbRun: cbRun, PICK_STEPS: PICK_STEPS, BILLS: BILLS, billsBuilder: billsBuilder, wrapBills: wrapBills, cardTop: cardTop, shortName: shortName, sizeOf: sizeOf, keysOf: keysOf, buildIndex: buildIndex, findBill: findBill, loadIndex: loadIndex,
                  waitCounts: waitCounts, homeHtml: homeHtml, paintHome: paintHome, tick: tick, listOpen: listOpen, listClose: listClose, coOpen: coOpen, coPreview: coPreview,
                  coRun: coRun, coDone: coDone, csCheck: csCheck, coAllowed: coAllowed, askYes: askYes, askNo: askNo, recentPick: recentPick, daysAgo: daysAgo, pickFinishedRecently: pickFinishedRecently, pickRecords: pickRecords, lastPickSkus: lastPickSkus, coPlain: coPlain, flagOn: flagOn, chunks: chunks, readOld: readOld, act: act, dueHtml: dueHtml, version: 'mtb (v234b4)' };
     function start() { if (flagOn()) { try { on(); } catch (e) { try { console.warn('mtb', e); } catch (x) { } } } else W.MTB_ON = false; }
@@ -17801,7 +17890,7 @@ html #vgate-card { z-index: 2147483200 !important; }
 #lb-bg .d4k-pv canvas, #lb-bg .d4k-pv svg { display: block; flex: 1 1 40%; min-width: 0; max-width: 48%; height: auto; max-height: 10rem; border: 1px solid #CBD5E1; background: #fff; }
 html.d4x-on #ful-banner.ful-banner { position: relative; top: auto; left: auto; right: auto; z-index: 1; margin: 0 0 .55rem; box-shadow: none; }
 html.d4x-on #ful-banner .d4-fbx { min-height: 44px; min-width: 44px; margin-left: auto; border: 1.5px solid #8A5A00; border-radius: .6rem; background: #fff; color: #5C3B00; font: 700 1.1rem Arial, Helvetica, sans-serif; cursor: pointer; }
-html.d4-orders #cam-btn, html.d4-orders #scan-hint-text { display: none !important; }
+html.d4-orders #scan-hint-text { display: none !important; }   /* v234g6 D1: the top camera button stays in the scanner bar on Orders */
 .d4-bin { display: block; font-size: .8rem; font-weight: 700; color: #1B4F8A; margin-top: .15rem; white-space: normal; overflow-wrap: anywhere; }
 .d4-bin.none { color: #6B7280; font-weight: 400; }
 html.d4x-on .header-right .hb[data-d4w] { display: inline-flex !important; flex-direction: column; align-items: center; justify-content: center; line-height: 1; padding-top: 2px; padding-bottom: 2px; }
@@ -18059,8 +18148,8 @@ html.d4x-on .nv-x { width: auto !important; min-width: 44px; padding: 0 .5rem !i
     function ordersTop() {
         var tab = $('pick-tab'); if (!tab) return;
         var host = $('d4-ohost');
-        if (!host) { host = document.createElement('div'); host.id = 'd4-ohost'; var at = $('mtb-home'); if (at && at.parentNode === tab) tab.insertBefore(host, at); else tab.insertBefore(host, tab.firstChild); }
-        else { var mh = $('mtb-home'); if (mh && mh.parentNode === tab && host.nextSibling !== mh) tab.insertBefore(host, mh); }
+        if (!host) { host = document.createElement('div'); host.id = 'd4-ohost'; var at = $('mtb-home'); if (at && at.parentNode === tab) tab.insertBefore(host, at.nextSibling); else tab.insertBefore(host, tab.firstChild); }
+        else { var mh = $('mtb-home'); if (mh && mh.parentNode === tab && mh.nextSibling !== host) tab.insertBefore(host, mh.nextSibling); }   /* v234g6 D4: the big Scan first, then the key numbers */
         var h = ordersTopHtml(); if (h !== OT.html || !host.firstChild) { host.innerHTML = h; OT.html = h; }
     }
     API.ordersTopHtml = ordersTopHtml;
@@ -18656,7 +18745,7 @@ html.d4x-on .nv-x { width: auto !important; min-width: 44px; padding: 0 .5rem !i
         var tab = $('pick-tab'); if (!tab) return; var rs = frows();
         var host = $('d4-olist');
         if (!host) { host = document.createElement('div'); host.id = 'd4-olist'; host.className = 'd4-ol'; }
-        var mh = $('mtb-home'), at = mh && mh.parentNode === tab ? mh.nextSibling : null;
+        var mh = $('d4-ohost') || $('mtb-home'), at = mh && mh.parentNode === tab ? mh.nextSibling : null;   /* v234g6 D4: the waiting list after the key numbers */
         if (host.parentNode !== tab || (mh && host.previousSibling !== mh)) { if (at) tab.insertBefore(host, at); else if (mh && mh.parentNode === tab) tab.appendChild(host); else { var oh = $('d4-ohost'); if (oh && oh.parentNode === tab) tab.insertBefore(host, oh.nextSibling); else tab.insertBefore(host, tab.firstChild); } }
         var h = '';
         if (rs) {
