@@ -140,7 +140,8 @@
 // v113 (2026-11-28, v43d): cache name bumped for App v234f4 (v43d = v234f4 (v234d3 + DB3 server reads + SALES1 + the B2 button, hidden while its flag is off) + Admin v2.93c unchanged). Nothing else changed.
 // v114 (2026-11-28, v43e): cache name bumped for App v234g2 (v43e = v234g2 (v234f4 + Labels: honest PDF words, a number box for each product, words on the icon buttons) + Admin v2.93c unchanged). Nothing else changed.
 // v115 (2026-11-28, v43f): cache name bumped for App v234g3 (v43f = v234g3 (v234g2 + phone code with the saved sign-in, the server selling value, the More badge fits) + Admin v2.93c unchanged). Nothing else changed.
-const CACHE_NAME = 'artzfolio-oms-shell-v115';
+// v116 (2026-11-28, v43g): cache name bumped for App v234g5 (v43g = v234g5 (v234g3 + the TO MAKE card on top with no keyboard pop, every pending bill read, neater Orders waiting list) + Admin v2.93c unchanged). Nothing else changed.
+const CACHE_NAME = 'artzfolio-oms-shell-v116';
 const OPTIONAL_FILES = ['./zxing_reader_3.1.4.js', './zxing_reader_3.1.4.wasm'];
 const SHELL_FILES = ['./index.html', './manifest.json', './icon.svg'];
 
