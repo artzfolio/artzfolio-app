@@ -4007,7 +4007,7 @@ button:focus-visible,select:focus-visible,input:focus-visible,textarea:focus-vis
 </style>
 </head>
 <body>
-<div class="ver-corner" id="verCornerBadge">v234g9</div>
+<div class="ver-corner" id="verCornerBadge">v234g10</div>
 <!-- v112: the full-screen SKU page (opened by a12OpenSku) -->
 <div class="a12-skupage" id="a12-skupage"><div class="a12-sphead"><button type="button" onclick="a12CloseSku()">&larr; Back</button><div id="a12-sp-title" style="flex:1"></div><button type="button" onclick="shOpen('sku')" aria-label="Share this product page">&#128228; Share</button></div><div class="a12-spbody" id="a12-sp-body"></div></div>
 <!-- v63: Gap 2 — offline write-queue indicator. Hidden (display:none) unless
@@ -5227,7 +5227,7 @@ button:focus-visible,select:focus-visible,input:focus-visible,textarea:focus-vis
 
             <!-- Version -->
             <div class="ver-badge">
-                <div class="ver-name">&#128230; ArtzFolio Super App v234g9</div>
+                <div class="ver-name">&#128230; ArtzFolio Super App v234g10</div>
                 <div class="ver-sub">Tap the button below to see what is new in this version.</div>
                 <button class="settings-btn" style="min-height:46px" onclick="wnOpen()">What is new and what is done</button>
             </div>
@@ -15034,6 +15034,23 @@ html.mtb-on .mto-tb-head .mto-btn{flex:0 0 auto}
         }
         return null;
     }
+    function openHit(idx, v) {   /* v234g10 S1: the make line that findBill skipped because the same product waits to be picked in that order (v234g9 F1) */
+        if (!idx || !idx.lines) return null;
+        var keys = keysOf(v); if (!keys.length) return null;
+        for (var i = 0; i < idx.lines.length; i++) {
+            var L = idx.lines[i];
+            if (!L.open || L.made >= L.qty) continue;
+            if (keys.indexOf(L.sku) >= 0 || (L.asin && keys.indexOf(L.asin) >= 0)) return { line: L, bill: idx.bills[L.bill] };
+        }
+        return null;
+    }
+    function waitsPick(v) {   /* v234g10 S1: say it plainly; nothing is saved; the scan is used up (the old path would only say it is not a pick slip) */
+        var h = openHit(X.idx, v); if (!h || !h.bill) return false;
+        var nm = E(shortName(h.line.title) || h.line.sku), ref = E(h.bill.ref);
+        say('&#8505; <strong>' + nm + '</strong> is also waiting to be <strong>picked</strong> in order <strong>' + ref + '</strong>, so this scan is not counted as a made piece.<br>' +
+            'To pick it: scan the pick slip of that order. To count a made piece: open the order card, or scan its <strong>TO MAKE</strong> code.', 'info');
+        return true;
+    }
     function titlesFor(skus) {
         var out = {}, g = []; for (var i = 0; i < skus.length; i += 100) g.push(skus.slice(i, i + 100));
         return Promise.all(g.map(function (c) {
@@ -15167,12 +15184,12 @@ html.mtb-on .mto-tb-head .mto-btn{flex:0 0 auto}
                 X.pending = null;
                 if (!X.on || !pickFreeHere() || MTO().open || cardBusy()) { oldPath(v, opts); return; }   /* B2: something started meanwhile */
                 var hit = findBill(X.idx, v, null);
-                if (hit) decide(v, hit, opts); else oldPath(v, opts);
+                if (hit) decide(v, hit, opts); else if (!waitsPick(v)) oldPath(v, opts);   /* v234g10 S1 */
             });
             return true;
         }
         var hit = findBill(X.idx, v, null);
-        if (!hit) return false;
+        if (!hit) return waitsPick(v);   /* v234g10 S1 */
         if (opts && opts.format && M.last && v === M.last.raw && now() - M.last.at < 2500) {
             say('&#8505; The camera read the same label twice in a moment &ndash; counted once. If that really was a second piece, scan it again now.', 'info');
             return true;
@@ -15915,7 +15932,7 @@ html.mtb-on .mto-tb-head .mto-btn{flex:0 0 auto}
         try { var a = api(); if (a && MTO().open) a.render(); } catch (e) { }
     }
     W.mtbRoute = routeHook; W.mtbSaved = savedHook; W.mtbRender = renderHook;
-    W.mtbApi = { askWhy: askWhy, openFor: openFor, binSheetHtml: binSheetHtml, binPrint: binPrint, on: on, off: off, X: X, plainStatus: plainStatus, typeBadges: typeBadges, normScan: normScan, makeType: makeType, STK: STK, openMakeFor: openMakeFor, decide: decide, pickPaint: pickPaint, checkOnly: checkOnly, cbOpen: cbOpen, cbRun: cbRun, PICK_STEPS: PICK_STEPS, BILLS: BILLS, billsBuilder: billsBuilder, wrapBills: wrapBills, cardTop: cardTop, shortName: shortName, sizeOf: sizeOf, keysOf: keysOf, buildIndex: buildIndex, findBill: findBill, loadIndex: loadIndex,
+    W.mtbApi = { openHit: openHit, waitsPick: waitsPick, askWhy: askWhy, openFor: openFor, binSheetHtml: binSheetHtml, binPrint: binPrint, on: on, off: off, X: X, plainStatus: plainStatus, typeBadges: typeBadges, normScan: normScan, makeType: makeType, STK: STK, openMakeFor: openMakeFor, decide: decide, pickPaint: pickPaint, checkOnly: checkOnly, cbOpen: cbOpen, cbRun: cbRun, PICK_STEPS: PICK_STEPS, BILLS: BILLS, billsBuilder: billsBuilder, wrapBills: wrapBills, cardTop: cardTop, shortName: shortName, sizeOf: sizeOf, keysOf: keysOf, buildIndex: buildIndex, findBill: findBill, loadIndex: loadIndex,
                  waitCounts: waitCounts, homeHtml: homeHtml, paintHome: paintHome, tick: tick, listOpen: listOpen, listClose: listClose, coOpen: coOpen, coPreview: coPreview,
                  coRun: coRun, coDone: coDone, csCheck: csCheck, coAllowed: coAllowed, askYes: askYes, askNo: askNo, recentPick: recentPick, daysAgo: daysAgo, pickFinishedRecently: pickFinishedRecently, pickRecords: pickRecords, lastPickSkus: lastPickSkus, coPlain: coPlain, flagOn: flagOn, chunks: chunks, readOld: readOld, act: act, dueHtml: dueHtml, version: 'mtb (v234b4)' };
     function start() { if (flagOn()) { try { on(); } catch (e) { try { console.warn('mtb', e); } catch (x) { } } } else W.MTB_ON = false; }
